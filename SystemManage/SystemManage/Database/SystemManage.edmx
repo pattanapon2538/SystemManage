@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SystemManageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Lg_ID" />
+          </Key>
+          <Property Name="Lg_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="languages" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="30" />
+          <Property Name="Updateby" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Role_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role_Initial" Type="nvarchar" MaxLength="50" />
+          <Property Name="Role_Detail" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Type_of_Contract">
+          <Key>
+            <PropertyRef Name="Contrat_ID" />
+          </Key>
+          <Property Name="Contrat_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Contrat_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contrat_Detail" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="date" />
+          <Property Name="UpdateDate" Type="date" Nullable="false" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Users_ID" />
+          </Key>
+          <Property Name="Favorite" Type="bit" Nullable="false" />
+          <Property Name="Users_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="User_Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="User_Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="User_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="User_LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="BirthDate" Type="date" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ContractFrom" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_of_Started" Type="date" Nullable="false" />
+          <Property Name="Date_of_Ended" Type="date" />
+          <Property Name="AttachShow1" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow2" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow3" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow4" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile1" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile2" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile3" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile4" Type="nvarchar" MaxLength="200" />
+          <Property Name="Permission" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SuccPass" Type="float" />
+          <Property Name="Non_Success" Type="float" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="SystemManageModelStoreContainer">
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type_of_Contract" EntityType="Self.Type_of_Contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SystemManageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="Guid" Nullable="false" />
+          <Property Name="Role_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role_Initial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Role_Detail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Type_of_Contract">
+          <Key>
+            <PropertyRef Name="Contrat_ID" />
+          </Key>
+          <Property Name="Contrat_ID" Type="Guid" Nullable="false" />
+          <Property Name="Contrat_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contrat_Detail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Users_ID" />
+          </Key>
+          <Property Name="Favorite" Type="Boolean" Nullable="false" />
+          <Property Name="Users_ID" Type="Guid" Nullable="false" />
+          <Property Name="User_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContractFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date_of_Started" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_of_Ended" Type="DateTime" Precision="0" />
+          <Property Name="AttachShow1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Permission" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SuccPass" Type="Double" />
+          <Property Name="Non_Success" Type="Double" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Type_of_Contract" EntityType="Self.Type_of_Contract" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Languages" EntityType="SystemManageModel.Language" />
+        </EntityContainer>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Lg_ID" />
+          </Key>
+          <Property Name="Lg_ID" Type="Guid" Nullable="false" />
+          <Property Name="languages" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Updateby" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SystemManageModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="SystemManageModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+                <ScalarProperty Name="Role_Initial" ColumnName="Role_Initial" />
+                <ScalarProperty Name="Role_Detail" ColumnName="Role_Detail" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type_of_Contract">
+            <EntityTypeMapping TypeName="SystemManageModel.Type_of_Contract">
+              <MappingFragment StoreEntitySet="Type_of_Contract">
+                <ScalarProperty Name="Contrat_ID" ColumnName="Contrat_ID" />
+                <ScalarProperty Name="Contrat_Name" ColumnName="Contrat_Name" />
+                <ScalarProperty Name="Contrat_Detail" ColumnName="Contrat_Detail" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SystemManageModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Favorite" ColumnName="Favorite" />
+                <ScalarProperty Name="Users_ID" ColumnName="Users_ID" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="User_LastName" ColumnName="User_LastName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ContractFrom" ColumnName="ContractFrom" />
+                <ScalarProperty Name="Date_of_Started" ColumnName="Date_of_Started" />
+                <ScalarProperty Name="Date_of_Ended" ColumnName="Date_of_Ended" />
+                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
+                <ScalarProperty Name="AttachShow2" ColumnName="AttachShow2" />
+                <ScalarProperty Name="AttachShow3" ColumnName="AttachShow3" />
+                <ScalarProperty Name="AttachShow4" ColumnName="AttachShow4" />
+                <ScalarProperty Name="AttachFile1" ColumnName="AttachFile1" />
+                <ScalarProperty Name="AttachFile2" ColumnName="AttachFile2" />
+                <ScalarProperty Name="AttachFile3" ColumnName="AttachFile3" />
+                <ScalarProperty Name="AttachFile4" ColumnName="AttachFile4" />
+                <ScalarProperty Name="Permission" ColumnName="Permission" />
+                <ScalarProperty Name="SuccPass" ColumnName="SuccPass" />
+                <ScalarProperty Name="Non_Success" ColumnName="Non_Success" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="SystemManageModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="Updateby" ColumnName="Updateby" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="languages" ColumnName="languages" />
+                <ScalarProperty Name="Lg_ID" ColumnName="Lg_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
