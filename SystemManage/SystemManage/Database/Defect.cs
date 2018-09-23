@@ -12,15 +12,9 @@ namespace SystemManage.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Defect
     {
-        public string Role_ID { get; set; }
-        public string Role_Name { get; set; }
-        public string Role_Initial { get; set; }
-        public string Role_Detail { get; set; }
-        public string CreateDate { get; set; }
-        public string UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string UpdateBy { get; set; }
+        public string Defect_ID { get; set; }
+        public string Sub_ID { get; set; }
     }
 }

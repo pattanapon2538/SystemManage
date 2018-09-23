@@ -14,11 +14,11 @@ namespace SystemManage.Database
     
     public partial class Type_of_Contract
     {
-        public System.Guid Contrat_ID { get; set; }
+        public string Contrat_ID { get; set; }
         public string Contrat_Name { get; set; }
         public string Contrat_Detail { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
-        public System.DateTime UpdateDate { get; set; }
+        public Nullable<DateTime> CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string CreateBy { get; set; }
     }
 }

@@ -5,34 +5,173 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SystemManageModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Language">
+        <EntityType Name="Defect">
           <Key>
-            <PropertyRef Name="Lg_ID" />
+            <PropertyRef Name="Defect_ID" />
           </Key>
-          <Property Name="Lg_ID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="languages" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Defect_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sub_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="DocumentID" />
+          </Key>
+          <Property Name="DocumentID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DocumentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DocumentDetail" Type="nvarchar" MaxLength="255" />
+          <Property Name="RoleID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AttachShow" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile" Type="nvarchar" MaxLength="200" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
           <Property Name="UpdateDate" Type="date" />
-          <Property Name="CreateBy" Type="nvarchar" MaxLength="30" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inbox">
+          <Key>
+            <PropertyRef Name="MailID" />
+          </Key>
+          <Property Name="MailID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MailName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MailDetail" Type="nvarchar" MaxLength="255" />
+          <Property Name="SendTo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AttachShow1" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow2" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow3" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow4" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow5" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile1" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile2" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile3" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile4" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile5" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Language_of_Type">
+          <Key>
+            <PropertyRef Name="languageID" />
+          </Key>
+          <Property Name="languageID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="languagesName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Updateby" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProjectDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="ProjectStatus" Type="tinyint" />
+          <Property Name="ProjectSendDate" Type="date" />
+          <Property Name="TotalPercent" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Role_ID" />
           </Key>
-          <Property Name="Role_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Role_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Role_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Role_Initial" Type="nvarchar" MaxLength="50" />
           <Property Name="Role_Detail" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreateDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UpdateDate" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="SkillsID" />
+          </Key>
+          <Property Name="SkillsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="languageID" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubDefect">
+          <Key>
+            <PropertyRef Name="SubDefect" />
+          </Key>
+          <Property Name="SubDefect" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DefectID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubDefectDetail" Type="nvarchar" MaxLength="255" />
+          <Property Name="SubDefectStatus" Type="tinyint" Nullable="false" />
+          <Property Name="AttachShow1" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow2" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow3" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow4" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow5" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile1" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile2" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile3" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile4" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile5" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SubTask">
+          <Key>
+            <PropertyRef Name="SubID" />
+          </Key>
+          <Property Name="SubID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubStatus" Type="tinyint" Nullable="false" />
+          <Property Name="SubPercent" Type="float" Nullable="false" />
+          <Property Name="SubDescriptionDev" Type="nvarchar" MaxLength="255" />
+          <Property Name="SubDevID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubDevSend" Type="date" Nullable="false" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="TaskID" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TaskName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalPercent" Type="float" Nullable="false" />
+          <Property Name="DescriptionTest" Type="nvarchar" MaxLength="255" />
+          <Property Name="TestID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TestSentDate" Type="date" Nullable="false" />
+          <Property Name="TestStatus" Type="tinyint" Nullable="false" />
+          <Property Name="DescriptionQA" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="QAID" Type="nvarchar" MaxLength="50" />
+          <Property Name="QASentDate" Type="date" Nullable="false" />
+          <Property Name="QAStatus" Type="tinyint" Nullable="false" />
+          <Property Name="AttachShow1" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile1" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow2" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile2" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow3" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile3" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow4" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile4" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachShow5" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttachFile5" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProjectID" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Type_of_Contract">
           <Key>
             <PropertyRef Name="Contrat_ID" />
           </Key>
-          <Property Name="Contrat_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Contrat_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Contrat_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Contrat_Detail" Type="nvarchar" MaxLength="50" />
           <Property Name="CreateDate" Type="date" />
@@ -43,8 +182,7 @@
           <Key>
             <PropertyRef Name="Users_ID" />
           </Key>
-          <Property Name="Favorite" Type="bit" Nullable="false" />
-          <Property Name="Users_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Users_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="User_Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="User_Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="User_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -68,10 +206,24 @@
           <Property Name="Non_Success" Type="float" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
           <Property Name="UpdateDate" Type="date" Nullable="false" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="RoleID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContractID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PositionID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Favorite" Type="bit" Nullable="false" />
         </EntityType>
         <EntityContainer Name="SystemManageModelStoreContainer">
-          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Defect" EntityType="Self.Defect" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inbox" EntityType="Self.Inbox" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language_of_Type" EntityType="Self.Language_of_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubDefect" EntityType="Self.SubDefect" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubTask" EntityType="Self.SubTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Type_of_Contract" EntityType="Self.Type_of_Contract" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -79,24 +231,180 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SystemManageModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Defects" EntityType="SystemManageModel.Defect" />
+          <EntitySet Name="Documents" EntityType="SystemManageModel.Document" />
+          <EntitySet Name="Inboxes" EntityType="SystemManageModel.Inbox" />
+          <EntitySet Name="Language_of_Type" EntityType="SystemManageModel.Language_of_Type" />
+          <EntitySet Name="Projects" EntityType="SystemManageModel.Project" />
+          <EntitySet Name="Roles" EntityType="SystemManageModel.Role" />
+          <EntitySet Name="SubDefects" EntityType="SystemManageModel.SubDefect" />
+          <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
+          <EntitySet Name="Tasks" EntityType="SystemManageModel.Task" />
+          <EntitySet Name="Type_of_Contract" EntityType="SystemManageModel.Type_of_Contract" />
+          <EntitySet Name="Users" EntityType="SystemManageModel.User" />
+          <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
+        </EntityContainer>
+        <EntityType Name="Defect">
+          <Key>
+            <PropertyRef Name="Defect_ID" />
+          </Key>
+          <Property Name="Defect_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sub_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="DocumentID" />
+          </Key>
+          <Property Name="DocumentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Inbox">
+          <Key>
+            <PropertyRef Name="MailID" />
+          </Key>
+          <Property Name="MailID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MailName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MailDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SendTo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Language_of_Type">
+          <Key>
+            <PropertyRef Name="languageID" />
+          </Key>
+          <Property Name="languageID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="languagesName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Updateby" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectStatus" Type="Byte" />
+          <Property Name="ProjectSendDate" Type="DateTime" Precision="0" />
+          <Property Name="TotalPercent" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="Role_ID" />
           </Key>
-          <Property Name="Role_ID" Type="Guid" Nullable="false" />
-          <Property Name="Role_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Role_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role_Initial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role_Detail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UpdateDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SubDefect">
+          <Key>
+            <PropertyRef Name="SubDefect1" />
+          </Key>
+          <Property Name="SubDefect1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DefectID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubDefectDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SubDefectStatus" Type="Byte" Nullable="false" />
+          <Property Name="AttachShow1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SubTask">
+          <Key>
+            <PropertyRef Name="SubID" />
+          </Key>
+          <Property Name="SubID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubStatus" Type="Byte" Nullable="false" />
+          <Property Name="SubPercent" Type="Double" Nullable="false" />
+          <Property Name="SubDescriptionDev" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="SubDevID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubDevSend" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TaskID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPercent" Type="Double" Nullable="false" />
+          <Property Name="DescriptionTest" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TestID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TestSentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TestStatus" Type="Byte" Nullable="false" />
+          <Property Name="DescriptionQA" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="QAID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QASentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="QAStatus" Type="Byte" Nullable="false" />
+          <Property Name="AttachShow1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Type_of_Contract">
           <Key>
             <PropertyRef Name="Contrat_ID" />
           </Key>
-          <Property Name="Contrat_ID" Type="Guid" Nullable="false" />
-          <Property Name="Contrat_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contrat_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contrat_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Contrat_Detail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="0" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -106,15 +414,14 @@
           <Key>
             <PropertyRef Name="Users_ID" />
           </Key>
-          <Property Name="Favorite" Type="Boolean" Nullable="false" />
-          <Property Name="Users_ID" Type="Guid" Nullable="false" />
-          <Property Name="User_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="User_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="User_LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Users_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ContractFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Date_of_Started" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Date_of_Ended" Type="DateTime" Precision="0" />
@@ -126,57 +433,204 @@
           <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Permission" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Permission" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="SuccPass" Type="Double" />
           <Property Name="Non_Success" Type="Double" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContractID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PositionID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Favorite" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Roles" EntityType="Self.Role" />
-          <EntitySet Name="Type_of_Contract" EntityType="Self.Type_of_Contract" />
-          <EntitySet Name="Users" EntityType="Self.User" />
-          <EntitySet Name="Languages" EntityType="SystemManageModel.Language" />
-        </EntityContainer>
-        <EntityType Name="Language">
+        <EntityType Name="Skill">
           <Key>
-            <PropertyRef Name="Lg_ID" />
+            <PropertyRef Name="SkillsID" />
           </Key>
-          <Property Name="Lg_ID" Type="Guid" Nullable="false" />
-          <Property Name="languages" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
-          <Property Name="CreateBy" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Updateby" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="SkillsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="languageID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SystemManageModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Defects">
+            <EntityTypeMapping TypeName="SystemManageModel.Defect">
+              <MappingFragment StoreEntitySet="Defect">
+                <ScalarProperty Name="Sub_ID" ColumnName="Sub_ID" />
+                <ScalarProperty Name="Defect_ID" ColumnName="Defect_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="SystemManageModel.Document">
+              <MappingFragment StoreEntitySet="Document">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
+                <ScalarProperty Name="AttachShow" ColumnName="AttachShow" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="DocumentDetail" ColumnName="DocumentDetail" />
+                <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
+                <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inboxes">
+            <EntityTypeMapping TypeName="SystemManageModel.Inbox">
+              <MappingFragment StoreEntitySet="Inbox">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AttachFile5" ColumnName="AttachFile5" />
+                <ScalarProperty Name="AttachFile4" ColumnName="AttachFile4" />
+                <ScalarProperty Name="AttachFile3" ColumnName="AttachFile3" />
+                <ScalarProperty Name="AttachFile2" ColumnName="AttachFile2" />
+                <ScalarProperty Name="AttachFile1" ColumnName="AttachFile1" />
+                <ScalarProperty Name="AttachShow5" ColumnName="AttachShow5" />
+                <ScalarProperty Name="AttachShow4" ColumnName="AttachShow4" />
+                <ScalarProperty Name="AttachShow3" ColumnName="AttachShow3" />
+                <ScalarProperty Name="AttachShow2" ColumnName="AttachShow2" />
+                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
+                <ScalarProperty Name="SendTo" ColumnName="SendTo" />
+                <ScalarProperty Name="MailDetail" ColumnName="MailDetail" />
+                <ScalarProperty Name="MailName" ColumnName="MailName" />
+                <ScalarProperty Name="MailID" ColumnName="MailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Language_of_Type">
+            <EntityTypeMapping TypeName="SystemManageModel.Language_of_Type">
+              <MappingFragment StoreEntitySet="Language_of_Type">
+                <ScalarProperty Name="Updateby" ColumnName="Updateby" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="languagesName" ColumnName="languagesName" />
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="SystemManageModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="TotalPercent" ColumnName="TotalPercent" />
+                <ScalarProperty Name="ProjectSendDate" ColumnName="ProjectSendDate" />
+                <ScalarProperty Name="ProjectStatus" ColumnName="ProjectStatus" />
+                <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="SystemManageModel.Role">
               <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
-                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
-                <ScalarProperty Name="Role_Initial" ColumnName="Role_Initial" />
-                <ScalarProperty Name="Role_Detail" ColumnName="Role_Detail" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Role_Detail" ColumnName="Role_Detail" />
+                <ScalarProperty Name="Role_Initial" ColumnName="Role_Initial" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubDefects">
+            <EntityTypeMapping TypeName="SystemManageModel.SubDefect">
+              <MappingFragment StoreEntitySet="SubDefect">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AttachFile5" ColumnName="AttachFile5" />
+                <ScalarProperty Name="AttachFile4" ColumnName="AttachFile4" />
+                <ScalarProperty Name="AttachFile3" ColumnName="AttachFile3" />
+                <ScalarProperty Name="AttachFile2" ColumnName="AttachFile2" />
+                <ScalarProperty Name="AttachFile1" ColumnName="AttachFile1" />
+                <ScalarProperty Name="AttachShow5" ColumnName="AttachShow5" />
+                <ScalarProperty Name="AttachShow4" ColumnName="AttachShow4" />
+                <ScalarProperty Name="AttachShow3" ColumnName="AttachShow3" />
+                <ScalarProperty Name="AttachShow2" ColumnName="AttachShow2" />
+                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
+                <ScalarProperty Name="SubDefectStatus" ColumnName="SubDefectStatus" />
+                <ScalarProperty Name="SubDefectDetail" ColumnName="SubDefectDetail" />
+                <ScalarProperty Name="DefectID" ColumnName="DefectID" />
+                <ScalarProperty Name="SubDefect1" ColumnName="SubDefect" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubTasks">
+            <EntityTypeMapping TypeName="SystemManageModel.SubTask">
+              <MappingFragment StoreEntitySet="SubTask">
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="SubDevSend" ColumnName="SubDevSend" />
+                <ScalarProperty Name="SubDevID" ColumnName="SubDevID" />
+                <ScalarProperty Name="SubDescriptionDev" ColumnName="SubDescriptionDev" />
+                <ScalarProperty Name="SubPercent" ColumnName="SubPercent" />
+                <ScalarProperty Name="SubStatus" ColumnName="SubStatus" />
+                <ScalarProperty Name="SubName" ColumnName="SubName" />
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="SystemManageModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AttachFile5" ColumnName="AttachFile5" />
+                <ScalarProperty Name="AttachShow5" ColumnName="AttachShow5" />
+                <ScalarProperty Name="AttachFile4" ColumnName="AttachFile4" />
+                <ScalarProperty Name="AttachShow4" ColumnName="AttachShow4" />
+                <ScalarProperty Name="AttachFile3" ColumnName="AttachFile3" />
+                <ScalarProperty Name="AttachShow3" ColumnName="AttachShow3" />
+                <ScalarProperty Name="AttachFile2" ColumnName="AttachFile2" />
+                <ScalarProperty Name="AttachShow2" ColumnName="AttachShow2" />
+                <ScalarProperty Name="AttachFile1" ColumnName="AttachFile1" />
+                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
+                <ScalarProperty Name="QAStatus" ColumnName="QAStatus" />
+                <ScalarProperty Name="QASentDate" ColumnName="QASentDate" />
+                <ScalarProperty Name="QAID" ColumnName="QAID" />
+                <ScalarProperty Name="DescriptionQA" ColumnName="DescriptionQA" />
+                <ScalarProperty Name="TestStatus" ColumnName="TestStatus" />
+                <ScalarProperty Name="TestSentDate" ColumnName="TestSentDate" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="DescriptionTest" ColumnName="DescriptionTest" />
+                <ScalarProperty Name="TotalPercent" ColumnName="TotalPercent" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Type_of_Contract">
             <EntityTypeMapping TypeName="SystemManageModel.Type_of_Contract">
               <MappingFragment StoreEntitySet="Type_of_Contract">
-                <ScalarProperty Name="Contrat_ID" ColumnName="Contrat_ID" />
-                <ScalarProperty Name="Contrat_Name" ColumnName="Contrat_Name" />
-                <ScalarProperty Name="Contrat_Detail" ColumnName="Contrat_Detail" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Contrat_Detail" ColumnName="Contrat_Detail" />
+                <ScalarProperty Name="Contrat_Name" ColumnName="Contrat_Name" />
+                <ScalarProperty Name="Contrat_ID" ColumnName="Contrat_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -184,42 +638,44 @@
             <EntityTypeMapping TypeName="SystemManageModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Favorite" ColumnName="Favorite" />
-                <ScalarProperty Name="Users_ID" ColumnName="Users_ID" />
-                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
-                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
-                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
-                <ScalarProperty Name="User_LastName" ColumnName="User_LastName" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="ContractFrom" ColumnName="ContractFrom" />
-                <ScalarProperty Name="Date_of_Started" ColumnName="Date_of_Started" />
-                <ScalarProperty Name="Date_of_Ended" ColumnName="Date_of_Ended" />
-                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
-                <ScalarProperty Name="AttachShow2" ColumnName="AttachShow2" />
-                <ScalarProperty Name="AttachShow3" ColumnName="AttachShow3" />
-                <ScalarProperty Name="AttachShow4" ColumnName="AttachShow4" />
-                <ScalarProperty Name="AttachFile1" ColumnName="AttachFile1" />
-                <ScalarProperty Name="AttachFile2" ColumnName="AttachFile2" />
-                <ScalarProperty Name="AttachFile3" ColumnName="AttachFile3" />
-                <ScalarProperty Name="AttachFile4" ColumnName="AttachFile4" />
-                <ScalarProperty Name="Permission" ColumnName="Permission" />
-                <ScalarProperty Name="SuccPass" ColumnName="SuccPass" />
-                <ScalarProperty Name="Non_Success" ColumnName="Non_Success" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Languages">
-            <EntityTypeMapping TypeName="SystemManageModel.Language">
-              <MappingFragment StoreEntitySet="Language">
-                <ScalarProperty Name="Updateby" ColumnName="Updateby" />
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="languages" ColumnName="languages" />
-                <ScalarProperty Name="Lg_ID" ColumnName="Lg_ID" />
+                <ScalarProperty Name="Non_Success" ColumnName="Non_Success" />
+                <ScalarProperty Name="SuccPass" ColumnName="SuccPass" />
+                <ScalarProperty Name="Permission" ColumnName="Permission" />
+                <ScalarProperty Name="AttachFile4" ColumnName="AttachFile4" />
+                <ScalarProperty Name="AttachFile3" ColumnName="AttachFile3" />
+                <ScalarProperty Name="AttachFile2" ColumnName="AttachFile2" />
+                <ScalarProperty Name="AttachFile1" ColumnName="AttachFile1" />
+                <ScalarProperty Name="AttachShow4" ColumnName="AttachShow4" />
+                <ScalarProperty Name="AttachShow3" ColumnName="AttachShow3" />
+                <ScalarProperty Name="AttachShow2" ColumnName="AttachShow2" />
+                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
+                <ScalarProperty Name="Date_of_Ended" ColumnName="Date_of_Ended" />
+                <ScalarProperty Name="Date_of_Started" ColumnName="Date_of_Started" />
+                <ScalarProperty Name="ContractFrom" ColumnName="ContractFrom" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="User_LastName" ColumnName="User_LastName" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+                <ScalarProperty Name="Users_ID" ColumnName="Users_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="SystemManageModel.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -12,14 +12,16 @@ namespace SystemManage.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Document
     {
-        public string Role_ID { get; set; }
-        public string Role_Name { get; set; }
-        public string Role_Initial { get; set; }
-        public string Role_Detail { get; set; }
-        public string CreateDate { get; set; }
-        public string UpdateDate { get; set; }
+        public string DocumentID { get; set; }
+        public string DocumentName { get; set; }
+        public string DocumentDetail { get; set; }
+        public string RoleID { get; set; }
+        public string AttachShow { get; set; }
+        public string AttachFile { get; set; }
+        public DateTime CreateDate { get; set; }
+        public Nullable<DateTime> UpdateDate { get; set; }
         public string CreateBy { get; set; }
         public string UpdateBy { get; set; }
     }

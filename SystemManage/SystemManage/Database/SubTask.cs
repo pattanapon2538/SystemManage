@@ -12,15 +12,19 @@ namespace SystemManage.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class SubTask
     {
-        public string Role_ID { get; set; }
-        public string Role_Name { get; set; }
-        public string Role_Initial { get; set; }
-        public string Role_Detail { get; set; }
-        public string CreateDate { get; set; }
-        public string UpdateDate { get; set; }
+        public string SubID { get; set; }
+        public string SubName { get; set; }
+        public byte SubStatus { get; set; }
+        public double SubPercent { get; set; }
+        public string SubDescriptionDev { get; set; }
+        public string SubDevID { get; set; }
+        public DateTime SubDevSend { get; set; }
+        public DateTime CreateDate { get; set; }
+        public Nullable<DateTime> UpdateDate { get; set; }
         public string CreateBy { get; set; }
         public string UpdateBy { get; set; }
+        public string TaskID { get; set; }
     }
 }

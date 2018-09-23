@@ -4,11 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7defb4f02a1646268b3c899f232c21b3" Name="Diagram1">
-        <EntityTypeShape EntityType="SystemManageModel.Role" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SystemManageModel.Type_of_Contract" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SystemManageModel.Language" Width="1.5" PointX="3.25" PointY="3.75" />
+      <Diagram DiagramId="7defb4f02a1646268b3c899f232c21b3" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="SystemManageModel.Defect" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SystemManageModel.Document" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SystemManageModel.Inbox" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SystemManageModel.Language_of_Type" Width="1.5" PointX="0.75" PointY="2.375" />
+        <EntityTypeShape EntityType="SystemManageModel.Project" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SystemManageModel.Role" Width="1.5" PointX="2.75" PointY="4.125" />
+        <EntityTypeShape EntityType="SystemManageModel.SubDefect" Width="1.5" PointX="6.75" PointY="3.875" />
+        <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SystemManageModel.Task" Width="1.5" PointX="8.75" PointY="4.25" />
+        <EntityTypeShape EntityType="SystemManageModel.Type_of_Contract" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="4.75" PointY="5.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

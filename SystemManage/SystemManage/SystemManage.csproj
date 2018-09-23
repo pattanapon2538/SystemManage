@@ -156,11 +156,31 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LanguagesController.cs" />
-    <Compile Include="Database\Language.cs">
+    <Compile Include="Database\Defect.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Document.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Inbox.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Language_of_Type.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Project.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Role.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Skill.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\SubDefect.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\SubTask.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\SystemManage.Context.cs">
@@ -178,6 +198,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SystemManage.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Database\Task.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Type_of_Contract.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
@@ -187,7 +210,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Languages.cs" />
+    <Compile Include="Models\DefectModel.cs" />
+    <Compile Include="Models\DocumentModel.cs" />
+    <Compile Include="Models\InboxModel.cs" />
+    <Compile Include="Models\LanguageOfTypeModel.cs" />
+    <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\SkillModel.cs" />
+    <Compile Include="Models\SubDefectModel.cs" />
+    <Compile Include="Models\SubTaskModel.cs" />
+    <Compile Include="Models\TaskModel.cs" />
+    <Compile Include="Models\TypeOfCotractModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +254,7 @@
     </EntityDeploy>
     <Content Include="Database\SystemManage.edmx.diagram">
       <DependentUpon>SystemManage.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -246,10 +281,6 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Languages\Index.cshtml" />
-    <Content Include="Views\Languages\Create.cshtml" />
-    <Content Include="Views\Languages\Detail.cshtml" />
-    <Content Include="Views\Languages\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

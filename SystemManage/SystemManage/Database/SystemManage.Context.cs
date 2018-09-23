@@ -25,9 +25,17 @@ namespace SystemManage.Database
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Defect> Defects { get; set; }
+        public virtual DbSet<Document> Documents { get; set; }
+        public virtual DbSet<Inbox> Inboxes { get; set; }
+        public virtual DbSet<Language_of_Type> Language_of_Type { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<SubDefect> SubDefects { get; set; }
+        public virtual DbSet<SubTask> SubTasks { get; set; }
+        public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<Type_of_Contract> Type_of_Contract { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Language> Languages { get; set; }
+        public virtual DbSet<Skill> Skills { get; set; }
     }
 }

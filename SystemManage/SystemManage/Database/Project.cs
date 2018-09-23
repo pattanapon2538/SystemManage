@@ -12,13 +12,17 @@ namespace SystemManage.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Language
+    public partial class Project
     {
-        public System.Guid Lg_ID { get; set; }
-        public string languages { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public Nullable<System.DateTime> UpdateDate { get; set; }
+        public string ProjectID { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectDescription { get; set; }
+        public Nullable<byte> ProjectStatus { get; set; }
+        public Nullable<DateTime> ProjectSendDate { get; set; }
+        public int TotalPercent { get; set; }
+        public DateTime CreateDate { get; set; }
+        public Nullable<DateTime> UpdateDate { get; set; }
         public string CreateBy { get; set; }
-        public string Updateby { get; set; }
+        public string UpdateBy { get; set; }
     }
 }

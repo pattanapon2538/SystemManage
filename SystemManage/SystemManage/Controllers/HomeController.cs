@@ -19,8 +19,7 @@ namespace SystemManage.Controllers
 
         public ActionResult About()
         {
-            var lan = db.Languages.Where(w => w.Lg_ID.ToString() == "88a1e89d-62be-e811-b68f-415645000030").FirstOrDefault();
-            ViewBag.Message = lan.languages;
+
 
             return View();
         }

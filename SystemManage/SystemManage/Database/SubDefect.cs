@@ -12,37 +12,25 @@ namespace SystemManage.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class SubDefect
     {
-        public string Users_ID { get; set; }
-        public string User_Email { get; set; }
-        public string User_Password { get; set; }
-        public string User_Name { get; set; }
-        public string User_LastName { get; set; }
-        public string Gender { get; set; }
-        public DateTime BirthDate { get; set; }
-        public string Address { get; set; }
-        public string ContractFrom { get; set; }
-        public DateTime Date_of_Started { get; set; }
-        public Nullable<DateTime> Date_of_Ended { get; set; }
+        public string SubDefect1 { get; set; }
+        public string DefectID { get; set; }
+        public string SubDefectDetail { get; set; }
+        public byte SubDefectStatus { get; set; }
         public string AttachShow1 { get; set; }
         public string AttachShow2 { get; set; }
         public string AttachShow3 { get; set; }
         public string AttachShow4 { get; set; }
+        public string AttachShow5 { get; set; }
         public string AttachFile1 { get; set; }
         public string AttachFile2 { get; set; }
         public string AttachFile3 { get; set; }
         public string AttachFile4 { get; set; }
-        public string Permission { get; set; }
-        public Nullable<double> SuccPass { get; set; }
-        public Nullable<double> Non_Success { get; set; }
+        public string AttachFile5 { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public Nullable<DateTime> UpdateDate { get; set; }
         public string CreateBy { get; set; }
         public string UpdateBy { get; set; }
-        public string RoleID { get; set; }
-        public string ContractID { get; set; }
-        public string PositionID { get; set; }
-        public bool Favorite { get; set; }
     }
 }
