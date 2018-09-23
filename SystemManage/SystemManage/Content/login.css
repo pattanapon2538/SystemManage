@@ -103,3 +103,7 @@
     .banner-text p {
         color: #fff;
     }
+
+    .field-validation-error {
+        color:red
+    }

@@ -9,8 +9,9 @@ namespace SystemManage.Models
     public class UserModel
     {
         public string Users_ID { get; set; }
+        [Required(ErrorMessage = "กรุณาใส่ Email ให้ถูกต้อง")]
         public string User_Email { get; set; }
-        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "กรุณาใส่ Password ให้ถูกต้อง")]
         public string User_Password { get; set; }
         public string User_Name { get; set; }
         public string User_LastName { get; set; }
