@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,6 +10,7 @@ namespace SystemManage.Models
     {
         public string Users_ID { get; set; }
         public string User_Email { get; set; }
+        [DataType(DataType.Password)]
         public string User_Password { get; set; }
         public string User_Name { get; set; }
         public string User_LastName { get; set; }
