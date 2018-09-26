@@ -23,7 +23,7 @@ namespace SystemManage.Controllers
                 if (user != null)
                 {
                     Session["userName"] = user.User_Email;
-                    return RedirectToAction("Index", "Member"); 
+                    return RedirectToAction("Index", "Languages"); 
                 }
             }
             return View("Index");
