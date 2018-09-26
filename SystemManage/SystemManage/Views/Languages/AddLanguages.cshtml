@@ -1,45 +1,40 @@
-﻿@{
-    ViewBag.Title = "AddLanguages";
-}
-@model SystemManage.Models.LanguageOfTypeModel
-@using (Ajax.BeginForm("AddLanguages", "Languages",
-    new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), OnSuccess = "clearvalue", UpdateTargetId = "FormRefresh" }))
-{
-    <div class="container" id="FormRefresh">
-        <div class="form-group">
-            <label>Language ID: </label>
-            @Html.TextBoxFor(m => m.languageID, new { @class = "form-control", @placeholder = "Enter" })
-        </div>
-        <div class="form-group">
-            <div class="form-group">
+﻿@model SystemManage.Models.LanguageOfTypeModel 
+@{ 
+    ViewBag.Title = "AddLanguages"; 
+} 
+@using (Ajax.BeginForm("AddLanguages", "Languages", 
+    new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), OnSuccess = "clearvalue"})) 
+{ 
+    <div class="container" id="FormRefresh"> 
+        <div class="form-group"> 
+            <label>Language ID: </label> 
+            @Html.TextBoxFor(m => m.languageID, new { @class = "form-control", @placeholder = "Enter" }) 
+        </div> 
+        <div class="form-group"> 
                 <label>Language Type: </label>
                 @Html.TextBoxFor(m => m.languagesName, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <div class="form-group">
-                    <label>Create Date </label>
-                    @Html.TextBoxFor(m => m.CreateDate, new { @class = "form-control" })
-                </div>
-                <div class="form-group">
-                    <div class="form-group">
-                        <label>Create By: </label>
-                        @Html.TextBoxFor(m => m.CreateBy, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button>Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script>
-    function clearvalue() {
-        $("#languageID").val("");
-        $("#languagesName").val("");
-        $("#CreateDate").val("");
-        $("#CreateBy").val("");
-    }
+            </div> 
+                <div class="form-group"> 
+                    <label>Create Date </label> 
+                    @Html.TextBoxFor(m => m.CreateDate, new { @class = "form-control" }) 
+                </div> 
+                    <div class="form-group"> 
+                        <label>Create By: </label> 
+                        @Html.TextBoxFor(m => m.CreateBy, new { @class = "form-control" }) 
+                    </div> 
+                </div> 
+                <div class="form-group"> 
+                    <button type="submit">Submit</button> 
+                </div> 
+} 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script> 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script> 
+    function clearvalue() { 
+        $("#languageID").val(""); 
+        $("#languagesName").val(""); 
+        $("#CreateDate").val(""); 
+        $("#CreateBy").val(""); 
+    } 
 </script>
