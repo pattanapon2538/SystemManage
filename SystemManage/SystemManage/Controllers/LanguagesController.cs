@@ -20,14 +20,22 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddLanguages(LanguageOfTypeModel model)
         {
+            var user = "Plus";//Session["userName"].ToString();
             Language_of_Type lg = new Language_of_Type();
             lg.languageID = model.languageID;
             lg.languagesName = model.languagesName;
-            lg.CreateDate = model.CreateDate;
-            lg.CreateBy = model.CreateBy;
+            lg.CreateDate = DateTime.Now;
+            lg.CreateBy = user;
             db.Language_of_Type.Add(lg);
             db.SaveChanges();
             return View();
+        }
+        public ActionResult EditLanguages(LanguageOfTypeModel model)
+        {
+            Language_of_Type lg = db.Language_of_Type.Where(w => w.languageID == model.languageID).FirstOrDefault();
+            lg.languagesName = model.languagesName;
+            db.SaveChanges();
+            return RedirectToAction("ShowLanguage");
         }
         public ActionResult ShowLanguage()
         {
@@ -47,6 +55,15 @@ namespace SystemManage.Controllers
             }
             ViewBag.DataList = model;
             return View();
+        }
+
+        public ActionResult DetailLanguages(string languageID)
+        {
+            LanguageOfTypeModel model = new LanguageOfTypeModel();
+            Language_of_Type lg = db.Language_of_Type.Where(w => w.languageID == languageID).FirstOrDefault();
+            model.languageID = lg.languageID;
+            model.languagesName = lg.languagesName;
+            return View(model);
         }
     }
 }
