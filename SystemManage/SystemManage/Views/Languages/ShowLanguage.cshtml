@@ -1,0 +1,46 @@
+﻿@model List<SystemManage.Models.LanguageOfTypeModel>
+@using SystemManage.Models;
+
+@{
+    ViewBag.Title = "ShowLanguage";
+}
+<div class="container">
+    <table class="tabel table-bordered">
+        <thead>
+            <tr>
+                <th>LanguageID</th>
+                <th>Language</th>
+                <th>CreateDate</th>
+                <th>UpdateDate</th>
+                <th>CreateBy</th>
+                <th>UpdateBy</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var i = 1;
+                foreach (var item in (List<LanguageOfTypeModel>)ViewBag.DataList)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.languageID</td>
+                        <td>@item.languagesName</td>
+                        <td>@item.CreateDate</td>
+                        <td>@item.UpdateDate</td>
+                        <td>@item.CreateBy</td>
+                        <td>@item.Updateby</td>
+                        <td>
+                            <a href=""><i class="glyphicon glyphicon-trash"></i></a>
+                        </td>
+                        <td>
+                            <a href=""><i class="glyphicon glyphicon-edit"></i></a>
+                        </td>
+                    </tr>
+                    i++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+

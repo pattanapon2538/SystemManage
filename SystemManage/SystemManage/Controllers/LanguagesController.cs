@@ -29,5 +29,24 @@ namespace SystemManage.Controllers
             db.SaveChanges();
             return View();
         }
+        public ActionResult ShowLanguage()
+        {
+            List<LanguageOfTypeModel> model = new List<LanguageOfTypeModel>();
+            var item = db.Language_of_Type.ToList();
+            foreach (var i in item)
+            {
+                model.Add(new LanguageOfTypeModel
+                   {
+                       languageID = i.languageID,
+                       languagesName = i.languagesName,
+                       CreateDate = i.CreateDate,
+                       UpdateDate = i.UpdateDate,
+                       CreateBy = i.CreateBy,
+                       Updateby = i.Updateby
+                   });
+            }
+            ViewBag.DataList = model;
+            return View();
+        }
     }
 }

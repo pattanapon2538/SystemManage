@@ -321,6 +321,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Languages\AddLanguages.cshtml" />
+    <Content Include="Views\Languages\ShowLanguage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
