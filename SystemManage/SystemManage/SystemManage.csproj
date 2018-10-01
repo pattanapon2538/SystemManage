@@ -151,6 +151,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Database\Defect.cs">
@@ -323,10 +324,12 @@
     <Content Include="Views\Languages\AddLanguages.cshtml" />
     <Content Include="Views\Languages\ShowLanguage.cshtml" />
     <Content Include="Views\Languages\DetailLanguages.cshtml" />
+    <Content Include="Views\Contact\ShowContact.cshtml" />
+    <Content Include="Views\Contact\AddContact.cshtml" />
+    <Content Include="Views\Contact\DetailContact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Member\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -42,8 +42,7 @@ namespace SystemManage.Controllers
                     languagesName = i.languagesName,
                     CreateDate = i.CreateDate,
                     UpdateDate = i.UpdateDate,
-                    CreateBy = i.CreateBy,
-                    Updateby = i.Updateby
+                    CreateBy = "Admin",
                 });
             }
             ViewBag.DataList = model;
@@ -61,6 +60,8 @@ namespace SystemManage.Controllers
         {
             Language_of_Type lg = db.Language_of_Type.Where(w => w.languageID == model.languageID).FirstOrDefault();
             lg.languagesName = model.languagesName;
+            lg.UpdateDate = DateTime.Now;
+            lg.Updateby = "Admin";
             db.SaveChanges();
             return RedirectToAction("ShowLanguage");
         }

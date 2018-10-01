@@ -16,8 +16,8 @@ namespace SystemManage.Database
     {
         public string languageID { get; set; }
         public string languagesName { get; set; }
-        public DateTime CreateDate { get; set; }
-        public Nullable<DateTime> UpdateDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
         public string CreateBy { get; set; }
         public string Updateby { get; set; }
     }

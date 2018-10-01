@@ -14,14 +14,6 @@
                 <label>Language Type: </label>
                 @Html.TextBoxFor(m => m.languagesName, new { @class = "form-control" })
             </div> 
-                <div class="form-group"> 
-                    <label>Create Date </label> 
-                    @Html.TextBoxFor(m => m.CreateDate, new { @class = "form-control" }) 
-                </div> 
-                    <div class="form-group"> 
-                        <label>Create By: </label> 
-                        @Html.TextBoxFor(m => m.CreateBy, new { @class = "form-control" }) 
-                    </div> 
                 </div> 
                 <div class="form-group"> 
                     <button type="submit">Submit</button> 
@@ -34,7 +26,5 @@
     function clearvalue() { 
         $("#languageID").val(""); 
         $("#languagesName").val(""); 
-        $("#CreateDate").val(""); 
-        $("#CreateBy").val(""); 
     } 
 </script>

@@ -174,9 +174,10 @@
           <Property Name="Contrat_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Contrat_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Contrat_Detail" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreateDate" Type="date" />
-          <Property Name="UpdateDate" Type="date" Nullable="false" />
-          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="date" Nullable="false" />
+          <Property Name="UpdateDate" Type="date" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UpdateBy" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -201,7 +202,7 @@
           <Property Name="AttachFile2" Type="nvarchar" MaxLength="200" />
           <Property Name="AttachFile3" Type="nvarchar" MaxLength="200" />
           <Property Name="AttachFile4" Type="nvarchar" MaxLength="200" />
-          <Property Name="Permission" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Skills" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SuccPass" Type="float" />
           <Property Name="Non_Success" Type="float" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
@@ -242,8 +243,8 @@
           <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
           <EntitySet Name="Tasks" EntityType="SystemManageModel.Task" />
           <EntitySet Name="Type_of_Contract" EntityType="SystemManageModel.Type_of_Contract" />
-          <EntitySet Name="Users" EntityType="SystemManageModel.User" />
           <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
+          <EntitySet Name="Users" EntityType="SystemManageModel.User" />
         </EntityContainer>
         <EntityType Name="Defect">
           <Key>
@@ -406,9 +407,18 @@
           <Property Name="Contrat_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Contrat_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Contrat_Detail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="0" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UpdateBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="SkillsID" />
+          </Key>
+          <Property Name="SkillsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="languageID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -433,7 +443,7 @@
           <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Permission" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Skills" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SuccPass" Type="Double" />
           <Property Name="Non_Success" Type="Double" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -444,14 +454,6 @@
           <Property Name="ContractID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PositionID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Favorite" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Skill">
-          <Key>
-            <PropertyRef Name="SkillsID" />
-          </Key>
-          <Property Name="SkillsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="languageID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -625,12 +627,22 @@
           <EntitySetMapping Name="Type_of_Contract">
             <EntityTypeMapping TypeName="SystemManageModel.Type_of_Contract">
               <MappingFragment StoreEntitySet="Type_of_Contract">
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Contrat_Detail" ColumnName="Contrat_Detail" />
                 <ScalarProperty Name="Contrat_Name" ColumnName="Contrat_Name" />
                 <ScalarProperty Name="Contrat_ID" ColumnName="Contrat_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="SystemManageModel.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -647,7 +659,7 @@
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Non_Success" ColumnName="Non_Success" />
                 <ScalarProperty Name="SuccPass" ColumnName="SuccPass" />
-                <ScalarProperty Name="Permission" ColumnName="Permission" />
+                <ScalarProperty Name="Skills" ColumnName="Skills" />
                 <ScalarProperty Name="AttachFile4" ColumnName="AttachFile4" />
                 <ScalarProperty Name="AttachFile3" ColumnName="AttachFile3" />
                 <ScalarProperty Name="AttachFile2" ColumnName="AttachFile2" />
@@ -667,15 +679,6 @@
                 <ScalarProperty Name="User_Password" ColumnName="User_Password" />
                 <ScalarProperty Name="User_Email" ColumnName="User_Email" />
                 <ScalarProperty Name="Users_ID" ColumnName="Users_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Skills">
-            <EntityTypeMapping TypeName="SystemManageModel.Skill">
-              <MappingFragment StoreEntitySet="Skills">
-                <ScalarProperty Name="languageID" ColumnName="languageID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,53 @@
+﻿@model List<SystemManage.Models.TypeOfCotractModel>
+@using SystemManage.Models ;
+@{
+    ViewBag.Title = "ShowContact";
+}
+<html>
+<head>
+    <title>ShowContact</title>
+</head>
+<body>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>No</td>
+                    <td>Contact</td>
+                    <td>Detail</td>
+                    <td>CreateDate</td>
+                    <td>UpdateDate</td>
+                    <td>CreateBy</td>
+                    <td>UpdateBy</td>
+                    <td>Edit</td>
+                    <td>Delete</td>
+                </tr>       
+            </thead>
+            <tbody>
+                @{
+                    var i = 1;
+                    foreach(var item in (List<TypeOfCotractModel>)ViewBag.DataList)
+                    {
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.Contrat_Name</td>
+                        <td>@item.Contrat_Detail</td>
+                        <td>@item.CreateDate</td>
+                        <td>@item.UpdateDate</td>
+                        <td>@item.CreateBy</td>
+                        <td>@item.UpdateBy</td>
+                        <td>
+                            <a href="#" class="glyphicon glyphicon-trash"></a>
+                        </td>
+                        <td>
+                            <a href="#" class="glyphicon glyphicon-edit"></a>
+                        </td>
+                    </tr>
+                        i++;
+                    }
+                }
+            </tbody>
+            </table>
+    </div>
+</body>
+</html>

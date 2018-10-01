@@ -20,8 +20,8 @@ namespace SystemManage.Database
         public string RoleID { get; set; }
         public string AttachShow { get; set; }
         public string AttachFile { get; set; }
-        public DateTime CreateDate { get; set; }
-        public Nullable<DateTime> UpdateDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
         public string CreateBy { get; set; }
         public string UpdateBy { get; set; }
     }

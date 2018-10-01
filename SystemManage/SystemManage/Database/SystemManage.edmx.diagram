@@ -15,8 +15,8 @@
         <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="8.75" PointY="0.75" />
         <EntityTypeShape EntityType="SystemManageModel.Task" Width="1.5" PointX="8.75" PointY="4.25" />
         <EntityTypeShape EntityType="SystemManageModel.Type_of_Contract" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="0.75" PointY="5" />
         <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="4.75" PointY="5.25" />
+        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="0.75" PointY="4.875" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
