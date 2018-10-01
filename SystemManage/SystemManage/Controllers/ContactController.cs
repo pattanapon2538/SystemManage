@@ -57,7 +57,7 @@ namespace SystemManage.Controllers
             model.Contrat_ID = tc.Contrat_ID;
             model.Contrat_Name = tc.Contrat_Name;
             model.Contrat_Detail = tc.Contrat_Detail;
-            return View(model); 
+            return View(model);
         }
         public ActionResult EditContact(Type_of_Contract model)
         {
@@ -67,6 +67,15 @@ namespace SystemManage.Controllers
             tc.UpdateDate = DateTime.Now;
             tc.UpdateBy = "Admin";
             db.SaveChanges();
+            return RedirectToAction("ShowContact");
+        }
+        public ActionResult DeleteContact(string Contrat_ID)
+        {
+            TypeOfCotractModel model = new TypeOfCotractModel();
+            Type_of_Contract tc = db.Type_of_Contract.Where(m => m.Contrat_ID == model.Contrat_ID).FirstOrDefault();
+            db.Type_of_Contract.Remove(tc);
+            db.SaveChanges();
+            var tc2 = db.Type_of_Contract.ToList();
             return RedirectToAction("ShowContact");
         }
     }
