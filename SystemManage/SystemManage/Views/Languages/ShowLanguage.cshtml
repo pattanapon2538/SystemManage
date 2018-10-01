@@ -8,13 +8,14 @@
     <table class="tabel table-bordered">
         <thead>
             <tr>
-                <th>LanguageID</th>
+                <th>No</th>
                 <th>Language</th>
                 <th>CreateDate</th>
                 <th>UpdateDate</th>
                 <th>CreateBy</th>
                 <th>UpdateBy</th>
                 <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -24,17 +25,16 @@
                 {
                     <tr>
                         <td>@i</td>
-                        <td>@item.languageID</td>
                         <td>@item.languagesName</td>
                         <td>@item.CreateDate</td>
                         <td>@item.UpdateDate</td>
                         <td>@item.CreateBy</td>
                         <td>@item.Updateby</td>
                         <td>
-                            <a href=""><i class="glyphicon glyphicon-trash"></i></a>
+                            <a href="@Url.Action("DeleteLanguage", new {languageID = item.languageID})"><i class="glyphicon glyphicon-trash"></i></a>
                         </td>
                         <td>
-                            <a href=""><i class="glyphicon glyphicon-edit"></i></a>
+                            <a href="#"><i class="glyphicon glyphicon-edit"></i></a>
                         </td>
                     </tr>
                     i++;
