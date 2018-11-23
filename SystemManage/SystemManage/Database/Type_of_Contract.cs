@@ -14,12 +14,21 @@ namespace SystemManage.Database
     
     public partial class Type_of_Contract
     {
-        public string Contrat_ID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Type_of_Contract()
+        {
+            this.Users = new HashSet<User>();
+        }
+    
+        public int Contrat_ID { get; set; }
         public string Contrat_Name { get; set; }
         public string Contrat_Detail { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string UpdateBy { get; set; }
+        public Nullable<int> CreateBy { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -1,0 +1,49 @@
+﻿@model SystemManage.Models.UserModel
+@{
+    ViewBag.Title = "AddUser";
+}
+@using (Ajax.BeginForm("AddUser", "User",
+    new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), OnSuccess = "clearvalue" }))
+{
+<div class="container" id="FormRefresh">
+    <div class="form-group">
+        <label>ID</label>
+        @Html.TextBoxFor(m => m.Users_ID, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
+    </div> <div class="form-group">
+        <label>Email</label>
+        @Html.TextBoxFor(m => m.User_Email, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        @Html.TextBoxFor(m => m.User_Password, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
+    </div>
+    <div class="form-group">
+        <label>Name</label>
+        @Html.TextBoxFor(m => m.User_Name, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
+    </div>
+    <div class="form-group">
+        <label>Lastname</label>
+        @Html.TextBoxFor(m => m.User_LastName, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
+    </div>
+    <div class="form-group">
+        <label>Address</label>
+        @Html.TextBoxFor(m => m.Address, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
+    </div>
+    <div class="form-group">
+        <label>Contact</label>
+        @Html.DisplayNameFor(m => m.Contract_ID)
+        @Html.DropDownListFor(m => m.Contract_ID, new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "Select")
+    </div>
+    <div class="form-group">
+        <label>Contact From</label>
+        @Html.TextBoxFor(m => m.ContractFrom, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
+    </div>
+    <div class="form-group">
+        <label>Position</label>
+        @Html.DisplayNameFor(m => m.Position_ID)
+        @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "Select")
+    </div>
+
+</div>
+}
+

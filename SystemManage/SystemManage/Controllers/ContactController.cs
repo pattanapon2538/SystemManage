@@ -19,13 +19,13 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddContact(TypeOfCotractModel model)
         {
-            var user = "Plus";//Session["userName"].ToString(); Test
+           // var user = "Plus";//Session["userName"].ToString(); Test
             Type_of_Contract tc = new Type_of_Contract();
             tc.Contrat_ID = model.Contrat_ID;
             tc.Contrat_Name = model.Contrat_Name;
             tc.Contrat_Detail = model.Contrat_Detail;
             tc.CreateDate = DateTime.Now;
-            tc.CreateBy = user;
+            tc.CreateBy = 11;
             db.Type_of_Contract.Add(tc);
             db.SaveChanges();
             return RedirectToAction("ShowContact");
@@ -42,15 +42,15 @@ namespace SystemManage.Controllers
                     Contrat_Name = i.Contrat_Name,
                     Contrat_Detail = i.Contrat_Detail,
                     CreateDate = i.CreateDate,
-                    UpdateDate = i.UpdateDate,
+                  /*  UpdateDate = i.UpdateDate,
                     CreateBy = i.CreateBy,
-                    UpdateBy = i.UpdateBy
+                    UpdateBy = i.UpdateBy*/
                 });
             }
             ViewBag.DataList = model;
             return View();
         }
-        public ActionResult DetailContact(string Contrat_ID)
+        public ActionResult DetailContact(int Contrat_ID)
         {
             TypeOfCotractModel model = new TypeOfCotractModel();
             Type_of_Contract tc = db.Type_of_Contract.Where(m => m.Contrat_ID == Contrat_ID).FirstOrDefault();
@@ -65,7 +65,7 @@ namespace SystemManage.Controllers
             tc.Contrat_Name = model.Contrat_Name;
             tc.Contrat_Detail = model.Contrat_Detail;
             tc.UpdateDate = DateTime.Now;
-            tc.UpdateBy = "Admin";
+            tc.UpdateBy = 11;
             db.SaveChanges();
             return RedirectToAction("ShowContact");
         }

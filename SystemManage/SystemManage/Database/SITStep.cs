@@ -12,16 +12,14 @@ namespace SystemManage.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Document
+    public partial class SITStep
     {
-        public string DocumentID { get; set; }
-        public string DocumentName { get; set; }
-        public string DocumentDetail { get; set; }
-        public string AttachShow { get; set; }
-        public string AttachFile { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public Nullable<System.DateTime> UpdateDate { get; set; }
-        public int CreateBy { get; set; }
-        public Nullable<int> UpdateBy { get; set; }
+        public int SITStep1 { get; set; }
+        public int SIT_ID { get; set; }
+        public int Step { get; set; }
+        public int Sub_ID { get; set; }
+    
+        public virtual SIT SIT { get; set; }
+        public virtual SubTask SubTask { get; set; }
     }
 }

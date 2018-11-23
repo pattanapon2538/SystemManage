@@ -14,15 +14,30 @@ namespace SystemManage.Database
     
     public partial class Project
     {
-        public string ProjectID { get; set; }
-        public string ProjectName { get; set; }
-        public string ProjectDescription { get; set; }
-        public Nullable<byte> ProjectStatus { get; set; }
-        public Nullable<System.DateTime> ProjectSendDate { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Project()
+        {
+            this.ProjectMembers = new HashSet<ProjectMember>();
+            this.SITs = new HashSet<SIT>();
+            this.Tasks = new HashSet<Task>();
+        }
+    
+        public int ProjectID { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public Nullable<byte> Status { get; set; }
+        public Nullable<System.DateTime> SendDate { get; set; }
         public int TotalPercent { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string UpdateBy { get; set; }
+        public int CreateBy { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectMember> ProjectMembers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SIT> SITs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Task> Tasks { get; set; }
     }
 }

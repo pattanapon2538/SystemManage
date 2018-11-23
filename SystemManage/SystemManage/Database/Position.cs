@@ -12,32 +12,24 @@ namespace SystemManage.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class SubTask
+    public partial class Position
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SubTask()
+        public Position()
         {
-            this.Defects = new HashSet<Defect>();
-            this.SITSteps = new HashSet<SITStep>();
+            this.Users = new HashSet<User>();
         }
     
-        public int SubID { get; set; }
-        public string SubName { get; set; }
-        public int SubStatus { get; set; }
-        public double SubPercent { get; set; }
-        public string SubDescriptionDev { get; set; }
-        public int SubDevID { get; set; }
-        public System.DateTime SubDevSend { get; set; }
+        public int Position_ID { get; set; }
+        public string Name { get; set; }
+        public string Initial { get; set; }
+        public string Detail { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public int TaskID { get; set; }
-        public Nullable<int> CreateBy { get; set; }
+        public int CreateBy { get; set; }
         public Nullable<int> UpdateBy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Defect> Defects { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SITStep> SITSteps { get; set; }
-        public virtual Task Task { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

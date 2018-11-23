@@ -12,15 +12,18 @@ namespace SystemManage.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Message
     {
-        public string Role_ID { get; set; }
-        public string Role_Name { get; set; }
-        public string Role_Initial { get; set; }
-        public string Role_Detail { get; set; }
-        public string CreateDate { get; set; }
-        public string UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string UpdateBy { get; set; }
+        public int Message_ID { get; set; }
+        public Nullable<int> Mail_ID { get; set; }
+        public string Name { get; set; }
+        public string Detail { get; set; }
+        public string AttachShow1 { get; set; }
+        public string AttachFile { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<int> CreateBy { get; set; }
+        public Nullable<int> SendTo { get; set; }
+    
+        public virtual Mail Mail { get; set; }
     }
 }

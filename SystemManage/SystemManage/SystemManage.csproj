@@ -154,22 +154,36 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Database\Defect.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Document.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Inbox.cs">
+    <Compile Include="Database\Language_of_Type.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Language_of_Type.cs">
+    <Compile Include="Database\Mail.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Message.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Position.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Project.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\Role.cs">
+    <Compile Include="Database\ProjectMember.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\SIT.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\SITStep.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\Skill.cs">
@@ -212,8 +226,8 @@
     <Compile Include="Models\DocumentModel.cs" />
     <Compile Include="Models\InboxModel.cs" />
     <Compile Include="Models\LanguageOfTypeModel.cs" />
+    <Compile Include="Models\PositionModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
-    <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Models\SkillModel.cs" />
     <Compile Include="Models\SubDefectModel.cs" />
     <Compile Include="Models\SubTaskModel.cs" />
@@ -327,6 +341,11 @@
     <Content Include="Views\Contact\ShowContact.cshtml" />
     <Content Include="Views\Contact\AddContact.cshtml" />
     <Content Include="Views\Contact\DetailContact.cshtml" />
+    <Content Include="Views\Role\AddRole.cshtml" />
+    <Content Include="Views\Role\ShowRole.cshtml" />
+    <Content Include="Views\Position\AddPosition.cshtml" />
+    <Content Include="Views\Position\ShowPosition.cshtml" />
+    <Content Include="Views\User\AddUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

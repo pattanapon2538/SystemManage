@@ -20,12 +20,12 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddLanguages(LanguageOfTypeModel model)
         {
-            var user = "Plus";//Session["userName"].ToString();
+            //var user = "Plus";//Session["userName"].ToString();
             Language_of_Type lg = new Language_of_Type();
             lg.languageID = model.languageID;
-            lg.languagesName = model.languagesName;
+            lg.Name = model.languagesName;
             lg.CreateDate = DateTime.Now;
-            lg.CreateBy = user;
+            lg.CreateBy = 11;
             db.Language_of_Type.Add(lg);
             db.SaveChanges();
             return RedirectToAction("ShowLanguage");
@@ -39,33 +39,33 @@ namespace SystemManage.Controllers
                 model.Add(new LanguageOfTypeModel
                 {
                     languageID = i.languageID,
-                    languagesName = i.languagesName,
+                    languagesName = i.Name,
                     CreateDate = i.CreateDate,
                     UpdateDate = i.UpdateDate,
-                    CreateBy = "Admin",
+                    CreateBy = 11,
                 });
             }
             ViewBag.DataList = model;
             return View();
         }
-        public ActionResult DetailLanguages(string languageID)
+        public ActionResult DetailLanguages(int languageID)
         {
             LanguageOfTypeModel model = new LanguageOfTypeModel();
             Language_of_Type lg = db.Language_of_Type.Where(w => w.languageID == languageID).FirstOrDefault();
             model.languageID = lg.languageID;
-            model.languagesName = lg.languagesName;
+            model.languagesName = lg.Name;
             return View(model);
         }
         public ActionResult EditLanguages(LanguageOfTypeModel model)
         {
             Language_of_Type lg = db.Language_of_Type.Where(w => w.languageID == model.languageID).FirstOrDefault();
-            lg.languagesName = model.languagesName;
+            lg.Name = model.languagesName;
             lg.UpdateDate = DateTime.Now;
-            lg.Updateby = "Admin";
+            lg.UpdateBy = 11;
             db.SaveChanges();
             return RedirectToAction("ShowLanguage");
         }
-        public ActionResult DeleteLanguage(string languageID)
+        public ActionResult DeleteLanguage(int languageID)
         {
             LanguageOfTypeModel model = new LanguageOfTypeModel();
             Language_of_Type lg = db.Language_of_Type.Where(w => w.languageID == languageID).FirstOrDefault();

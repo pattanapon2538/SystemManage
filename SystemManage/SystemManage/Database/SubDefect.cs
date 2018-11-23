@@ -14,10 +14,10 @@ namespace SystemManage.Database
     
     public partial class SubDefect
     {
-        public string SubDefect1 { get; set; }
-        public string DefectID { get; set; }
+        public int SubDefect1 { get; set; }
+        public int DefectID { get; set; }
         public string SubDefectDetail { get; set; }
-        public byte SubDefectStatus { get; set; }
+        public int SubDefectStatus { get; set; }
         public string AttachShow1 { get; set; }
         public string AttachShow2 { get; set; }
         public string AttachShow3 { get; set; }
@@ -30,7 +30,9 @@ namespace SystemManage.Database
         public string AttachFile5 { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string UpdateBy { get; set; }
+        public int CreateBy { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+    
+        public virtual Defect Defect { get; set; }
     }
 }

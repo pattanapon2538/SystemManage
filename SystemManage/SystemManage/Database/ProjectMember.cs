@@ -12,16 +12,13 @@ namespace SystemManage.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Document
+    public partial class ProjectMember
     {
-        public string DocumentID { get; set; }
-        public string DocumentName { get; set; }
-        public string DocumentDetail { get; set; }
-        public string AttachShow { get; set; }
-        public string AttachFile { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public Nullable<System.DateTime> UpdateDate { get; set; }
-        public int CreateBy { get; set; }
-        public Nullable<int> UpdateBy { get; set; }
+        public int UserID { get; set; }
+        public int ProjectID { get; set; }
+        public int Role { get; set; }
+    
+        public virtual Project Project { get; set; }
+        public virtual User User { get; set; }
     }
 }

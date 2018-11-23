@@ -14,31 +14,34 @@ namespace SystemManage.Database
     
     public partial class Task
     {
-        public string TaskID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Task()
+        {
+            this.SubTasks = new HashSet<SubTask>();
+        }
+    
+        public int TaskID { get; set; }
         public string TaskName { get; set; }
         public double TotalPercent { get; set; }
+        public Nullable<int> Task_level { get; set; }
         public string DescriptionTest { get; set; }
-        public string TestID { get; set; }
+        public int TestID { get; set; }
         public System.DateTime TestSentDate { get; set; }
         public byte TestStatus { get; set; }
         public string DescriptionQA { get; set; }
-        public string QAID { get; set; }
+        public Nullable<int> QAID { get; set; }
         public System.DateTime QASentDate { get; set; }
         public byte QAStatus { get; set; }
-        public string AttachShow1 { get; set; }
-        public string AttachFile1 { get; set; }
-        public string AttachShow2 { get; set; }
-        public string AttachFile2 { get; set; }
-        public string AttachShow3 { get; set; }
-        public string AttachFile3 { get; set; }
-        public string AttachShow4 { get; set; }
-        public string AttachFile4 { get; set; }
-        public string AttachShow5 { get; set; }
-        public string AttachFile5 { get; set; }
+        public string AttachShow { get; set; }
+        public string AttachFile { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string UpdateBy { get; set; }
-        public string ProjectID { get; set; }
+        public int ProjectID { get; set; }
+        public int CreateBy { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+    
+        public virtual Project Project { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubTask> SubTasks { get; set; }
     }
 }

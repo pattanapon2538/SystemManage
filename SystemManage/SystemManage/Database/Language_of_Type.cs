@@ -14,11 +14,20 @@ namespace SystemManage.Database
     
     public partial class Language_of_Type
     {
-        public string languageID { get; set; }
-        public string languagesName { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Language_of_Type()
+        {
+            this.Skills = new HashSet<Skill>();
+        }
+    
+        public int languageID { get; set; }
+        public string Name { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string Updateby { get; set; }
+        public Nullable<int> CreateBy { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Skill> Skills { get; set; }
     }
 }

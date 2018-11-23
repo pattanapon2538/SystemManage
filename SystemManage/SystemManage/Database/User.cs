@@ -14,7 +14,13 @@ namespace SystemManage.Database
     
     public partial class User
     {
-        public string Users_ID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.ProjectMembers = new HashSet<ProjectMember>();
+        }
+    
+        public int User_ID { get; set; }
         public string User_Email { get; set; }
         public string User_Password { get; set; }
         public string User_Name { get; set; }
@@ -33,16 +39,28 @@ namespace SystemManage.Database
         public string AttachFile2 { get; set; }
         public string AttachFile3 { get; set; }
         public string AttachFile4 { get; set; }
-        public string Skills { get; set; }
-        public Nullable<double> SuccPass { get; set; }
-        public Nullable<double> Non_Success { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public System.DateTime UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string UpdateBy { get; set; }
-        public string RoleID { get; set; }
-        public string ContractID { get; set; }
-        public string PositionID { get; set; }
-        public bool Favorite { get; set; }
+        public string Permisstion { get; set; }
+        public string comment { get; set; }
+        public int SkillsID { get; set; }
+        public Nullable<int> AVG { get; set; }
+        public Nullable<int> Amount_Succ { get; set; }
+        public Nullable<int> Amount_Non { get; set; }
+        public Nullable<int> TotalCoding { get; set; }
+        public Nullable<int> Speaking { get; set; }
+        public Nullable<int> Reading { get; set; }
+        public Nullable<int> Writng { get; set; }
+        public Nullable<int> Listening { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<System.DateTime> UpdateDate { get; set; }
+        public Nullable<int> CreateBy { get; set; }
+        public Nullable<int> UpdateBy { get; set; }
+        public int Contract_ID { get; set; }
+        public int Position_ID { get; set; }
+    
+        public virtual Position Position { get; set; }
+        public virtual Skill Skill { get; set; }
+        public virtual Type_of_Contract Type_of_Contract { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectMember> ProjectMembers { get; set; }
     }
 }
