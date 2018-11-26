@@ -17,7 +17,7 @@ namespace SystemManage.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Language_of_Type()
         {
-            this.Skills = new HashSet<Skill>();
+            this.Users = new HashSet<User>();
         }
     
         public int languageID { get; set; }
@@ -28,6 +28,6 @@ namespace SystemManage.Database
         public Nullable<int> UpdateBy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Skill> Skills { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

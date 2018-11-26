@@ -41,7 +41,7 @@ namespace SystemManage.Database
         public string AttachFile4 { get; set; }
         public string Permisstion { get; set; }
         public string comment { get; set; }
-        public int SkillsID { get; set; }
+        public int LanguageID { get; set; }
         public Nullable<int> AVG { get; set; }
         public Nullable<int> Amount_Succ { get; set; }
         public Nullable<int> Amount_Non { get; set; }
@@ -57,8 +57,8 @@ namespace SystemManage.Database
         public int Contract_ID { get; set; }
         public int Position_ID { get; set; }
     
+        public virtual Language_of_Type Language_of_Type { get; set; }
         public virtual Position Position { get; set; }
-        public virtual Skill Skill { get; set; }
         public virtual Type_of_Contract Type_of_Contract { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectMember> ProjectMembers { get; set; }

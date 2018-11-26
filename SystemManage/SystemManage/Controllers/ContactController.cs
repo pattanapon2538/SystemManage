@@ -12,28 +12,20 @@ namespace SystemManage.Controllers
     {
         Entities db = new Entities();
         // GET: Contact
-        public ActionResult AddContact()
-        {
-            return View();
-        }
         [HttpPost]
-        public ActionResult AddContact(TypeOfCotractModel model)
+        public ActionResult AddContact(TypeOfCotractModel cm)
         {
-           // var user = "Plus";//Session["userName"].ToString(); Test
+            // var user = "Plus";//Session["userName"].ToString(); Test
             Type_of_Contract tc = new Type_of_Contract();
-            tc.Contrat_ID = model.Contrat_ID;
-            tc.Contrat_Name = model.Contrat_Name;
-            tc.Contrat_Detail = model.Contrat_Detail;
+            tc.Contrat_ID = cm.Contrat_ID;
+            tc.Contrat_Name = cm.Contrat_Name;
+            tc.Contrat_Detail = cm.Contrat_Detail;
             tc.CreateDate = DateTime.Now;
             tc.CreateBy = 11;
             db.Type_of_Contract.Add(tc);
             db.SaveChanges();
-            return RedirectToAction("ShowContact");
-        }
-        public ActionResult ShowContact()
-        {
             List<TypeOfCotractModel> model = new List<TypeOfCotractModel>();
-            var item = db.Type_of_Contract.ToList();
+            var item = db.Type_of_Contract.OrderByDescending(s=>s.Contrat_ID).ToList();
             foreach (var i in item)
             {
                 model.Add(new TypeOfCotractModel
@@ -42,9 +34,29 @@ namespace SystemManage.Controllers
                     Contrat_Name = i.Contrat_Name,
                     Contrat_Detail = i.Contrat_Detail,
                     CreateDate = i.CreateDate,
-                  /*  UpdateDate = i.UpdateDate,
+                    UpdateDate = i.UpdateDate,
                     CreateBy = i.CreateBy,
-                    UpdateBy = i.UpdateBy*/
+                    UpdateBy = i.UpdateBy,
+                });
+            }
+            ViewBag.DataList = model;
+            return PartialView("ShowContact");
+        }
+        public ActionResult ShowContact()
+        {
+            List<TypeOfCotractModel> model = new List<TypeOfCotractModel>();
+            var item = db.Type_of_Contract.OrderByDescending(s => s.Contrat_ID).ToList();
+            foreach (var i in item)
+            {
+                model.Add(new TypeOfCotractModel
+                {
+                    Contrat_ID = i.Contrat_ID,
+                    Contrat_Name = i.Contrat_Name,
+                    Contrat_Detail = i.Contrat_Detail,
+                    CreateDate = i.CreateDate,
+                    UpdateDate = i.UpdateDate,
+                    CreateBy = i.CreateBy,
+                    UpdateBy = i.UpdateBy,
                 });
             }
             ViewBag.DataList = model;

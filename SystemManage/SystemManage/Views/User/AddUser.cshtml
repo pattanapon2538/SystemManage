@@ -43,7 +43,14 @@
         @Html.DisplayNameFor(m => m.Position_ID)
         @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "Select")
     </div>
-
+    <div class="form-group">
+        <label>Language</label>
+        @Html.DisplayNameFor(m => m.LanguageID)
+        @Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "Select")
+    </div>
+    <div class="form-group">
+        <button type="submit">Submit</button>
+    </div>
 </div>
 }
 

@@ -13,27 +13,39 @@ namespace SystemManage.Controllers
     {
         Entities db = new Entities();
         // GET: Languages
-        public ActionResult AddLanguages()
-        {
-            return View();
-        }
         [HttpPost]
-        public ActionResult AddLanguages(LanguageOfTypeModel model)
+        public ActionResult AddLanguage(LanguageOfTypeModel language)
         {
-            //var user = "Plus";//Session["userName"].ToString();
-            Language_of_Type lg = new Language_of_Type();
-            lg.languageID = model.languageID;
-            lg.Name = model.languagesName;
-            lg.CreateDate = DateTime.Now;
-            lg.CreateBy = 11;
-            db.Language_of_Type.Add(lg);
-            db.SaveChanges();
-            return RedirectToAction("ShowLanguage");
+            if (ModelState.IsValid)
+            {
+                Language_of_Type model = new Language_of_Type();
+                model.Name = language.languagesName;
+                model.CreateDate = DateTime.Now;
+                model.CreateBy = 11;
+                db.Language_of_Type.Add(model);
+                db.SaveChanges();
+            }
+            List<LanguageOfTypeModel> languagelist = new List<LanguageOfTypeModel>();
+            var result = db.Language_of_Type.OrderByDescending(s => s.languageID).ToList();
+            foreach (var i in result)
+            {
+                languagelist.Add(new LanguageOfTypeModel
+                {
+                    languageID = i.languageID,
+                    languagesName = i.Name,
+                    CreateDate = i.CreateDate,
+                    UpdateDate = i.UpdateDate,
+                    CreateBy = Convert.ToInt16(i.CreateBy),
+                });
+            }
+            ViewBag.DataList = languagelist;
+            return PartialView("ShowLanguage");
         }
+            
         public ActionResult ShowLanguage()
         {
             List<LanguageOfTypeModel> model = new List<LanguageOfTypeModel>();
-            var item = db.Language_of_Type.ToList();
+            var item = db.Language_of_Type.OrderByDescending(s=>s.languageID).ToList();
             foreach (var i in item)
             {
                 model.Add(new LanguageOfTypeModel

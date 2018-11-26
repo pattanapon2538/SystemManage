@@ -1,46 +1,82 @@
-﻿@model List<SystemManage.Models.LanguageOfTypeModel>
+﻿@model SystemManage.Models.LanguageOfTypeModel
 @using SystemManage.Models;
-
 @{
     ViewBag.Title = "ShowLanguage";
+    Layout = "~/Views/Shared/AddminLayout.cshtml";
 }
 <div class="container">
-    <table class="tabel table-bordered">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Language</th>
-                <th>CreateDate</th>
-                <th>UpdateDate</th>
-                <th>CreateBy</th>
-                <th>UpdateBy</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                var i = 1;
-                foreach (var item in (List<LanguageOfTypeModel>)ViewBag.DataList)
-                {
-                    <tr>
-                        <td>@i</td>
-                        <td>@item.languagesName</td>
-                        <td>@item.CreateDate</td>
-                        <td>@item.UpdateDate</td>
-                        <td>@item.CreateBy</td>
-                        <td>@item.Updateby</td>
-                        <td>
-                            <a href="@Url.Action("DeleteLanguage", new {languageID = item.languageID})"><i class="glyphicon glyphicon-trash"></i></a>
-                        </td>
-                        <td>
-                            <a href="@Url.Action("DetailLanguage", new {languageID = item.languageID})"><i class="glyphicon glyphicon-edit"></i></a>
-                        </td>
-                    </tr>
-                    i++;
-                }
-            }
-        </tbody>
-    </table>
+    <div class="login-box ptb--100">
+        @using (Ajax.BeginForm("AddLanguage", "Languages",
+             new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }))
+        {
+            <form>
+                <div class="login-form-body shadow " style="border-style:solid ;border-width: 1px">
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-6 col-form-label">Language Programming: </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.languagesName, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.languagesName, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
+                        <button id="form_submit" type="submit">Add</button>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
 </div>
-
+<div class="row" id="tb-data">
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="data-tables datatable-primary">
+                    <div id="dataTable2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="dataTable2" class="text-center dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="dataTable2_info" style="width: 1131px;">
+                                    <thead class="text-capitalize">
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 140px;" aria-sort="ascending" aria-label="No.: activate to sort column descending">No.</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 275px;">Language</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">Update Date</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Create Date</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">Edit</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            var i = 1;
+                                            foreach (var item in (List<LanguageOfTypeModel>)ViewBag.DataList)
+                                            {
+                                                <tr>
+                                                    <td>@i</td>
+                                                    <td>@item.languagesName</td>
+                                                    <td>@item.CreateDate</td>
+                                                    <td>@item.UpdateDate</td>
+                                                    <td>
+                                                        <a href="@Url.Action("DeleteLanguage", new {languageID = item.languageID})"><i class="glyphicon glyphicon-trash"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("DetailLanguage", new {languageID = item.languageID})"><i class="glyphicon glyphicon-edit"></i></a>
+                                                    </td>
+                                                </tr>
+                                                i++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function clearvalue() {
+        $("#languagesName").val("");
+    }
+</script>

@@ -1,53 +1,92 @@
-﻿@model List<SystemManage.Models.TypeOfCotractModel>
-@using SystemManage.Models ;
+﻿@model SystemManage.Models.TypeOfCotractModel
+@using SystemManage.Models
 @{
     ViewBag.Title = "ShowContact";
+    Layout = "~/Views/Shared/AddminLayout.cshtml";
 }
-<html>
-<head>
-    <title>ShowContact</title>
-</head>
-<body>
-    <div class="container">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <td>No</td>
-                    <td>Contact</td>
-                    <td>Detail</td>
-                    <td>CreateDate</td>
-                    <td>UpdateDate</td>
-                    <td>CreateBy</td>
-                    <td>UpdateBy</td>
-                    <td>Edit</td>
-                    <td>Delete</td>
-                </tr>       
-            </thead>
-            <tbody>
-                @{
-                    var i = 1;
-                    foreach(var item in (List<TypeOfCotractModel>)ViewBag.DataList)
-                    {
-                    <tr>
-                        <td>@i</td>
-                        <td>@item.Contrat_Name</td>
-                        <td>@item.Contrat_Detail</td>
-                        <td>@item.CreateDate</td>
-                        <td>@item.UpdateDate</td>
-                        <td>@item.CreateBy</td>
-                        <td>@item.UpdateBy</td>
-                        <td>
-                            <a href="#" class="glyphicon glyphicon-trash"></a>
-                        </td>
-                        <td>
-                            <a href="#" class="glyphicon glyphicon-edit"></a>
-                        </td>
-                    </tr>
-                        i++;
-                    }
-                }
-            </tbody>
-            </table>
+<div class="container">
+    <div class="login-box ptb--100">
+        @using (Ajax.BeginForm("AddContact", "Contact",
+             new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }))
+        {
+            <form>
+                <div class="login-form-body shadow " style="border-style:solid ;border-width: 1px">
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-6 col-form-label">Contact of Type: </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.Contrat_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.Contrat_Name, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <div class="mt">
+                        </div>
+                        <label for="language" class="col-sm-6 col-form-label">Detail: </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.Contrat_Detail, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.Contrat_Name, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
+                        <button id="form_submit" type="submit">Add</button>
+                    </div>
+                </div>
+            </form>
+        }
     </div>
-</body>
-</html>
+</div>
+<div class="row" id="tb-data">
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="data-tables datatable-primary">
+                    <div id="dataTable2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="dataTable2" class="text-center dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="dataTable2_info" style="width: 1131px;">
+                                    <thead class="text-capitalize">
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 140px;" aria-sort="ascending" aria-label="No.: activate to sort column descending">No.</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 275px;">Contact of Type</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">Detail</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Create Date</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Update Date</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">Edit</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            var i = 1;
+                                            foreach (var item in (List<TypeOfCotractModel>)ViewBag.DataList)
+                                            {
+                                                <tr>
+                                                    <td>@i</td>
+                                                    <td>@item.Contrat_Name</td>
+                                                    <td>@item.Contrat_Detail</td>
+                                                    <td>@item.CreateDate</td>
+                                                    <td>@item.UpdateDate</td>
+                                                    <td>
+                                                        <a href="@Url.Action("DeleteContact", new {languageID = item.Contrat_ID})"><i class="glyphicon glyphicon-trash"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("DetailContact", new {languageID = item.Contrat_ID})"><i class="glyphicon glyphicon-edit"></i></a>
+                                                    </td>
+                                                </tr>
+                                                i++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function clearvalue() {
+        $("#Contrat_Name").val("");
+        $("#Contrat_Detail").val("");
+    }
+</script>

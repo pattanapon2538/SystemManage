@@ -34,12 +34,12 @@ namespace SystemManage.Database
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<SIT> SITs { get; set; }
         public virtual DbSet<SITStep> SITSteps { get; set; }
-        public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<SubDefect> SubDefects { get; set; }
         public virtual DbSet<SubTask> SubTasks { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<Type_of_Contract> Type_of_Contract { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ProjectMember> ProjectMembers { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Skill> Skills { get; set; }
     }
 }

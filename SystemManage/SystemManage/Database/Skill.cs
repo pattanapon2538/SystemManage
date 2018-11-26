@@ -14,19 +14,9 @@ namespace SystemManage.Database
     
     public partial class Skill
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Skill()
-        {
-            this.Users = new HashSet<User>();
-        }
-    
         public int SkillsID { get; set; }
-        public Nullable<int> UserID { get; set; }
-        public Nullable<int> languageID { get; set; }
+        public int User_ID { get; set; }
+        public int languageID { get; set; }
         public Nullable<int> level_of_lg { get; set; }
-    
-        public virtual Language_of_Type Language_of_Type { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
     }
 }

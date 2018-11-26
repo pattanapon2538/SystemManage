@@ -33,7 +33,7 @@ namespace SystemManage.Models
         public string AttachFile4 { get; set; }
         public string Permission { get; set; }
         public string comment { get; set; }
-        public int SkillsID { get; set; }
+        public int LanguageID { get; set; }
         public int AVG { get; set; }
         public int Amount_Succ { get; set; }
         public int Amount_Non { get; set; }
