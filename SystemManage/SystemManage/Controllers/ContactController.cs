@@ -15,15 +15,19 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddContact(TypeOfCotractModel cm)
         {
-            // var user = "Plus";//Session["userName"].ToString(); Test
-            Type_of_Contract tc = new Type_of_Contract();
-            tc.Contrat_ID = cm.Contrat_ID;
-            tc.Contrat_Name = cm.Contrat_Name;
-            tc.Contrat_Detail = cm.Contrat_Detail;
-            tc.CreateDate = DateTime.Now;
-            tc.CreateBy = 11;
-            db.Type_of_Contract.Add(tc);
-            db.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                // var user = "Plus";//Session["userName"].ToString(); Test
+                Type_of_Contract tc = new Type_of_Contract();
+                tc.Contrat_ID = cm.Contrat_ID;
+                tc.Contrat_Name = cm.Contrat_Name;
+                tc.Contrat_Detail = cm.Contrat_Detail;
+                tc.CreateDate = DateTime.Now;
+                tc.CreateBy = 11;
+                db.Type_of_Contract.Add(tc);
+                db.SaveChanges();
+                ModelState.Clear();
+            }
             List<TypeOfCotractModel> model = new List<TypeOfCotractModel>();
             var item = db.Type_of_Contract.OrderByDescending(s=>s.Contrat_ID).ToList();
             foreach (var i in item)

@@ -9,7 +9,7 @@ namespace SystemManage.Models
     public class LanguageOfTypeModel
     {
         public int languageID { get; set; }
-        [Required(ErrorMessage = "Error")]
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public string languagesName { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }

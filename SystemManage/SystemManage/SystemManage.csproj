@@ -407,11 +407,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Languages\ShowLanguage.cshtml" />
     <Content Include="Views\Languages\DetailLanguages.cshtml" />
-    <Content Include="Views\Contact\AddContact.cshtml" />
     <Content Include="Views\Contact\DetailContact.cshtml" />
-    <Content Include="Views\Role\AddRole.cshtml" />
-    <Content Include="Views\Role\ShowRole.cshtml" />
-    <Content Include="Views\Position\AddPosition.cshtml" />
     <Content Include="Views\Position\ShowPosition.cshtml" />
     <Content Include="Views\User\AddUser.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />

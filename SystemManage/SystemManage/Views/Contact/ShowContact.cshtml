@@ -21,7 +21,7 @@
                         </div>
                         <label for="language" class="col-sm-6 col-form-label">Detail: </label>
                         <div class="col-sm-6">
-                            @Html.TextBoxFor(m => m.Contrat_Detail, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.TextAreaFor(m => m.Contrat_Detail, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
                             @Html.ValidationMessageFor(m => m.Contrat_Name, string.Empty, new { @style = "color:red" })
                         </div>
                     </div>

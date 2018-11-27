@@ -24,6 +24,7 @@ namespace SystemManage.Controllers
                 model.CreateBy = 11;
                 db.Language_of_Type.Add(model);
                 db.SaveChanges();
+                ModelState.Clear();
             }
             List<LanguageOfTypeModel> languagelist = new List<LanguageOfTypeModel>();
             var result = db.Language_of_Type.OrderByDescending(s => s.languageID).ToList();

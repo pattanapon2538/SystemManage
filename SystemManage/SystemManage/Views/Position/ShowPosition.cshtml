@@ -1,45 +1,139 @@
-﻿@model List<SystemManage.Models.PositionModel>
+﻿@model SystemManage.Models.PositionModel
 @using SystemManage.Models;
-
 @{
-    ViewBag.Title = "ShowPosition";
+    ViewBag.Title = "Showposition";
+    Layout = "~/Views/Shared/AddminLayout.cshtml";
 }
 <div class="container">
-    <table class="tabel table-bordered">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Language</th>
-                <th>CreateDate</th>
-                <th>UpdateDate</th>
-                <th>CreateBy</th>
-                <th>UpdateBy</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                var i = 1;
-                foreach (var item in (List<LanguageOfTypeModel>)ViewBag.DataList)
-                {
-                    <tr>
-                        <td>@i</td>
-                        <td>@item.languagesName</td>
-                        <td>@item.CreateDate</td>
-                        <td>@item.UpdateDate</td>
-                        <td>@item.CreateBy</td>
-                        <td>@item.Updateby</td>
-                        <td>
-                            <a href="@Url.Action("DeleteLanguage", new {languageID = item.languageID})"><i class="glyphicon glyphicon-trash"></i></a>
-                        </td>
-                        <td>
-                            <a href="@Url.Action("DetailLanguage", new {languageID = item.languageID})"><i class="glyphicon glyphicon-edit"></i></a>
-                        </td>
-                    </tr>
-                    i++;
-                }
-            }
-        </tbody>
-    </table>
+    <div class="login-box ptb--100">
+        @using (Ajax.BeginForm("AddPosition", "Position",
+             new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <form>
+                <div class="login-form-body shadow " style="border-style:solid ;border-width: 1px">
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-6 col-form-label">Positon : </label>
+                        <div class="col-sm-6">
+                            @Html.HiddenFor(m => m.Position_ID, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.Name, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-6 col-form-label">Initial : </label>
+                        <div class="col-sm-6">
+                            @Html.TextBoxFor(m => m.Initial, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.Initial, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-6 col-form-label">Detail : </label>
+                        <div class="col-sm-6">
+                            @Html.TextAreaFor(m => m.Detail, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.Detail, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
+                        <button id="form_submit" type="submit">Add</button>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
 </div>
+<div class="row" id="tb-data">
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="data-tables datatable-primary">
+                    <div id="dataTable2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="dataTable2" class="text-center dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="dataTable2_info" style="width: 1131px;">
+                                    <thead class="text-capitalize">
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 140px;" aria-sort="ascending" aria-label="No.: activate to sort column descending">No.</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 275px;">Position</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">Initial</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Detail</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Create Date</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Update Date</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">Edit</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            var i = 1;
+                                            foreach (var item in (List<PositionModel>)ViewBag.DataList)
+                                            {
+                                                <tr>
+                                                    <td>@i</td>
+                                                    <td>@item.Name</td>
+                                                    <td>@item.Initial</td>
+                                                    <td>@item.Detail</td>
+                                                    <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
+                                                    <td>
+                                                        @if (item.UpdateDate != null)
+                                                        {
+                                                            item.UpdateDate.ToString("dd/mm/yyyy");
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        <span style="cursor:pointer" onclick="EditDetail('@item.Position_ID')"><i class="glyphicon fa fa-diamond"></i></span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("DeletePosition", new {Position_ID = item.Position_ID})"><i class="glyphicon fa fa-archive"></i></a>
+                                                    </td>
+                                                </tr>
+                                                i++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function EditDetail(positionID) {
+
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action("DetailPosition", "Position"))",
+            data: { Position_ID: positionID },
+            dataType: "json",
+            success: function (data)
+            {
+                $("#Position_ID").val(data.Position_ID);
+                $("#Name").val(data.Name);
+                $("#Initial").val(data.Initial);
+                $("#Detail").val(data.Detail);
+            }
+        });
+    }
+</script>
+<script>
+    function DeleteData(positionID) {
+        $.ajex({
+            type: "POST"
+            url: "@(Url.Action("DeletePosition", "Position"))",
+            data: { Position_ID: positionID },
+            dataType: "json",
+                success: function (data)
+                {
+                    $("#Position_ID").val(data.Position_ID);
+                    $("#Name").val(data.Name);
+                    $("#Initial").val(data.Initial);
+                    $("#Detail").val(data.Detail);
+
+                }
+        });
+    }
+</script>

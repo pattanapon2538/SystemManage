@@ -74,7 +74,7 @@
           <Key>
             <PropertyRef Name="Position_ID" />
           </Key>
-          <Property Name="Position_ID" Type="int" Nullable="false" />
+          <Property Name="Position_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Initial" Type="nvarchar" MaxLength="50" />
           <Property Name="Detail" Type="nvarchar" MaxLength="50" />

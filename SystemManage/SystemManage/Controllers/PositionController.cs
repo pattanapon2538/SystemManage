@@ -12,32 +12,39 @@ namespace SystemManage.Controllers
     {
         Entities db = new Entities();
         // GET: Role
-        public ActionResult AddPosition()
-        {
-            return View();
-        }
         [HttpPost]
-        public ActionResult AddPosition(PositionModel model)
+        public ActionResult AddPosition(PositionModel pm)
         {
-            Position r = new Position();
-            var users = 1; //[Session].Save
-            r.Position_ID = model.Position_ID;
-            r.Name = model.Name;
-            r.Initial = model.Initial;
-            r.Detail = model.Detail;
-            r.CreateDate = DateTime.Now;
-            r.CreateBy = users;
-            db.Positions.Add(r);
-            db.SaveChanges();
-            return RedirectToAction("ShowPosition");
-        }
-        public ActionResult ShowPosition()
-        {
-            List<PositionModel> model = new List<PositionModel>();
-            var item = db.Positions.ToList();
-            foreach(var i in item)
+                if (pm.Position_ID != 0)
+                {
+                    var result = db.Positions.Where(s => s.Position_ID == pm.Position_ID).FirstOrDefault();
+                    result.Name = pm.Name;
+                    result.Initial = pm.Initial;
+                    result.Detail = pm.Detail;
+                    result.UpdateDate = DateTime.Now;
+                    result.UpdateBy = 11;
+                    db.SaveChanges();
+                    ModelState.Clear();
+                }
+                else
+                {
+                    Position r = new Position();
+                    r.Position_ID = pm.Position_ID;
+                    r.Name = pm.Name;
+                    r.Initial = pm.Initial;
+                    r.Detail = pm.Detail;
+                    r.CreateDate = DateTime.Now;
+                    r.CreateBy = 11;
+                    db.Positions.Add(r);
+                    db.SaveChanges();
+                    ModelState.Clear();
+                }
+
+            List<PositionModel> positionsList = new List<PositionModel>();
+            var item = db.Positions.OrderByDescending(s => s.Position_ID).ToList();
+            foreach (var i in item)
             {
-                model.Add(new PositionModel
+                positionsList.Add(new PositionModel
                 {
                     Position_ID = i.Position_ID,
                     Name = i.Name,
@@ -46,34 +53,47 @@ namespace SystemManage.Controllers
                     CreateDate = i.CreateDate,
                     UpdateDate = i.UpdateDate,
                     CreateBy = i.CreateBy,
-                   // UpdateBy = i.UpdateBy
+                    UpdateBy = i.UpdateBy,
                 });
             }
-            ViewBag.DataLsit = model;
+            ViewBag.DataList = positionsList;
+            return PartialView("ShowPosition");
+        }
+
+        public ActionResult ShowPosition()
+        {
+            List<PositionModel> positionsList = new List<PositionModel>();
+            var item = db.Positions.OrderByDescending(s => s.Position_ID).ToList();
+            foreach (var i in item)
+            {
+                positionsList.Add(new PositionModel
+                {
+                    Position_ID = i.Position_ID,
+                    Name = i.Name,
+                    Initial = i.Initial,
+                    Detail = i.Detail,
+                    CreateDate = i.CreateDate,
+                    UpdateDate = i.UpdateDate,
+                    CreateBy = i.CreateBy,
+                    UpdateBy = i.UpdateBy,
+                });
+            }
+            ViewBag.DataList = positionsList;
             return View();
         }
-        public ActionResult DetailPosition(int Position_ID)
+
+        [HttpPost]
+        public ActionResult DetailPosition(string Position_ID)
         {
             PositionModel Model = new PositionModel();
-            Position r = db.Positions.Where(w => w.Position_ID == Position_ID).FirstOrDefault();
+            Position r = db.Positions.Where(w => w.Position_ID.ToString() == Position_ID).FirstOrDefault();
             Model.Position_ID = r.Position_ID;
             Model.Name = r.Name;
             Model.Initial = r.Initial;
             Model.Detail = r.Detail;
-            return View(Model);
+            return Json(new { Position_ID = r.Position_ID, Name = r.Name , Initial = r.Initial , Detail = r.Detail }, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult EditPosition(int Position_ID)
-        {
-            PositionModel Model = new PositionModel();
-            Position r = db.Positions.Where(w => w.Position_ID == Position_ID).FirstOrDefault();
-            r.Name = Model.Name;
-            r.Initial = Model.Initial;
-            r.Detail = Model.Detail;
-            r.UpdateBy = 11;
-            r.UpdateDate = DateTime.Now;
-            db.SaveChanges();
-            return RedirectToAction("ShowPosition");
-        }
+       
         public ActionResult DeletePosition(int Position_ID)
         {
             PositionModel Model = new PositionModel();
