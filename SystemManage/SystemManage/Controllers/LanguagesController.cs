@@ -14,12 +14,21 @@ namespace SystemManage.Controllers
         Entities db = new Entities();
         // GET: Languages
         [HttpPost]
-        public ActionResult AddLanguage(LanguageOfTypeModel language)
+        public ActionResult AddLanguage(LanguageOfTypeModel lg)
         {
-            if (ModelState.IsValid)
+            if (lg.languageID != 0)
+            {
+                var results = db.Language_of_Type.Where(s => s.languageID == lg.languageID).FirstOrDefault();
+                results.Name = lg.Name;
+                results.UpdateDate = DateTime.Now;
+                results.UpdateBy = 11;
+                db.SaveChanges();
+                ModelState.Clear();
+            }
+            else
             {
                 Language_of_Type model = new Language_of_Type();
-                model.Name = language.languagesName;
+                model.Name = lg.Name;
                 model.CreateDate = DateTime.Now;
                 model.CreateBy = 11;
                 db.Language_of_Type.Add(model);
@@ -33,7 +42,7 @@ namespace SystemManage.Controllers
                 languagelist.Add(new LanguageOfTypeModel
                 {
                     languageID = i.languageID,
-                    languagesName = i.Name,
+                    Name = i.Name,
                     CreateDate = i.CreateDate,
                     UpdateDate = i.UpdateDate,
                     CreateBy = Convert.ToInt16(i.CreateBy),
@@ -52,7 +61,7 @@ namespace SystemManage.Controllers
                 model.Add(new LanguageOfTypeModel
                 {
                     languageID = i.languageID,
-                    languagesName = i.Name,
+                    Name = i.Name,
                     CreateDate = i.CreateDate,
                     UpdateDate = i.UpdateDate,
                     CreateBy = 11,
@@ -61,23 +70,16 @@ namespace SystemManage.Controllers
             ViewBag.DataList = model;
             return View();
         }
+        [HttpPost]
         public ActionResult DetailLanguages(int languageID)
         {
             LanguageOfTypeModel model = new LanguageOfTypeModel();
             Language_of_Type lg = db.Language_of_Type.Where(w => w.languageID == languageID).FirstOrDefault();
             model.languageID = lg.languageID;
-            model.languagesName = lg.Name;
-            return View(model);
+            model.Name = lg.Name;
+            return Json(new { languageID = lg.languageID, Name = lg.Name },JsonRequestBehavior.AllowGet);
         }
-        public ActionResult EditLanguages(LanguageOfTypeModel model)
-        {
-            Language_of_Type lg = db.Language_of_Type.Where(w => w.languageID == model.languageID).FirstOrDefault();
-            lg.Name = model.languagesName;
-            lg.UpdateDate = DateTime.Now;
-            lg.UpdateBy = 11;
-            db.SaveChanges();
-            return RedirectToAction("ShowLanguage");
-        }
+        
         public ActionResult DeleteLanguage(int languageID)
         {
             LanguageOfTypeModel model = new LanguageOfTypeModel();
@@ -88,6 +90,14 @@ namespace SystemManage.Controllers
             return RedirectToAction("ShowLanguage");
 
         }
-        
+        //public ActionResult EditLanguages(LanguageOfTypeModel model) Edit แบบ ไม่ใช้ jquery
+        //{
+        //    Language_of_Type lg = db.Language_of_Type.Where(w => w.languageID == model.languageID).FirstOrDefault();
+        //    lg.Name = model.languagesName;
+        //    lg.UpdateDate = DateTime.Now;
+        //    lg.UpdateBy = 11;
+        //    db.SaveChanges();
+        //    return RedirectToAction("ShowLanguage");
+        //}
     }
 }

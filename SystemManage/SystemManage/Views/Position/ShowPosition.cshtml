@@ -75,9 +75,9 @@
                                                     <td>@item.Detail</td>
                                                     <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
                                                     <td>
-                                                        @if (item.UpdateDate != null)
+                                                        @if (item.UpdateDate >= item.CreateDate)
                                                         {
-                                                            item.UpdateDate.ToString("dd/mm/yyyy");
+                                                            @item.UpdateDate.ToString("dd/mm/yyyy");
                                                         }
                                                     </td>
                                                     <td>
@@ -116,24 +116,6 @@
                 $("#Initial").val(data.Initial);
                 $("#Detail").val(data.Detail);
             }
-        });
-    }
-</script>
-<script>
-    function DeleteData(positionID) {
-        $.ajex({
-            type: "POST"
-            url: "@(Url.Action("DeletePosition", "Position"))",
-            data: { Position_ID: positionID },
-            dataType: "json",
-                success: function (data)
-                {
-                    $("#Position_ID").val(data.Position_ID);
-                    $("#Name").val(data.Name);
-                    $("#Initial").val(data.Initial);
-                    $("#Detail").val(data.Detail);
-
-                }
         });
     }
 </script>

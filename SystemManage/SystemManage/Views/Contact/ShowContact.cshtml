@@ -9,11 +9,13 @@
         @using (Ajax.BeginForm("AddContact", "Contact",
              new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }))
         {
+            @Html.AntiForgeryToken()
             <form>
                 <div class="login-form-body shadow " style="border-style:solid ;border-width: 1px">
                     <div class="form-group row">
                         <label for="language" class="col-sm-6 col-form-label">Contact of Type: </label>
                         <div class="col-sm-6">
+                            @Html.HiddenFor(m => m.Contrat_ID, new { @class = "form-control" })
                             @Html.TextBoxFor(m => m.Contrat_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
                             @Html.ValidationMessageFor(m => m.Contrat_Name, string.Empty, new { @style = "color:red" })
                         </div>
@@ -22,7 +24,7 @@
                         <label for="language" class="col-sm-6 col-form-label">Detail: </label>
                         <div class="col-sm-6">
                             @Html.TextAreaFor(m => m.Contrat_Detail, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
-                            @Html.ValidationMessageFor(m => m.Contrat_Name, string.Empty, new { @style = "color:red" })
+                            @*@Html.ValidationMessageFor(m => m.Contrat_Name, string.Empty, new { @style = "color:red" })*@
                         </div>
                     </div>
                     <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
@@ -62,13 +64,19 @@
                                                     <td>@i</td>
                                                     <td>@item.Contrat_Name</td>
                                                     <td>@item.Contrat_Detail</td>
-                                                    <td>@item.CreateDate</td>
-                                                    <td>@item.UpdateDate</td>
-                                                    <td>
-                                                        <a href="@Url.Action("DeleteContact", new {languageID = item.Contrat_ID})"><i class="glyphicon glyphicon-trash"></i></a>
+                                                    <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
+                                                    <td>@if (item.UpdateDate >= item.CreateDate)
+                                                         {
+
+                                                            @item.UpdateDate.ToString("dd/MM/yyyy");
+
+                                                         }
                                                     </td>
                                                     <td>
-                                                        <a href="@Url.Action("DetailContact", new {languageID = item.Contrat_ID})"><i class="glyphicon glyphicon-edit"></i></a>
+                                                        <span style="cursor:pointer" onclick="EditDetail('@item.Contrat_ID')"><i class="glyphicon fa fa-diamond"></i></span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("DeleteContact", new {Contrat_ID = item.Contrat_ID})"><i class="glyphicon fa fa-archive"></i></a>
                                                     </td>
                                                 </tr>
                                                 i++;
@@ -85,8 +93,19 @@
     </div>
 </div>
 <script>
-    function clearvalue() {
-        $("#Contrat_Name").val("");
-        $("#Contrat_Detail").val("");
+    function EditDetail(ContactID) {
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action("DetailContact", "Contact"))",
+            data: { Contrat_ID: ContactID },
+            dataType: "json",
+            success: function (data)
+            {
+                $("#Contrat_ID").val(data.Contrat_ID);
+                $("#Contrat_Name").val(data.Contrat_Name);
+                $("#Contrat_Detail").val(data.Contrat_Detail);
+            }
+        });
+
     }
 </script>

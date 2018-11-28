@@ -11,7 +11,7 @@ namespace SystemManage.Controllers
     public class PositionController : Controller
     {
         Entities db = new Entities();
-        // GET: Role
+        // GET: Position_ID
         [HttpPost]
         public ActionResult AddPosition(PositionModel pm)
         {

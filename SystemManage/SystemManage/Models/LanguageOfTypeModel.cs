@@ -10,8 +10,8 @@ namespace SystemManage.Models
     {
         public int languageID { get; set; }
         [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
-        public string languagesName { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public string Name { get; set; }
+        public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public int CreateBy { get; set; }
         public int Updateby { get; set; }
