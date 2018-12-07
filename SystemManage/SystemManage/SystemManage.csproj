@@ -155,6 +155,8 @@
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Database\Defect.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
@@ -287,6 +289,7 @@
     <Content Include="assets\images\team\team-author5.jpg" />
     <Content Include="assets\js\bar-chart.js" />
     <Content Include="assets\js\bootstrap.min.js" />
+    <Content Include="assets\js\global.js" />
     <Content Include="assets\js\jquery.slicknav.min.js" />
     <Content Include="assets\js\jquery.slimscroll.min.js" />
     <Content Include="assets\js\line-chart.js" />
@@ -297,8 +300,22 @@
     <Content Include="assets\js\plugins.js" />
     <Content Include="assets\js\popper.min.js" />
     <Content Include="assets\js\scripts.js" />
-    <Content Include="assets\js\vendor\jquery-2.2.4.min.js" />
-    <Content Include="assets\js\vendor\modernizr-2.8.3.min.js" />
+    <Content Include="assets\vendor\datepicker\daterangepicker.css" />
+    <Content Include="assets\vendor\datepicker\daterangepicker.js" />
+    <Content Include="assets\vendor\datepicker\moment.min.js" />
+    <Content Include="assets\vendor\font-awesome-4.7\css\font-awesome.css" />
+    <Content Include="assets\vendor\font-awesome-4.7\css\font-awesome.min.css" />
+    <Content Include="assets\vendor\font-awesome-4.7\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\vendor\font-awesome-4.7\HELP-US-OUT.txt" />
+    <Content Include="assets\vendor\jquery-2.2.4.min.js" />
+    <Content Include="assets\vendor\jquery\jquery.js" />
+    <Content Include="assets\vendor\jquery\jquery.min.js" />
+    <Content Include="assets\vendor\mdi-font\css\material-design-iconic-font.css" />
+    <Content Include="assets\vendor\mdi-font\css\material-design-iconic-font.min.css" />
+    <Content Include="assets\vendor\mdi-font\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="assets\vendor\modernizr-2.8.3.min.js" />
+    <Content Include="assets\vendor\select2\select2.min.css" />
+    <Content Include="assets\vendor\select2\select2.min.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -360,6 +377,15 @@
     <Content Include="assets\fonts\themify.eot" />
     <Content Include="assets\fonts\themify.ttf" />
     <Content Include="assets\fonts\themify.woff" />
+    <Content Include="assets\vendor\font-awesome-4.7\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\vendor\font-awesome-4.7\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assets\vendor\font-awesome-4.7\fonts\FontAwesome.otf" />
+    <Content Include="assets\vendor\mdi-font\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="assets\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="assets\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="assets\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -414,9 +440,14 @@
     <Content Include="Views\User\ShowUser.cshtml" />
     <Content Include="Views\Shared\AddminLayout.cshtml" />
     <Content Include="Views\Contact\ShowContact.cshtml" />
+    <Content Include="Views\Project\AddProject.cshtml" />
+    <Content Include="Views\Project\ShowProject.cshtml" />
+    <Content Include="Views\Project\EditProject.cshtml" />
+    <Content Include="Views\Task\AddTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploade\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

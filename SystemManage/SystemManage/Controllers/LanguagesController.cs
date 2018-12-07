@@ -46,6 +46,7 @@ namespace SystemManage.Controllers
                     CreateDate = i.CreateDate,
                     UpdateDate = i.UpdateDate,
                     CreateBy = Convert.ToInt16(i.CreateBy),
+                    Updateby = Convert.ToInt16(i.UpdateBy),
                 });
             }
             ViewBag.DataList = languagelist;
@@ -55,7 +56,7 @@ namespace SystemManage.Controllers
         public ActionResult ShowLanguage()
         {
             List<LanguageOfTypeModel> model = new List<LanguageOfTypeModel>();
-            var item = db.Language_of_Type.OrderByDescending(s=>s.languageID).ToList();
+            var item = db.Language_of_Type.OrderByDescending(s => s.languageID).ToList();
             foreach (var i in item)
             {
                 model.Add(new LanguageOfTypeModel
@@ -64,7 +65,8 @@ namespace SystemManage.Controllers
                     Name = i.Name,
                     CreateDate = i.CreateDate,
                     UpdateDate = i.UpdateDate,
-                    CreateBy = 11,
+                    CreateBy = Convert.ToInt16(i.CreateBy),
+                    Updateby = Convert.ToInt16(i.UpdateBy),
                 });
             }
             ViewBag.DataList = model;

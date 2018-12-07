@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace SystemManage.Models
         public string User_Email { get; set; }
         [Required(ErrorMessage = "กรุณาใส่ Password ให้ถูกต้อง")]
         public string User_Password { get; set; }
+        [Required(ErrorMessage = "กรุณาใส่ Password ให้ถูกต้อง")]
+        public string User_RePassword { get; set; }
         public string User_Name { get; set; }
         public string User_LastName { get; set; }
         public string Gender { get; set; }
@@ -27,6 +30,7 @@ namespace SystemManage.Models
         public string AttachShow2 { get; set; }
         public string AttachShow3 { get; set; }
         public string AttachShow4 { get; set; }
+        [DisplayName("Upload File")]
         public string AttachFile1 { get; set; }
         public string AttachFile2 { get; set; }
         public string AttachFile3 { get; set; }
@@ -38,19 +42,22 @@ namespace SystemManage.Models
         public int Amount_Succ { get; set; }
         public int Amount_Non { get; set; }
         public int TotalCoding { get; set; }
-        public int Speaking { get; set; }
-        public int Reading { get; set; }
-        public int Writng { get; set; }
-        public int Listening { get; set; }
+        public string Speaking { get; set; }
+        public string Reading { get; set; }
+        public string Writng { get; set; }
+        public string Listening { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
         public int Contract_ID { get; set; }
         public int Position_ID { get; set; }
+        public string Phone { get; set; }
+        public HttpPostedFileBase File1 { get; set; }
         [NotMapped]
         public List<Position> PositionList { get; set; }
         public List<Type_of_Contract> ContractsList { get; set; }
         public List<Language_of_Type> LanguageList { get; set; }
     }
+   
 }

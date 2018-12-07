@@ -87,7 +87,7 @@
           <Key>
             <PropertyRef Name="ProjectID" />
           </Key>
-          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="255" />
           <Property Name="Status" Type="tinyint" />
@@ -224,16 +224,16 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Key>
             <PropertyRef Name="User_ID" />
           </Key>
-          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="User_Password" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="User_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="User_LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
-          <Property Name="BirthDate" Type="date" Nullable="false" />
-          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="User_LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="char" MaxLength="1" />
+          <Property Name="BirthDate" Type="date" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
           <Property Name="ContractFrom" Type="nvarchar" MaxLength="50" />
-          <Property Name="Date_of_Started" Type="date" Nullable="false" />
+          <Property Name="Date_of_Started" Type="date" />
           <Property Name="Date_of_Ended" Type="date" />
           <Property Name="AttachShow1" Type="nvarchar" MaxLength="200" />
           <Property Name="AttachShow2" Type="nvarchar" MaxLength="200" />
@@ -243,7 +243,7 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Property Name="AttachFile2" Type="nvarchar" MaxLength="200" />
           <Property Name="AttachFile3" Type="nvarchar" MaxLength="200" />
           <Property Name="AttachFile4" Type="nvarchar" MaxLength="200" />
-          <Property Name="Permisstion" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Permisstion" Type="nvarchar" MaxLength="3" />
           <Property Name="comment" Type="nvarchar" MaxLength="50" />
           <Property Name="LanguageID" Type="int" Nullable="false" />
           <Property Name="AVG" Type="int" />
@@ -260,6 +260,7 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Property Name="UpdateBy" Type="int" />
           <Property Name="Contract_ID" Type="int" Nullable="false" />
           <Property Name="Position_ID" Type="int" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="13" />
         </EntityType>
         <Association Name="FK_Contact">
           <End Role="Type_of_Contract" Type="Self.Type_of_Contract" Multiplicity="1" />
@@ -908,13 +909,13 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Property Name="User_ID" Type="Int32" Nullable="false" />
           <Property Name="User_Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="User_Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="User_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="User_LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ContractFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Date_of_Started" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Date_of_Started" Type="DateTime" Precision="0" />
           <Property Name="Date_of_Ended" Type="DateTime" Precision="0" />
           <Property Name="AttachShow1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="AttachShow2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -924,7 +925,7 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Permisstion" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Permisstion" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LanguageID" Type="Int32" Nullable="false" />
           <Property Name="AVG" Type="Int32" />
@@ -945,6 +946,7 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <NavigationProperty Name="Position" Relationship="SystemManageModel.FK_Position" FromRole="User" ToRole="Position" />
           <NavigationProperty Name="Type_of_Contract" Relationship="SystemManageModel.FK_Contact" FromRole="User" ToRole="Type_of_Contract" />
           <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_UserID" FromRole="User" ToRole="ProjectMember" />
+          <Property Name="Phone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Languages">
           <End Type="SystemManageModel.Language_of_Type" Role="Language_of_Type" Multiplicity="1" />
@@ -1228,6 +1230,7 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="SystemManageModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Position_ID" ColumnName="Position_ID" />
                 <ScalarProperty Name="Contract_ID" ColumnName="Contract_ID" />
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />

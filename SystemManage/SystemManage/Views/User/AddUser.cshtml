@@ -1,56 +1,242 @@
 ﻿@model SystemManage.Models.UserModel
+@using SystemManage.Models;
 @{
     ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/AddminLayout.cshtml";
 }
-@using (Ajax.BeginForm("AddUser", "User",
-    new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), OnSuccess = "clearvalue" }))
-{
-<div class="container" id="FormRefresh">
-    <div class="form-group">
-        <label>ID</label>
-        @Html.TextBoxFor(m => m.Users_ID, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
-    </div> <div class="form-group">
-        <label>Email</label>
-        @Html.TextBoxFor(m => m.User_Email, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
-    </div>
-    <div class="form-group">
-        <label>Password</label>
-        @Html.TextBoxFor(m => m.User_Password, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
-    </div>
-    <div class="form-group">
-        <label>Name</label>
-        @Html.TextBoxFor(m => m.User_Name, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
-    </div>
-    <div class="form-group">
-        <label>Lastname</label>
-        @Html.TextBoxFor(m => m.User_LastName, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
-    </div>
-    <div class="form-group">
-        <label>Address</label>
-        @Html.TextBoxFor(m => m.Address, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
-    </div>
-    <div class="form-group">
-        <label>Contact</label>
-        @Html.DisplayNameFor(m => m.Contract_ID)
-        @Html.DropDownListFor(m => m.Contract_ID, new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "Select")
-    </div>
-    <div class="form-group">
-        <label>Contact From</label>
-        @Html.TextBoxFor(m => m.ContractFrom, new { @class = "form control", @placeHolder = "กรุณาใส่ข้อมูล" })
-    </div>
-    <div class="form-group">
-        <label>Position</label>
-        @Html.DisplayNameFor(m => m.Position_ID)
-        @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "Select")
-    </div>
-    <div class="form-group">
-        <label>Language</label>
-        @Html.DisplayNameFor(m => m.LanguageID)
-        @Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "Select")
-    </div>
-    <div class="form-group">
-        <button type="submit">Submit</button>
+<div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title">Create Account</h2>
+                @using (Ajax.BeginForm("AddUser", "User",
+                    new AjaxOptions { HttpMethod = FormMethod.Post.ToString()}, new { enctype = "multipart/form-data"}))
+                {
+                    <form>
+                        <div class="row row-space"><!--Row แรก-->
+                            <div class="col-2">
+                                <div>
+                                    <label class="label">Email</label>
+                                    @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.User_Email, string.Empty, new { @style = "color:red" })
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Password</label>
+                                    @Html.TextBoxFor(m => m.User_Password, new { @type = "Password", @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.User_Password, string.Empty, new { @style = "color:red" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Name</label>
+                                    @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
+                                </div>
+                            </div>
+                            <div lass="col-2">
+                                <div class="input-group">
+                                    <label class="label">Retype Password</label>
+                                    @Html.TextBoxFor(m => m.User_RePassword, new { @type = "Password", @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.User_RePassword, string.Empty, new { @style = "color:red" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Lastname</label>
+                                    @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.User_LastName, string.Empty, new { @style = "color:red" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Gender</label>
+                                    <div class="p-t-10">
+                                        <label class="radio-container m-r-45">
+                                            Male
+                                            @Html.RadioButton("Gender", "M")
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">
+                                            Female
+                                            @Html.RadioButton("Gender", "F")
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <div class="input-group">
+                                        <label class="label">Phone</label>
+                                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Birthday</label>
+                                    <div class="input-group-icon">
+                                        @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control" })
+                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label class="label">Address</label>
+                            @Html.TextAreaFor(m => m.Address, new { @class = "form-control" })
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Type of Contract</label>
+                                    @*<div class="rs-select2 js-select-simple select--no-search">*@
+                                    @Html.DisplayNameFor(m => m.Contract_ID)
+                                    @Html.DropDownListFor(m => m.Contract_ID,
+                                   new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "Select")
+                                    @*</div>*@
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <div class="input-group">
+                                        <label class="label">Contract From</label>
+                                        @Html.TextBoxFor(m => m.ContractFrom, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Date of Started Contract</label>
+                                    <div class="input-group-icon">
+                                        @Html.TextBoxFor(m => m.Date_of_Started, new { @class = "form-control" })
+                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Date of Ended Contract</label>
+                                    <div class="input-group-icon">
+                                        @Html.TextBoxFor(m => m.Date_of_Ended, new { @class = "form-control" })
+                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group" onsubmit="return AjexPost(this)">
+                                    <label class="label">Document References</label>
+                                    <input id="file" name="file" type="file">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Position</label>
+                                    @Html.DisplayNameFor(m => m.Position_ID)
+                                    @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "Select")
+                                </div>
+                            </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Skills</label>
+                                    @Html.DisplayNameFor(m => m.LanguageID)
+                                    @Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "Select", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">level</label>
+                                    @Html.DisplayNameFor(m => m.LanguageID)
+                                    @Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "Select", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">English Communication</label>
+                                <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <label class="label">Speaking</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                                <div class="input-group">
+                                        ดีมาก @Html.RadioButtonFor(m => m.Speaking,"3", new { })
+                                        พอใช้ @Html.RadioButtonFor(m => m.Speaking,"2")
+                                        แย่  @Html.RadioButtonFor(m => m.Speaking,"1")
+                                </div>
+                            </div>
+                        <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Reading</label>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    ดีมาก @Html.RadioButtonFor(m => m.Reading, "3", new { })
+                                    พอใช้ @Html.RadioButtonFor(m => m.Reading, "2")
+                                    แย่  @Html.RadioButtonFor(m => m.Reading, "1")
+
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Listening</label>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    ดีมาก @Html.RadioButtonFor(m => m.Listening, "3", new { })
+                                    พอใช้ @Html.RadioButtonFor(m => m.Listening, "2")
+                                    แย่  @Html.RadioButtonFor(m => m.Listening, "1")
+                                </div>
+                            </div>
+                        <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Writing</label>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    ดีมาก @Html.RadioButtonFor(m => m.Writng, "3", new { })
+                                    พอใช้ @Html.RadioButtonFor(m => m.Writng, "2")
+                                    แย่  @Html.RadioButtonFor(m => m.Writng, "1")
+                                </div>
+                            </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                ฝ่ายบริหารจัดการระบบ @Html.RadioButtonFor(m => m.Permission, "A", new { }) <!--A = Admin-->
+                                ฝ่ายบริหารจัดการโครงการ @Html.RadioButtonFor(model => model.Permission, "P")<!--P = Programmer-->
+                                ลูกค้า @Html.RadioButtonFor(model => model.Permission, "C")<!--C = Customer-->
+                            </div>
+                        </div>
+                        <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
+                            <button id="form_submit" type="submit">Add</button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
     </div>
 </div>
-}
-
