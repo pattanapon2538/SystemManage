@@ -1,1 +1,55 @@
-﻿
+﻿@model SystemManage.Models.TaskModel
+@using (Ajax.BeginForm("AddTask", "Task", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
+{
+    <div>
+        @Html.TextBoxFor(m => m.SubTasksName)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.SubTasksDis)
+    </div>
+
+    <div>
+        @Html.TextBoxFor(m => m.SubTasksName)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.SubTasksDis)
+    </div>
+
+    <div>
+        @Html.HiddenFor(m => m.ProjectID)
+        @Html.TextBoxFor(m => m.TaskName)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.TotalPercent)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.Task_level)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.DescriptionTest)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.TestSentDate)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.TestStatus)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.DescriptionQA)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.QASentDate)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.QAStatus)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.AttachFile)
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.AttachShow)
+    </div>
+    <div>
+        <div class="col-sm-3"><button type="submit" class="btn btn-outline-primary btn-block shadow ">Submit</button></div>
+    </div>
+}

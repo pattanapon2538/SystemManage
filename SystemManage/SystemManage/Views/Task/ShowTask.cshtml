@@ -1,0 +1,85 @@
+﻿@model SystemManage.Models.TaskModel
+@using SystemManage.Models;
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowTask</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="~/assets/css/metisMenu.css">
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/assets/css/slicknav.min.css">
+</head>
+<body>
+    <div>
+        <div class="container">
+            <div class="card shadow" style="margin-top: 100px">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h2 class="text-center">My Task</h2>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="table-info">
+                                        <th>No</th>
+                                        <th>Task</th>
+                                        <th>SubTask</th>
+                                        <th>TotalPercent</th>
+                                        <th>Update Date</th>
+                                        <th>Create Date</th>
+                                        <th>Edit</th>
+                                        <th>Delete  </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var i = 1;
+                                        foreach (var item in (List<TaskModel>)ViewBag.DataList)
+                                        {
+                                            <tr>
+                                                <td>@i</td>
+                                                <td>@item.TaskName</td>
+                                                <td>@item.SubTasksName</td>
+                                                <td>@item.TotalPercent</td>
+                                                <td>
+                                                    @if (item.UpdateDate >= item.CreateDate)
+                                                    {
+                                                        @item.UpdateDate.ToString("dd/MM/yyyy");
+                                                    }
+                                                </td>
+                                                <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
+                                                <td>
+                                                    <a href="@Url.Action("DetailTask", new {TaskID = item.TaskID})"><i class="glyphicon fa fa-diamond"></i></a>
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("DeleteTask", new {TaskID = item.TaskID})"><i class="glyphicon fa fa-archive"></i></a>
+                                                </td>
+                                            </tr>
+                                            i++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px">
+                <div class="col-sm-3 ">
+                </div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3"><a href="@Url.Action("AddTask")"><button type="button" class="btn btn-outline-primary btn-block shadow">New Project</button></a></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

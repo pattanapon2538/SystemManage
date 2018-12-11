@@ -23,22 +23,23 @@ namespace SystemManage.Database
         public int TaskID { get; set; }
         public string TaskName { get; set; }
         public double TotalPercent { get; set; }
-        public Nullable<int> Task_level { get; set; }
+        public int Task_level { get; set; }
         public string DescriptionTest { get; set; }
         public int TestID { get; set; }
-        public System.DateTime TestSentDate { get; set; }
-        public byte TestStatus { get; set; }
+        public DateTime TestSentDate { get; set; }
+        public string TestStatus { get; set; }
         public string DescriptionQA { get; set; }
-        public Nullable<int> QAID { get; set; }
-        public System.DateTime QASentDate { get; set; }
+        public int QAID { get; set; }
+        public DateTime QASentDate { get; set; }
         public byte QAStatus { get; set; }
         public string AttachShow { get; set; }
         public string AttachFile { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public Nullable<System.DateTime> UpdateDate { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public int ProjectID { get; set; }
         public int CreateBy { get; set; }
-        public Nullable<int> UpdateBy { get; set; }
+        public int UpdateBy { get; set; }
+        public string DescriptionTask { get; set; }
     
         public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

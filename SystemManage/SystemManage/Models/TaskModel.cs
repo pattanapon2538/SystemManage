@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -7,9 +8,10 @@ namespace SystemManage.Models
 {
     public class TaskModel
     {
-        public string TaskID { get; set; }
+        public int TaskID { get; set; }
         public string TaskName { get; set; }
         public double TotalPercent { get; set; }
+        public int Task_level { get; set; }
         public string DescriptionTest { get; set; }
         public string TestID { get; set; }
         public DateTime TestSentDate { get; set; }
@@ -18,20 +20,21 @@ namespace SystemManage.Models
         public string QAID { get; set; }
         public DateTime QASentDate { get; set; }
         public byte QAStatus { get; set; }
-        public string AttachShow1 { get; set; }
-        public string AttachFile1 { get; set; }
-        public string AttachShow2 { get; set; }
-        public string AttachFile2 { get; set; }
-        public string AttachShow3 { get; set; }
-        public string AttachFile3 { get; set; }
-        public string AttachShow4 { get; set; }
-        public string AttachFile4 { get; set; }
-        public string AttachShow5 { get; set; }
-        public string AttachFile5 { get; set; }
+        public string AttachShow { get; set; }
+        public string AttachFile { get; set; }
         public DateTime CreateDate { get; set; }
-        public Nullable<DateTime> UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string CreateBy { get; set; }
         public string UpdateBy { get; set; }
         public string ProjectID { get; set; }
+        public List<string> SubTasksName { get; set; }
+        public List<string> SubTasksDis { get; set; }
+        public List<int> SubTaskDevID { get; set; }
+        public List<DateTime> SubTaskSendDate { get; set; }
+        public List<DateTime> SubTaskCreateDate { get; set; }
+        public List<DateTime> SubTaskUpdate { get; set; }
+        public int SubDevID { get; set; }
+        public string SubTasksDes { get; set; }
+        public string SubTaskNames { get; set; }
     }
 }

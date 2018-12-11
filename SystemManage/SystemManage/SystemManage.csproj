@@ -242,6 +242,7 @@
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\default-css.css" />
     <Content Include="assets\css\font-awesome.min.css" />
+    <Content Include="assets\css\main.css" />
     <Content Include="assets\css\metisMenu.css" />
     <Content Include="assets\css\owl.carousel.min.css" />
     <Content Include="assets\css\responsive.css" />
@@ -444,6 +445,9 @@
     <Content Include="Views\Project\ShowProject.cshtml" />
     <Content Include="Views\Project\EditProject.cshtml" />
     <Content Include="Views\Task\AddTask.cshtml" />
+    <Content Include="Views\Task\ShowTask.cshtml" />
+    <Content Include="Views\Task\DetailTask.cshtml" />
+    <Content Include="Views\Position\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

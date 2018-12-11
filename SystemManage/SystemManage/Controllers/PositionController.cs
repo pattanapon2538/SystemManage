@@ -103,5 +103,6 @@ namespace SystemManage.Controllers
             return RedirectToAction("ShowPosition");
 
         }
+        
     }
 }

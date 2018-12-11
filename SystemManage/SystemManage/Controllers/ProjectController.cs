@@ -77,11 +77,17 @@ namespace SystemManage.Controllers
         }
         public ActionResult DeleteProject(int ProjectID)
         {
-            ProjectModel p = new ProjectModel();
             Project d = db.Projects.Where(m => m.ProjectID == ProjectID).FirstOrDefault();
             db.Projects.Remove(d);
             db.SaveChanges();
             return RedirectToAction("ShowProject");
+        }
+        public ActionResult GetData(String ProjectID)
+        {
+            ProjectModel Model = new ProjectModel();
+            Project p = db.Projects.Where(m => m.ProjectID.ToString() == ProjectID).FirstOrDefault();
+            Model.ProjectID = p.ProjectID;
+            return RedirectToAction("ShowTask","Task", new { ProjectID = Model.ProjectID });
         }
     }
 }

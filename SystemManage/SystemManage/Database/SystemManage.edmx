@@ -171,7 +171,7 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Key>
             <PropertyRef Name="SubID" />
           </Key>
-          <Property Name="SubID" Type="int" Nullable="false" />
+          <Property Name="SubID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SubName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SubStatus" Type="int" Nullable="false" />
           <Property Name="SubPercent" Type="float" Nullable="false" />
@@ -188,14 +188,14 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Key>
             <PropertyRef Name="TaskID" />
           </Key>
-          <Property Name="TaskID" Type="int" Nullable="false" />
+          <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TaskName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TotalPercent" Type="float" Nullable="false" />
           <Property Name="Task_level" Type="int" />
           <Property Name="DescriptionTest" Type="nvarchar" MaxLength="255" />
           <Property Name="TestID" Type="int" Nullable="false" />
           <Property Name="TestSentDate" Type="date" Nullable="false" />
-          <Property Name="TestStatus" Type="tinyint" Nullable="false" />
+          <Property Name="TestStatus" Type="char" MaxLength="5" />
           <Property Name="DescriptionQA" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="QAID" Type="int" />
           <Property Name="QASentDate" Type="date" Nullable="false" />
@@ -207,6 +207,7 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Property Name="ProjectID" Type="int" Nullable="false" />
           <Property Name="CreateBy" Type="int" Nullable="false" />
           <Property Name="UpdateBy" Type="int" />
+          <Property Name="DescriptionTask" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Type_of_Contract">
           <Key>
@@ -510,7 +511,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <EntitySet Name="SITSteps" EntityType="SystemManageModel.SITStep" />
           <EntitySet Name="SubDefects" EntityType="SystemManageModel.SubDefect" />
           <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
-          <EntitySet Name="Tasks" EntityType="SystemManageModel.Task" />
           <EntitySet Name="Type_of_Contract" EntityType="SystemManageModel.Type_of_Contract" />
           <EntitySet Name="ProjectMembers" EntityType="SystemManageModel.ProjectMember" />
           <AssociationSet Name="FK_Defect" Association="SystemManageModel.FK_Defect">
@@ -533,10 +533,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
             <End Role="Project" EntitySet="Projects" />
             <End Role="SIT" EntitySet="SITs" />
           </AssociationSet>
-          <AssociationSet Name="FK_Task" Association="SystemManageModel.FK_Task">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="Task" EntitySet="Tasks" />
-          </AssociationSet>
           <AssociationSet Name="FK_Step" Association="SystemManageModel.FK_Step">
             <End Role="SIT" EntitySet="SITs" />
             <End Role="SITStep" EntitySet="SITSteps" />
@@ -544,10 +540,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <AssociationSet Name="FK_Sub" Association="SystemManageModel.FK_Sub">
             <End Role="SubTask" EntitySet="SubTasks" />
             <End Role="SITStep" EntitySet="SITSteps" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
-            <End Role="Task" EntitySet="Tasks" />
-            <End Role="SubTask" EntitySet="SubTasks" />
           </AssociationSet>
           <EntitySet Name="Users" EntityType="SystemManageModel.User" />
           <AssociationSet Name="FK_Languages" Association="SystemManageModel.FK_Languages">
@@ -567,6 +559,15 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
             <End Role="ProjectMember" EntitySet="ProjectMembers" />
           </AssociationSet>
           <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
+          <EntitySet Name="Tasks" EntityType="SystemManageModel.Task" />
+          <AssociationSet Name="FK_Task" Association="SystemManageModel.FK_Task">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="SubTask" EntitySet="SubTasks" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Defect">
           <Key>
@@ -743,32 +744,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <NavigationProperty Name="SITSteps" Relationship="SystemManageModel.FK_Sub" FromRole="SubTask" ToRole="SITStep" />
           <NavigationProperty Name="Task" Relationship="SystemManageModel.FK_SubTask" FromRole="SubTask" ToRole="Task" />
         </EntityType>
-        <EntityType Name="Task">
-          <Key>
-            <PropertyRef Name="TaskID" />
-          </Key>
-          <Property Name="TaskID" Type="Int32" Nullable="false" />
-          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TotalPercent" Type="Double" Nullable="false" />
-          <Property Name="Task_level" Type="Int32" />
-          <Property Name="DescriptionTest" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="TestID" Type="Int32" Nullable="false" />
-          <Property Name="TestSentDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="TestStatus" Type="Byte" Nullable="false" />
-          <Property Name="DescriptionQA" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="QAID" Type="Int32" />
-          <Property Name="QASentDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="QAStatus" Type="Byte" Nullable="false" />
-          <Property Name="AttachShow" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
-          <Property Name="ProjectID" Type="Int32" Nullable="false" />
-          <Property Name="CreateBy" Type="Int32" Nullable="false" />
-          <Property Name="UpdateBy" Type="Int32" />
-          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Task" FromRole="Task" ToRole="Project" />
-          <NavigationProperty Name="SubTasks" Relationship="SystemManageModel.FK_SubTask" FromRole="Task" ToRole="SubTask" />
-        </EntityType>
         <EntityType Name="Type_of_Contract">
           <Key>
             <PropertyRef Name="Contrat_ID" />
@@ -854,18 +829,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Task">
-          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
-          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectID" />
-            </Principal>
-            <Dependent Role="Task">
-              <PropertyRef Name="ProjectID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Step">
           <End Type="SystemManageModel.SIT" Role="SIT" Multiplicity="1" />
           <End Type="SystemManageModel.SITStep" Role="SITStep" Multiplicity="*" />
@@ -887,18 +850,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
             </Principal>
             <Dependent Role="SITStep">
               <PropertyRef Name="Sub_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubTask">
-          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="1" />
-          <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Task">
-              <PropertyRef Name="TaskID" />
-            </Principal>
-            <Dependent Role="SubTask">
-              <PropertyRef Name="TaskID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1005,6 +956,57 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Property Name="languageID" Type="Int32" Nullable="false" />
           <Property Name="level_of_lg" Type="Int32" />
         </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPercent" Type="Double" Nullable="false" />
+          <Property Name="Task_level" Type="Int32" />
+          <Property Name="DescriptionTest" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
+          <Property Name="TestSentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TestStatus" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="DescriptionQA" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="QAID" Type="Int32" />
+          <Property Name="QASentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="QAStatus" Type="Byte" Nullable="false" />
+          <Property Name="AttachShow" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="CreateBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="DescriptionTask" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Task" FromRole="Task" ToRole="Project" />
+          <NavigationProperty Name="SubTasks" Relationship="SystemManageModel.FK_SubTask" FromRole="Task" ToRole="SubTask" />
+        </EntityType>
+        <Association Name="FK_Task">
+          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubTask">
+          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="TaskID" />
+            </Principal>
+            <Dependent Role="SubTask">
+              <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1180,31 +1182,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tasks">
-            <EntityTypeMapping TypeName="SystemManageModel.Task">
-              <MappingFragment StoreEntitySet="Task">
-                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
-                <ScalarProperty Name="AttachShow" ColumnName="AttachShow" />
-                <ScalarProperty Name="QAStatus" ColumnName="QAStatus" />
-                <ScalarProperty Name="QASentDate" ColumnName="QASentDate" />
-                <ScalarProperty Name="QAID" ColumnName="QAID" />
-                <ScalarProperty Name="DescriptionQA" ColumnName="DescriptionQA" />
-                <ScalarProperty Name="TestStatus" ColumnName="TestStatus" />
-                <ScalarProperty Name="TestSentDate" ColumnName="TestSentDate" />
-                <ScalarProperty Name="TestID" ColumnName="TestID" />
-                <ScalarProperty Name="DescriptionTest" ColumnName="DescriptionTest" />
-                <ScalarProperty Name="Task_level" ColumnName="Task_level" />
-                <ScalarProperty Name="TotalPercent" ColumnName="TotalPercent" />
-                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
-                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Type_of_Contract">
             <EntityTypeMapping TypeName="SystemManageModel.Type_of_Contract">
               <MappingFragment StoreEntitySet="Type_of_Contract">
@@ -1277,6 +1254,32 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
                 <ScalarProperty Name="languageID" ColumnName="languageID" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="SystemManageModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="DescriptionTask" ColumnName="DescriptionTask" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
+                <ScalarProperty Name="AttachShow" ColumnName="AttachShow" />
+                <ScalarProperty Name="QAStatus" ColumnName="QAStatus" />
+                <ScalarProperty Name="QASentDate" ColumnName="QASentDate" />
+                <ScalarProperty Name="QAID" ColumnName="QAID" />
+                <ScalarProperty Name="DescriptionQA" ColumnName="DescriptionQA" />
+                <ScalarProperty Name="TestStatus" ColumnName="TestStatus" />
+                <ScalarProperty Name="TestSentDate" ColumnName="TestSentDate" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="DescriptionTest" ColumnName="DescriptionTest" />
+                <ScalarProperty Name="Task_level" ColumnName="Task_level" />
+                <ScalarProperty Name="TotalPercent" ColumnName="TotalPercent" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

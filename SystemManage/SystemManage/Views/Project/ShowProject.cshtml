@@ -45,7 +45,7 @@
                                     foreach (var item in (List<ProjectModel>)ViewBag.DataList)
                                     {
                                         <tr>
-                                            <td><a href="@Url.Action("AddTask","Task", new {ProjectID = item.ProjectID})"><i class="glyphicon fa fa-archive"></i></a></td>
+                                            <td><a href="@Url.Action("Getdata" ,new {ProjectID = item.ProjectID})"><i class="glyphicon fa fa-archive"></i></a></td>
                                             <td>@i</td>
                                             <td>@item.ProjectName</td>
                                             <td>@item.ProjectStatus</td>
