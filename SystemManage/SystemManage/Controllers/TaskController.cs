@@ -77,9 +77,11 @@ namespace SystemManage.Controllers
             ProjectModel Model = new ProjectModel();
             Project p = db.Projects.Where(m => m.ProjectID.ToString() == ProjectID).FirstOrDefault();
             Session["ProjectID"] = p.ProjectID; //ปิดเพื่อ Test 
-
+            //Session["Member"] = p.ProjectID;
+            List<SubTaskModel> SubTaskList = new List<SubTaskModel>();
             List<TaskModel> TaskList = new List<TaskModel>();
-            var item = db.Tasks.Where(m => m.ProjectID.ToString() == ProjectID).OrderByDescending(t => t.TaskID).ToList();
+            var item = db.Tasks.Where(m => m.ProjectID.ToString() == ProjectID).ToList();
+            string Taskname = null;
             foreach (var i in item)
             {
                 TaskList.Add(new TaskModel
@@ -90,7 +92,27 @@ namespace SystemManage.Controllers
                     CreateDate = i.CreateDate,
                     UpdateDate = i.UpdateDate,
                 });
+                    Taskname = i.TaskName;
+                var item2 = db.SubTasks.Where(m => m.TaskID == i.TaskID).OrderByDescending(t => t.TaskID).ToList();
+                foreach(var s in item2)
+                {
+                    SubTaskList.Add(new SubTaskModel
+                    {
+                        TaskID = s.TaskID,
+                        TaskName = Taskname,
+                        SubID = s.SubID,
+                        SubName = s.SubName,
+                        SubStatus = s.SubStatus,
+                        SubPercent = s.SubPercent,
+                        SubDescriptionDev = s.SubDescriptionDev,
+                        SubDevID = s.SubDevID.ToString(),
+                        SubDevSend = s.SubDevSend,
+                        CreateDate = s.CreateDate,
+                        UpdateDate = s.UpdateDate,
+                    });
+                }
             }
+            ViewBag.DataList2 = SubTaskList;
             ViewBag.DataList = TaskList;
             return View();
         }
@@ -133,6 +155,5 @@ namespace SystemManage.Controllers
             db.SaveChanges();
             return RedirectToAction("ShowTask");
         }
-       
     }
 }

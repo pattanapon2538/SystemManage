@@ -19,5 +19,7 @@ namespace SystemManage.Models
         public string CreateBy { get; set; }
         public string UpdateBy { get; set; }
         public int TaskID { get; set; }
+        public string TaskName { get; set; }
+        public int Handle { get; set; }
     }
 }

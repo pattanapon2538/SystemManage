@@ -98,17 +98,14 @@
           <Property Name="CreateBy" Type="int" Nullable="false" />
           <Property Name="UpdateBy" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ProjectMember">
           <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="ProjectID" />
-            <PropertyRef Name="Role" />
+            <PropertyRef Name="MemberID" />
           </Key>
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="ProjectID" Type="int" Nullable="false" />
           <Property Name="Role" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="SIT">
           <Key>
@@ -427,6 +424,7 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectMember" EntityType="Self.ProjectMember" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SIT" EntityType="Self.SIT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SITStep" EntityType="Self.SITStep" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
@@ -435,13 +433,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Type_of_Contract" EntityType="Self.Type_of_Contract" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProjectMember" EntityType="Self.ProjectMember" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ProjectMember].[UserID] AS [UserID], 
-    [ProjectMember].[ProjectID] AS [ProjectID], 
-    [ProjectMember].[Role] AS [Role]
-    FROM [dbo].[ProjectMember] AS [ProjectMember]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Contact" Association="Self.FK_Contact">
             <End Role="Type_of_Contract" EntitySet="Type_of_Contract" />
             <End Role="Users" EntitySet="Users" />
@@ -512,7 +503,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <EntitySet Name="SubDefects" EntityType="SystemManageModel.SubDefect" />
           <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
           <EntitySet Name="Type_of_Contract" EntityType="SystemManageModel.Type_of_Contract" />
-          <EntitySet Name="ProjectMembers" EntityType="SystemManageModel.ProjectMember" />
           <AssociationSet Name="FK_Defect" Association="SystemManageModel.FK_Defect">
             <End Role="SubTask" EntitySet="SubTasks" />
             <End Role="Defect" EntitySet="Defects" />
@@ -524,10 +514,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <AssociationSet Name="FK_Mail" Association="SystemManageModel.FK_Mail">
             <End Role="Mail" EntitySet="Mails" />
             <End Role="Message" EntitySet="Messages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Project" Association="SystemManageModel.FK_Project">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="ProjectMember" EntitySet="ProjectMembers" />
           </AssociationSet>
           <AssociationSet Name="FK_SIT" Association="SystemManageModel.FK_SIT">
             <End Role="Project" EntitySet="Projects" />
@@ -554,10 +540,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
             <End Role="Type_of_Contract" EntitySet="Type_of_Contract" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserID" Association="SystemManageModel.FK_UserID">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ProjectMember" EntitySet="ProjectMembers" />
-          </AssociationSet>
           <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
           <EntitySet Name="Tasks" EntityType="SystemManageModel.Task" />
           <AssociationSet Name="FK_Task" Association="SystemManageModel.FK_Task">
@@ -567,6 +549,15 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
             <End Role="Task" EntitySet="Tasks" />
             <End Role="SubTask" EntitySet="SubTasks" />
+          </AssociationSet>
+          <EntitySet Name="ProjectMembers" EntityType="SystemManageModel.ProjectMember" />
+          <AssociationSet Name="FK_Project" Association="SystemManageModel.FK_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectMember" EntitySet="ProjectMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserID" Association="SystemManageModel.FK_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ProjectMember" EntitySet="ProjectMembers" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Defect">
@@ -667,9 +658,9 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Property Name="UpdateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateBy" Type="Int32" Nullable="false" />
           <Property Name="UpdateBy" Type="Int32" />
-          <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_Project" FromRole="Project" ToRole="ProjectMember" />
           <NavigationProperty Name="SITs" Relationship="SystemManageModel.FK_SIT" FromRole="Project" ToRole="SIT" />
           <NavigationProperty Name="Tasks" Relationship="SystemManageModel.FK_Task" FromRole="Project" ToRole="Task" />
+          <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_Project" FromRole="Project" ToRole="ProjectMember" />
         </EntityType>
         <EntityType Name="SIT">
           <Key>
@@ -757,18 +748,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <Property Name="UpdateBy" Type="Int32" />
           <NavigationProperty Name="Users" Relationship="SystemManageModel.FK_Contact" FromRole="Type_of_Contract" ToRole="User" />
         </EntityType>
-        <EntityType Name="ProjectMember">
-          <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="ProjectID" />
-            <PropertyRef Name="Role" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="ProjectID" Type="Int32" Nullable="false" />
-          <Property Name="Role" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Project" FromRole="ProjectMember" ToRole="Project" />
-          <NavigationProperty Name="User" Relationship="SystemManageModel.FK_UserID" FromRole="ProjectMember" ToRole="User" />
-        </EntityType>
         <Association Name="FK_Defect">
           <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="1" />
           <End Type="SystemManageModel.Defect" Role="Defect" Multiplicity="*" />
@@ -802,18 +781,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
             </Principal>
             <Dependent Role="Message">
               <PropertyRef Name="Mail_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Project">
-          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
-          <End Type="SystemManageModel.ProjectMember" Role="ProjectMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectID" />
-            </Principal>
-            <Dependent Role="ProjectMember">
-              <PropertyRef Name="ProjectID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -896,8 +863,8 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
           <NavigationProperty Name="Language_of_Type" Relationship="SystemManageModel.FK_Languages" FromRole="User" ToRole="Language_of_Type" />
           <NavigationProperty Name="Position" Relationship="SystemManageModel.FK_Position" FromRole="User" ToRole="Position" />
           <NavigationProperty Name="Type_of_Contract" Relationship="SystemManageModel.FK_Contact" FromRole="User" ToRole="Type_of_Contract" />
-          <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_UserID" FromRole="User" ToRole="ProjectMember" />
           <Property Name="Phone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_UserID" FromRole="User" ToRole="ProjectMember" />
         </EntityType>
         <Association Name="FK_Languages">
           <End Type="SystemManageModel.Language_of_Type" Role="Language_of_Type" Multiplicity="1" />
@@ -932,18 +899,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="Contract_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserID">
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
-          <End Type="SystemManageModel.ProjectMember" Role="ProjectMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="ProjectMember">
-              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1004,6 +959,41 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
             </Principal>
             <Dependent Role="SubTask">
               <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProjectMember">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Project" FromRole="ProjectMember" ToRole="Project" />
+          <NavigationProperty Name="User" Relationship="SystemManageModel.FK_UserID" FromRole="ProjectMember" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Project">
+          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="SystemManageModel.ProjectMember" Role="ProjectMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="ProjectMember">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserID">
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
+          <End Type="SystemManageModel.ProjectMember" Role="ProjectMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="ProjectMember">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1195,15 +1185,6 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProjectMembers">
-            <EntityTypeMapping TypeName="SystemManageModel.ProjectMember">
-              <MappingFragment StoreEntitySet="ProjectMember">
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="SystemManageModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -1280,6 +1261,16 @@ warning 6002: The table/view 'SystemManage.dbo.ProjectMember' does not have a pr
                 <ScalarProperty Name="TotalPercent" ColumnName="TotalPercent" />
                 <ScalarProperty Name="TaskName" ColumnName="TaskName" />
                 <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectMembers">
+            <EntityTypeMapping TypeName="SystemManageModel.ProjectMember">
+              <MappingFragment StoreEntitySet="ProjectMember">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

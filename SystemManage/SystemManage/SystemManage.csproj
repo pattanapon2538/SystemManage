@@ -154,6 +154,7 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Models\DocumentModel.cs" />
     <Compile Include="Models\InboxModel.cs" />
     <Compile Include="Models\LanguageOfTypeModel.cs" />
+    <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\PositionModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\SkillModel.cs" />
@@ -270,6 +272,11 @@
     <Content Include="assets\images\card\card-img7.jpg" />
     <Content Include="assets\images\card\card-img8.jpg" />
     <Content Include="assets\images\card\card-img9.jpg" />
+    <Content Include="assets\images\icon\conversation.png" />
+    <Content Include="assets\images\icon\document.png" />
+    <Content Include="assets\images\icon\email.png" />
+    <Content Include="assets\images\icon\event.png" />
+    <Content Include="assets\images\icon\group.png" />
     <Content Include="assets\images\icon\loader.gif" />
     <Content Include="assets\images\icon\logo.png" />
     <Content Include="assets\images\icon\logo2.png" />
@@ -281,6 +288,10 @@
     <Content Include="assets\images\icon\market-value\trends-up-icon.png" />
     <Content Include="assets\images\icon\market-value\triangle-down.png" />
     <Content Include="assets\images\icon\market-value\triangle-up.png" />
+    <Content Include="assets\images\icon\project.png" />
+    <Content Include="assets\images\icon\report.png" />
+    <Content Include="assets\images\icon\report.svg" />
+    <Content Include="assets\images\icon\team.svg" />
     <Content Include="assets\images\media\media1.jpg" />
     <Content Include="assets\images\media\media2.jpg" />
     <Content Include="assets\images\team\team-author1.jpg" />
@@ -445,13 +456,15 @@
     <Content Include="Views\Project\ShowProject.cshtml" />
     <Content Include="Views\Project\EditProject.cshtml" />
     <Content Include="Views\Task\AddTask.cshtml" />
-    <Content Include="Views\Task\ShowTask.cshtml" />
     <Content Include="Views\Task\DetailTask.cshtml" />
     <Content Include="Views\Position\index.cshtml" />
+    <Content Include="Views\Shared\_MainMenu.cshtml" />
+    <Content Include="Views\Task\ShowTask.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploade\" />
+    <Folder Include="Views\Member\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
