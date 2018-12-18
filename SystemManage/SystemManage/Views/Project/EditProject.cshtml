@@ -25,7 +25,7 @@
                         <h2 class="text-center">New Project</h2>
                         <div class="form-group">
                             <label for="usr">Project Name :</label>
-                            @Html.HiddenFor(m => m.ProjectID, new { @class = "form-control" })
+                            @Html.HiddenFor(m => m.ProjectID)
                             @Html.EditorFor(m => m.ProjectName, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.ProjectName, string.Empty, new { @style = "color:red" })
                         </div>

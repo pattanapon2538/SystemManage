@@ -1,55 +1,218 @@
-﻿@model SystemManage.Models.TaskModel
-@using (Ajax.BeginForm("AddTask", "Task", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
-{
-    <div>
-        @Html.TextBoxFor(m => m.SubTasksName)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.SubTasksDis)
-    </div>
+﻿<!doctype html>
+<html lang="en">
+@model SystemManage.Models.TaskModel
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <div>
-        @Html.TextBoxFor(m => m.SubTasksName)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.SubTasksDis)
-    </div>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- datepicker script-->
+    @*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+    <script>
 
-    <div>
-        @Html.HiddenFor(m => m.ProjectID)
-        @Html.TextBoxFor(m => m.TaskName)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.TotalPercent)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.Task_level)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.DescriptionTest)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.TestSentDate)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.TestStatus)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.DescriptionQA)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.QASentDate)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.QAStatus)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.AttachFile)
-    </div>
-    <div>
-        @Html.TextBoxFor(m => m.AttachShow)
-    </div>
-    <div>
-        <div class="col-sm-3"><button type="submit" class="btn btn-outline-primary btn-block shadow ">Submit</button></div>
-    </div>
-}
+        //***scritpt datepicker***//
+        $(function () {
+            $("#datepicker1").datepicker();
+            $("#datepicker2").datepicker();
+            $("#datepicker3").datepicker();
+            $("#datepicker4").datepicker();
+            $("#datepicker5").datepicker();
+            $("#datepicker6").datepicker();
+            $("#datepicker7").datepicker();
+            $("#datepicker8").datepicker();
+            $("#datepicker9").datepicker();
+            $("#datepicker10").datepicker();
+        });
+        //***//
+
+        //***script addsubtask***//
+        $(document).ready(function () {
+            var i = 1;
+            var r = 3;
+            $("#add").click(function () {
+                i++;
+                r++;
+                var domElement = $('<div class="card" id="subtask' + i + '"><div class="card-body shadow"><div class="row"><div class="col-sm-6"><div class="form-group"><label for="taskname">Sub Task Name :</label>@Html.TextBoxFor(m => m.SubTasksName, new {@class = "form-control" })</div></div><div class="col-sm-1"></div><div class="col-sm-4"><div class="input-group"><label class="label" for="step" style="margin-right: 10px">Step :</label><div class="rs-select2 js-select-simple select--no-search " style="width: 100px"><select name="step"><option>1</option><option>2</option><option>3</option></select><div class="select-dropdown"></div></div><label class="label" for="level" style="margin-right: 10px">Level :</label><div class="rs-select2 js-select-simple select--no-search " style="width: 100px"><select name="level"><option>1</option><option>2</option><option>3</option></select><div class="select-dropdown"></div></div></div></div><div class="col-sm-1"><a href="#" id="cancel"><img src = "/icon/canel.png" ></a></div></div><div class="row"><div class="col-sm-12"><div class="form-group"><label for="comment">Description for Developer :</label>@Html.TextBoxFor(m => m.SubTasksDis)</div></div></div><div class="row"><div class="col-sm-8"> <div class="input-group"><label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>@Html.TextBoxFor(m => m.SubTaskDevID,new {@class ="form-control"})</div><div class="form-group" style="margin-top: 20px"><input type="file" class="form-control-file" id="exampleFormControlFile1"></div></div><div class="col-sm-4"><div class="input-group"><label class="label" style="margin-right: 10px">Send Date :</label>@Html.TextBoxFor(m => m.SubTaskSendDate, new {@id = "datepicker' + r + '" })</div></div></div></div></div>');
+                $(this).parent('div').before(domElement);
+            });
+        });
+        //***//
+
+        //***script deletesubtask***//
+        $(document).on('click', '#cancel', function () {
+            var c = confirm("ยืนยันการลบที่จะลบ SubTask นี้");
+            if (c == true) {
+                $(this).parent('div').parent('div').parent('div').parent('div').remove();
+            }
+
+        });
+        //***//
+
+        //***script confrimrefresh***//
+        window.onbeforeunload = function () {
+            return "ข้อมูลไม่ได้บันทึก";
+        };
+                //***//
+
+    </script>
+    <!-- end datepicker script -->
+
+    <title>Task</title>
+</head>
+<body>
+    @using (Ajax.BeginForm("AddTask", "Task", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
+    {
+        <div class="container">
+            <div class="card shadow" style="margin-top: 50px;margin-bottom: 50px">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="taskname">Task Name :</label>
+                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-controll" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="comment">Description for Task :</label>
+                                @Html.TextAreaFor(m => m.DescriptionTask, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body shadow">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="taskname">Sub Task Name :</label>
+                                        @Html.TextBoxFor(m => m.SubTasksName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <label class="label" for="step" style="margin-right: 10px">Step :</label>
+                                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                                            <select name="step">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </select>
+                                            <div class="select-dropdown"></div>
+                                        </div>
+                                        <label class="label" for="level" style="margin-right: 10px">Level :</label>
+                                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                                            <select name="level">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </select>
+                                            <div class="select-dropdown"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="comment">Description for Developer :</label>
+                                        @Html.TextAreaFor(m => m.SubTasksDis, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>
+                                        @Html.TextBoxFor(m => m.SubTaskDevID, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group" style="margin-top: 20px">
+                                        <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <label class="label" style="margin-right: 10px">Send Date :</label>
+                                        @Html.TextBoxFor(m => m.SubTaskSendDate, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;margin-top: 20px">
+                        <a href="#div" id="add"><cneter><img src="~/icon/plus.png" width="42" height="42"></a>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="comment">Description for Tester :</label>
+                                @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
+                                @Html.TextBoxFor(m => m.TestID, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 10px">Send Date :</label>
+                                @Html.TextBoxFor(m => m.TestSentDate, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="comment">Description for Quality Assurance :</label>
+                                @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 10px">ผู้ตรวจงาน :</label>
+                                @Html.TextBoxFor(m => m.QAID, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 10px">Send Date :</label>
+                                @Html.TextBoxFor(m => m.QASentDate, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-outline-danger">Back</button>
+                            <button type="submit" class="btn btn-outline-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>

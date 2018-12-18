@@ -92,8 +92,9 @@ namespace SystemManage.Controllers
         {
             ProjectModel Model = new ProjectModel();
             Project p = db.Projects.Where(m => m.ProjectID.ToString() == ProjectID).FirstOrDefault();
-            Model.ProjectID = p.ProjectID;
-            return RedirectToAction("ShowTask","Task", new { ProjectID = Model.ProjectID });
+            Session["ProjectID"] = p.ProjectID;
+            Session["ProjectName"] = p.Name;
+            return RedirectToAction("ShowTask", "Task");
         }
     }
 }

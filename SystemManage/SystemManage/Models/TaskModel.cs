@@ -10,14 +10,15 @@ namespace SystemManage.Models
     {
         public int TaskID { get; set; }
         public string TaskName { get; set; }
+        public string DescriptionTask { get; set; }
         public double TotalPercent { get; set; }
         public int Task_level { get; set; }
         public string DescriptionTest { get; set; }
-        public string TestID { get; set; }
+        public int TestID { get; set; }
         public DateTime TestSentDate { get; set; }
         public byte TestStatus { get; set; }
         public string DescriptionQA { get; set; }
-        public string QAID { get; set; }
+        public int QAID { get; set; }
         public DateTime QASentDate { get; set; }
         public byte QAStatus { get; set; }
         public string AttachShow { get; set; }
@@ -34,7 +35,9 @@ namespace SystemManage.Models
         public List<DateTime> SubTaskCreateDate { get; set; }
         public List<DateTime> SubTaskUpdate { get; set; }
         public int SubDevID { get; set; }
+        public DateTime SubTaskDateSend { get; set; }
         public string SubTasksDes { get; set; }
         public string SubTaskNames { get; set; }
+        public int SubTaskID { get; set; }
     }
 }

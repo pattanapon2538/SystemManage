@@ -14,7 +14,6 @@ namespace SystemManage.Controllers
         // GET: Task
         public ActionResult AddTask()
         {
-
             return View();
         }
         [HttpPost]
@@ -24,6 +23,7 @@ namespace SystemManage.Controllers
             SubTask st = new SubTask();
             t.ProjectID = Convert.ToInt32(Session["ProjectID"]);
             t.TaskName = model.TaskName;
+            t.DescriptionTask = model.DescriptionTask;
             t.TotalPercent = 0;
             t.Task_level = model.Task_level;
             t.DescriptionTest = model.DescriptionTest;
@@ -57,7 +57,7 @@ namespace SystemManage.Controllers
                     db.SaveChanges();
                 }
                 ModelState.Clear();
-                return View();
+                return RedirectToAction("ShowTask");
             }
             st.TaskID = t.TaskID;
             st.SubName = model.SubTasksName[0].ToString();
@@ -72,15 +72,13 @@ namespace SystemManage.Controllers
             ModelState.Clear();
             return View();
         }
-        public ActionResult ShowTask(String ProjectID)
+        public ActionResult ShowTask()
         {
             ProjectModel Model = new ProjectModel();
-            Project p = db.Projects.Where(m => m.ProjectID.ToString() == ProjectID).FirstOrDefault();
-            Session["ProjectID"] = p.ProjectID; //ปิดเพื่อ Test 
-            //Session["Member"] = p.ProjectID;
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             List<SubTaskModel> SubTaskList = new List<SubTaskModel>();
             List<TaskModel> TaskList = new List<TaskModel>();
-            var item = db.Tasks.Where(m => m.ProjectID.ToString() == ProjectID).ToList();
+            var item = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
             string Taskname = null;
             foreach (var i in item)
             {
@@ -116,20 +114,24 @@ namespace SystemManage.Controllers
             ViewBag.DataList = TaskList;
             return View();
         }
-        public ActionResult DetailTask(String TaskID)
+        public ActionResult DetailTask(String SubID)
         {
             TaskModel model = new TaskModel();
-            var t = db.Tasks.Where(m => m.TaskID.ToString() == TaskID).FirstOrDefault();
-            var st = db.SubTasks.Where(m => m.TaskID.ToString() == TaskID).FirstOrDefault();
+            var st = db.SubTasks.Where(m => m.SubID.ToString() == SubID).FirstOrDefault();
+            model.SubTaskID = st.SubID;
+            model.SubTaskNames = st.SubName;
+            model.SubTasksDes = st.SubDescriptionDev;
+            model.SubDevID = st.SubDevID;
+            model.SubTaskDateSend = st.SubDevSend;
+            var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
             model.TaskID = t.TaskID;
             model.TaskName = t.TaskName;
-            model.Task_level = t.Task_level;
-            model.TotalPercent = t.TotalPercent;
-            model.SubDevID = st.SubDevID;
-            model.SubTasksDes = st.SubDescriptionDev;
-            model.SubTaskNames = st.SubName;
-            model.QAID = t.QAID.ToString();
-            model.TestID = t.TestID.ToString();
+            model.DescriptionTask = t.DescriptionTask;
+            model.TestID = t.TestID;
+            model.DescriptionTest = t.DescriptionTest;
+            model.TestSentDate = t.TestSentDate;
+            model.QAID = t.QAID;
+            model.QASentDate = t.QASentDate;
             model.DescriptionQA = t.DescriptionQA;
             return View(model);
         }
@@ -137,6 +139,7 @@ namespace SystemManage.Controllers
         {
             TaskModel model = new TaskModel();
             var t = db.Tasks.Where(m => m.TaskID == TaskID).FirstOrDefault();
+            var st = db.SubTasks.Where(m => m.TaskID == TaskID).FirstOrDefault();
             t.TaskID = model.TaskID;
             t.TaskName = model.TaskName;
             t.Task_level = model.Task_level;

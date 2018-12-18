@@ -8,7 +8,7 @@
     <div class="card-body" style="margin: auto">
         <div class="row">
             <div class="col-sm-12" style="margin: auto">
-                <h1 class="text-center" style="margin-bottom: 20pt">Manage Project</h1>
+                <h1 class="text-center" style="margin-bottom: 20pt">@Session["ProjectName"]</h1>
             </div>
         </div>
         <div class="row">
@@ -100,8 +100,8 @@
         <div class="col-sm-4">
             <div style="margin-top: 20px; margin-bottom: 10px;margin-left: 220px">
                 <button type="button" class="btn btn-success">SIT</button>
-                <button type="button" class="btn btn-primary">New Test</button>
-            </div>
+                <a href="@Url.Action("AddTask")"><button type="button" class="btn btn-primary">New Test</button></a>
+</div>
         </div>
     </div>
 </div>
@@ -146,10 +146,10 @@
                                     <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
                                     <td>@item.SubDevSend.ToString("dd/MM/yyyy")</td>
                                     <td>
-                                        <a href="@Url.Action("DetailTask", new { TaskID = item.TaskID })"><i class="glyphicon fa fa-diamond"></i></a>
+                                        <a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-diamond"></i></a>
                                     </td>
                                     <td>
-                                        <a href="@Url.Action("DeleteTask", new { TaskID = item.TaskID })"><i class="glyphicon fa fa-archive"></i></a>
+                                        <a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-archive"></i></a>
                                     </td>
                                 </tr>
                                 }
@@ -160,24 +160,6 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        function Contains(text_one, text_two) {
-            if (text_one.indexOf(text_two) != -1)
-                return ture;
-        }
-        $("#SubTask").keyup(function () {
-            var SearchText = $("#SubTask").val().toLowerCase();
-            $(".Search").each(function () {
-                if (!Contains($(this).text().toLowerCase, SearchText)) {
-                    $(this).hide();
-                }
-                else {
-                    $(this).show();
-                }
-            });
-        });
-    });
-</script>
+<>
+
 
