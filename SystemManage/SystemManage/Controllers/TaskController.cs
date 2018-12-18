@@ -135,25 +135,34 @@ namespace SystemManage.Controllers
             model.DescriptionQA = t.DescriptionQA;
             return View(model);
         }
-        public ActionResult EditTask(int TaskID)
+        public ActionResult EditTask(TaskModel model)
         {
-            TaskModel model = new TaskModel();
-            var t = db.Tasks.Where(m => m.TaskID == TaskID).FirstOrDefault();
-            var st = db.SubTasks.Where(m => m.TaskID == TaskID).FirstOrDefault();
-            t.TaskID = model.TaskID;
+            var st = db.SubTasks.Where(m => m.SubID == model.SubTaskID).FirstOrDefault();
+            st.SubName = model.SubTaskNames;
+            st.SubDevID = model.SubDevID;
+            st.SubDescriptionDev = model.SubTasksDes;
+            st.SubDevSend = model.SubTaskDateSend;
+            db.SaveChanges();
+            var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
             t.TaskName = model.TaskName;
-            t.Task_level = model.Task_level;
-            t.TotalPercent = model.TotalPercent;
-            t.QAID = Convert.ToInt32(model.QAID);
-            t.TestID = Convert.ToInt32(model.TestID);
+            t.Task_level = 1; //Set Dropdown
+            t.DescriptionTask = model.DescriptionTask;
+            t.TestID = model.TestID;
+            t.DescriptionTest = model.DescriptionTest;
+            t.TestSentDate = model.TestSentDate;
+            t.TestStatus = "t"; //รอเขียนเงื่อนไข
+            t.QAID = model.QAID;
+            t.DescriptionQA = model.DescriptionQA;
+            t.QASentDate = model.QASentDate;
+            t.QAStatus = 0; //รอเขียนเงื่อนไข แก้ type ด้วย
+            t.UpdateDate = DateTime.Now;
+            t.UpdateBy = 0; //Session[User]
             db.SaveChanges();
             return RedirectToAction("ShowTask");
         }
-        public ActionResult DeleteTask(int TaskID)
+        public ActionResult DeleteTask(int SubID)
         {
-            var t = db.Tasks.Where(m => m.TaskID == TaskID).FirstOrDefault();
-            var st = db.SubTasks.Where(m => m.TaskID == TaskID).FirstOrDefault();
-            db.Tasks.Remove(t);
+            var st = db.SubTasks.Where(m => m.SubID == SubID).FirstOrDefault();
             db.SubTasks.Remove(st);
             db.SaveChanges();
             return RedirectToAction("ShowTask");

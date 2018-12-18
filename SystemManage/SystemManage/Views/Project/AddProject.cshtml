@@ -38,7 +38,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="comment">Description :</label>
-                                @Html.TextAreaFor(m => m.ProjectDescription, new { @class = "zmdi zmdi-calendar-note input-icon js-btn-calendar" })
+                                @Html.TextAreaFor(m => m.ProjectDescription, new { @class = "form-control" , @type = "TextArea" })
                             </div>
                         </div>
                     </div>
@@ -49,8 +49,8 @@
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">Send Date :</label>
                                 <div>
-                                    @Html.EditorFor(m => m.ProjectSendDate, new { @type = "date" })
-                                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    @Html.TextBoxFor(m => m.ProjectSendDate, new { @type = "date" ,@class ="form-control"})
+                                    @*<i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>*@
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                     <div class="col-sm-3 ">
                     </div>
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-3"><button type="reset" class="btn btn-outline-danger btn-block shadow">Back</button></div>
+                    <div class="col-sm-3"><a href="@Url.Action("ShowProject")"><button type="button" class="btn btn-outline-danger btn-block shadow">Back</button></a></div>
                     <div class="col-sm-3"><button type="submit" class="btn btn-outline-primary btn-block shadow ">Submit</button></div>
                 </div>
             </div>

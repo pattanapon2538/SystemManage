@@ -26,7 +26,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">Description for Task :</label>
-                                @Html.TextAreaFor(m => m.DescriptionTask, new { @class = "form-control" })
+                                @Html.TextAreaFor(m => m.DescriptionTask, new { @class = "form-control",@type ="TextArea" })
                             </div>
                         </div>
                     </div>
@@ -35,8 +35,9 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="taskname">Sub Task Name :</label>
-                                        @Html.EditorFor(m => m.SubTasksName, new { @class = "form-control" })
+                                        <label for="taskname">SubTask Name :</label>
+                                        @Html.HiddenFor(m => m.SubTaskID)
+                                        @Html.EditorFor(m => m.SubTaskNames, new { @class = "form-control" })
                                     </div>
                                 </div>
                                 <div class="col-sm-1"></div>
@@ -67,7 +68,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="comment">Description for Developer :</label>
-                                        @Html.EditorFor(m => m.SubTasksDes, new { @class = "form-control" })
+                                        @Html.TextAreaFor(m => m.SubTasksDes, new { @class = "form-control", @type = "TextArea" })
                                     </div>
                                 </div>
                             </div>
@@ -90,11 +91,13 @@
                             </div>
                         </div>
                     </div>
+                    <div style="text-align: center;margin-top: 20px">
+                    </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">Description for Tester :</label>
-                                @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control" })
+                                @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control", @type = "TextArea" })
                             </div>
                         </div>
                     </div>
@@ -116,7 +119,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">Description for Quality Assurance :</label>
-                                @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control" })
+                                @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control", @type = "TextArea" })
                             </div>
                         </div>
                     </div>
@@ -141,7 +144,7 @@
                             </div>
                         </div>
                         <div class="col-sm-2">
-                            <button type="button" class="btn btn-outline-danger">Back</button>
+                           <a href="@Url.Action("ShowTask",new {@class ="btn btn-outline-danger" ,@type ="button" })"><button type="button" class="btn btn-outline-danger">Back</button></a>
                             <button type="submit" class="btn btn-outline-primary">Submit</button>
                         </div>
                     </div>

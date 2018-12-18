@@ -84,6 +84,16 @@ namespace SystemManage.Controllers
         public ActionResult DeleteProject(int ProjectID)
         {
             Project d = db.Projects.Where(m => m.ProjectID == ProjectID).FirstOrDefault();
+            var t = db.Tasks.Where(m => m.ProjectID == d.ProjectID).ToList();
+            foreach (var item in t)
+            {
+                var st = db.SubTasks.Where(m => m.TaskID == item.TaskID).ToList();
+                foreach (var item2 in st)
+                {
+                    db.SubTasks.Remove(item2);
+                }
+                db.Tasks.Remove(item);
+            }
             db.Projects.Remove(d);
             db.SaveChanges();
             return RedirectToAction("ShowProject");
