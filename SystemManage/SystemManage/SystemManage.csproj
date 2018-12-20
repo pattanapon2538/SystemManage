@@ -3404,11 +3404,12 @@
     <Content Include="Views\Position\index.cshtml" />
     <Content Include="Views\Shared\_MainMenu.cshtml" />
     <Content Include="Views\Task\ShowTask.cshtml" />
+    <Content Include="Views\Member\ShowMember.cshtml" />
+    <Content Include="Views\Member\ListMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploade\" />
-    <Folder Include="Views\Member\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

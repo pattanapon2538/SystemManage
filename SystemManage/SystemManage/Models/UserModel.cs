@@ -53,6 +53,7 @@ namespace SystemManage.Models
         public int Contract_ID { get; set; }
         public int Position_ID { get; set; }
         public string Phone { get; set; }
+        public string PositionName { get; set; }
         public HttpPostedFileBase File1 { get; set; }
         [NotMapped]
         public List<Position> PositionList { get; set; }

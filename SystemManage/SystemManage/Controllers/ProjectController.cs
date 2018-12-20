@@ -31,7 +31,7 @@ namespace SystemManage.Controllers
             db.Projects.Add(p);
             db.SaveChanges();
             pm.ProjectID = p.ProjectID;
-            pm.UserID = p.CreateBy; //Session[UserID]
+            pm.UserID = 1374; //Session[UserID]
             pm.Role = 1; //1 = PM, 2= Dev, 3=Test, 4=QA, 5= Customer
             db.ProjectMembers.Add(pm);
             db.SaveChanges();

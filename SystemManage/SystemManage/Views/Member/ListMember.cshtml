@@ -1,0 +1,196 @@
+﻿@using SystemManage.Models;
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="~/assets/css/metisMenu.css">
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/assets/css/slicknav.min.css">
+    <title>AddMember</title>
+</head>
+<body>
+    <div class="card" style="border: none">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="#">BACK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 style="text-align: center">Member</h1>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">E-mail</span>
+                                    </div>
+                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group">
+                                        <label class="label" for="subject" style="margin-right: 10px">Position :</label>
+                                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                                            <select name="subject">
+                                                <option>All</option>
+                                                <option>Pause</option>
+                                                <option>Terminate</option>
+                                            </select>
+                                            <div class="select-dropdown"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">Name</span>
+                                    </div>
+                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <label class="label" for="subject" style="margin-right: 10px">Percent :</label>
+                                    <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                                        <select name="subject">
+
+                                            <option>0</option>
+                                        </select>
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                                    <div class="rs-select2 js-select-simple select--no-search " style="width: 100px;margin-left: -40px">
+                                        <select name="subject">
+
+                                            <option>100</option>
+                                        </select>
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">LastName</span>
+                                    </div>
+                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group">
+                                        <label class="label" for="subject" style="margin-right: 10px">Skills :</label>
+                                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                                            <select name="subject">
+                                                <option>All</option>
+                                                <option>Pause</option>
+                                                <option>Terminate</option>
+                                            </select>
+                                            <div class="select-dropdown"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">NickName</span>
+                                    </div>
+                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-primary btn-block shadow">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="margin-top: 20px">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr class="table-info">
+                                <th>favorite</th>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>LastName</th>
+                                <th>Position</th>
+                                <th>ความยากของงาน</th>
+                                <th>Percent Success</th>
+                                <th>Roundcoding</th>
+                                <th>Detail</th>
+                                <th>Add</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+
+                                foreach (var item in (List<UserModel>)ViewBag.DataList)
+                                {
+                                    <tr>
+                                        <td><i class="glyphicon fa fa-star"></i></td>
+                                        <td>@item.User_Email</td>
+                                        <td>@item.User_Name</td>
+                                        <td>@item.User_LastName</td>
+                                        <td>@item.PositionName</td>
+                                        <td>@item.AVG</td>
+                                        <td>@item.Amount_Succ</td>
+                                        <td>@item.TotalCoding</td>
+                                        <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><i class="glyphicon fa fa-archive"></i></a></td>
+                                        <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><i class="glyphicon fa fa-diamond"></i></a></td>
+                                    </tr>
+                                };
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/assets/js/bootstrap.min.js"></script>
+<script src="~/assets/js/popper.min.js"></script>
+<script src="~/assets/js/bootstrap.min.js"></script>
+<script src="~/assets/js/owl.carousel.min.js"></script>
+<script src="~/assets/js/metisMenu.min.js"></script>
+<script src="~/assets/js/jquery.slimscroll.min.js"></script>
+<script src="~/assets/js/jquery.slicknav.min.js"></script>
