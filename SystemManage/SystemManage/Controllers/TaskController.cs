@@ -27,17 +27,17 @@ namespace SystemManage.Controllers
             t.TotalPercent = 0;
             t.Task_level = model.Task_level;
             t.DescriptionTest = model.DescriptionTest;
-            t.TestID = 1; //session[UserId]
+            t.TestID = model.TaskID; //เลือกการค้นหาจาก Table Member ที่ Role เป็น Tester = 4 
             t.TestSentDate = model.TestSentDate;
             t.TestStatus = model.TestStatus.ToString();
             t.DescriptionQA = model.DescriptionQA;
-            t.QAID = 1; //session[UserID]
+            t.QAID = model.QAID; //เลือกการค้นหาจาก Table Member ที่ Role เป็น QA = 3
             t.QASentDate = model.QASentDate;
             t.QAStatus = model.QAStatus;
             t.AttachFile = model.AttachFile;
             t.AttachShow = model.AttachShow;
             t.CreateDate = DateTime.Now;
-            t.CreateBy = 1;//Session[UserID]
+            t.CreateBy = Convert.ToInt32(Session["userID"]);
             db.Tasks.Add(t);
             db.SaveChanges();
             var count= model.SubTasksName.Count;
@@ -48,7 +48,7 @@ namespace SystemManage.Controllers
                     st.TaskID = t.TaskID;
                     st.SubName = model.SubTasksName[item].ToString();
                     st.SubDescriptionDev = model.SubTasksDis[item].ToString();
-                    st.SubDevID = 11;//Session[UserID]
+                    st.SubDevID = model.SubTaskDevID[item] ;//เลือกการค้นหาจาก Table Member ที่ Role เป็น Dev = 2
                     st.SubPercent = 0;
                     st.SubStatus = 1;
                     st.SubDevSend = DateTime.Now;
@@ -62,7 +62,7 @@ namespace SystemManage.Controllers
             st.TaskID = t.TaskID;
             st.SubName = model.SubTasksName[0].ToString();
             st.SubDescriptionDev = model.SubTasksDis[0].ToString();
-            st.SubDevID = 11;//Session[UserID]
+            st.SubDevID = model.SubTaskDevID[0];////เลือกการค้นหาจาก Table Member ที่ Role เป็น Dev = 2
             st.SubPercent = 0;
             st.SubStatus = 1;
             st.SubDevSend = DateTime.Now;
@@ -76,38 +76,74 @@ namespace SystemManage.Controllers
         {
             ProjectModel Model = new ProjectModel();
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+            int userID = Convert.ToInt32(Session["userID"]);
+            string Taskname = null;
             List<SubTaskModel> SubTaskList = new List<SubTaskModel>();
             List<TaskModel> TaskList = new List<TaskModel>();
             var item = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
-            string Taskname = null;
+            var r = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.UserID == userID).FirstOrDefault();
             foreach (var i in item)
             {
-                TaskList.Add(new TaskModel
+                if (r.Role == 1)
                 {
-                    TaskID = i.TaskID,
-                    TaskName = i.TaskName,
-                    TotalPercent = i.TotalPercent,
-                    CreateDate = i.CreateDate,
-                    UpdateDate = i.UpdateDate,
-                });
-                    Taskname = i.TaskName;
-                var item2 = db.SubTasks.Where(m => m.TaskID == i.TaskID).OrderByDescending(t => t.TaskID).ToList();
-                foreach(var s in item2)
-                {
-                    SubTaskList.Add(new SubTaskModel
+                    TaskList.Add(new TaskModel
                     {
-                        TaskID = s.TaskID,
-                        TaskName = Taskname,
-                        SubID = s.SubID,
-                        SubName = s.SubName,
-                        SubStatus = s.SubStatus,
-                        SubPercent = s.SubPercent,
-                        SubDescriptionDev = s.SubDescriptionDev,
-                        SubDevID = s.SubDevID.ToString(),
-                        SubDevSend = s.SubDevSend,
-                        CreateDate = s.CreateDate,
-                        UpdateDate = s.UpdateDate,
+                        TaskID = i.TaskID,
+                        TaskName = i.TaskName,
+                        TotalPercent = i.TotalPercent,
+                        CreateDate = i.CreateDate,
+                        UpdateDate = i.UpdateDate,
                     });
+                    Taskname = i.TaskName;
+                    var item2 = db.SubTasks.Where(m => m.TaskID == i.TaskID).OrderByDescending(t => t.TaskID).ToList();
+                    foreach (var s in item2)
+                    {
+                        SubTaskList.Add(new SubTaskModel
+                        {
+                            TaskID = s.TaskID,
+                            TaskName = Taskname,
+                            SubID = s.SubID,
+                            SubName = s.SubName,
+                            SubStatus = s.SubStatus,
+                            SubPercent = s.SubPercent,
+                            SubDescriptionDev = s.SubDescriptionDev,
+                            SubDevID = s.SubDevID.ToString(),
+                            SubDevSend = s.SubDevSend,
+                            CreateDate = s.CreateDate,
+                            UpdateDate = s.UpdateDate,
+                        });
+                    }
+                }
+                else if (r.Role == 2)
+                {
+                    var st = db.SubTasks.Where(m => m.TaskID == i.TaskID && m.SubDevID == userID).ToList();
+                    foreach (var s in st)
+                    {
+                        var t = db.Tasks.Where(m => m.TaskID == s.TaskID).FirstOrDefault();
+                        TaskList.Add(new TaskModel
+                        {
+                            TaskID = t.TaskID,
+                            TaskName = t.TaskName,
+                            TotalPercent = t.TotalPercent,
+                            CreateDate = t.CreateDate,
+                            UpdateDate = t.UpdateDate,
+                        });
+                        SubTaskList.Add(new SubTaskModel
+                        {
+                            TaskID = s.TaskID,
+                            TaskName = Taskname,
+                            SubID = s.SubID,
+                            SubName = s.SubName,
+                            SubStatus = s.SubStatus,
+                            SubPercent = s.SubPercent,
+                            SubDescriptionDev = s.SubDescriptionDev,
+                            SubDevID = s.SubDevID.ToString(),
+                            SubDevSend = s.SubDevSend,
+                            CreateDate = s.CreateDate,
+                            UpdateDate = s.UpdateDate,
+                            
+                        });
+                    }
                 }
             }
             ViewBag.DataList2 = SubTaskList;

@@ -39,7 +39,36 @@ namespace SystemManage.Controllers
             ProjectMember pm = new ProjectMember();
             pm.UserID = UserID;
             pm.ProjectID = Convert.ToInt32(Session["ProjectID"]);
-            pm.Role = 0; //Defualt ต้องมีเงื่อนไขดูจาก Position สามาเปลี่ยนแปลงได้
+            var PoList = db.Users.Where(m => m.User_ID == UserID).FirstOrDefault();
+            if (PoList.Position_ID == 113)//PositionID = 113 Dev 
+            {
+                pm.Role = 2; 
+                db.ProjectMembers.Add(pm);
+                db.SaveChanges();
+                return RedirectToAction("ListMember");
+            }
+            else if (PoList.Position_ID == 110)//PositionID = 110 Tester
+            {
+                pm.Role = 3; 
+                db.ProjectMembers.Add(pm);
+                db.SaveChanges();
+                return RedirectToAction("ListMember");
+            }
+            else if (PoList.Position_ID == 142)//PositionID = 142 QA 
+            {
+                pm.Role = 4; 
+                db.ProjectMembers.Add(pm);
+                db.SaveChanges();
+                return RedirectToAction("ListMember");
+            }
+            else if (PoList.Position_ID == 143)//PositionID = 143 ลูกค้า 
+            {
+                pm.Role = 5; 
+                db.ProjectMembers.Add(pm);
+                db.SaveChanges();
+                return RedirectToAction("ListMember");
+            }else //ถ้าไม่เข้าเงื่อไขให้เป็น Dev ทั้งหมด
+            pm.Role = 2; 
             db.ProjectMembers.Add(pm);
             db.SaveChanges();
             return RedirectToAction("ListMember");

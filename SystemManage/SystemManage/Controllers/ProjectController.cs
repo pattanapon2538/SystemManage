@@ -18,20 +18,20 @@ namespace SystemManage.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddProject(ProjectModel model,MemberModel MemberModel)
+        public ActionResult AddProject(ProjectModel model)
         {
             Project p = new Project();
             ProjectMember pm = new ProjectMember();
             p.Name = model.ProjectName;
             p.Description = model.ProjectDescription;
-            p.CreateDate = DateTime.Now;
             p.SendDate = model.ProjectSendDate;
             p.Status = 1;
-            p.CreateBy = 11; //Session[UserID]
+            p.CreateBy = Convert.ToInt32(Session["userID"]);
+            p.CreateDate = DateTime.Now;
             db.Projects.Add(p);
             db.SaveChanges();
             pm.ProjectID = p.ProjectID;
-            pm.UserID = 1374; //Session[UserID]
+            pm.UserID = Convert.ToInt32(Session["userID"]);
             pm.Role = 1; //1 = PM, 2= Dev, 3=Test, 4=QA, 5= Customer
             db.ProjectMembers.Add(pm);
             db.SaveChanges();
@@ -41,21 +41,24 @@ namespace SystemManage.Controllers
         public ActionResult ShowProject()
         {
             List<ProjectModel> projectlist = new List<ProjectModel>();
-            var item = db.Projects.OrderByDescending(m => m.ProjectID).ToList();
-            foreach(var i in item)
+            int userID = Convert.ToInt32(Session["userID"]);
+            var member = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
+            foreach (var m in member)
             {
-                projectlist.Add(new ProjectModel
-                {
-                 ProjectID = i.ProjectID,
-                 ProjectName = i.Name,
-                 ProjectDescription = i.Description,
-                 ProjectStatus = i.Status,
-                 ProjectSendDate = i.SendDate,
-                 CreateDate = i.CreateDate,
-                 UpdateDate = i.UpdateDate,
-                }); 
+                var item = db.Projects.Where(p => p.ProjectID == m.ProjectID).FirstOrDefault();
+                    projectlist.Add(new ProjectModel
+                    {
+                        ProjectID = item.ProjectID,
+                        ProjectName = item.Name,
+                        ProjectRole = m.Role,
+                        ProjectDescription = item.Description,
+                        ProjectStatus = item.Status,
+                        ProjectSendDate = item.SendDate,
+                        CreateDate = item.CreateDate,
+                        UpdateDate = item.UpdateDate,
+                    });
             }
-            ViewBag.DataList = projectlist;
+            ViewBag.dataList = projectlist;
             return View();
         }
         public ActionResult EditProject(String ProjectID)
@@ -76,7 +79,7 @@ namespace SystemManage.Controllers
             p.Description = Model.ProjectDescription;
             p.Status = Model.ProjectStatus;
             p.UpdateDate = DateTime.Now;
-            p.UpdateBy = 11;
+            p.UpdateBy = Convert.ToInt32(Session["userID"]);
             db.SaveChanges();
             return RedirectToAction("ShowProject");
 

@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="~/assets/css/slicknav.min.css">
  </head>
 <body>
-
+    
     <div class="container">
         <div class="card shadow" style="margin-top: 100px">
             <div class="card-body">
@@ -41,11 +41,12 @@
                             </thead>
                             <tbody>
                                 @{
+                                    var role = 0;
                                     var i = 1;
                                     foreach (var item in (List<ProjectModel>)ViewBag.DataList)
                                     {
                                         <tr>
-                                            <td><a href="@Url.Action("Getdata" ,new {ProjectID = item.ProjectID})"><i class="glyphicon fa fa-archive"></i></a></td>
+                                            <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-archive"></i></a></td>
                                             <td>@i</td>
                                             <td>@item.ProjectName</td>
                                             <td>@item.ProjectStatus</td>
@@ -58,16 +59,25 @@
                                             </td>
                                             <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
                                             <td>@item.ProjectSendDate.ToString("dd/MM/yyyy")</td>
+                                            @if (item.ProjectRole == 1)
+                                            {
                                             <td>
-                                                <a href="@Url.Action("EditProject", new {ProjectID = item.ProjectID})"><i class="glyphicon fa fa-diamond"></i></a>
+                                                <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-diamond"></i></a>
                                             </td>
-                                            <td>
-                                                <a href="@Url.Action("DeleteProject", new {ProjectID = item.ProjectID})"><i class="glyphicon fa fa-archive"></i></a>
-                                            </td>
+                                                <td>
+                                                    <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-archive"></i></a>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                                <td></td>
+                                            }
                                         </tr>
+                                        role=@item.ProjectRole;
                                         i++;
                                     }
-                                }
+                                 }
                             </tbody>
                         </table>
                     </div>
@@ -79,7 +89,8 @@
             </div>
             <div class="col-sm-3"></div>
             <div class="col-sm-3"></div>
-            <div class="col-sm-3"><a href="@Url.Action("AddProject")"><button type="button" class="btn btn-outline-primary btn-block shadow">New Project</button></a></div>
+            <div class="col-sm-3"> @if (role != 5) { <a href="@Url.Action("AddProject")"><button type="button" class="btn btn-outline-primary btn-block shadow">New Project</button></a>}</div>
+        
         </div>
     </div>
 
