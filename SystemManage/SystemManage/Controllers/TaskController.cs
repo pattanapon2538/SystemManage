@@ -27,7 +27,7 @@ namespace SystemManage.Controllers
             t.TotalPercent = 0;
             t.Task_level = model.Task_level;
             t.DescriptionTest = model.DescriptionTest;
-            t.TestID = model.TaskID; //เลือกการค้นหาจาก Table Member ที่ Role เป็น Tester = 4 
+            t.TestID = model.TestID; //เลือกการค้นหาจาก Table Member ที่ Role เป็น Tester = 4 
             t.TestSentDate = model.TestSentDate;
             t.TestStatus = model.TestStatus.ToString();
             t.DescriptionQA = model.DescriptionQA;
@@ -84,7 +84,8 @@ namespace SystemManage.Controllers
             var r = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.UserID == userID).FirstOrDefault();
             foreach (var i in item)
             {
-                if (r.Role == 1)
+                //PM และ CM
+                if (r.Role == 1 || r.Role == 5)
                 {
                     TaskList.Add(new TaskModel
                     {
@@ -114,6 +115,7 @@ namespace SystemManage.Controllers
                         });
                     }
                 }
+                // Dev
                 else if (r.Role == 2)
                 {
                     var st = db.SubTasks.Where(m => m.TaskID == i.TaskID && m.SubDevID == userID).ToList();
@@ -131,7 +133,7 @@ namespace SystemManage.Controllers
                         SubTaskList.Add(new SubTaskModel
                         {
                             TaskID = s.TaskID,
-                            TaskName = Taskname,
+                            TaskName = t.TaskName,
                             SubID = s.SubID,
                             SubName = s.SubName,
                             SubStatus = s.SubStatus,
@@ -141,8 +143,76 @@ namespace SystemManage.Controllers
                             SubDevSend = s.SubDevSend,
                             CreateDate = s.CreateDate,
                             UpdateDate = s.UpdateDate,
-                            
+
                         });
+                    }
+                }
+                //Tester
+                else if (r.Role == 3)
+                {
+                    var t = db.Tasks.Where(m => m.TaskID == i.TaskID && m.TestID == userID).ToList();
+                    foreach (var it in t)
+                    {
+                        TaskList.Add(new TaskModel
+                        {
+                            TaskID = it.TaskID,
+                            TaskName = it.TaskName,
+                            TotalPercent = it.TotalPercent,
+                            CreateDate = it.CreateDate,
+                            UpdateDate = it.UpdateDate,
+                        });
+                        var st = db.SubTasks.Where(m => m.TaskID == it.TaskID).ToList();
+                        foreach (var si in st)
+                        {
+                            SubTaskList.Add(new SubTaskModel
+                            {
+                                TaskID = si.TaskID,
+                                TaskName = it.TaskName,
+                                SubID = si.SubID,
+                                SubName = si.SubName,
+                                SubStatus = si.SubStatus,
+                                SubPercent = si.SubPercent,
+                                SubDescriptionDev = si.SubDescriptionDev,
+                                SubDevID = si.SubDevID.ToString(),
+                                SubDevSend = si.SubDevSend,
+                                CreateDate = si.CreateDate,
+                                UpdateDate = si.UpdateDate,
+                            });
+                        }
+                    }
+                }
+                //QA
+                else if (r.Role == 4)
+                {
+                    var t = db.Tasks.Where(m => m.TaskID == i.TaskID && m.QAID == userID).ToList();
+                    foreach (var it in t)
+                    {
+                        TaskList.Add(new TaskModel
+                        {
+                            TaskID = it.TaskID,
+                            TaskName = it.TaskName,
+                            TotalPercent = it.TotalPercent,
+                            CreateDate = it.CreateDate,
+                            UpdateDate = it.UpdateDate,
+                        });
+                        var st = db.SubTasks.Where(m => m.TaskID == it.TaskID).ToList();
+                        foreach (var si in st)
+                        {
+                            SubTaskList.Add(new SubTaskModel
+                            {
+                                TaskID = si.TaskID,
+                                TaskName = it.TaskName,
+                                SubID = si.SubID,
+                                SubName = si.SubName,
+                                SubStatus = si.SubStatus,
+                                SubPercent = si.SubPercent,
+                                SubDescriptionDev = si.SubDescriptionDev,
+                                SubDevID = si.SubDevID.ToString(),
+                                SubDevSend = si.SubDevSend,
+                                CreateDate = si.CreateDate,
+                                UpdateDate = si.UpdateDate,
+                            });
+                        }
                     }
                 }
             }
@@ -174,6 +244,7 @@ namespace SystemManage.Controllers
         public ActionResult EditTask(TaskModel model)
         {
             var st = db.SubTasks.Where(m => m.SubID == model.SubTaskID).FirstOrDefault();
+
             st.SubName = model.SubTaskNames;
             st.SubDevID = model.SubDevID;
             st.SubDescriptionDev = model.SubTasksDes;
