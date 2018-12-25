@@ -180,6 +180,7 @@
           <Property Name="TaskID" Type="int" Nullable="false" />
           <Property Name="CreateBy" Type="int" />
           <Property Name="UpdateBy" Type="int" />
+          <Property Name="Handle" Type="int" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -192,11 +193,11 @@
           <Property Name="DescriptionTest" Type="nvarchar" MaxLength="255" />
           <Property Name="TestID" Type="int" Nullable="false" />
           <Property Name="TestSentDate" Type="date" Nullable="false" />
-          <Property Name="TestStatus" Type="char" MaxLength="5" />
+          <Property Name="TestStatus" Type="int" />
           <Property Name="DescriptionQA" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="QAID" Type="int" />
           <Property Name="QASentDate" Type="date" Nullable="false" />
-          <Property Name="QAStatus" Type="tinyint" Nullable="false" />
+          <Property Name="QAStatus" Type="int" Nullable="false" />
           <Property Name="AttachShow" Type="nvarchar" MaxLength="200" />
           <Property Name="AttachFile" Type="nvarchar" MaxLength="200" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
@@ -541,15 +542,6 @@
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
           <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
-          <EntitySet Name="Tasks" EntityType="SystemManageModel.Task" />
-          <AssociationSet Name="FK_Task" Association="SystemManageModel.FK_Task">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="Task" EntitySet="Tasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
-            <End Role="Task" EntitySet="Tasks" />
-            <End Role="SubTask" EntitySet="SubTasks" />
-          </AssociationSet>
           <EntitySet Name="ProjectMembers" EntityType="SystemManageModel.ProjectMember" />
           <AssociationSet Name="FK_Project" Association="SystemManageModel.FK_Project">
             <End Role="Project" EntitySet="Projects" />
@@ -558,6 +550,15 @@
           <AssociationSet Name="FK_UserID" Association="SystemManageModel.FK_UserID">
             <End Role="User" EntitySet="Users" />
             <End Role="ProjectMember" EntitySet="ProjectMembers" />
+          </AssociationSet>
+          <EntitySet Name="Tasks" EntityType="SystemManageModel.Task" />
+          <AssociationSet Name="FK_Task" Association="SystemManageModel.FK_Task">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="SubTask" EntitySet="SubTasks" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Defect">
@@ -659,8 +660,8 @@
           <Property Name="CreateBy" Type="Int32" Nullable="false" />
           <Property Name="UpdateBy" Type="Int32" />
           <NavigationProperty Name="SITs" Relationship="SystemManageModel.FK_SIT" FromRole="Project" ToRole="SIT" />
-          <NavigationProperty Name="Tasks" Relationship="SystemManageModel.FK_Task" FromRole="Project" ToRole="Task" />
           <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_Project" FromRole="Project" ToRole="ProjectMember" />
+          <NavigationProperty Name="Tasks" Relationship="SystemManageModel.FK_Task" FromRole="Project" ToRole="Task" />
         </EntityType>
         <EntityType Name="SIT">
           <Key>
@@ -733,6 +734,7 @@
           <Property Name="UpdateBy" Type="Int32" />
           <NavigationProperty Name="Defects" Relationship="SystemManageModel.FK_Defect" FromRole="SubTask" ToRole="Defect" />
           <NavigationProperty Name="SITSteps" Relationship="SystemManageModel.FK_Sub" FromRole="SubTask" ToRole="SITStep" />
+          <Property Name="Handle" Type="Int32" />
           <NavigationProperty Name="Task" Relationship="SystemManageModel.FK_SubTask" FromRole="SubTask" ToRole="Task" />
         </EntityType>
         <EntityType Name="Type_of_Contract">
@@ -911,57 +913,6 @@
           <Property Name="languageID" Type="Int32" Nullable="false" />
           <Property Name="level_of_lg" Type="Int32" />
         </EntityType>
-        <EntityType Name="Task">
-          <Key>
-            <PropertyRef Name="TaskID" />
-          </Key>
-          <Property Name="TaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TotalPercent" Type="Double" Nullable="false" />
-          <Property Name="Task_level" Type="Int32" />
-          <Property Name="DescriptionTest" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="TestID" Type="Int32" Nullable="false" />
-          <Property Name="TestSentDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="TestStatus" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
-          <Property Name="DescriptionQA" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="QAID" Type="Int32" />
-          <Property Name="QASentDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="QAStatus" Type="Byte" Nullable="false" />
-          <Property Name="AttachShow" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
-          <Property Name="ProjectID" Type="Int32" Nullable="false" />
-          <Property Name="CreateBy" Type="Int32" Nullable="false" />
-          <Property Name="UpdateBy" Type="Int32" />
-          <Property Name="DescriptionTask" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Task" FromRole="Task" ToRole="Project" />
-          <NavigationProperty Name="SubTasks" Relationship="SystemManageModel.FK_SubTask" FromRole="Task" ToRole="SubTask" />
-        </EntityType>
-        <Association Name="FK_Task">
-          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
-          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectID" />
-            </Principal>
-            <Dependent Role="Task">
-              <PropertyRef Name="ProjectID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubTask">
-          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="1" />
-          <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Task">
-              <PropertyRef Name="TaskID" />
-            </Principal>
-            <Dependent Role="SubTask">
-              <PropertyRef Name="TaskID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ProjectMember">
           <Key>
             <PropertyRef Name="MemberID" />
@@ -994,6 +945,57 @@
             </Principal>
             <Dependent Role="ProjectMember">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPercent" Type="Double" Nullable="false" />
+          <Property Name="Task_level" Type="Int32" />
+          <Property Name="DescriptionTest" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
+          <Property Name="TestSentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TestStatus" Type="Int32" />
+          <Property Name="DescriptionQA" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="QAID" Type="Int32" />
+          <Property Name="QASentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="QAStatus" Type="Int32" Nullable="false" />
+          <Property Name="AttachShow" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="CreateBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="DescriptionTask" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Task" FromRole="Task" ToRole="Project" />
+          <NavigationProperty Name="SubTasks" Relationship="SystemManageModel.FK_SubTask" FromRole="Task" ToRole="SubTask" />
+        </EntityType>
+        <Association Name="FK_Task">
+          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubTask">
+          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="TaskID" />
+            </Principal>
+            <Dependent Role="SubTask">
+              <PropertyRef Name="TaskID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1157,6 +1159,7 @@
           <EntitySetMapping Name="SubTasks">
             <EntityTypeMapping TypeName="SystemManageModel.SubTask">
               <MappingFragment StoreEntitySet="SubTask">
+                <ScalarProperty Name="Handle" ColumnName="Handle" />
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="TaskID" ColumnName="TaskID" />
@@ -1238,6 +1241,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProjectMembers">
+            <EntityTypeMapping TypeName="SystemManageModel.ProjectMember">
+              <MappingFragment StoreEntitySet="ProjectMember">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="SystemManageModel.Task">
               <MappingFragment StoreEntitySet="Task">
@@ -1261,16 +1274,6 @@
                 <ScalarProperty Name="TotalPercent" ColumnName="TotalPercent" />
                 <ScalarProperty Name="TaskName" ColumnName="TaskName" />
                 <ScalarProperty Name="TaskID" ColumnName="TaskID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProjectMembers">
-            <EntityTypeMapping TypeName="SystemManageModel.ProjectMember">
-              <MappingFragment StoreEntitySet="ProjectMember">
-                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -130,28 +130,51 @@
                         @{
                             foreach (var item in (List<SubTaskModel>)ViewBag.DataList2)
                             {
-                                <tr class="Seach">
-                                    <td>@item.TaskName</td>
-                                    <td>@item.SubName</td>
-                                    <td>@item.SubStatus</td>
-                                    <td>@item.SubPercent</td>
-                                    <td>@item.SubDevID</td>
-                                    <td>@item.Handle</td>
-                                    <td>
-                                        @if (item.UpdateDate >= item.CreateDate)
-                                        {
-                                            @item.UpdateDate.ToString("dd/MM/yyyy");
-                                        }
-                                    </td>
-                                    <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
-                                    <td>@item.SubDevSend.ToString("dd/MM/yyyy")</td>
-                                    <td>
-                                        <a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-diamond"></i></a>
-                                    </td>
-                                    <td>
-                                        <a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-archive"></i></a>
-                                    </td>
-                                </tr>
+                        <tr class="Seach">
+                            <td>@item.TaskName</td>
+                            <td>@item.SubName</td>
+                            @if (item.SubStatus == 0)
+                            {
+                                <td>อยู่ระหว่างดำเนินการ</td>
+                            }
+                            else if (item.SubStatus == 1)
+                            {
+                                <td>รอการตรวจสอบ</td>
+                            }
+                            else if (item.SubStatus == 2)
+                            {
+                                <td>ตรวจสอบคุณภาพ</td>
+                            }
+                            else if (item.SubStatus == 3)
+                            {
+                                <td>รอการยืนยัน</td>
+                            }
+                            else if (item.SubStatus == 4)
+                            {
+                                <td>เสร็จสิน</td>
+                            }
+                            else if (item.SubStatus == 5)
+                            {
+                                <td>อยู่ระหว่างการแก้ไข</td>
+                            }
+                            <td>@item.SubPercent</td>
+                            <td>@item.SubDevID</td>
+                            <td>@item.Handle</td>
+                            <td>
+                                @if (item.UpdateDate >= item.CreateDate)
+                                {
+                                    @item.UpdateDate.ToString("dd/MM/yyyy");
+                                }
+                            </td>
+                            <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.SubDevSend.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-diamond"></i></a>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-archive"></i></a>
+                            </td>
+                        </tr>
                                 }
                         }
                     </tbody>

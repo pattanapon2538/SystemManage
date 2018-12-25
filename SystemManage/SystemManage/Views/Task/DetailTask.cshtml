@@ -144,8 +144,11 @@
                             </div>
                         </div>
                         <div class="col-sm-2">
-                           <a href="@Url.Action("ShowTask",new {@class ="btn btn-outline-danger" ,@type ="button" })"><button type="button" class="btn btn-outline-danger">Back</button></a>
+                           <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger">Back</button></a>
+                            @if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                            {
                             <button type="submit" class="btn btn-outline-primary">Submit</button>
+                            }
                         </div>
                     </div>
                 </div>

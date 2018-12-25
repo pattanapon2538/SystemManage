@@ -27,11 +27,11 @@ namespace SystemManage.Database
         public string DescriptionTest { get; set; }
         public int TestID { get; set; }
         public DateTime TestSentDate { get; set; }
-        public string TestStatus { get; set; }
+        public int TestStatus { get; set; }
         public string DescriptionQA { get; set; }
         public int QAID { get; set; }
         public DateTime QASentDate { get; set; }
-        public byte QAStatus { get; set; }
+        public int QAStatus { get; set; }
         public string AttachShow { get; set; }
         public string AttachFile { get; set; }
         public DateTime CreateDate { get; set; }

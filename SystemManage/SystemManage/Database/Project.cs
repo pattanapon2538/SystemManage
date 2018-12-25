@@ -18,8 +18,8 @@ namespace SystemManage.Database
         public Project()
         {
             this.SITs = new HashSet<SIT>();
-            this.Tasks = new HashSet<Task>();
             this.ProjectMembers = new HashSet<ProjectMember>();
+            this.Tasks = new HashSet<Task>();
         }
     
         public int ProjectID { get; set; }
@@ -36,8 +36,8 @@ namespace SystemManage.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SIT> SITs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Tasks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectMember> ProjectMembers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Task> Tasks { get; set; }
     }
 }

@@ -33,6 +33,7 @@ namespace SystemManage.Database
         public int TaskID { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
+        public int Handle { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Defect> Defects { get; set; }

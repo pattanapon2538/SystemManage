@@ -34,10 +34,12 @@ namespace SystemManage.Models
         public List<DateTime> SubTaskSendDate { get; set; }
         public List<DateTime> SubTaskCreateDate { get; set; }
         public List<DateTime> SubTaskUpdate { get; set; }
+        public int Status { get; set; }
         public int SubDevID { get; set; }
         public DateTime SubTaskDateSend { get; set; }
         public string SubTasksDes { get; set; }
         public string SubTaskNames { get; set; }
         public int SubTaskID { get; set; }
+        public int Handle { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace SystemManage.Controllers
             t.DescriptionTest = model.DescriptionTest;
             t.TestID = model.TestID; //เลือกการค้นหาจาก Table Member ที่ Role เป็น Tester = 4 
             t.TestSentDate = model.TestSentDate;
-            t.TestStatus = model.TestStatus.ToString();
+            t.TestStatus = model.TestStatus;
             t.DescriptionQA = model.DescriptionQA;
             t.QAID = model.QAID; //เลือกการค้นหาจาก Table Member ที่ Role เป็น QA = 3
             t.QASentDate = model.QASentDate;
@@ -48,14 +48,19 @@ namespace SystemManage.Controllers
                     st.TaskID = t.TaskID;
                     st.SubName = model.SubTasksName[item].ToString();
                     st.SubDescriptionDev = model.SubTasksDis[item].ToString();
-                    st.SubDevID = model.SubTaskDevID[item] ;//เลือกการค้นหาจาก Table Member ที่ Role เป็น Dev = 2
+                    st.SubDevID = model.SubTaskDevID[item];//เลือกการค้นหาจาก Table Member ที่ Role เป็น Dev = 2
+                    var PoinCode = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
+                    PoinCode.TotalCoding = PoinCode.TotalCoding + 1;
+                    db.SaveChanges();
                     st.SubPercent = 0;
-                    st.SubStatus = 1;
+                    st.Handle = model.SubTaskDevID[item];
+                    st.SubStatus = 0;
                     st.SubDevSend = DateTime.Now;
                     st.CreateDate = DateTime.Now;
                     db.SubTasks.Add(st);
                     db.SaveChanges();
                 }
+
                 ModelState.Clear();
                 return RedirectToAction("ShowTask");
             }
@@ -63,8 +68,12 @@ namespace SystemManage.Controllers
             st.SubName = model.SubTasksName[0].ToString();
             st.SubDescriptionDev = model.SubTasksDis[0].ToString();
             st.SubDevID = model.SubTaskDevID[0];////เลือกการค้นหาจาก Table Member ที่ Role เป็น Dev = 2
+            var PoinCode2 = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
+            PoinCode2.TotalCoding = PoinCode2.TotalCoding + 1;
+            db.SaveChanges();
             st.SubPercent = 0;
-            st.SubStatus = 1;
+            st.SubStatus = 0;
+            st.Handle = model.SubTaskDevID[0];
             st.SubDevSend = DateTime.Now;
             st.CreateDate = DateTime.Now;
             db.SubTasks.Add(st);
@@ -105,6 +114,7 @@ namespace SystemManage.Controllers
                             TaskName = Taskname,
                             SubID = s.SubID,
                             SubName = s.SubName,
+                            Handle = s.Handle,
                             SubStatus = s.SubStatus,
                             SubPercent = s.SubPercent,
                             SubDescriptionDev = s.SubDescriptionDev,
@@ -136,6 +146,7 @@ namespace SystemManage.Controllers
                             TaskName = t.TaskName,
                             SubID = s.SubID,
                             SubName = s.SubName,
+                            Handle = s.Handle,
                             SubStatus = s.SubStatus,
                             SubPercent = s.SubPercent,
                             SubDescriptionDev = s.SubDescriptionDev,
@@ -170,6 +181,7 @@ namespace SystemManage.Controllers
                                 TaskName = it.TaskName,
                                 SubID = si.SubID,
                                 SubName = si.SubName,
+                                Handle = si.Handle,
                                 SubStatus = si.SubStatus,
                                 SubPercent = si.SubPercent,
                                 SubDescriptionDev = si.SubDescriptionDev,
@@ -204,6 +216,7 @@ namespace SystemManage.Controllers
                                 TaskName = it.TaskName,
                                 SubID = si.SubID,
                                 SubName = si.SubName,
+                                Handle = si.Handle,
                                 SubStatus = si.SubStatus,
                                 SubPercent = si.SubPercent,
                                 SubDescriptionDev = si.SubDescriptionDev,
@@ -228,6 +241,8 @@ namespace SystemManage.Controllers
             model.SubTaskNames = st.SubName;
             model.SubTasksDes = st.SubDescriptionDev;
             model.SubDevID = st.SubDevID;
+            model.Handle = st.Handle;
+            model.Status = st.SubStatus;
             model.SubTaskDateSend = st.SubDevSend;
             var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
             model.TaskID = t.TaskID;
@@ -243,28 +258,107 @@ namespace SystemManage.Controllers
         }
         public ActionResult EditTask(TaskModel model)
         {
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+            int userID = Convert.ToInt32(Session["userID"]);
             var st = db.SubTasks.Where(m => m.SubID == model.SubTaskID).FirstOrDefault();
-
-            st.SubName = model.SubTaskNames;
-            st.SubDevID = model.SubDevID;
-            st.SubDescriptionDev = model.SubTasksDes;
-            st.SubDevSend = model.SubTaskDateSend;
-            db.SaveChanges();
             var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
-            t.TaskName = model.TaskName;
-            t.Task_level = 1; //Set Dropdown
-            t.DescriptionTask = model.DescriptionTask;
-            t.TestID = model.TestID;
-            t.DescriptionTest = model.DescriptionTest;
-            t.TestSentDate = model.TestSentDate;
-            t.TestStatus = "t"; //รอเขียนเงื่อนไข
-            t.QAID = model.QAID;
-            t.DescriptionQA = model.DescriptionQA;
-            t.QASentDate = model.QASentDate;
-            t.QAStatus = 0; //รอเขียนเงื่อนไข แก้ type ด้วย
-            t.UpdateDate = DateTime.Now;
-            t.UpdateBy = 0; //Session[User]
-            db.SaveChanges();
+            var r = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.UserID == userID).FirstOrDefault();
+            //PM
+            if (r.Role == 1)
+            {
+                st.SubName = model.SubTaskNames;
+                st.SubDevID = model.SubDevID;
+                st.SubDescriptionDev = model.SubTasksDes;
+                st.SubDevSend = model.SubTaskDateSend;
+                db.SaveChanges();
+                t.TaskName = model.TaskName;
+                t.Task_level = 1; //Set Dropdown
+                t.DescriptionTask = model.DescriptionTask;
+                t.TestID = model.TestID;
+                t.DescriptionTest = model.DescriptionTest;
+                t.TestSentDate = model.TestSentDate;
+                t.TestStatus = 0; //รอเขียนเงื่อนไข
+                t.QAID = model.QAID;
+                t.DescriptionQA = model.DescriptionQA;
+                t.QASentDate = model.QASentDate;
+                t.QAStatus = 0; //รอเขียนเงื่อนไข แก้ type ด้วย
+                t.UpdateDate = DateTime.Now;
+                t.UpdateBy = Convert.ToInt32(Session["userID"]); //Session[User]
+                db.SaveChanges();
+                return RedirectToAction("ShowTask");
+            }
+            //Dev
+            else if (r.Role == 2)
+            {
+                if (st.SubStatus == 0)
+                {
+                    st.SubStatus = 1;
+                    st.SubPercent = 25;
+                    st.Handle = t.TestID;
+                    st.UpdateDate = DateTime.Now;
+                    st.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    db.SaveChanges();
+                    t.UpdateDate = DateTime.Now;
+                    t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    db.SaveChanges();
+                    return RedirectToAction("ShowTask");
+                }
+                return RedirectToAction("ShowTask");
+            }
+            //Tester
+            else if (r.Role == 3)
+            {
+                if (st.SubStatus == 1)
+                {
+                    st.SubStatus = 2;
+                    st.SubPercent = 50;
+                    st.Handle = t.QAID;
+                    st.UpdateDate = DateTime.Now;
+                    st.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    db.SaveChanges();
+                    t.UpdateDate = DateTime.Now;
+                    t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    db.SaveChanges();
+                    return RedirectToAction("ShowTask");
+                }
+                return RedirectToAction("ShowTask");
+            }
+            //QA
+            else if (r.Role == 4)
+            {
+                if (st.SubStatus == 2)
+                {
+                    st.SubStatus = 3;
+                    st.SubPercent = 75;
+                    st.UpdateDate = DateTime.Now;
+                    st.Handle = t.QAID;
+                    st.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    db.SaveChanges();
+                    t.UpdateDate = DateTime.Now;
+                    t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    db.SaveChanges();
+                    return RedirectToAction("ShowTask");
+                }
+                return RedirectToAction("ShowTask");
+            }
+            //CM
+            else if (r.Role == 5)
+            {
+                if (st.SubStatus == 3)
+                {
+                    st.SubStatus = 4;
+                    st.SubPercent = 100;
+                    st.UpdateDate = DateTime.Now;
+                    st.Handle = Convert.ToInt32(Session["userID"]);
+                    st.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    db.SaveChanges();
+                    t.UpdateDate = DateTime.Now;
+                    t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    db.SaveChanges();
+                    return RedirectToAction("ShowTask");
+                }
+                return RedirectToAction("ShowTask");
+            }
             return RedirectToAction("ShowTask");
         }
         public ActionResult DeleteTask(int SubID)

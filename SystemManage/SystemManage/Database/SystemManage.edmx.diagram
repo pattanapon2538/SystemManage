@@ -28,12 +28,12 @@
         <AssociationConnector Association="SystemManageModel.FK_Position" />
         <AssociationConnector Association="SystemManageModel.FK_Contact" />
         <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="7" PointY="3.75" />
-        <EntityTypeShape EntityType="SystemManageModel.Task" Width="1.5" PointX="11.25" PointY="1.375" />
-        <AssociationConnector Association="SystemManageModel.FK_Task" />
-        <AssociationConnector Association="SystemManageModel.FK_SubTask" />
         <EntityTypeShape EntityType="SystemManageModel.ProjectMember" Width="1.5" PointX="7" PointY="1.375" />
         <AssociationConnector Association="SystemManageModel.FK_Project" />
         <AssociationConnector Association="SystemManageModel.FK_UserID" />
+        <EntityTypeShape EntityType="SystemManageModel.Task" Width="1.5" PointX="11.25" PointY="0.875" />
+        <AssociationConnector Association="SystemManageModel.FK_Task" />
+        <AssociationConnector Association="SystemManageModel.FK_SubTask" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
