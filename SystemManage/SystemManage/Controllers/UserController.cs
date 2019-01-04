@@ -54,7 +54,7 @@ namespace SystemManage.Controllers
             //u.AttachShow4 = model.AttachShow4;
             u.Permisstion = model.Permission;
             u.Position_ID = model.Position_ID;
-            u.comment = model.comment;
+            u.comment = model.Comment;
             u.LanguageID = model.LanguageID; //Ref ??? Table Skills
             s.languageID = model.LanguageID;
             u.AVG = model.AVG;

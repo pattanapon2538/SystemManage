@@ -40,11 +40,6 @@ namespace SystemManage.Controllers
             }
             return View("Index");
         }
-        public ActionResult logOut()
-        {
-            Session.Abandon();
-            return RedirectToAction("Index", "Login");
-
-        }
+        
     }
 }

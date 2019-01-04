@@ -92,7 +92,7 @@
           <Property Name="Description" Type="nvarchar" MaxLength="255" />
           <Property Name="Status" Type="tinyint" />
           <Property Name="SendDate" Type="date" />
-          <Property Name="TotalPercent" Type="int" Nullable="false" />
+          <Property Name="TotalPercent" Type="float" Nullable="false" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
           <Property Name="UpdateDate" Type="date" />
           <Property Name="CreateBy" Type="int" Nullable="false" />

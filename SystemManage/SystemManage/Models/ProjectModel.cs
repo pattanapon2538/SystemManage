@@ -14,10 +14,10 @@ namespace SystemManage.Models
         public string ProjectName { get; set; }
         public string ProjectDescription { get; set; }
         public byte ProjectStatus { get; set; }
+        public double TotalPercent { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ProjectSendDate { get; set; }
-        public int TotalPercent { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string CreateBy { get; set; }

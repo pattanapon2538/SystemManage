@@ -43,20 +43,48 @@ namespace SystemManage.Controllers
             List<ProjectModel> projectlist = new List<ProjectModel>();
             int userID = Convert.ToInt32(Session["userID"]);
             var member = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
+            int countList = 0;
+            double Percent = 0;
             foreach (var m in member)
             {
                 var item = db.Projects.Where(p => p.ProjectID == m.ProjectID).FirstOrDefault();
+                Project po = db.Projects.Where(pos => pos.ProjectID == item.ProjectID).FirstOrDefault();
+                var item2 = db.Tasks.Where(t => t.ProjectID == item.ProjectID).ToList();
+                foreach (var t in item2)
+                {
+                    var item3 = db.SubTasks.Where(st => st.TaskID == t.TaskID).ToList();
+                    foreach(var s in item3)
+                    {
+                        Percent = Percent + s.SubPercent;
+                        ++countList;
+                    }
+                }
+                if (countList != 0)
+                {
+                    Percent = Percent / countList;
+                    po.TotalPercent = Convert.ToInt32(Percent);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    Percent = 0;
+                    po.TotalPercent = Convert.ToInt32(Percent);
+                    db.SaveChanges();
+                }
                     projectlist.Add(new ProjectModel
                     {
                         ProjectID = item.ProjectID,
                         ProjectName = item.Name,
                         ProjectRole = m.Role,
+                        TotalPercent = Percent,
                         ProjectDescription = item.Description,
                         ProjectStatus = item.Status,
                         ProjectSendDate = item.SendDate,
                         CreateDate = item.CreateDate,
                         UpdateDate = item.UpdateDate,
                     });
+                countList = 0;
+                Percent = 0;
             }
             ViewBag.dataList = projectlist;
             return View();

@@ -113,13 +113,15 @@ namespace SystemManage.Controllers
                         var nameDev = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
                         var nameHandle = db.Users.Where(m => m.User_ID == s.Handle).FirstOrDefault();
                         DevName = nameDev.User_Name;
+                        Handle = nameHandle.User_Name;
+                    //    number = number + s.SubPercent;
                         SubTaskList.Add(new SubTaskModel
                         {
                             TaskID = s.TaskID,
                             TaskName = Taskname,
                             SubID = s.SubID,
                             SubName = s.SubName,
-                            Handle = nameHandle.ToString(),
+                            Handle = Handle,
                             SubStatus = s.SubStatus,
                             SubPercent = s.SubPercent,
                             SubDescriptionDev = s.SubDescriptionDev,
@@ -128,7 +130,7 @@ namespace SystemManage.Controllers
                             CreateDate = s.CreateDate,
                             UpdateDate = s.UpdateDate,
                         });
-                        
+                      //  ++countList;
                     }
                 }
                 // Dev
@@ -139,6 +141,8 @@ namespace SystemManage.Controllers
                     {
                         var nameDev = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
                         var nameHandle = db.Users.Where(m => m.User_ID == s.Handle).FirstOrDefault();
+                        DevName = nameDev.User_Name;
+                        Handle = nameHandle.User_Name;
                         var t = db.Tasks.Where(m => m.TaskID == s.TaskID).FirstOrDefault();
                         TaskList.Add(new TaskModel
                         {
@@ -154,11 +158,11 @@ namespace SystemManage.Controllers
                             TaskName = t.TaskName,
                             SubID = s.SubID,
                             SubName = s.SubName,
-                            Handle = nameHandle.ToString(),
+                            Handle = Handle,
                             SubStatus = s.SubStatus,
                             SubPercent = s.SubPercent,
                             SubDescriptionDev = s.SubDescriptionDev,
-                            SubDevID = nameDev.,
+                            SubDevID = DevName,
                             SubDevSend = s.SubDevSend,
                             CreateDate = s.CreateDate,
                             UpdateDate = s.UpdateDate,
@@ -183,17 +187,21 @@ namespace SystemManage.Controllers
                         var st = db.SubTasks.Where(m => m.TaskID == it.TaskID).ToList();
                         foreach (var si in st)
                         {
+                            var nameDev = db.Users.Where(m => m.User_ID == si.SubDevID).FirstOrDefault();
+                            var nameHandle = db.Users.Where(m => m.User_ID == si.Handle).FirstOrDefault();
+                            DevName = nameDev.User_Name;
+                            Handle = nameHandle.User_Name;
                             SubTaskList.Add(new SubTaskModel
                             {
                                 TaskID = si.TaskID,
                                 TaskName = it.TaskName,
                                 SubID = si.SubID,
                                 SubName = si.SubName,
-                                Handle = si.Handle,
+                                Handle = Handle,
                                 SubStatus = si.SubStatus,
                                 SubPercent = si.SubPercent,
                                 SubDescriptionDev = si.SubDescriptionDev,
-                                SubDevID = si.SubDevID.ToString(),
+                                SubDevID = DevName,
                                 SubDevSend = si.SubDevSend,
                                 CreateDate = si.CreateDate,
                                 UpdateDate = si.UpdateDate,
@@ -218,17 +226,21 @@ namespace SystemManage.Controllers
                         var st = db.SubTasks.Where(m => m.TaskID == it.TaskID).ToList();
                         foreach (var si in st)
                         {
+                            var nameDev = db.Users.Where(m => m.User_ID == si.SubDevID).FirstOrDefault();
+                            var nameHandle = db.Users.Where(m => m.User_ID == si.Handle).FirstOrDefault();
+                            DevName = nameDev.User_Name;
+                            Handle = nameHandle.User_Name;
                             SubTaskList.Add(new SubTaskModel
                             {
                                 TaskID = si.TaskID,
                                 TaskName = it.TaskName,
                                 SubID = si.SubID,
                                 SubName = si.SubName,
-                                Handle = si.Handle,
+                                Handle = Handle,
                                 SubStatus = si.SubStatus,
                                 SubPercent = si.SubPercent,
                                 SubDescriptionDev = si.SubDescriptionDev,
-                                SubDevID = si.SubDevID.ToString(),
+                                SubDevID = DevName,
                                 SubDevSend = si.SubDevSend,
                                 CreateDate = si.CreateDate,
                                 UpdateDate = si.UpdateDate,
@@ -237,6 +249,7 @@ namespace SystemManage.Controllers
                     }
                 }
             }
+          
             ViewBag.DataList2 = SubTaskList;
             ViewBag.DataList = TaskList;
             return View();
