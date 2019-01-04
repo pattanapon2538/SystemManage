@@ -20,6 +20,6 @@ namespace SystemManage.Models
         public string UpdateBy { get; set; }
         public int TaskID { get; set; }
         public string TaskName { get; set; }
-        public int Handle { get; set; }
+        public string Handle { get; set; }
     }
 }

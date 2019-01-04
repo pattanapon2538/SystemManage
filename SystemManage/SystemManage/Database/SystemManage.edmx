@@ -181,6 +181,8 @@
           <Property Name="CreateBy" Type="int" />
           <Property Name="UpdateBy" Type="int" />
           <Property Name="Handle" Type="int" />
+          <Property Name="HaveDefect" Type="int" />
+          <Property Name="RoundCoding" Type="int" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -736,6 +738,8 @@
           <NavigationProperty Name="SITSteps" Relationship="SystemManageModel.FK_Sub" FromRole="SubTask" ToRole="SITStep" />
           <Property Name="Handle" Type="Int32" />
           <NavigationProperty Name="Task" Relationship="SystemManageModel.FK_SubTask" FromRole="SubTask" ToRole="Task" />
+          <Property Name="HaveDefect" Type="Int32" />
+          <Property Name="RoundCoding" Type="Int32" />
         </EntityType>
         <EntityType Name="Type_of_Contract">
           <Key>
@@ -1159,6 +1163,8 @@
           <EntitySetMapping Name="SubTasks">
             <EntityTypeMapping TypeName="SystemManageModel.SubTask">
               <MappingFragment StoreEntitySet="SubTask">
+                <ScalarProperty Name="RoundCoding" ColumnName="RoundCoding" />
+                <ScalarProperty Name="HaveDefect" ColumnName="HaveDefect" />
                 <ScalarProperty Name="Handle" ColumnName="Handle" />
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />

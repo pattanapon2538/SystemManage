@@ -25,9 +25,9 @@ namespace SystemManage.Models
         public string AttachFile { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string UpdateBy { get; set; }
-        public string ProjectID { get; set; }
+        public int CreateBy { get; set; }
+        public int UpdateBy { get; set; }
+        public int ProjectID { get; set; }
         public List<string> SubTasksName { get; set; }
         public List<string> SubTasksDis { get; set; }
         public List<int> SubTaskDevID { get; set; }

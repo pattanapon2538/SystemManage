@@ -49,14 +49,13 @@ namespace SystemManage.Controllers
                     st.SubName = model.SubTasksName[item].ToString();
                     st.SubDescriptionDev = model.SubTasksDis[item].ToString();
                     st.SubDevID = model.SubTaskDevID[item];//เลือกการค้นหาจาก Table Member ที่ Role เป็น Dev = 2
-                    var PoinCode = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
-                    PoinCode.TotalCoding = PoinCode.TotalCoding + 1;
                     db.SaveChanges();
                     st.SubPercent = 0;
                     st.Handle = model.SubTaskDevID[item];
                     st.SubStatus = 0;
                     st.SubDevSend = DateTime.Now;
                     st.CreateDate = DateTime.Now;
+                    st.CreateBy = Convert.ToInt32(Session["userID"]);
                     db.SubTasks.Add(st);
                     db.SaveChanges();
                 }
@@ -76,6 +75,7 @@ namespace SystemManage.Controllers
             st.Handle = model.SubTaskDevID[0];
             st.SubDevSend = DateTime.Now;
             st.CreateDate = DateTime.Now;
+            st.CreateBy = Convert.ToInt32(Session["userID"]);
             db.SubTasks.Add(st);
             db.SaveChanges();
             ModelState.Clear();
@@ -87,6 +87,8 @@ namespace SystemManage.Controllers
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             int userID = Convert.ToInt32(Session["userID"]);
             string Taskname = null;
+            string Handle = null;
+            string DevName = null;
             List<SubTaskModel> SubTaskList = new List<SubTaskModel>();
             List<TaskModel> TaskList = new List<TaskModel>();
             var item = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
@@ -108,21 +110,25 @@ namespace SystemManage.Controllers
                     var item2 = db.SubTasks.Where(m => m.TaskID == i.TaskID).OrderByDescending(t => t.TaskID).ToList();
                     foreach (var s in item2)
                     {
+                        var nameDev = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
+                        var nameHandle = db.Users.Where(m => m.User_ID == s.Handle).FirstOrDefault();
+                        DevName = nameDev.User_Name;
                         SubTaskList.Add(new SubTaskModel
                         {
                             TaskID = s.TaskID,
                             TaskName = Taskname,
                             SubID = s.SubID,
                             SubName = s.SubName,
-                            Handle = s.Handle,
+                            Handle = nameHandle.ToString(),
                             SubStatus = s.SubStatus,
                             SubPercent = s.SubPercent,
                             SubDescriptionDev = s.SubDescriptionDev,
-                            SubDevID = s.SubDevID.ToString(),
+                            SubDevID = DevName,
                             SubDevSend = s.SubDevSend,
                             CreateDate = s.CreateDate,
                             UpdateDate = s.UpdateDate,
                         });
+                        
                     }
                 }
                 // Dev
@@ -131,6 +137,8 @@ namespace SystemManage.Controllers
                     var st = db.SubTasks.Where(m => m.TaskID == i.TaskID && m.SubDevID == userID).ToList();
                     foreach (var s in st)
                     {
+                        var nameDev = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
+                        var nameHandle = db.Users.Where(m => m.User_ID == s.Handle).FirstOrDefault();
                         var t = db.Tasks.Where(m => m.TaskID == s.TaskID).FirstOrDefault();
                         TaskList.Add(new TaskModel
                         {
@@ -146,11 +154,11 @@ namespace SystemManage.Controllers
                             TaskName = t.TaskName,
                             SubID = s.SubID,
                             SubName = s.SubName,
-                            Handle = s.Handle,
+                            Handle = nameHandle.ToString(),
                             SubStatus = s.SubStatus,
                             SubPercent = s.SubPercent,
                             SubDescriptionDev = s.SubDescriptionDev,
-                            SubDevID = s.SubDevID.ToString(),
+                            SubDevID = nameDev.,
                             SubDevSend = s.SubDevSend,
                             CreateDate = s.CreateDate,
                             UpdateDate = s.UpdateDate,
@@ -254,6 +262,7 @@ namespace SystemManage.Controllers
             model.QAID = t.QAID;
             model.QASentDate = t.QASentDate;
             model.DescriptionQA = t.DescriptionQA;
+            model.CreateBy = t.CreateBy;
             return View(model);
         }
         public ActionResult EditTask(TaskModel model)
@@ -262,6 +271,7 @@ namespace SystemManage.Controllers
             int userID = Convert.ToInt32(Session["userID"]);
             var st = db.SubTasks.Where(m => m.SubID == model.SubTaskID).FirstOrDefault();
             var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
+            var PointCode = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
             var r = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.UserID == userID).FirstOrDefault();
             //PM
             if (r.Role == 1)
@@ -289,27 +299,33 @@ namespace SystemManage.Controllers
             }
             //Dev
             else if (r.Role == 2)
-            {
-                if (st.SubStatus == 0)
-                {
+            {   
                     st.SubStatus = 1;
                     st.SubPercent = 25;
                     st.Handle = t.TestID;
                     st.UpdateDate = DateTime.Now;
                     st.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    ++st.RoundCoding;
+                    ++PointCode.TotalCoding;
                     db.SaveChanges();
                     t.UpdateDate = DateTime.Now;
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
                     db.SaveChanges();
-                    return RedirectToAction("ShowTask");
+                if (st.SubDevSend >= st.UpdateDate)
+                {
+                    PointCode.Amount_Succ = PointCode.Amount_Succ + 1;
+                    db.SaveChanges();
+                }
+                else if (st.SubDevSend < st.UpdateDate)
+                {
+                    PointCode.Amount_Succ = PointCode.Amount_Non + 1;
+                    db.SaveChanges();
                 }
                 return RedirectToAction("ShowTask");
             }
             //Tester
             else if (r.Role == 3)
             {
-                if (st.SubStatus == 1)
-                {
                     st.SubStatus = 2;
                     st.SubPercent = 50;
                     st.Handle = t.QAID;
@@ -320,14 +336,10 @@ namespace SystemManage.Controllers
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
                     db.SaveChanges();
                     return RedirectToAction("ShowTask");
-                }
-                return RedirectToAction("ShowTask");
             }
             //QA
             else if (r.Role == 4)
             {
-                if (st.SubStatus == 2)
-                {
                     st.SubStatus = 3;
                     st.SubPercent = 75;
                     st.UpdateDate = DateTime.Now;
@@ -338,14 +350,10 @@ namespace SystemManage.Controllers
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
                     db.SaveChanges();
                     return RedirectToAction("ShowTask");
-                }
-                return RedirectToAction("ShowTask");
             }
             //CM
             else if (r.Role == 5)
             {
-                if (st.SubStatus == 3)
-                {
                     st.SubStatus = 4;
                     st.SubPercent = 100;
                     st.UpdateDate = DateTime.Now;
@@ -356,8 +364,6 @@ namespace SystemManage.Controllers
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
                     db.SaveChanges();
                     return RedirectToAction("ShowTask");
-                }
-                return RedirectToAction("ShowTask");
             }
             return RedirectToAction("ShowTask");
         }

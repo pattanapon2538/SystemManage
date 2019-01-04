@@ -66,20 +66,16 @@
 
                         <ul class="metismenu" id="menu">
                             <li>
-                                <a href="membersearchp.html" aria-expanded="true"><i class="ti-dashboard"></i><span>จัดการผู้ใช้</span></a>
+                                <a href="@Url.Action("ShowUser","User")" aria-expanded="true"><i class="ti-dashboard"></i><span>จัดการผู้ใช้</span></a>
                             </li>
                             <li>
-                                <a href="positionp.html" aria-expanded="true">
-                                    <i class="ti-layout-sidebar-left"></i><span>
-                                        จัดการตำแหน่งงาน
-                                    </span>
-                                </a>
+                                <a href="@Url.Action("ShowPosition","Position")" aria-expanded="true"><i class="ti-layout-sidebar-left"></i><span> จัดการตำแหน่งงาน</span></a>
                             </li>
                             <li>
-                                <a href="contractp.html" aria-expanded="true"><i class="ti-pie-chart"></i><span>จัดการรูปแบบสัญญาจ้าง</span></a>
+                                <a href="@Url.Action("ShowContact","Contact")" aria-expanded="true"><i class="ti-pie-chart"></i><span>จัดการรูปแบบสัญญาจ้าง</span></a>
                             </li>
                             <li>
-                                <a href="languagep.html" aria-expanded="true"><i class="ti-slice"></i><span>จัดกการภาษาที่ใช้ในการเขียนโปรแกรม</span></a>
+                                <a href="@Url.Action("ShowLanguage","Languages")" aria-expanded="true"><i class="ti-slice"></i><span>จัดกการภาษาที่ใช้ในการเขียนโปรแกรม</span></a>
                             </li>
                         </ul>
                     </nav>

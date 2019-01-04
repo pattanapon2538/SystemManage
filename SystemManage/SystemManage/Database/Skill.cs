@@ -17,6 +17,6 @@ namespace SystemManage.Database
         public int SkillsID { get; set; }
         public int User_ID { get; set; }
         public int languageID { get; set; }
-        public Nullable<int> level_of_lg { get; set; }
+        public int level_of_lg { get; set; }
     }
 }

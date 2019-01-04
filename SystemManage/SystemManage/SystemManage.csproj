@@ -152,6 +152,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ContactController.cs" />
+    <Compile Include="Controllers\DefectController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
@@ -3406,6 +3407,7 @@
     <Content Include="Views\Task\ShowTask.cshtml" />
     <Content Include="Views\Member\ShowMember.cshtml" />
     <Content Include="Views\Member\ListMember.cshtml" />
+    <Content Include="Views\Defect\AddDefect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
