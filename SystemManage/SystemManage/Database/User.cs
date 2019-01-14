@@ -45,7 +45,7 @@ namespace SystemManage.Database
         public int AVG { get; set; }
         public int Amount_Succ { get; set; }
         public int Amount_Non { get; set; }
-        public int TotalCoding { get; set; }
+        public int  TotalCoding { get; set; }
         public int Speaking { get; set; }
         public int Reading { get; set; }
         public int Writng { get; set; }

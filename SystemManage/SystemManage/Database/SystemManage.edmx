@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Defect_ID" />
           </Key>
-          <Property Name="Defect_ID" Type="int" Nullable="false" />
+          <Property Name="Defect_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Sub_ID" Type="int" Nullable="false" />
           <Property Name="Detail" Type="nvarchar" MaxLength="300" />
           <Property Name="SendDate" Type="date" />
@@ -184,6 +184,17 @@
           <Property Name="HaveDefect" Type="int" />
           <Property Name="RoundCoding" Type="int" />
         </EntityType>
+        <EntityType Name="SubTaskSubmisstion">
+          <Key>
+            <PropertyRef Name="Submit_ID" />
+          </Key>
+          <Property Name="Submit_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AssignDate" Type="date" />
+          <Property Name="Deadline" Type="date" />
+          <Property Name="SubmitDate" Type="date" />
+          <Property Name="HandleBy" Type="int" />
+          <Property Name="SubID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Task">
           <Key>
             <PropertyRef Name="TaskID" />
@@ -215,7 +226,7 @@
           </Key>
           <Property Name="Contrat_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Contrat_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Contrat_Detail" Type="nvarchar" MaxLength="50" />
+          <Property Name="Contrat_Detail" Type="nvarchar" MaxLength="255" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
           <Property Name="UpdateDate" Type="date" />
           <Property Name="CreateBy" Type="int" />
@@ -419,6 +430,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="SubID">
+          <End Role="SubTask" Type="Self.SubTask" Multiplicity="1" />
+          <End Role="SubTaskSubmisstion" Type="Self.SubTaskSubmisstion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubTask">
+              <PropertyRef Name="SubID" />
+            </Principal>
+            <Dependent Role="SubTaskSubmisstion">
+              <PropertyRef Name="SubID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SystemManageModelStoreContainer">
           <EntitySet Name="Defect" EntityType="Self.Defect" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
@@ -433,6 +456,7 @@
           <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubDefect" EntityType="Self.SubDefect" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubTask" EntityType="Self.SubTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubTaskSubmisstion" EntityType="Self.SubTaskSubmisstion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Type_of_Contract" EntityType="Self.Type_of_Contract" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -487,6 +511,10 @@
           <AssociationSet Name="FK_UserID" Association="Self.FK_UserID">
             <End Role="Users" EntitySet="Users" />
             <End Role="ProjectMember" EntitySet="ProjectMember" />
+          </AssociationSet>
+          <AssociationSet Name="SubID" Association="Self.SubID">
+            <End Role="SubTask" EntitySet="SubTask" />
+            <End Role="SubTaskSubmisstion" EntitySet="SubTaskSubmisstion" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -561,6 +589,11 @@
           <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
             <End Role="Task" EntitySet="Tasks" />
             <End Role="SubTask" EntitySet="SubTasks" />
+          </AssociationSet>
+          <EntitySet Name="SubTaskSubmisstions" EntityType="SystemManageModel.SubTaskSubmisstion" />
+          <AssociationSet Name="SubID" Association="SystemManageModel.SubID">
+            <End Role="SubTask" EntitySet="SubTasks" />
+            <End Role="SubTaskSubmisstion" EntitySet="SubTaskSubmisstions" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Defect">
@@ -740,6 +773,7 @@
           <NavigationProperty Name="Task" Relationship="SystemManageModel.FK_SubTask" FromRole="SubTask" ToRole="Task" />
           <Property Name="HaveDefect" Type="Int32" />
           <Property Name="RoundCoding" Type="Int32" />
+          <NavigationProperty Name="SubTaskSubmisstions" Relationship="SystemManageModel.SubID" FromRole="SubTask" ToRole="SubTaskSubmisstion" />
         </EntityType>
         <EntityType Name="Type_of_Contract">
           <Key>
@@ -747,7 +781,7 @@
           </Key>
           <Property Name="Contrat_ID" Type="Int32" Nullable="false" />
           <Property Name="Contrat_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Contrat_Detail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contrat_Detail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateBy" Type="Int32" />
@@ -1000,6 +1034,30 @@
             </Principal>
             <Dependent Role="SubTask">
               <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SubTaskSubmisstion">
+          <Key>
+            <PropertyRef Name="Submit_ID" />
+          </Key>
+          <Property Name="Submit_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AssignDate" Type="DateTime" Precision="0" />
+          <Property Name="Deadline" Type="DateTime" Precision="0" />
+          <Property Name="SubmitDate" Type="DateTime" Precision="0" />
+          <Property Name="HandleBy" Type="Int32" />
+          <Property Name="SubID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SubTask" Relationship="SystemManageModel.SubID" FromRole="SubTaskSubmisstion" ToRole="SubTask" />
+        </EntityType>
+        <Association Name="SubID">
+          <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="1" />
+          <End Type="SystemManageModel.SubTaskSubmisstion" Role="SubTaskSubmisstion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubTask">
+              <PropertyRef Name="SubID" />
+            </Principal>
+            <Dependent Role="SubTaskSubmisstion">
+              <PropertyRef Name="SubID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1280,6 +1338,18 @@
                 <ScalarProperty Name="TotalPercent" ColumnName="TotalPercent" />
                 <ScalarProperty Name="TaskName" ColumnName="TaskName" />
                 <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubTaskSubmisstions">
+            <EntityTypeMapping TypeName="SystemManageModel.SubTaskSubmisstion">
+              <MappingFragment StoreEntitySet="SubTaskSubmisstion">
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
+                <ScalarProperty Name="HandleBy" ColumnName="HandleBy" />
+                <ScalarProperty Name="SubmitDate" ColumnName="SubmitDate" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="AssignDate" ColumnName="AssignDate" />
+                <ScalarProperty Name="Submit_ID" ColumnName="Submit_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

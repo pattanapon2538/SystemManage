@@ -19,6 +19,7 @@ namespace SystemManage.Database
         {
             this.Defects = new HashSet<Defect>();
             this.SITSteps = new HashSet<SITStep>();
+            this.SubTaskSubmisstions = new HashSet<SubTaskSubmisstion>();
         }
     
         public int SubID { get; set; }
@@ -42,5 +43,7 @@ namespace SystemManage.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SITStep> SITSteps { get; set; }
         public virtual Task Task { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubTaskSubmisstion> SubTaskSubmisstions { get; set; }
     }
 }

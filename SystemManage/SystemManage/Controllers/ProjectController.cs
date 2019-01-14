@@ -48,6 +48,7 @@ namespace SystemManage.Controllers
             foreach (var m in member)
             {
                 var item = db.Projects.Where(p => p.ProjectID == m.ProjectID).FirstOrDefault();
+                var pm = db.Users.Where(u => u.User_ID == item.CreateBy).FirstOrDefault();
                 Project po = db.Projects.Where(pos => pos.ProjectID == item.ProjectID).FirstOrDefault();
                 var item2 = db.Tasks.Where(t => t.ProjectID == item.ProjectID).ToList();
                 foreach (var t in item2)
@@ -80,6 +81,7 @@ namespace SystemManage.Controllers
                         ProjectDescription = item.Description,
                         ProjectStatus = item.Status,
                         ProjectSendDate = item.SendDate,
+                        CreateBy = pm.User_Email,
                         CreateDate = item.CreateDate,
                         UpdateDate = item.UpdateDate,
                     });
@@ -93,6 +95,7 @@ namespace SystemManage.Controllers
         {
             ProjectModel Model = new ProjectModel();
             Project p = db.Projects.Where(m => m.ProjectID.ToString() == ProjectID).FirstOrDefault();
+            
             Model.ProjectID = p.ProjectID;
             Model.ProjectName = p.Name;
             Model.ProjectDescription = p.Description;

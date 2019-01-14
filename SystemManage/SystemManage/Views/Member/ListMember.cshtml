@@ -21,14 +21,14 @@
     <link rel="stylesheet" href="~/assets/css/metisMenu.css">
     <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="~/assets/css/slicknav.min.css">
-    <title>AddMember</title>
+    <title>เพิ่มสมาชิกในโครงการ</title>
 </head>
 <body>
     <div class="card" style="border: none">
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="#">BACK</a>
+                    <a href="@Url.Action("ShowMember")">กลับ</a>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h1 style="text-align: center">Member</h1>
+                <h1 style="text-align: center">เพิ่มสมาชิกในโครงการ</h1>
             </div>
         </div>
         <div class="card">
@@ -47,7 +47,7 @@
                             <div class="col-sm-6">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">E-mail</span>
+                                        <span class="input-group-text" id="basic-addon1">อีเมล</span>
                                     </div>
                                     <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
                                 </div>
@@ -148,16 +148,16 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr class="table-info">
-                                <th>favorite</th>
-                                <th>Email</th>
-                                <th>Name</th>
-                                <th>LastName</th>
-                                <th>Position</th>
+                                <th>ชื่นชอบ</th>
+                                <th>อีเมล</th>
+                                <th>ชื่อ</th>
+                                <th>นามสกุล</th>
+                                <th>ตำแหน่ง</th>
                                 <th>ความยากของงาน</th>
-                                <th>Percent Success</th>
-                                <th>Roundcoding</th>
-                                <th>Detail</th>
-                                <th>Add</th>
+                                <th>เปอร์เซ็นความสำเร็จ</th>
+                                <th>จำนวนการโค๊ต</th>
+                                <th>ดูรายละเอียด</th>
+                                <th>เพิ่ม</th>
                             </tr>
                         </thead>
                         <tbody>

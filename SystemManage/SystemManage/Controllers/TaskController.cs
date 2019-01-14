@@ -83,7 +83,6 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowTask()
         {
-            ProjectModel Model = new ProjectModel();
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             int userID = Convert.ToInt32(Session["userID"]);
             string Taskname = null;
@@ -256,6 +255,7 @@ namespace SystemManage.Controllers
         }
         public ActionResult DetailTask(String SubID)
         {
+            Session["SubID"] = SubID;
             TaskModel model = new TaskModel();
             var st = db.SubTasks.Where(m => m.SubID.ToString() == SubID).FirstOrDefault();
             model.SubTaskID = st.SubID;

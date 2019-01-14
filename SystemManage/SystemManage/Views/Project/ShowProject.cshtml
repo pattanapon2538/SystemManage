@@ -23,20 +23,19 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h2 class="text-center">My Project</h2>
+                        <h2 class="text-center">โครงการของฉัน</h2>
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="table-info">
                                     <th>เข้า</th>
-                                    <th>No</th>
-                                    <th>Project</th>
-                                    <th>Status</th>
-                                    <th>Percent</th>
-                                    <th>Update Date</th>
-                                    <th>Create Date</th>
-                                    <th>Send Date</th>
-                                    <th>Edit</th>
-                                    <th>Delete  </th>
+                                    <th>ลำดับ</th>
+                                    <th>โครงการ</th>
+                                    <th>สถานะ</th>
+                                    <th>เปอร์เซ็น</th>
+                                    <th>กำหนดส่ง</th>
+                                    <th>ผู้จัดการโครงการ</th>
+                                    <th>แก้ไข</th>
+                                    <th>ลบ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,35 +44,32 @@
                                     var i = 1;
                                     foreach (var item in (List<ProjectModel>)ViewBag.DataList)
                                     {
-                                        <tr>
-                                            <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-archive"></i></a></td>
-                                            <td>@i</td>
-                                            <td>@item.ProjectName</td>
-                                            <td>@item.ProjectStatus</td>
-                                            <td>@item.TotalPercent %</td>
-                                            <td>
-                                                @if (item.UpdateDate >= item.CreateDate)
-                                                {
-                                                    @item.UpdateDate.ToString("dd/MM/yyyy");
-                                                }
-                                            </td>
-                                            <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
-                                            <td>@item.ProjectSendDate.ToString("dd/MM/yyyy")</td>
-                                            @if (item.ProjectRole == 1)
-                                            {
-                                            <td>
-                                                <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-diamond"></i></a>
-                                            </td>
-                                                <td>
-                                                    <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-archive"></i></a>
-                                                </td>
-                                            }
-                                            else
-                                            {
-                                                <td></td>
-                                                <td></td>
-                                            }
-                                        </tr>
+                                <tr>
+                                    <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-archive"></i></a></td>
+                                    <td>@i</td>
+                                    <td>@item.ProjectName</td>
+                                    <td>@item.ProjectStatus</td>
+                                    @{
+                                        item.TotalPercent = item.TotalPercent / 100;
+                                    }
+                                    <td>@item.TotalPercent.ToString("P02")</td>
+                                    <td>@item.ProjectSendDate.ToString("dd/MM/yyyy")</td>
+                                    <td>@item.CreateBy</td>
+                                    @if (item.ProjectRole == 1)
+                                    {
+                                        <td>
+                                            <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-diamond"></i></a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-archive"></i></a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                        <td></td>
+                                    }
+                                </tr>
                                         role=@item.ProjectRole;
                                         i++;
                                     }
@@ -89,7 +85,7 @@
             </div>
             <div class="col-sm-3"></div>
             <div class="col-sm-3"></div>
-            <div class="col-sm-3"> @if (role != 5) { <a href="@Url.Action("AddProject")"><button type="button" class="btn btn-outline-primary btn-block shadow">New Project</button></a>}</div>
+            <div class="col-sm-3"> @if (role != 5) { <a href="@Url.Action("AddProject")"><button type="button" class="btn btn-outline-primary btn-block shadow">สร้างโครงการ</button></a>}</div>
         
         </div>
     </div>

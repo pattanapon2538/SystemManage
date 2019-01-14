@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -13,6 +14,8 @@ namespace SystemManage.Models
         public double SubPercent { get; set; }
         public string SubDescriptionDev { get; set; }
         public string SubDevID { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime SubDevSend { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }

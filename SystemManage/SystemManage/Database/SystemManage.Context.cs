@@ -41,5 +41,6 @@ namespace SystemManage.Database
         public virtual DbSet<Skill> Skills { get; set; }
         public virtual DbSet<ProjectMember> ProjectMembers { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<SubTaskSubmisstion> SubTaskSubmisstions { get; set; }
     }
 }

@@ -85,7 +85,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">Send Date :</label>
-                                        @Html.EditorFor(m => m.SubTaskDateSend, new { @class = "form-control" })
+                                        @Html.EditorFor(m => m.SubTaskDateSend, new { @class = "form-control" , @type = "date"})
                                     </div>
                                 </div>
                             </div>
@@ -110,8 +110,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">Send Date :</label>
-                                @Html.EditorFor(m => m.TestSentDate, new { @class = "form-control" })
+                                <label class="label" style="margin-right: 10px">กำหนดส่ง:</label>
+                                @Html.EditorFor(m => m.TestSentDate, new { @class = "form-control" ,@type = "date" })
                             </div>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">Send Date :</label>
+                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
                                 @Html.EditorFor(m => m.QASentDate, new { @class = "form-control" })
                             </div>
                         </div>
@@ -156,7 +156,7 @@
                            <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger">Back</button></a>
                             @if (Model.Handle == Convert.ToInt32(Session["userID"]) || Model.CreateBy == Convert.ToInt32(Session["userID"]))
                             {
-                            <button type="submit" class="btn btn-outline-primary">Submit</button>
+                            <button type="submit" class="btn btn-outline-primary">บันทึก</button>
                             }
                         </div>
                     </div>

@@ -1,7 +1,144 @@
-﻿@{
+﻿<style>
+    input, select, textarea {
+        max-width: 2800px;
+    }
+</style>
+@{
     ViewBag.Title = "AddDefect";
+    @model SystemManage.Models.DefectModel
 }
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+    <script>
 
-<h2>AddDefect</h2>
+        //***scritpt datepicker***//
+        $(function () {
+            $("#datepicker1").datepicker();
+            $("#datepicker2").datepicker();
+            $("#datepicker3").datepicker();
+            $("#datepicker4").datepicker();
+            $("#datepicker5").datepicker();
+            $("#datepicker6").datepicker();
+            $("#datepicker7").datepicker();
+            $("#datepicker8").datepicker();
+            $("#datepicker9").datepicker();
+            $("#datepicker10").datepicker();
+        });
+        //***//
 
-sdsd
+        //***script addsubtask***//
+        $(document).ready(function () {
+            var i = 1;
+            $("#add").click(function () {
+                i++;
+                 var domElement = $('<div class="card" id="defect" ' + 'i' + '> <div class="card-body "> <div class="row"> <div class="col-sm-6"> <div class="form-group"> <label for="taskname">งาน :</label>  @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" }) </div> </div> <div class="col-sm-5"></div> <div class="col-sm-1"> <a href="#" id="cancel"><img src = "~icon/cancel.png" ></a> </div> </div> <div class="row"> <div class="col-sm-6"> <div class="form-group"> <label for="taskname">งานรอง :</label> @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control" }) </div> </div> </div> <div class="row"> <div class="col-sm-12"> <div class="form-group"> <label for="comment">รายละเอียดข้อผิดพลาด :</label> @Html.TextBoxFor(m => m.DetailList, new { @class = "form-control" ,@Type = "TextArea" }) </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="input-group"> <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label> @Html.TextBoxFor(m => m.DevName, new {  @class = "form-control" }) </div> </div> <div class="col-sm-4"> <div class="form-group"> <input type="file" class="form-control-file" id="exampleFormControlFile1"> </div> </div> <div class="col-sm-4"> <div class="input-group"> <label class="label" style="margin-right: 10px">กำหนดส่ง :</label> @Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control" ,@type = "date" }) </div> </div> </div> </div> </div>  ');
+                $(this).parent('div').before(domElement);
+            });
+        });
+        //***//
+
+        //***script deletesubtask***//
+        $(document).on('click', '#cancel', function () {
+            var c = confirm("ยืนยันการลบที่จะลบ Defect นี้");
+            if (c == true) {
+                $(this).parent('div').parent('div').parent('div').parent('div').remove();
+            }
+
+        });
+        //***//
+
+        //***script confrimrefresh***//
+        window.onbeforeunload = function () {
+            return "ข้อมูลไม่ได้บันทึก";
+        };
+                            //***//
+
+    </script>
+    <!-- end datepicker script -->
+
+    <title>Defect</title>
+</head>
+<body>
+    @using (Ajax.BeginForm("AddDefect", "Defect", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h1 class="text-center" style="margin-top: 20pt">Defect</h1>
+                </div>
+            </div>
+            <div class="card shadow" style="margin-top: 50px;margin-bottom: 50px">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="taskname">ชื่องาน :</label>
+                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="taskname">ชื่องานรอง :</label>
+                                @Html.HiddenFor(m => m.Sub_ID)
+                                @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="comment">รายละเอียดข้อผิดพลาด:</label>
+                                @Html.TextAreaFor(m => m.DetailList, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>
+                                @Html.TextBoxFor(m => m.DevName, new { readOnreadOnly = true, @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
+                                @Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control", @type = "date" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center;margin-top: 20px">
+                        <a href="#div" id="add"><cneter><img src="~/icon/plus.png" width="42px" height="42px"></a>
+                    </div>
+                    <div class="row" style="margin-top: 20px;margin-bottom: 20px">
+                        <div class="col-sm-10">
+                        </div>
+                        <div class="col-sm-2">
+                            <a href="@Url.Action("ShowTask", "Task", new { SubTask = Session["SubTask"] })"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
+                            <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>

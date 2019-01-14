@@ -199,6 +199,9 @@
     <Compile Include="Database\SubTask.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\SubTaskSubmisstion.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\SystemManage.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -234,7 +237,6 @@
     <Compile Include="Models\PositionModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\SkillModel.cs" />
-    <Compile Include="Models\SubDefectModel.cs" />
     <Compile Include="Models\SubTaskModel.cs" />
     <Compile Include="Models\TaskModel.cs" />
     <Compile Include="Models\TypeOfCotractModel.cs" />
@@ -3408,6 +3410,8 @@
     <Content Include="Views\Member\ShowMember.cshtml" />
     <Content Include="Views\Member\ListMember.cshtml" />
     <Content Include="Views\Defect\AddDefect.cshtml" />
+    <Content Include="Views\Defect\ShowDefect.cshtml" />
+    <Content Include="Views\Defect\DetailDefect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -30,14 +30,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h2 class="text-center">New Project</h2>
+                            <h2 class="text-center">สร้างโครงการ</h2>
                             <div class="form-group">
-                                <label for="usr">Project Name :</label>
+                                <label for="usr">ชื่อโครงการ :</label>
                                 @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.ProjectName, string.Empty, new { @style = "color:red" })
                             </div>
                             <div class="form-group">
-                                <label for="comment">Description :</label>
+                                <label for="comment">รายละเอียด :</label>
                                 @Html.TextAreaFor(m => m.ProjectDescription, new { @class = "form-control" , @type = "TextArea" })
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                         <div class="col-sm-4"></div>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">Send Date :</label>
+                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
                                 <div>
                                     @Html.TextBoxFor(m => m.ProjectSendDate, new { @type = "date" ,@class ="form-control"})
                                     @*<i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>*@
@@ -60,8 +60,8 @@
                     <div class="col-sm-3 ">
                     </div>
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-3"><a href="@Url.Action("ShowProject")"><button type="button" class="btn btn-outline-danger btn-block shadow">Back</button></a></div>
-                    <div class="col-sm-3"><button type="submit" class="btn btn-outline-primary btn-block shadow ">Submit</button></div>
+                    <div class="col-sm-3"><a href="@Url.Action("ShowProject")"><button type="button" class="btn btn-outline-danger btn-block shadow">ยกเลิก</button></a></div>
+                    <div class="col-sm-3"><button type="submit" class="btn btn-outline-primary btn-block shadow ">ยืนยัน</button></div>
                 </div>
             </div>
         </div>

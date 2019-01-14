@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 login-sec">
-                <h2 class="text-center">Login Now</h2>
+                <h2 class="text-center">Login</h2>
                 @using (Ajax.BeginForm("CheckLogin", "Login", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
                 {
                     <div class="form-group">
@@ -22,7 +22,7 @@
 
                             <small>Remember Me</small>
                         </label>
-                        <button type="submit" class="btn btn-login float-right">Submit</button>
+                        <button type="submit" class="btn btn-login float-right">Login</button>
                     </div>
 
                 }
