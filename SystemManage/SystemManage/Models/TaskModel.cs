@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using SystemManage.Database;
 
 namespace SystemManage.Models
 {
@@ -42,5 +43,13 @@ namespace SystemManage.Models
         public string SubTaskNames { get; set; }
         public int SubTaskID { get; set; }
         public int Handle { get; set; }
+        
+        public List<ProjectMember> DevList { get; set; }
+        public List<ProjectMember> TestList { get; set; }
+        public List<ProjectMember> QAList { get; set; }
+
+        public string DevName { get; set; }
+        public List<string> TestName { get; set; }
+        public List<string> QAName { get; set; }
     }
 }

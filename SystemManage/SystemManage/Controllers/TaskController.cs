@@ -14,7 +14,19 @@ namespace SystemManage.Controllers
         // GET: Task
         public ActionResult AddTask()
         {
-            return View();
+            int c = 0;
+            TaskModel t = new TaskModel();
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+            t.DevList = db.ProjectMembers.Where(m => m.Role == 2 && m.ProjectID == ProjectID).ToList();
+            //foreach (var i in t.DevList)
+            //{
+            //    var item = db.Users.Where(m => m.User_ID == i.UserID).FirstOrDefault();
+            //    t.DevName[c] = item.User_Email.ToString();
+            //    ++c;
+            //}
+            t.TestList = db.ProjectMembers.Where(m => m.Role == 3 && m.ProjectID == ProjectID).ToList();
+            t.QAList = db.ProjectMembers.Where(m => m.Role == 4 && m.ProjectID == ProjectID).ToList();
+            return View(t);
         }
         [HttpPost]
         public ActionResult AddTask(TaskModel model,SubTask modelSub)

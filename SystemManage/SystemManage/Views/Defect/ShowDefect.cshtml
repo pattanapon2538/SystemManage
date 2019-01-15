@@ -112,7 +112,6 @@
                             <th><center>ผู้ทดสอบ</center></th>
                             <th><center>ผู้ตรวจคุณภาพ</center></th>
                             <th><center>รายละเอียด</center></th>
-                            <th><center>แก้ไข</center></th>
                             <th><center>ลบ</center></th>
                         </tr>
                     </thead>
@@ -146,14 +145,12 @@
                                 <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a>
                             </td>
                             <td>
-                                
-                            </td>
-                            <td>
                                 <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a>
                             </td>
                             }
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a>
+                            </td>
                             <td></td>
                         </tr>
                                 ++n;

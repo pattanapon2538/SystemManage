@@ -142,7 +142,8 @@
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>
-                                        @Html.TextBoxFor(m => m.SubTaskDevID, new { @class = "form-control" })
+                                        @*@Html.TextBoxFor(m => m.SubTaskDevID, new { @class = "form-control" })*@
+                                        @Html.DropDownListFor(m => m.SubTaskDevID, new SelectList(Model.DevList, "UserID", "UserID"), "Select", new {@class = "form-control" })
                                     </div>
                                     <div class="form-group" style="margin-top: 20px">
                                         <input type="file" class="form-control-file" id="exampleFormControlFile1">
@@ -172,7 +173,7 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
-                                @Html.TextBoxFor(m => m.TestID, new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.TestID, new SelectList(Model.TestList, "UserID", "UserID"), "Select", new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -194,7 +195,7 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้ตรวจงาน :</label>
-                                @Html.TextBoxFor(m => m.QAID, new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.QAID, new SelectList(Model.QAList, "UserID", "UserID"), "Select", new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-4">
