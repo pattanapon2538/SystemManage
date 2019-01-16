@@ -113,7 +113,7 @@
                 <table class="table table-bordered">
                         <thead>
                             <tr class="table-info">
-                                <th>อันดับ</th>
+                                <th><center>อันดับ</center></th>
                                 <th>งาน</th>
                                 <th>งานรอง</th>
                                 <th>ผู้พัฒนา</th>
@@ -121,7 +121,7 @@
                                 <th>ผู้รับผิดชอบ</th>
                                 <th>กำหนดส่ง</th>
                                 <th>เปอร์เซ็น</th>
-                                <th>แก้ไข</th>
+                                <th>รายละเอียด</th>
                                 <th>ลบ</th>
                             </tr>
                         </thead>
@@ -165,9 +165,13 @@
                                         <td>
                                             <a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-diamond"></i></a>
                                         </td>
+                                        @if (item.CreateBy == Convert.ToInt32(Session["userID"]))
+                                        {
                                         <td>
                                             <a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-archive"></i></a>
                                         </td>
+                                        }
+                                        else { <td></td>}
                                     </tr>
                                     ++i;
                                 }

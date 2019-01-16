@@ -124,43 +124,41 @@
                             <td><center>@n</center></td>
                             <td><center>@i.TaskName</center></td>
                             <td><center>@i.SubTaskName</center></td>
-                                @if (i.Status == 0)
-                                    {
-                                        <td><center>รอการแก้ไข</center></td>
-                                    }
-                                    else if (i.Status == 1)
-                                    {
-                                        <td><center>รอการตรวจสอบ</center></td>
-                                    }
-                                    else if (i.Status == 2)
-                                    {
-                                        <td><center>แก้ไขแล้dว</center></td>
-                                    }
+                            @if (i.Status == 0)
+                            {
+                                <td><center>รอการแก้ไข</center></td>
+                            }
+                            else if (i.Status == 1)
+                            {
+                                <td><center>รอการตรวจสอบ</center></td>
+                            }
+                            else if (i.Status == 2)
+                            {
+                                <td><center>แก้ไขแล้ว</center></td>
+                            }
+                            else if (i.Status == 3)
+                            {
+                                <td><center>แก้ไขอีกครั้ง</center></td>
+                            }
                             <td><center>@i.DevName</center></td>
                             <td><center>@i.TestName</center></td>
                             <td><center>@i.QAName</center></td>
+                            <td>
+                                <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a>
+                            </td>
                             @if (i.CreateBy == Convert.ToInt32(Session["userID"]))
                             {
-                            <td>
-                                <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a>
-                            </td>
-                            <td>
-                                <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a>
-                            </td>
+                                <td>
+                                    <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a>
+                                </td>
                             }
-                            <td>
-                                <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a>
-                            </td>
-                            <td></td>
+                            else
+                            {
+                                <td></td>
+                            }
+
                         </tr>
                                 ++n;
                             }
                         }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-       
-
+                    </tbody></table></div></div></div></div>

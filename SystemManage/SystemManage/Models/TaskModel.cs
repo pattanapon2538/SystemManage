@@ -48,7 +48,7 @@ namespace SystemManage.Models
         public List<ProjectMember> TestList { get; set; }
         public List<ProjectMember> QAList { get; set; }
 
-        public string DevName { get; set; }
+        public List<string> DevName { get; set; }
         public List<string> TestName { get; set; }
         public List<string> QAName { get; set; }
     }

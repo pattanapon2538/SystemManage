@@ -14,16 +14,9 @@ namespace SystemManage.Controllers
         // GET: Task
         public ActionResult AddTask()
         {
-            int c = 0;
             TaskModel t = new TaskModel();
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
-            t.DevList = db.ProjectMembers.Where(m => m.Role == 2 && m.ProjectID == ProjectID).ToList();
-            //foreach (var i in t.DevList)
-            //{
-            //    var item = db.Users.Where(m => m.User_ID == i.UserID).FirstOrDefault();
-            //    t.DevName[c] = item.User_Email.ToString();
-            //    ++c;
-            //}
+            t.DevList = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 2).ToList();
             t.TestList = db.ProjectMembers.Where(m => m.Role == 3 && m.ProjectID == ProjectID).ToList();
             t.QAList = db.ProjectMembers.Where(m => m.Role == 4 && m.ProjectID == ProjectID).ToList();
             return View(t);
@@ -91,7 +84,7 @@ namespace SystemManage.Controllers
             db.SubTasks.Add(st);
             db.SaveChanges();
             ModelState.Clear();
-            return View();
+            return RedirectToAction("ShowTask","Task");
         }
         public ActionResult ShowTask()
         {
@@ -116,6 +109,7 @@ namespace SystemManage.Controllers
                         TotalPercent = i.TotalPercent,
                         CreateDate = i.CreateDate,
                         UpdateDate = i.UpdateDate,
+                        CreateBy = i.CreateBy
                     });
                     Taskname = i.TaskName;
                     var item2 = db.SubTasks.Where(m => m.TaskID == i.TaskID).OrderByDescending(t => t.TaskID).ToList();
@@ -140,6 +134,7 @@ namespace SystemManage.Controllers
                             SubDevSend = s.SubDevSend,
                             CreateDate = s.CreateDate,
                             UpdateDate = s.UpdateDate,
+                            CreateBy = s.CreateBy
                         });
                       //  ++countList;
                     }
@@ -162,6 +157,7 @@ namespace SystemManage.Controllers
                             TotalPercent = t.TotalPercent,
                             CreateDate = t.CreateDate,
                             UpdateDate = t.UpdateDate,
+                            CreateBy = t.CreateBy
                         });
                         SubTaskList.Add(new SubTaskModel
                         {
@@ -177,6 +173,7 @@ namespace SystemManage.Controllers
                             SubDevSend = s.SubDevSend,
                             CreateDate = s.CreateDate,
                             UpdateDate = s.UpdateDate,
+                            CreateBy = s.CreateBy
 
                         });
                     }
@@ -194,6 +191,7 @@ namespace SystemManage.Controllers
                             TotalPercent = it.TotalPercent,
                             CreateDate = it.CreateDate,
                             UpdateDate = it.UpdateDate,
+                            CreateBy = it.CreateBy
                         });
                         var st = db.SubTasks.Where(m => m.TaskID == it.TaskID).ToList();
                         foreach (var si in st)
@@ -216,6 +214,7 @@ namespace SystemManage.Controllers
                                 SubDevSend = si.SubDevSend,
                                 CreateDate = si.CreateDate,
                                 UpdateDate = si.UpdateDate,
+                                CreateBy = si.CreateBy
                             });
                         }
                     }
@@ -233,6 +232,7 @@ namespace SystemManage.Controllers
                             TotalPercent = it.TotalPercent,
                             CreateDate = it.CreateDate,
                             UpdateDate = it.UpdateDate,
+                            CreateBy = it.CreateBy
                         });
                         var st = db.SubTasks.Where(m => m.TaskID == it.TaskID).ToList();
                         foreach (var si in st)
@@ -255,6 +255,7 @@ namespace SystemManage.Controllers
                                 SubDevSend = si.SubDevSend,
                                 CreateDate = si.CreateDate,
                                 UpdateDate = si.UpdateDate,
+                                CreateBy = si.CreateBy
                             });
                         }
                     }

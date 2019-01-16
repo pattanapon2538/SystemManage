@@ -1,4 +1,5 @@
 ﻿@model SystemManage.Models.DefectModel
+@using SystemManage.Models
 @{
     ViewBag.Title = "DetailDefect";
 }
@@ -19,7 +20,7 @@
                             <div class="form-group">
                                 <label for="taskname">ชื่องาน :</label>
                                 @Html.HiddenFor(m => m.Defect_ID)
-                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" ,@readonly = "" })
                             </div>
                         </div>
                     </div>
@@ -28,7 +29,7 @@
                             <div class="form-group">
                                 <label for="taskname">ชื่องานรอง :</label>
                                 @Html.HiddenFor(m => m.Sub_ID)
-                                @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control", @readonly = "" })
                             </div>
                         </div>
                     </div>
@@ -36,7 +37,14 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">รายละเอียดข้อผิดพลาด:</label>
-                                @Html.TextBoxFor(m => m.Detail, new { @class = "form-control",@type = "TextArea" })
+                                @if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                {
+                                    @Html.TextBoxFor(m => m.Detail, new { @class = "form-control", @type = "TextArea" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.Detail, new { @class = "form-control", @type = "TextArea" , @readonly = "" })
+                                }
                             </div>
                         </div>
                     </div>
@@ -44,13 +52,50 @@
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>
-                                @Html.TextBoxFor(m => m.DevName, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.DevName, new { @class = "form-control" , @readonly = "" })
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
-                                @Html.TextBoxFor(m => m.SendDate, new { @class = "form-control", @type = "date" })
+                                @if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                {
+                                    <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
+                                    @Html.TextBoxFor(m => m.SendDate, new { @class = "form-control", @type = "date" })
+                                }
+                                else
+                                {
+                                    <label class="label" style="margin-right: 10px">กำหนดส่ง:</label>
+                                    @Html.TextBoxFor(m => m.SendDate, new { @class = "form-control", @type = "date", @readonly = "" })
+                                }
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                @if (Model.DevID == Convert.ToInt32(Session["userID"]) && Model.Status == 2)
+                                {
+                                    <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
+                                    <div class="rs-select2 js-select-simple select--no-search ">
+                                        @Html.DropDownListFor(m => m.StatusDev, new SelectList(Enum.GetValues(typeof(DefectModel.StatusDefectDev))), "เลือกสถานะ", new { @class = "form-control", @disabled = "disabled" })
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                                }
+                                else if (Model.DevID == Convert.ToInt32(Session["userID"]))
+                                {
+                                    <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
+                                    <div class="rs-select2 js-select-simple select--no-search ">
+                                        @Html.DropDownListFor(m => m.StatusDev, new SelectList(Enum.GetValues(typeof(DefectModel.StatusDefectDev))), "เลือกสถานะ", new { @class = "form-control"})
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                                }
+                                else if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                {
+                                    <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
+                                    <div class="rs-select2 js-select-simple select--no-search ">
+                                        @Html.DropDownListFor(m => m.StatusTest, new SelectList(Enum.GetValues(typeof(DefectModel.StatusDefectTest))), "เลือกสถานะ", new { @class = "form-control" })
+                                        <div class="select-dropdown"></div>
+                                    </div>
+                                }
+                                @Html.HiddenFor(m => m.CreateBy)
                             </div>
                         </div>
                     </div>
@@ -66,8 +111,10 @@
                         </div>
                         <div class="col-sm-2">
                             <a href="@Url.Action("ShowDefect","Defect")"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
-                            <button type="submit" class="btn btn-outline-primary">บันทึก</button>
-
+                            @if (Model.CreateBy == Convert.ToInt32(Session["userID"]) || Model.DevID == Convert.ToInt32(Session["userID"]))
+                            {
+                            <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
+                            }
                         </div>
                     </div>
                 </div>

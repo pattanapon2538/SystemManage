@@ -93,6 +93,7 @@ namespace SystemManage.Controllers
                     DevName = Dev.User_Email,
                     TestName = Tester.User_Email,
                     QAName = QA.User_Email,
+                    CreateBy = i.CreateBy
                 });
             }
             ViewBag.DataList = DefectList;
@@ -109,9 +110,27 @@ namespace SystemManage.Controllers
             model.TaskName = Task.TaskName;
             model.SubTaskName = SubTask.SubName;
             model.Detail = item.Detail;
+            model.DevID = SubTask.SubDevID;
             model.DevName = Dev.User_Email;
             model.Status = item.Status;
             model.SendDate = item.SendDate;
+            model.CreateBy = item.CreateBy;
+            if (item.Status == 0)
+            {
+                model.StatusDev = DefectModel.StatusDefectDev.Coding;
+            }
+            else if (item.Status == 1)
+            {
+                model.StatusDev = DefectModel.StatusDefectDev.FIXD;
+            }
+            else if (item.Status == 2)
+            {
+                model.StatusTest = DefectModel.StatusDefectTest.Close;
+            }
+            else if (item.Status == 3)
+            {
+                model.StatusTest = DefectModel.StatusDefectTest.ReCoding;
+            }
             return View(model);
         }
         public ActionResult SeveData(DefectModel model)
@@ -120,6 +139,22 @@ namespace SystemManage.Controllers
             i.Detail = model.Detail;
             i.SendDate = model.SendDate;
             i.UpdateDate = DateTime.Now;
+            if (model.StatusDev.ToString() == "Coding" && model.CreateBy != Convert.ToInt32(Session["userID"]))
+            {
+                i.Status = 0;
+            }
+            else if (model.StatusDev.ToString() == "FIXD" && model.CreateBy != Convert.ToInt32(Session["userID"]))
+            {
+                i.Status = 1;
+            }
+            else if (model.StatusTest.ToString() == "Close" && model.CreateBy == Convert.ToInt32(Session["userID"]))
+            {
+                i.Status = 2;
+            }
+            else if (model.StatusTest.ToString() == "Recoding" && model.CreateBy == Convert.ToInt32(Session["userID"]))
+            {
+                i.Status = 3;
+            }
             //i.AttachFile =
             //i.AttachShow
             i.UpdateBy = Convert.ToInt32(Session["userID"]);

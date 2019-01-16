@@ -19,8 +19,8 @@ namespace SystemManage.Models
         public DateTime SubDevSend { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string UpdateBy { get; set; }
+        public int CreateBy { get; set; }
+        public int UpdateBy { get; set; }
         public int TaskID { get; set; }
         public string TaskName { get; set; }
         public string Handle { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,8 @@ namespace SystemManage.Models
         public int Defect_ID { get; set; }
         public int Sub_ID { get; set; }
         public string Detail { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime SendDate { get; set; }
         public int Status { get; set; }
         public string AttachShow { get; set; }
@@ -18,10 +21,13 @@ namespace SystemManage.Models
         public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
+        public StatusDefectDev StatusDev { get; set; }
+        public StatusDefectTest StatusTest { get; set; }
 
 
         public string TaskName { get; set; }
         public string SubTaskName { get; set; }
+        public int DevID { get; set; }
         public string DevName { get; set; }
         public string TestName { get; set; }
         public string QAName { get; set; }
@@ -32,5 +38,15 @@ namespace SystemManage.Models
         public List<string> AttachFileList { get; set; }
         public List<DateTime> SendDateList { get; set; }
 
+        public enum StatusDefectDev
+        {
+            FIXD,
+            Coding
+        }
+        public enum StatusDefectTest
+        {
+            Close,
+            ReCoding
+        }
     }
 }
