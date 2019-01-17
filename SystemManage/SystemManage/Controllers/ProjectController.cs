@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SystemManage.Models;
 using SystemManage.Database;
+using SystemManage.Controllers;
 
 namespace SystemManage.Controllers
 {
@@ -20,6 +21,7 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddProject(ProjectModel model)
         {
+            InboxController i = new InboxController();
             Project p = new Project();
             ProjectMember pm = new ProjectMember();
             p.Name = model.ProjectName;
@@ -36,6 +38,13 @@ namespace SystemManage.Controllers
             db.ProjectMembers.Add(pm);
             db.SaveChanges();
             ModelState.Clear();
+            //string sender = model.CreateBy.ToString();
+            string sender = "systemmanage59346@gmail.com";
+            string subject = model.ProjectName;
+            //string receiver = model.CreateBy.ToString();
+            string receiver = "pattanapon2538@outlook.com";
+            string mess = "ท่านได้มีการสร้างโครงการ"+model.ProjectName+"ตำแหน่งของคุณคือหัวโครงการ";
+            i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ShowProject");
         }
         public ActionResult ShowProject()
@@ -128,7 +137,9 @@ namespace SystemManage.Controllers
                 }
                 db.Tasks.Remove(item);
             }
+            var pm = db.ProjectMembers.Where(s => s.ProjectID == ProjectID).FirstOrDefault();
             db.Projects.Remove(d);
+            db.ProjectMembers.Remove(pm);
             db.SaveChanges();
             return RedirectToAction("ShowProject");
         }

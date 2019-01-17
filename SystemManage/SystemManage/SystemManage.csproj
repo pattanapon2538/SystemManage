@@ -153,12 +153,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DefectController.cs" />
+    <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\LanguagesController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Database\Defect.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
@@ -3416,6 +3418,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploade\" />
+    <Folder Include="Views\Inbox\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

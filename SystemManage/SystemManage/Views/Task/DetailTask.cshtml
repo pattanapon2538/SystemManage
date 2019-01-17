@@ -18,7 +18,7 @@
                             <div class="form-group">
                                 <label for="taskname">Task Name :</label>
                                 @Html.HiddenFor(m => m.TaskID)
-                                @Html.EditorFor(m => m.TaskName, new { @class = "form-controll" })
+                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                                     <div class="form-group">
                                         <label for="taskname">SubTask Name :</label>
                                         @Html.HiddenFor(m => m.SubTaskID)
-                                        @Html.EditorFor(m => m.SubTaskNames, new { @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.SubTaskNames, new { @class = "form-control" })
                                     </div>
                                 </div>
                                 <div class="col-sm-1"></div>
@@ -76,7 +76,8 @@
                                 <div class="col-sm-8">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>
-                                        @Html.EditorFor(m => m.SubDevID, new { @class = "form-control" })
+                                        @Html.DropDownListFor(m => m.SubDevID, new SelectList(Model.DevList, "UserID", "UserID"), "Select", new { @class = "form-control" })
+
                                     </div>
                                     <div class="form-group" style="margin-top: 20px">
                                         <input type="file" class="form-control-file" id="exampleFormControlFile1">
@@ -84,8 +85,8 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        <label class="label" style="margin-right: 10px">Send Date :</label>
-                                        @Html.EditorFor(m => m.SubTaskDateSend, new { @class = "form-control", @type = "date" })
+                                        <label class="label" style="margin-right: 10px">Send Date:</label>
+                                        @Html.TextBoxFor(m => m.SubTaskDateSend, new { @class = "form-control", @type = "date" })
                                     </div>
                                 </div>
                             </div>
@@ -116,12 +117,13 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <div class="col-sm-6">
-                                    <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
-                                    @Html.EditorFor(m => m.TestID, new { @class = "form-control" })
+                                    <label class="label" style="margin-right: 10px">ผู้ทดสอบ:</label>
+                                    @Html.DropDownListFor(m => m.TestID, new SelectList(Model.TestList, "UserID", "UserID"), "Select", new { @class = "form-control" })
+
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="label" style="margin-right: 10px">กำหนดส่ง:</label>
-                                    @Html.EditorFor(m => m.TestSentDate, new { @class = "form-control", @type = "date" })
+                                    @Html.TextBoxFor(m => m.TestSentDate, new { @class = "form-control", @type = "date" })
                                 </div>
                             </div>
                         </div>
@@ -146,11 +148,12 @@
                             <div class="input-group">
                                 <div class="col-sm-6">
                                     <label class="label" style="margin-right: 10px">ผู้ตรวจงาน :</label>
-                                    @Html.EditorFor(m => m.QAID, new { @class = "form-control" })
+                                    @Html.DropDownListFor(m => m.QAID, new SelectList(Model.QAList, "UserID", "UserID"), "Select", new { @class = "form-control" })
+
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
-                                    @Html.EditorFor(m => m.QASentDate, new { @class = "form-control" })
+                                    @Html.TextBoxFor(m => m.QASentDate, new { @class = "form-control" , @type="date"})
                                 </div>
                             </div>
                         </div>

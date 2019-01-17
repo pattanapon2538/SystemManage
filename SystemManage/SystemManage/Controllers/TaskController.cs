@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SystemManage.Database;
 using SystemManage.Models;
+using SystemManage.Controllers;
 
 namespace SystemManage.Controllers
 {
@@ -269,8 +270,11 @@ namespace SystemManage.Controllers
         public ActionResult DetailTask(String SubID)
         {
             Session["SubID"] = SubID;
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             TaskModel model = new TaskModel();
             var st = db.SubTasks.Where(m => m.SubID.ToString() == SubID).FirstOrDefault();
+            var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
+            model.DevList = db.ProjectMembers.Where(m => m.ProjectID == t.ProjectID && m.Role == 2).ToList();
             model.SubTaskID = st.SubID;
             model.SubTaskNames = st.SubName;
             model.SubTasksDes = st.SubDescriptionDev;
@@ -278,7 +282,8 @@ namespace SystemManage.Controllers
             model.Handle = st.Handle;
             model.Status = st.SubStatus;
             model.SubTaskDateSend = st.SubDevSend;
-            var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
+            model.TestList = db.ProjectMembers.Where(m => m.ProjectID == t.ProjectID && m.Role == 3).ToList();
+            model.QAList = db.ProjectMembers.Where(m => m.ProjectID == t.ProjectID && m.Role == 4).ToList();
             model.TaskID = t.TaskID;
             model.TaskName = t.TaskName;
             model.DescriptionTask = t.DescriptionTask;

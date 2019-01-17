@@ -114,15 +114,15 @@
                         <thead>
                             <tr class="table-info">
                                 <th><center>อันดับ</center></th>
-                                <th>งาน</th>
-                                <th>งานรอง</th>
-                                <th>ผู้พัฒนา</th>
-                                <th>สถานะปัจจุบัน</th>
-                                <th>ผู้รับผิดชอบ</th>
-                                <th>กำหนดส่ง</th>
-                                <th>เปอร์เซ็น</th>
-                                <th>รายละเอียด</th>
-                                <th>ลบ</th>
+                                <th><center>งาน</center></th>
+                                <th><center>งานรอง</center></th>
+                                <th><center>ผู้พัฒนา</center></th>
+                                <th><center>สถานะปัจจุบัน</center></th>
+                                <th><center>ผู้รับผิดชอบ</center></th>
+                                <th><center>กำหนดส่ง</center></th>
+                                <th><center>เปอร์เซ็น</center></th>
+                                <th><center>รายละเอียด</center></th>
+                                <th><center>ลบ</center></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -131,45 +131,45 @@
                                 foreach (var item in (List<SubTaskModel>)ViewBag.DataList2)
                                 {
                                     <tr class="Seach">
-                                        <td>@i</td>
-                                        <td>@item.TaskName</td>
-                                        <td>@item.SubName</td>
-                                        <td>@item.SubDevID</td>
+                                        <td><center>@i</center></td>
+                                        <td><center>@item.TaskName</center></td>
+                                        <td><center>@item.SubName</center></td>
+                                        <td><center>@item.SubDevID</center></td>
                                         @if (item.SubStatus == 0)
                                         {
-                                            <td>อยู่ระหว่างดำเนินการ</td>
+                                            <td><center>อยู่ระหว่างดำเนินการ</center></td>
                                         }
                                         else if (item.SubStatus == 1)
                                         {
-                                            <td>รอการตรวจสอบ</td>
+                                            <td><center>รอการตรวจสอบ</center></td>
                                         }
                                         else if (item.SubStatus == 2)
                                         {
-                                            <td>ตรวจสอบคุณภาพ</td>
+                                            <td><center>ตรวจสอบคุณภาพ</center></td>
                                         }
                                         else if (item.SubStatus == 3)
                                         {
-                                            <td>รอการยืนยัน</td>
+                                            <td><center>รอการยืนยัน</center></td>
                                         }
                                         else if (item.SubStatus == 4)
                                         {
-                                            <td>เสร็จสิน</td>
+                                            <td><center>เสร็จสิน</center></td>
                                         }
                                         else if (item.SubStatus == 5)
                                         {
-                                            <td>อยู่ระหว่างการแก้ไข</td>
+                                            <td><center>อยู่ระหว่างการแก้ไข</center></td>
                                         }
-                                        <td>@item.Handle</td>
-                                        <td>@item.SubDevSend.ToString("dd/MM/yyyy")</td>
-                                        <td>@item.SubPercent%</td>
+                                        <td><center>@item.Handle</center></td>
+                                        <td><center>@item.SubDevSend.ToString("dd/MM/yyyy")</center></td>
+                                        <td><center>@item.SubPercent%</center></td>
                                         <td>
-                                            <a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-diamond"></i></a>
-                                        </td>
+                                            <center><a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-diamond"></i></a></center>
+</td>
                                         @if (item.CreateBy == Convert.ToInt32(Session["userID"]))
                                         {
                                         <td>
-                                            <a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-archive"></i></a>
-                                        </td>
+                                            <center><a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-archive"></i></a></center>
+</td>
                                         }
                                         else { <td></td>}
                                     </tr>
