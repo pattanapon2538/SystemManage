@@ -18,6 +18,7 @@ namespace SystemManage.Database
         public Language_of_Type()
         {
             this.Users = new HashSet<User>();
+            this.Skills = new HashSet<Skill>();
         }
     
         public int languageID { get; set; }
@@ -29,5 +30,7 @@ namespace SystemManage.Database
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Skill> Skills { get; set; }
     }
 }

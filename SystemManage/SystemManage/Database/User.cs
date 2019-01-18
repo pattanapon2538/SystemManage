@@ -45,7 +45,7 @@ namespace SystemManage.Database
         public int AVG { get; set; }
         public int Amount_Succ { get; set; }
         public int Amount_Non { get; set; }
-        public int  TotalCoding { get; set; }
+        public int TotalCoding { get; set; }
         public int Speaking { get; set; }
         public int Reading { get; set; }
         public int Writng { get; set; }
@@ -60,8 +60,9 @@ namespace SystemManage.Database
     
         public virtual Language_of_Type Language_of_Type { get; set; }
         public virtual Position Position { get; set; }
-        public virtual Type_of_Contract Type_of_Contract { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectMember> ProjectMembers { get; set; }
+        public virtual Type_of_Contract Type_of_Contract { get; set; }
+        public virtual Skill Skill { get; set; }
     }
 }

@@ -4,38 +4,40 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7defb4f02a1646268b3c899f232c21b3" Name="Diagram1" ZoomLevel="63">
-        <EntityTypeShape EntityType="SystemManageModel.Defect" Width="1.5" PointX="13.25" PointY="6.375" />
-        <EntityTypeShape EntityType="SystemManageModel.Document" Width="1.5" PointX="15.75" PointY="8.5" />
-        <EntityTypeShape EntityType="SystemManageModel.Language_of_Type" Width="1.5" PointX="7" PointY="6.125" />
-        <EntityTypeShape EntityType="SystemManageModel.Mail" Width="1.5" PointX="9.25" PointY="5.625" />
-        <EntityTypeShape EntityType="SystemManageModel.Message" Width="1.5" PointX="9.25" PointY="8.25" />
-        <EntityTypeShape EntityType="SystemManageModel.Position" Width="1.5" PointX="3.125" PointY="1.25" />
-        <EntityTypeShape EntityType="SystemManageModel.Project" Width="1.5" PointX="9.125" PointY="1.375" />
-        <EntityTypeShape EntityType="SystemManageModel.SIT" Width="1.5" PointX="15.75" PointY="1.75" />
-        <EntityTypeShape EntityType="SystemManageModel.SITStep" Width="1.5" PointX="15.75" PointY="6.125" />
-        <EntityTypeShape EntityType="SystemManageModel.SubDefect" Width="1.5" PointX="11.25" PointY="6.75" />
-        <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="13.25" PointY="1.375" />
-        <EntityTypeShape EntityType="SystemManageModel.Type_of_Contract" Width="1.5" PointX="7.125" PointY="8.875" />
+      <Diagram DiagramId="7defb4f02a1646268b3c899f232c21b3" Name="Diagram1" ZoomLevel="56">
+        <EntityTypeShape EntityType="SystemManageModel.Defect" Width="1.5" PointX="11.125" PointY="7.875" />
+        <EntityTypeShape EntityType="SystemManageModel.Document" Width="1.5" PointX="11" PointY="1.375" />
+        <EntityTypeShape EntityType="SystemManageModel.Language_of_Type" Width="1.5" PointX="3" PointY="10.75" />
+        <EntityTypeShape EntityType="SystemManageModel.Mail" Width="1.5" PointX="7" PointY="1.125" />
+        <EntityTypeShape EntityType="SystemManageModel.Message" Width="1.5" PointX="8.875" PointY="1" />
+        <EntityTypeShape EntityType="SystemManageModel.Position" Width="1.5" PointX="1" PointY="4.375" />
+        <EntityTypeShape EntityType="SystemManageModel.Project" Width="1.5" PointX="5.125" PointY="4.25" />
+        <EntityTypeShape EntityType="SystemManageModel.ProjectMember" Width="1.5" PointX="5.125" PointY="1.125" />
+        <EntityTypeShape EntityType="SystemManageModel.SIT" Width="1.5" PointX="5.125" PointY="8.375" />
+        <EntityTypeShape EntityType="SystemManageModel.SITStep" Width="1.5" PointX="7.625" PointY="9.75" />
+        <EntityTypeShape EntityType="SystemManageModel.SubDefect" Width="1.5" PointX="13.25" PointY="7.875" />
+        <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="9" PointY="4.375" />
+        <EntityTypeShape EntityType="SystemManageModel.SubTaskSubmisstion" Width="1.5" PointX="11.125" PointY="4.625" />
+        <EntityTypeShape EntityType="SystemManageModel.Task" Width="1.5" PointX="7" PointY="3.625" />
+        <EntityTypeShape EntityType="SystemManageModel.Type_of_Contract" Width="1.5" PointX="1" PointY="1.125" />
+        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="3" PointY="1.25" />
         <AssociationConnector Association="SystemManageModel.FK_Defect" />
         <AssociationConnector Association="SystemManageModel.FK_SubDefect" />
+        <AssociationConnector Association="SystemManageModel.FK_Languages" />
         <AssociationConnector Association="SystemManageModel.FK_Mail" />
+        <AssociationConnector Association="SystemManageModel.FK_Position" />
+        <AssociationConnector Association="SystemManageModel.FK_Project" />
         <AssociationConnector Association="SystemManageModel.FK_SIT" />
+        <AssociationConnector Association="SystemManageModel.FK_Task" />
+        <AssociationConnector Association="SystemManageModel.FK_UserID" />
         <AssociationConnector Association="SystemManageModel.FK_Step" />
         <AssociationConnector Association="SystemManageModel.FK_Sub" />
-        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="5" PointY="1.375" />
-        <AssociationConnector Association="SystemManageModel.FK_Languages" />
-        <AssociationConnector Association="SystemManageModel.FK_Position" />
-        <AssociationConnector Association="SystemManageModel.FK_Contact" />
-        <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="7" PointY="3.75" />
-        <EntityTypeShape EntityType="SystemManageModel.ProjectMember" Width="1.5" PointX="7" PointY="1.375" />
-        <AssociationConnector Association="SystemManageModel.FK_Project" />
-        <AssociationConnector Association="SystemManageModel.FK_UserID" />
-        <EntityTypeShape EntityType="SystemManageModel.Task" Width="1.5" PointX="11.25" PointY="0.875" />
-        <AssociationConnector Association="SystemManageModel.FK_Task" />
         <AssociationConnector Association="SystemManageModel.FK_SubTask" />
-        <EntityTypeShape EntityType="SystemManageModel.SubTaskSubmisstion" Width="1.5" PointX="13.375" PointY="10.25" />
         <AssociationConnector Association="SystemManageModel.SubID" />
+        <AssociationConnector Association="SystemManageModel.FK_Contact" />
+        <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="1" PointY="7.5" />
+        <AssociationConnector Association="SystemManageModel.FK_languaeID" />
+        <AssociationConnector Association="SystemManageModel.FK_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

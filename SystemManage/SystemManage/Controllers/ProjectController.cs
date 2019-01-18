@@ -38,12 +38,13 @@ namespace SystemManage.Controllers
             db.ProjectMembers.Add(pm);
             db.SaveChanges();
             ModelState.Clear();
-            //string sender = model.CreateBy.ToString();
-            string sender = "systemmanage59346@gmail.com";
+            var Email = db.Users.Where(m => m.User_ID == p.CreateBy).FirstOrDefault();
+            string sender = Email.ToString();
+            //string sender = "systemmanage59346@gmail.com";
             string subject = model.ProjectName;
             //string receiver = model.CreateBy.ToString();
             string receiver = "pattanapon2538@outlook.com";
-            string mess = "ท่านได้มีการสร้างโครงการ"+model.ProjectName+"ตำแหน่งของคุณคือหัวโครงการ";
+            string mess = "ท่านได้มีการสร้างโครงการ" + model.ProjectName + "ตำแหน่งของคุณคือหัวโครงการ";
             i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ShowProject");
         }
@@ -104,7 +105,6 @@ namespace SystemManage.Controllers
         {
             ProjectModel Model = new ProjectModel();
             Project p = db.Projects.Where(m => m.ProjectID.ToString() == ProjectID).FirstOrDefault();
-            
             Model.ProjectID = p.ProjectID;
             Model.ProjectName = p.Name;
             Model.ProjectDescription = p.Description;
@@ -117,16 +117,37 @@ namespace SystemManage.Controllers
             Project p = db.Projects.Where(m => m.ProjectID == Model.ProjectID).FirstOrDefault();
             p.Name = Model.ProjectName;
             p.Description = Model.ProjectDescription;
-            p.Status = Model.ProjectStatus;
+            if (Model.status.ToString() == "Terminate")
+            {
+                p.Status = 3;
+            }
+            else if (Model.status.ToString() == "Pause")
+            {
+                p.Status = 2;
+            }
+            else if (Model.status.ToString() == "Processing")
+            {
+                p.Status = 1;
+            }
             p.UpdateDate = DateTime.Now;
             p.UpdateBy = Convert.ToInt32(Session["userID"]);
             db.SaveChanges();
+            var Email = db.Users.Where(m => m.User_ID == p.CreateBy).FirstOrDefault();
+            string sender = Email.ToString();
+            //string sender = "systemmanage59346@gmail.com";
+            string subject = Model.ProjectName;
+            //string receiver = model.CreateBy.ToString();
+            string receiver = "pattanapon2538@outlook.com";
+            string mess = "โครงการ" + Model.ProjectName + "ได้มีการแก้ไขข้อมูลสถานะของโครงการ"+Model.status;
+            InboxController i = new InboxController();
+            i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ShowProject");
 
         }
         public ActionResult DeleteProject(int ProjectID)
         {
             Project d = db.Projects.Where(m => m.ProjectID == ProjectID).FirstOrDefault();
+            
             var t = db.Tasks.Where(m => m.ProjectID == d.ProjectID).ToList();
             foreach (var item in t)
             {
@@ -141,6 +162,16 @@ namespace SystemManage.Controllers
             db.Projects.Remove(d);
             db.ProjectMembers.Remove(pm);
             db.SaveChanges();
+            var Email = db.Users.Where(m => m.User_ID == d.CreateBy).FirstOrDefault();
+            string sender = Email.ToString();
+            //string sender = d.CreateBy.ToString();
+            //string sender = "systemmanage59346@gmail.com";
+            string subject = d.Name;
+            //string receiver = d.CreateBy.ToString(); รอส่งเมล์ให้ทั้งทีม
+            string receiver = "pattanapon2538@outlook.com";
+            string mess = "โครงการ" + d.Name + "ได้ถูกลบ";
+            InboxController i = new InboxController();
+            i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ShowProject");
         }
         public ActionResult GetData(String ProjectID)

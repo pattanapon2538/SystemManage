@@ -50,6 +50,16 @@ namespace SystemManage.Controllers
                     s.HaveDefect = 1;
                     s.SubStatus = 5;
                     db.SaveChanges();
+                    var Email = db.Users.Where(m => m.User_ID == d.CreateBy).FirstOrDefault();
+                    var Sendto = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
+                    string sender = Email.User_Email.ToString();
+                    //string sender = "systemmanage59346@gmail.com";
+                    string subject = "Defect หัวข้อ"+ st.SubName;
+                    string receiver = Sendto.User_Email.ToString();
+                    //string receiver = "pattanapon2538@outlook.com";
+                    string mess = "มีข้อผิดพลาดในหัวข้อ" + st.SubName;
+                    InboxController ms = new InboxController();
+                    ms.SendEmail(receiver, subject, mess, sender);
                 }
             }
             else {
@@ -67,6 +77,16 @@ namespace SystemManage.Controllers
                 s.HaveDefect = 1;
                 s.SubStatus = 5;
                 db.SaveChanges();
+                var Email = db.Users.Where(m => m.User_ID == d.CreateBy).FirstOrDefault();
+                var Sendto = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
+                string sender = Email.User_Email.ToString();
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = "Defect หัวข้อ" + st.SubName;
+                string receiver = Sendto.User_Email.ToString();
+                //string receiver = "pattanapon2538@outlook.com";
+                string mess = "มีข้อผิดพลาดในหัวข้อ" + st.SubName;
+                InboxController ms = new InboxController();
+                ms.SendEmail(receiver, subject, mess, sender);
             }
             return RedirectToAction("ShowDefect");
         }
@@ -166,6 +186,17 @@ namespace SystemManage.Controllers
             var i = db.Defects.Where(m => m.Defect_ID == DefectID).FirstOrDefault();
             db.Defects.Remove(i);
             db.SaveChanges();
+            var Email = db.Users.Where(m => m.User_ID == i.CreateBy).FirstOrDefault();
+            var u = db.SubTasks.Where(m => m.SubID == i.Sub_ID).FirstOrDefault();
+            var Sendto = db.Users.Where(m => m.User_ID == u.SubDevID).FirstOrDefault();
+            string sender = Email.User_Email.ToString();
+            //string sender = "systemmanage59346@gmail.com";
+            string subject = "Defect" + u.SubName;
+            string receiver = Sendto.User_Email.ToString();
+            //string receiver = "pattanapon2538@outlook.com";
+            string mess = "ได้ลบหัวข้อ" + u.SubName;
+            InboxController ms = new InboxController();
+            ms.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ShowDefect","Defect");
         }
         

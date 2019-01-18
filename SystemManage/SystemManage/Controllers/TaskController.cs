@@ -25,6 +25,7 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddTask(TaskModel model,SubTask modelSub)
         {
+            InboxController sendMail = new InboxController();
             Task t = new Task();
             SubTask st = new SubTask();
             t.ProjectID = Convert.ToInt32(Session["ProjectID"]);
@@ -64,6 +65,16 @@ namespace SystemManage.Controllers
                     st.CreateBy = Convert.ToInt32(Session["userID"]);
                     db.SubTasks.Add(st);
                     db.SaveChanges();
+                    var Emails = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
+                    var Sendtos = db.Users.Where(m => m.User_ID == model.SubTaskDevID[item]).FirstOrDefault();
+                    string senders = Emails.User_Email.ToString();
+                    //string sender = "systemmanage59346@gmail.com";
+                    string subjects = t.TaskName+""+st.SubName;
+                    string receivers = Sendtos.User_Email.ToString();
+                    //string receiver = "pattanapon2538@outlook.com";
+                    string messs = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ"+st.SubPercent;
+                    InboxController e = new InboxController();
+                    e.SendEmail(receivers, subjects, messs, senders);
                 }
 
                 ModelState.Clear();
@@ -84,6 +95,16 @@ namespace SystemManage.Controllers
             st.CreateBy = Convert.ToInt32(Session["userID"]);
             db.SubTasks.Add(st);
             db.SaveChanges();
+            var Email = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
+            var Sendto = db.Users.Where(m => m.User_ID == model.SubTaskDevID[0]).FirstOrDefault();
+            string sender = Email.User_Email.ToString();
+            //string sender = "systemmanage59346@gmail.com";
+            string subject = t.TaskName + "" + st.SubName;
+            string receiver = Sendto.User_Email.ToString();
+            //string receiver = "pattanapon2538@outlook.com";
+            string mess = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubPercent;
+            InboxController i = new InboxController();
+            i.SendEmail(receiver, subject, mess, sender);
             ModelState.Clear();
             return RedirectToAction("ShowTask","Task");
         }
@@ -300,10 +321,10 @@ namespace SystemManage.Controllers
         {
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             int userID = Convert.ToInt32(Session["userID"]);
-            var st = db.SubTasks.Where(m => m.SubID == model.SubTaskID).FirstOrDefault();
-            var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
-            var PointCode = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
-            var r = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.UserID == userID).FirstOrDefault();
+            SubTask st = db.SubTasks.Where(m => m.SubID == model.SubTaskID).FirstOrDefault();
+            Task t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
+            User PointCode = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
+            ProjectMember r = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.UserID == userID).FirstOrDefault();
             //PM
             if (r.Role == 1)
             {
@@ -326,6 +347,16 @@ namespace SystemManage.Controllers
                 t.UpdateDate = DateTime.Now;
                 t.UpdateBy = Convert.ToInt32(Session["userID"]); //Session[User]
                 db.SaveChanges();
+                var Email = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
+                var Sendto = db.Users.Where(m => m.User_ID == model.SubDevID).FirstOrDefault();
+                string sender = Email.User_Email.ToString();
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = t.TaskName + "" + st.SubName;
+                string receiver = Sendto.User_Email.ToString();
+                //string receiver = "pattanapon2538@outlook.com";
+                string mess = "งานของคุณได้มีการแก้ไข" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
                 return RedirectToAction("ShowTask");
             }
             //Dev
@@ -342,6 +373,16 @@ namespace SystemManage.Controllers
                     t.UpdateDate = DateTime.Now;
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
                     db.SaveChanges();
+                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
+                var Sendto = db.Users.Where(m => m.User_ID == t.TestID).FirstOrDefault();
+                string sender = Email.User_Email.ToString();
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = t.TaskName + "" + st.SubName;
+                string receiver = Sendto.User_Email.ToString();
+                //string receiver = "pattanapon2538@outlook.com";
+                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
                 if (st.SubDevSend >= st.UpdateDate)
                 {
                     PointCode.Amount_Succ = PointCode.Amount_Succ + 1;
@@ -366,7 +407,17 @@ namespace SystemManage.Controllers
                     t.UpdateDate = DateTime.Now;
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
                     db.SaveChanges();
-                    return RedirectToAction("ShowTask");
+                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
+                var Sendto = db.Users.Where(m => m.User_ID == t.QAID).FirstOrDefault();
+                string sender = Email.User_Email.ToString();
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = t.TaskName + "" + st.SubName;
+                string receiver = Sendto.User_Email.ToString();
+                //string receiver = "pattanapon2538@outlook.com";
+                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
+                return RedirectToAction("ShowTask");
             }
             //QA
             else if (r.Role == 4)
@@ -380,7 +431,17 @@ namespace SystemManage.Controllers
                     t.UpdateDate = DateTime.Now;
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
                     db.SaveChanges();
-                    return RedirectToAction("ShowTask");
+                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
+                var Sendto = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
+                string sender = Email.User_Email.ToString();
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = t.TaskName + "" + st.SubName;
+                string receiver = Sendto.User_Email.ToString();
+                //string receiver = "pattanapon2538@outlook.com";
+                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
+                return RedirectToAction("ShowTask");
             }
             //CM
             else if (r.Role == 5)
@@ -394,15 +455,42 @@ namespace SystemManage.Controllers
                     t.UpdateDate = DateTime.Now;
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
                     db.SaveChanges();
-                    return RedirectToAction("ShowTask");
+                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
+                var Sendto = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
+                string sender = Email.User_Email.ToString();
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = t.TaskName + "" + st.SubName;
+                string receiver = Sendto.User_Email.ToString();
+                //string receiver = "pattanapon2538@outlook.com";
+                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
+                return RedirectToAction("ShowTask");
             }
             return RedirectToAction("ShowTask");
         }
         public ActionResult DeleteTask(int SubID)
         {
             var st = db.SubTasks.Where(m => m.SubID == SubID).FirstOrDefault();
+            var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
+            var d = db.SubTasks.Where(m => m.TaskID == t.TaskID).ToList();
+            if (d.Count == 0)
+            {
+                db.Tasks.Remove(t);
+                db.SaveChanges();
+            }
             db.SubTasks.Remove(st);
             db.SaveChanges();
+            var Email = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
+            var Sendto = db.Users.Where(m => m.User_ID == st.Handle).FirstOrDefault();
+            string sender = Email.User_Email.ToString();
+            //string sender = "systemmanage59346@gmail.com";
+            string subject = t.TaskName + "" + st.SubName;
+            string receiver = Sendto.User_Email.ToString();
+            //string receiver = "pattanapon2538@outlook.com";
+            string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+            InboxController i = new InboxController();
+            i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ShowTask");
         }
     }

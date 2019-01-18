@@ -27,15 +27,15 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="table-info">
-                                    <th>เข้า</th>
-                                    <th>ลำดับ</th>
-                                    <th>โครงการ</th>
-                                    <th>สถานะ</th>
-                                    <th>เปอร์เซ็น</th>
-                                    <th>กำหนดส่ง</th>
-                                    <th>ผู้จัดการโครงการ</th>
-                                    <th>แก้ไข</th>
-                                    <th>ลบ</th>
+                                    <th><center>เข้า</center></th>
+                                    <th><center>ลำดับ</center></th>
+                                    <th><center>โครงการ</center></th>
+                                    <th><center>สถานะ</center></th>
+                                    <th><center>เปอร์เซ็น</center></th>
+                                    <th><center>กำหนดส่ง</center></th>
+                                    <th><center>ผู้จัดการโครงการ</center></th>
+                                    <th><center>แก้ไข</center></th>
+                                    <th><center>ลบ</center></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,23 +46,23 @@
                                     {
                                 <tr>
                                     <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-archive"></i></a></td>
-                                    <td>@i</td>
-                                    <td>@item.ProjectName</td>
-                                    <td>@item.ProjectStatus</td>
+                                    <td><center>@i</center></td>
+                                    <td><center>@item.ProjectName</center></td>
+                                    <td><center>@item.ProjectStatus</center></td>
                                     @{
                                         item.TotalPercent = item.TotalPercent / 100;
                                     }
-                                    <td>@item.TotalPercent.ToString("P02")</td>
-                                    <td>@item.ProjectSendDate.ToString("dd/MM/yyyy")</td>
-                                    <td>@item.CreateBy</td>
+                                    <td><center>@item.TotalPercent.ToString("P02")</center></td>
+                                    <td><center>@item.ProjectSendDate.ToString("dd/MM/yyyy")</center></td>
+                                    <td><center>@item.CreateBy</center></td>
                                     @if (item.ProjectRole == 1)
                                     {
-                                        <td>
+                                        <td><center>
                                             <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-diamond"></i></a>
-                                        </td>
-                                        <td>
+                                            </center></td>
+                                        <td><center>
                                             <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="glyphicon fa fa-archive"></i></a>
-                                        </td>
+                                            </center></td>
                                     }
                                     else
                                     {

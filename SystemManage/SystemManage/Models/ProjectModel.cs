@@ -13,7 +13,8 @@ namespace SystemManage.Models
         [Required(ErrorMessage = "กรุณาใส่ข้อมูลให้ถูกต้อง")]
         public string ProjectName { get; set; }
         public string ProjectDescription { get; set; }
-        public byte ProjectStatus { get; set; }
+        public int ProjectStatus { get; set; }
+        public Status status { get; set; }
         public double TotalPercent { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -23,5 +24,12 @@ namespace SystemManage.Models
         public string CreateBy { get; set; }
         public string UpdateBy { get; set; }
         public int ProjectRole { get; set; }
+
+        public enum Status
+        {
+            Processing,
+            Pause,
+            Terminate,
+        }
     }
 }
