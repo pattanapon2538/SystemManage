@@ -109,6 +109,18 @@ namespace SystemManage.Controllers
             Model.ProjectName = p.Name;
             Model.ProjectDescription = p.Description;
             Model.ProjectSendDate = p.SendDate;
+            if (p.Status == 1)
+            {
+                Model.status = ProjectModel.Status.Processing;
+            }
+            else if (p.Status == 2)
+            {
+                Model.status = ProjectModel.Status.Pause;
+            }
+            else if (p.Status == 3)
+            {
+                Model.status = ProjectModel.Status.Terminate;
+            }
             return View(Model);
 
         }

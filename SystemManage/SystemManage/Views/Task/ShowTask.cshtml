@@ -1,182 +1,188 @@
-﻿@{
+﻿<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+@{
     ViewBag.Title = "ShowTask";
     Layout = "~/Views/Shared/_MainMenu.cshtml";
 }
 @using SystemManage.Models;
-@using (Html.BeginForm("SearchTask","Task", FormMethod.Get)) { 
-<div class="card">
-    <div class="card-body" style="margin: auto">
-        <div class="row">
-            <div class="col-sm-12" style="margin: auto">
-                <h1 class="text-center" style="margin-bottom: 20pt">@Session["ProjectName"]</h1>
+@using (Html.BeginForm("SearchTask", "Task", FormMethod.Get))
+{
+    <div id="flip"><center><i class="fas fa-arrow-down"></i></center></div>
+    <div class="card">
+        <div class="card-body" style="margin: auto" id="panel">
+            <div class="row">
+                <div class="col-sm-12" style="margin: auto">
+                    <h1 class="text-center" style="margin-bottom: 20pt">@Session["ProjectName"]</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Task</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="SubTask">Sub Task</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">ผู้รับผิดชอบ</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">ผู้ดำเนินการ</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group" style="margin-left: 100px">
+                        <label class="label" for="subject" style="margin-right: 10px">Status :</label>
+                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                            <select name="subject">
+
+                                <option>All</option>
+                                <option>Pause</option>
+                                <option>Terminate</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <label class="label" for="subject" style="margin-right: 10px">Percent :</label>
+                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                            <select name="subject">
+
+                                <option>0</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px;margin-left: -40px">
+                            <select name="subject">
+
+                                <option>100</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div style="margin: auto;margin-top: 20px">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="button" class="btn btn-basic">Clear</button>
+                </div>
+
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Task</span>
-                    </div>
-                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-danger" style="margin-left: 30px">Report</button>
+                </div>
+                <div class="col-sm-9"></div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-success btn-block">SIT</button>
+                </div>
+                <div class="col-sm-1">
+                    <a href="@Url.Action("AddTask")"><button type="button" class="btn btn-primary btn-block">New Test</button></a>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="SubTask">Sub Task</span>
-                    </div>
-                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">ผู้รับผิดชอบ</span>
-                    </div>
-                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">ผู้ดำเนินการ</span>
-                    </div>
-                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="input-group" style="margin-left: 100px">
-                    <label class="label" for="subject" style="margin-right: 10px">Status :</label>
-                    <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                        <select name="subject">
-
-                            <option>All</option>
-                            <option>Pause</option>
-                            <option>Terminate</option>
-                        </select>
-                        <div class="select-dropdown"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="input-group">
-                    <label class="label" for="subject" style="margin-right: 10px">Percent :</label>
-                    <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                        <select name="subject">
-
-                            <option>0</option>
-                        </select>
-                        <div class="select-dropdown"></div>
-                    </div>
-                    <div class="rs-select2 js-select-simple select--no-search " style="width: 100px;margin-left: -40px">
-                        <select name="subject">
-
-                            <option>100</option>
-                        </select>
-                        <div class="select-dropdown"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div style="margin: auto;margin-top: 20px">
-                <button type="submit" class="btn btn-primary">Search</button>
-                <button type="button" class="btn btn-basic">Clear</button>
-            </div>
-
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <div style="margin-top: 20px; margin-bottom: 10px">
-                <button type="button" class="btn btn-danger" style="margin-left: 30px">Report</button>
-            </div>
-        </div>
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4">
-            <div style="margin-top: 20px; margin-bottom: 10px;margin-left: 220px">
-                <button type="button" class="btn btn-success">SIT</button>
-                <a href="@Url.Action("AddTask")"><button type="button" class="btn btn-primary">New Test</button></a>
-            </div>
-        </div>
-    </div>
-</div>
 }
 <div class="card">
     <div class="card-body">
         <div class="row">
             <div class="col-sm-12" style:overflow-x:auto>
                 <table class="table table-bordered">
-                        <thead>
-                            <tr class="table-info">
-                                <th><center>อันดับ</center></th>
-                                <th><center>งาน</center></th>
-                                <th><center>งานรอง</center></th>
-                                <th><center>ผู้พัฒนา</center></th>
-                                <th><center>สถานะปัจจุบัน</center></th>
-                                <th><center>ผู้รับผิดชอบ</center></th>
-                                <th><center>กำหนดส่ง</center></th>
-                                <th><center>เปอร์เซ็น</center></th>
-                                <th><center>รายละเอียด</center></th>
-                                <th><center>ลบ</center></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                int i = 1;
-                                foreach (var item in (List<SubTaskModel>)ViewBag.DataList2)
-                                {
-                                    <tr class="Seach">
-                                        <td><center>@i</center></td>
-                                        <td><center>@item.TaskName</center></td>
-                                        <td><center>@item.SubName</center></td>
-                                        <td><center>@item.SubDevID</center></td>
-                                        @if (item.SubStatus == 0)
-                                        {
-                                            <td><center>อยู่ระหว่างดำเนินการ</center></td>
-                                        }
-                                        else if (item.SubStatus == 1)
-                                        {
-                                            <td><center>รอการตรวจสอบ</center></td>
-                                        }
-                                        else if (item.SubStatus == 2)
-                                        {
-                                            <td><center>ตรวจสอบคุณภาพ</center></td>
-                                        }
-                                        else if (item.SubStatus == 3)
-                                        {
-                                            <td><center>รอการยืนยัน</center></td>
-                                        }
-                                        else if (item.SubStatus == 4)
-                                        {
-                                            <td><center>เสร็จสิน</center></td>
-                                        }
-                                        else if (item.SubStatus == 5)
-                                        {
-                                            <td><center>อยู่ระหว่างการแก้ไข</center></td>
-                                        }
-                                        <td><center>@item.Handle</center></td>
-                                        <td><center>@item.SubDevSend.ToString("dd/MM/yyyy")</center></td>
-                                        <td><center>@item.SubPercent%</center></td>
+                    <thead>
+                        <tr class="table-info">
+                            <th><center>อันดับ</center></th>
+                            <th><center>งาน</center></th>
+                            <th><center>งานรอง</center></th>
+                            <th><center>ผู้พัฒนา</center></th>
+                            <th><center>สถานะปัจจุบัน</center></th>
+                            <th><center>ผู้รับผิดชอบ</center></th>
+                            <th><center>กำหนดส่ง</center></th>
+                            <th><center>เปอร์เซ็น</center></th>
+                            <th><center>รายละเอียด</center></th>
+                            <th><center>ลบ</center></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 1;
+                            foreach (var item in (List<SubTaskModel>)ViewBag.DataList2)
+                            {
+                                <tr class="Seach">
+                                    <td><center>@i</center></td>
+                                    <td><center>@item.TaskName</center></td>
+                                    <td><center>@item.SubName</center></td>
+                                    <td><center>@item.SubDevID</center></td>
+                                    @if (item.SubStatus == 0)
+                                    {
+                                        <td><center>อยู่ระหว่างดำเนินการ</center></td>
+                                    }
+                                    else if (item.SubStatus == 1)
+                                    {
+                                        <td><center>รอการตรวจสอบ</center></td>
+                                    }
+                                    else if (item.SubStatus == 2)
+                                    {
+                                        <td><center>ตรวจสอบคุณภาพ</center></td>
+                                    }
+                                    else if (item.SubStatus == 3)
+                                    {
+                                        <td><center>รอการยืนยัน</center></td>
+                                    }
+                                    else if (item.SubStatus == 4)
+                                    {
+                                        <td><center>เสร็จสิน</center></td>
+                                    }
+                                    else if (item.SubStatus == 5)
+                                    {
+                                        <td><center>อยู่ระหว่างการแก้ไข</center></td>
+                                    }
+                                    <td><center>@item.Handle</center></td>
+                                    <td><center>@item.SubDevSend.ToString("dd/MM/yyyy")</center></td>
+                                    <td><center>@item.SubPercent%</center></td>
+                                    <td>
+                                        <center><a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="fas fa-book-open"></i></a></center>
+                                    </td>
+                                    @if (item.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
                                         <td>
-                                            <center><a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-diamond"></i></a></center>
-</td>
-                                        @if (item.CreateBy == Convert.ToInt32(Session["userID"]))
-                                        {
-                                        <td>
-                                            <center><a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="glyphicon fa fa-archive"></i></a></center>
-</td>
-                                        }
-                                        else { <td></td>}
-                                    </tr>
-                                    ++i;
-                                }
+                                            <center><a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="fas fa-backspace"></i></a></center>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>}
+                                </tr>
+                                ++i;
                             }
-                        </tbody>
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>

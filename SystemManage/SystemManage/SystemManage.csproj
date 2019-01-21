@@ -276,6 +276,7 @@
     <Content Include="assets\images\card\card-img7.jpg" />
     <Content Include="assets\images\card\card-img8.jpg" />
     <Content Include="assets\images\card\card-img9.jpg" />
+    <Content Include="assets\images\icon\account-login-3x.png" />
     <Content Include="assets\images\icon\conversation.png" />
     <Content Include="assets\images\icon\document.png" />
     <Content Include="assets\images\icon\email.png" />

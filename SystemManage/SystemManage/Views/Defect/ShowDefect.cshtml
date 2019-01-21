@@ -1,10 +1,13 @@
-﻿@{
+﻿<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+@{
     ViewBag.Title = "ShowDefect";
     Layout = "~/Views/Shared/_MainMenu.cshtml";
 }
 @using SystemManage.Models;
+<div id="flip">Click to slide down panel</div>
 <div class="card">
-    <div class="card-body" style="margin: auto">
+    <div class="card-body" style="margin: auto" id="panel">
         <div class="row">
             <div class="col-sm-12 text-center">
                 <h1 class="text-center" style="margin-bottom: 20pt">Defect</h1>
@@ -116,49 +119,54 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @{ 
+                        @{
                             int n = 1;
                             foreach (var i in (List<DefectModel>)ViewBag.DataList)
                             {
-                        <tr>
-                            <td><center>@n</center></td>
-                            <td><center>@i.TaskName</center></td>
-                            <td><center>@i.SubTaskName</center></td>
-                            @if (i.Status == 0)
-                            {
-                                <td><center>รอการแก้ไข</center></td>
-                            }
-                            else if (i.Status == 1)
-                            {
-                                <td><center>รอการตรวจสอบ</center></td>
-                            }
-                            else if (i.Status == 2)
-                            {
-                                <td><center>แก้ไขแล้ว</center></td>
-                            }
-                            else if (i.Status == 3)
-                            {
-                                <td><center>แก้ไขอีกครั้ง</center></td>
-                            }
-                            <td><center>@i.DevName</center></td>
-                            <td><center>@i.TestName</center></td>
-                            <td><center>@i.QAName</center></td>
-                            <td>
-                                <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a>
-                            </td>
-                            @if (i.CreateBy == Convert.ToInt32(Session["userID"]))
-                            {
-                                <td>
-                                    <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a>
-                                </td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
+                                <tr>
+                                    <td><center>@n</center></td>
+                                    <td><center>@i.TaskName</center></td>
+                                    <td><center>@i.SubTaskName</center></td>
+                                    @if (i.Status == 0)
+                                    {
+                                        <td><center>รอการแก้ไข</center></td>
+                                    }
+                                    else if (i.Status == 1)
+                                    {
+                                        <td><center>รอการตรวจสอบ</center></td>
+                                    }
+                                    else if (i.Status == 2)
+                                    {
+                                        <td><center>แก้ไขแล้ว</center></td>
+                                    }
+                                    else if (i.Status == 3)
+                                    {
+                                        <td><center>แก้ไขอีกครั้ง</center></td>
+                                    }
+                                    <td><center>@i.DevName</center></td>
+                                    <td><center>@i.TestName</center></td>
+                                    <td><center>@i.QAName</center></td>
+                                    <td>
+                                        <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-book-open"></i></center></a>
+                                    </td>
+                                    @if (i.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        <td>
+                                            <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-backspace"></i></center></a>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
 
-                        </tr>
+                                </tr>
                                 ++n;
                             }
                         }
-                    </tbody></table></div></div></div></div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
