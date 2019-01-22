@@ -365,18 +365,23 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="icon\cancel.png" />
+    <Content Include="icon\contact.png" />
     <Content Include="icon\conversation.png" />
     <Content Include="icon\document.png" />
     <Content Include="icon\email.png" />
     <Content Include="icon\event.png" />
     <Content Include="icon\file.png" />
     <Content Include="icon\group.png" />
+    <Content Include="icon\inbox.png" />
+    <Content Include="icon\paper.png" />
     <Content Include="icon\plus.png" />
     <Content Include="icon\project.png" />
     <Content Include="icon\report.png" />
     <Content Include="icon\report.svg" />
     <Content Include="icon\subtask.png" />
+    <Content Include="icon\team.png" />
     <Content Include="icon\team.svg" />
+    <Content Include="icon\virus.png" />
     <Content Include="open-iconic-master\.gitignore" />
     <Content Include="open-iconic-master\font\css\open-iconic-bootstrap.css" />
     <Content Include="open-iconic-master\font\css\open-iconic-bootstrap.min.css" />

@@ -44,7 +44,7 @@
                                     <td>@item.Amount_Succ</td>
                                     <td>@item.TotalCoding</td>
                                     <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><i class="glyphicon fa fa-archive"></i></a></td>
-                                    <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><i class="glyphicon fa fa-diamond"></i></a></td>
+                                    <td><a href="@Url.Action("DeleteMember", new {UserID = item.Users_ID })"><i class="glyphicon fa fa-diamond"></i></a></td>
                                 </tr>
 
                                     }

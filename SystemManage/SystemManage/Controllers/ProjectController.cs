@@ -39,11 +39,11 @@ namespace SystemManage.Controllers
             db.SaveChanges();
             ModelState.Clear();
             var Email = db.Users.Where(m => m.User_ID == p.CreateBy).FirstOrDefault();
-            string sender = Email.ToString();
+            string sender = Email.User_Email;
             //string sender = "systemmanage59346@gmail.com";
             string subject = model.ProjectName;
             //string receiver = model.CreateBy.ToString();
-            string receiver = "pattanapon2538@outlook.com";
+            string receiver = "plusth2538@gmail.com";
             string mess = "ท่านได้มีการสร้างโครงการ" + model.ProjectName + "ตำแหน่งของคุณคือหัวโครงการ";
             i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ShowProject");
@@ -91,7 +91,7 @@ namespace SystemManage.Controllers
                         ProjectDescription = item.Description,
                         ProjectStatus = item.Status,
                         ProjectSendDate = item.SendDate,
-                        CreateBy = pm.User_Email,
+                        CreateBy = pm.User_Name,
                         CreateDate = item.CreateDate,
                         UpdateDate = item.UpdateDate,
                     });
@@ -144,22 +144,26 @@ namespace SystemManage.Controllers
             p.UpdateDate = DateTime.Now;
             p.UpdateBy = Convert.ToInt32(Session["userID"]);
             db.SaveChanges();
-            var Email = db.Users.Where(m => m.User_ID == p.CreateBy).FirstOrDefault();
-            string sender = Email.ToString();
-            //string sender = "systemmanage59346@gmail.com";
-            string subject = Model.ProjectName;
-            //string receiver = model.CreateBy.ToString();
-            string receiver = "pattanapon2538@outlook.com";
-            string mess = "โครงการ" + Model.ProjectName + "ได้มีการแก้ไขข้อมูลสถานะของโครงการ"+Model.status;
-            InboxController i = new InboxController();
-            i.SendEmail(receiver, subject, mess, sender);
+            var p2 = db.ProjectMembers.Where(m => m.ProjectID == Model.ProjectID).ToList();
+            foreach (var e in p2)
+            {
+                var Email = db.Users.Where(m => m.User_ID == e.UserID).FirstOrDefault();
+                string sender = Email.User_Email;
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = Model.ProjectName;
+                //string receiver = model.CreateBy.ToString();
+                string receiver = "plusth2538@gmail.com";
+                string mess = "โครงการ" + Model.ProjectName + "ได้มีการแก้ไขข้อมูลสถานะของโครงการ" + Model.status;
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
+
+            }
             return RedirectToAction("ShowProject");
 
         }
         public ActionResult DeleteProject(int ProjectID)
         {
             Project d = db.Projects.Where(m => m.ProjectID == ProjectID).FirstOrDefault();
-            
             var t = db.Tasks.Where(m => m.ProjectID == d.ProjectID).ToList();
             foreach (var item in t)
             {
@@ -170,20 +174,23 @@ namespace SystemManage.Controllers
                 }
                 db.Tasks.Remove(item);
             }
-            var pm = db.ProjectMembers.Where(s => s.ProjectID == ProjectID).FirstOrDefault();
             db.Projects.Remove(d);
-            db.ProjectMembers.Remove(pm);
+            var pm = db.ProjectMembers.Where(s => s.ProjectID == ProjectID).ToList();
+            foreach (var c in pm)
+            {
+                var Email = db.Users.Where(m => m.User_ID == c.UserID).FirstOrDefault();
+                string sender = Email.User_Email;
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = d.Name;
+                //string receiver = d.CreateBy.ToString(); รอส่งเมล์ให้ทั้งทีม
+                string receiver = "plusth2538@gmail.com";
+                string mess = "โครงการ" + d.Name + "ได้ถูกลบ";
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
+            }
+            var pm2 = db.ProjectMembers.Where(s => s.ProjectID == ProjectID).FirstOrDefault();
+            db.ProjectMembers.Remove(pm2);
             db.SaveChanges();
-            var Email = db.Users.Where(m => m.User_ID == d.CreateBy).FirstOrDefault();
-            string sender = Email.ToString();
-            //string sender = d.CreateBy.ToString();
-            //string sender = "systemmanage59346@gmail.com";
-            string subject = d.Name;
-            //string receiver = d.CreateBy.ToString(); รอส่งเมล์ให้ทั้งทีม
-            string receiver = "pattanapon2538@outlook.com";
-            string mess = "โครงการ" + d.Name + "ได้ถูกลบ";
-            InboxController i = new InboxController();
-            i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ShowProject");
         }
         public ActionResult GetData(String ProjectID)

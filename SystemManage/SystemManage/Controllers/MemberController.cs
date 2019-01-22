@@ -14,25 +14,26 @@ namespace SystemManage.Controllers
         // GET: Member
         public ActionResult ListMember()
         {
+            var projectID = Convert.ToInt32(Session["ProjectID"]);
             List<UserModel> UserList = new List<UserModel>();
-            var item = db.Users.OrderByDescending(m => m.User_ID).ToList();
-            foreach(var i in item)
-            {
-                var PositionDB = db.Positions.Where(m => m.Position_ID == i.Position_ID).FirstOrDefault();
-                UserList.Add(new UserModel
+            var user = db.Users.OrderByDescending(m => m.User_ID).ToList();
+                foreach (var d in user)
                 {
-                    Users_ID = i.User_ID,
-                    User_Email = i.User_Email,
-                    User_Name = i.User_Name,
-                    User_LastName = i.User_LastName,
-                    PositionName = PositionDB.Name,
-                    TotalCoding = i.TotalCoding,
-                    Amount_Succ = i.Amount_Succ,
-                    AVG = i.AVG
-                });
-                ViewBag.DataList = UserList;
-            }
-            return View();
+                    var PositionDB = db.Positions.Where(m => m.Position_ID == d.Position_ID).FirstOrDefault();
+                     UserList.Add(new UserModel
+                     {
+                         Users_ID = d.User_ID,
+                         User_Email = d.User_Email,
+                         User_Name = d.User_Name,
+                         User_LastName = d.User_LastName,
+                         PositionName = PositionDB.Name,
+                         TotalCoding = d.TotalCoding,
+                         Amount_Succ = d.Amount_Succ,
+                         AVG = d.AVG
+                     });
+                         ViewBag.DataList = UserList;
+                }
+                return View();
         }
         public ActionResult AddMember(int UserID)
         {
@@ -78,7 +79,7 @@ namespace SystemManage.Controllers
             var pm = db.ProjectMembers.Where(m => m.UserID == UserID).FirstOrDefault();
             db.ProjectMembers.Remove(pm);
             db.SaveChanges();
-            return RedirectToAction("ShowTeam");
+            return RedirectToAction("ShowMember");
         }
         public ActionResult ShowMember()
         {
