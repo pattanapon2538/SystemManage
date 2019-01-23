@@ -15,14 +15,14 @@ namespace SystemManage.Database
     public partial class Message
     {
         public int Message_ID { get; set; }
-        public Nullable<int> Mail_ID { get; set; }
+        public int Mail_ID { get; set; }
         public string Name { get; set; }
         public string Detail { get; set; }
         public string AttachShow1 { get; set; }
         public string AttachFile { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
-        public Nullable<int> CreateBy { get; set; }
-        public Nullable<int> SendTo { get; set; }
+        public DateTime CreateDate { get; set; }
+        public int CreateBy { get; set; }
+        public int SendTo { get; set; }
     
         public virtual Mail Mail { get; set; }
     }

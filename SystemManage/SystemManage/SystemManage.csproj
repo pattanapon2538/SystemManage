@@ -3419,11 +3419,12 @@
     <Content Include="Views\Defect\AddDefect.cshtml" />
     <Content Include="Views\Defect\ShowDefect.cshtml" />
     <Content Include="Views\Defect\DetailDefect.cshtml" />
+    <Content Include="Views\Inbox\Inbox.cshtml" />
+    <Content Include="Views\Inbox\AddInbox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploade\" />
-    <Folder Include="Views\Inbox\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

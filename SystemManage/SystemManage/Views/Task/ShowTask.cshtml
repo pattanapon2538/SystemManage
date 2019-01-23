@@ -5,8 +5,6 @@
     Layout = "~/Views/Shared/_MainMenu.cshtml";
 }
 @using SystemManage.Models;
-@using (Html.BeginForm("SearchTask", "Task", FormMethod.Get))
-{
     <div id="flip"><center><i class="fas fa-arrow-down"></i></center></div>
     <div class="card">
         <div class="card-body" style="margin: auto" id="panel">
@@ -109,7 +107,6 @@
             </div>
         </div>
     </div>
-}
 <div class="card">
     <div class="card-body">
         <div class="row">

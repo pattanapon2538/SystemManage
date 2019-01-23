@@ -1,0 +1,63 @@
+﻿<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+@using SystemManage.Models;
+@{
+    ViewBag.Title = "Inbox";
+    Layout = "~/Views/Shared/_MainMenu.cshtml";
+}
+<div class="card">
+    <div class="card-body">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4" style="margin: auto">
+                        <h1 style="margin-bottom: 20pt">Inbox</h1>
+                    </div>
+                    <div class="col-sm-6">    </div>
+                    <div class="col-sm-1" style="margin: auto">
+                        <a href="@Url.Action("AddInbox", "Inbox")"><button type="button" class="btn btn-outline-success">+ New Email</button></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 " style="overflow-x:auto">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="table-info">
+                                    <th><center>ลำดับ</center></th>
+                                    <th><center>หัวข้อ</center></th>
+                                    <th><center>สถานะ</center></th>
+                                    <th><center>ผู้รับ</center></th>
+                                    <th><center>Edit</center></th>
+                                    <th><center>Delete</center></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int c = 1;
+                                    foreach (var item in (List<InboxModel>)ViewBag.DataList)
+                                    {
+                                        <tr>
+                                            <td><center>@c</center></td>
+                                            <td><center>@item.MailName</center></td>
+                                            @if (item.Status == 1)
+                                            {
+                                                <td><center>ใหม่</center></td>
+                                            }
+                                            else if (item.Status == 0)
+                                            {
+                                                <td><center>อ่านแล้ว</center></td>
+                                            }
+                                            <td><center>@item.SendTo</center></td>
+                                            <td><center><a href="@Url.Action("DetailTask", new { SubID = item.MailID })"><i class="fas fa-book-open"></i></a></center></td>
+                                            <td><center><a href="@Url.Action("DeleteTask", new { SubID = item.MailID })"><i class="fas fa-backspace"></i></a></center></td>
+                                        </tr>
+                                        ++c;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
