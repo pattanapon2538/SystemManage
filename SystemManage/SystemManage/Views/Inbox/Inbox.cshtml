@@ -47,7 +47,7 @@
                                                 <td><center>อ่านแล้ว</center></td>
                                             }
                                             <td><center>@item.SendTo</center></td>
-                                            <td><center><a href="@Url.Action("DetailTask", new { MailID = item.MailID })"><i class="fas fa-book-open"></i></a></center></td>
+                                            <td><center><a href="@Url.Action("ReadMail", new { MailID = item.MailID })"><i class="fas fa-book-open"></i></a></center></td>
                                             <td><center><a href="@Url.Action("DeleteMessage", new { MailID = item.MailID })"><i class="fas fa-backspace"></i></a></center></td>
                                         </tr>
                                         ++c;
