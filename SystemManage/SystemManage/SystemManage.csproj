@@ -170,6 +170,9 @@
     <Compile Include="Database\Language_of_Type.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\LogMessage.cs">
+      <DependentUpon>SystemManage.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Mail.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
     </Compile>
@@ -234,6 +237,7 @@
     <Compile Include="Models\DocumentModel.cs" />
     <Compile Include="Models\InboxModel.cs" />
     <Compile Include="Models\LanguageOfTypeModel.cs" />
+    <Compile Include="Models\LogMessageModel.cs" />
     <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\PositionModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
@@ -3421,6 +3425,7 @@
     <Content Include="Views\Defect\DetailDefect.cshtml" />
     <Content Include="Views\Inbox\Inbox.cshtml" />
     <Content Include="Views\Inbox\AddInbox.cshtml" />
+    <Content Include="Views\Inbox\ReadMail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

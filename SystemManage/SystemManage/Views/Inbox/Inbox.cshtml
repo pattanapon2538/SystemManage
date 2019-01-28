@@ -26,8 +26,8 @@
                                     <th><center>หัวข้อ</center></th>
                                     <th><center>สถานะ</center></th>
                                     <th><center>ผู้รับ</center></th>
-                                    <th><center>Edit</center></th>
-                                    <th><center>Delete</center></th>
+                                    <th><center>อ่าน</center></th>
+                                    <th><center>ลบ</center></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,8 +47,8 @@
                                                 <td><center>อ่านแล้ว</center></td>
                                             }
                                             <td><center>@item.SendTo</center></td>
-                                            <td><center><a href="@Url.Action("DetailTask", new { SubID = item.MailID })"><i class="fas fa-book-open"></i></a></center></td>
-                                            <td><center><a href="@Url.Action("DeleteTask", new { SubID = item.MailID })"><i class="fas fa-backspace"></i></a></center></td>
+                                            <td><center><a href="@Url.Action("DetailTask", new { MailID = item.MailID })"><i class="fas fa-book-open"></i></a></center></td>
+                                            <td><center><a href="@Url.Action("DeleteMessage", new { MailID = item.MailID })"><i class="fas fa-backspace"></i></a></center></td>
                                         </tr>
                                         ++c;
                                     }

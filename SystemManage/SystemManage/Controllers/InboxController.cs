@@ -18,20 +18,24 @@ namespace SystemManage.Controllers
         public ActionResult Inbox()
         {
             List<InboxModel> InboxList = new List<InboxModel>();
+            List<LogMessageModel> LogList = new List<LogMessageModel>();
             var userId = Convert.ToInt32(Session["userID"]);
-            var u = db.Messages.Where(m => m.CreateBy == userId).OrderByDescending(m => m.CreateDate).ToList();
+
+            var u = db.Messages.Where(m => m.CreateBy == userId || m.SendTo == userId).OrderByDescending(m => m.CreateDate).ToList();
             foreach (var c in u)
             {
-                var i = db.Mails.Where(m => m.Mail_ID == c.Mail_ID).FirstOrDefault();
-                var k = db.Users.Where(m => m.User_ID == c.SendTo).FirstOrDefault();
-                InboxList.Add(new InboxModel {
-                    MailID = c.Message_ID.ToString(),
-                    MailName = c.Name,
-                    Status = i.Status,
-                    SendTo = k.User_Name
-                });
-                ViewBag.DataList = InboxList;
+                    var i = db.Mails.Where(m => m.Mail_ID == c.Mail_ID).FirstOrDefault();
+                    var l = db.LogMessages.Where(m => m.Message_ID == c.Message_ID).FirstOrDefault();
+                    var k = db.Users.Where(m => m.User_ID == l.Recive).FirstOrDefault();
+                    InboxList.Add(new InboxModel
+                    {
+                        MailID = c.Message_ID.ToString(),
+                        MailName = c.Name,
+                        Status = i.Status,
+                        SendTo = k.User_Name
+                    });
             }
+            ViewBag.DataList = InboxList;
             return View();
         }
         public ActionResult AddInbox()
@@ -43,6 +47,7 @@ namespace SystemManage.Controllers
         {
             Mail m = new Mail();
             Message ms = new Message();
+            LogMessage lm = new LogMessage();
             InboxController s = new InboxController();
             m.Name = model.MailName;
             m.Status = 1;
@@ -57,6 +62,14 @@ namespace SystemManage.Controllers
             ms.CreateDate = DateTime.Now;
             ms.CreateBy = Convert.ToInt32(Session["userID"]);
             db.Messages.Add(ms);
+            db.SaveChanges();
+            lm.Log_Name = model.MailName;
+            lm.Log_Message = model.MailDetail;
+            lm.Recive = Convert.ToInt32(model.SendTo);
+            lm.CreateDate = DateTime.Now;
+            lm.CreateBy = ms.CreateBy;
+            lm.Message_ID = ms.Message_ID;
+            db.LogMessages.Add(lm);
             db.SaveChanges();
             var u = db.Users.Where(d => d.User_ID == ms.SendTo).FirstOrDefault();
             string receiver = u.User_Email;
@@ -105,6 +118,56 @@ namespace SystemManage.Controllers
                 ViewBag.Error = "Some Error";
             }
             return View();
+        }
+        public ActionResult DeleteMessage(int MailID)
+        {
+            var d = db.Messages.Where(m => m.Message_ID == MailID).FirstOrDefault();
+            if (d.CreateBy == Convert.ToInt32(Session["userID"]))
+            {
+                if (d.SendTo != 0 && d.CreateBy != 0)
+                {
+                    d.CreateBy = 0;
+                    db.SaveChanges();
+                }
+                else if (d.SendTo == 0)
+                {
+                    var m = db.Mails.Where(t => t.Mail_ID == d.Mail_ID).FirstOrDefault();
+                    db.Messages.Remove(d);
+                    db.SaveChanges();
+                    db.Mails.Remove(m);
+                    db.SaveChanges();
+                }
+            }
+            else if (d.SendTo == Convert.ToInt32(Session["userID"]))
+            {
+                if (d.SendTo != 0 && d.CreateBy != 0)
+                {
+                    d.SendTo = 0;
+                    db.SaveChanges();
+                }
+                else if (d.CreateBy == 0)
+                {
+                    var m = db.Mails.Where(t => t.Mail_ID == d.Mail_ID).FirstOrDefault();
+                    db.Messages.Remove(d);
+                    db.SaveChanges();
+                    db.Mails.Remove(m);
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Inbox");
+        }
+        public ActionResult ReadMail(int MailID)
+        {
+            InboxModel model = new InboxModel();
+            var i = db.Messages.Where(m => m.Message_ID == MailID).FirstOrDefault();
+            var me = db.Mails.Where(m => m.Mail_ID == i.Mail_ID).FirstOrDefault();
+            me.Status = 0;
+            db.SaveChanges();
+            model.MailID = i.Message_ID.ToString();
+            model.MailDetail = i.Detail;
+            model.SendTo = i.SendTo.ToString();
+            model.CreateBy = i.CreateBy.ToString();
+            return View(model);
         }
     }
 }

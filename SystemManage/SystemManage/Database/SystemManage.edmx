@@ -46,6 +46,20 @@
           <Property Name="CreateBy" Type="int" />
           <Property Name="UpdateBy" Type="int" />
         </EntityType>
+        <EntityType Name="LogMessage">
+          <Key>
+            <PropertyRef Name="Log_ID" />
+          </Key>
+          <Property Name="Log_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Log_Name" Type="nvarchar(max)" />
+          <Property Name="Log_Message" Type="nvarchar(max)" />
+          <Property Name="AttachShow1" Type="nvarchar" MaxLength="300" />
+          <Property Name="AttachFile" Type="nchar" MaxLength="10" />
+          <Property Name="CreateDate" Type="date" />
+          <Property Name="CreateBy" Type="int" />
+          <Property Name="Recive" Type="int" />
+          <Property Name="Message_ID" Type="int" />
+        </EntityType>
         <EntityType Name="Mail">
           <Key>
             <PropertyRef Name="Mail_ID" />
@@ -470,6 +484,7 @@
           <EntitySet Name="Defect" EntityType="Self.Defect" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Language_of_Type" EntityType="Self.Language_of_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogMessage" EntityType="Self.LogMessage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mail" EntityType="Self.Mail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
@@ -635,6 +650,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Skill" EntitySet="Skills" />
           </AssociationSet>
+          <EntitySet Name="LogMessages" EntityType="SystemManageModel.LogMessage" />
         </EntityContainer>
         <EntityType Name="Defect">
           <Key>
@@ -1129,6 +1145,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="LogMessage">
+          <Key>
+            <PropertyRef Name="Log_ID" />
+          </Key>
+          <Property Name="Log_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Log_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Log_Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow1" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="Recive" Type="Int32" />
+          <Property Name="Message_ID" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1418,6 +1448,21 @@
                 <ScalarProperty Name="languageID" ColumnName="languageID" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogMessages">
+            <EntityTypeMapping TypeName="SystemManageModel.LogMessage">
+              <MappingFragment StoreEntitySet="LogMessage">
+                <ScalarProperty Name="Message_ID" ColumnName="Message_ID" />
+                <ScalarProperty Name="Recive" ColumnName="Recive" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
+                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
+                <ScalarProperty Name="Log_Message" ColumnName="Log_Message" />
+                <ScalarProperty Name="Log_Name" ColumnName="Log_Name" />
+                <ScalarProperty Name="Log_ID" ColumnName="Log_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
