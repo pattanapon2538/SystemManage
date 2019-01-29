@@ -159,6 +159,7 @@
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\SITController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Database\Defect.cs">
@@ -241,6 +242,7 @@
     <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\PositionModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\SITModel.cs" />
     <Compile Include="Models\SkillModel.cs" />
     <Compile Include="Models\SubTaskModel.cs" />
     <Compile Include="Models\TaskModel.cs" />
@@ -3427,6 +3429,7 @@
     <Content Include="Views\Inbox\AddInbox.cshtml" />
     <Content Include="Views\Inbox\ReadMail.cshtml" />
     <Content Include="Views\Inbox\ViewTest.cshtml" />
+    <Content Include="Views\SIT\AddSIT.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

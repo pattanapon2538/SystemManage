@@ -7,6 +7,7 @@
 <!doctype html>
 <html lang="en">
 @model SystemManage.Models.TaskModel
+@using SystemManage.Models
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -121,11 +122,7 @@
                                         </div>
                                         <label class="label" for="level" style="margin-right: 10px">Level :</label>
                                         <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                                            <select name="level">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                            </select>
+                                            @Html.DropDownListFor(m => m.level, new SelectList(Enum.GetValues(typeof(TaskModel.LevelTask))), "เลือก", new { @class = "form-control" })
                                             <div class="select-dropdown"></div>
                                         </div>
                                     </div>

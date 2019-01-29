@@ -1,4 +1,5 @@
 ﻿@model SystemManage.Models.TaskModel
+@using SystemManage.Models
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,7 +17,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="taskname">Task Name :</label>
+                                <label for="taskname">ชื่องาน :</label>
                                 @Html.HiddenFor(m => m.TaskID)
                                 @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
                             </div>
@@ -25,7 +26,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">Description for Task :</label>
+                                <label for="comment">รายละเอียดงาน :</label>
                                 @Html.TextAreaFor(m => m.DescriptionTask, new { @class = "form-control", @type = "TextArea" })
                             </div>
                         </div>
@@ -35,7 +36,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="taskname">SubTask Name :</label>
+                                        <label for="taskname">ชื่องานรอง :</label>
                                         @Html.HiddenFor(m => m.SubTaskID)
                                         @Html.TextBoxFor(m => m.SubTaskNames, new { @class = "form-control" })
                                     </div>
@@ -52,13 +53,9 @@
                                             </select>
                                             <div class="select-dropdown"></div>
                                         </div>
-                                        <label class="label" for="level" style="margin-right: 10px">Level :</label>
+                                        <label class="label" for="level" style="margin-right: 10px">ระดับ :</label>
                                         <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                                            <select name="level">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                            </select>
+                                            @Html.DropDownListFor(m => m.level, new SelectList(Enum.GetValues(typeof(TaskModel.LevelTask))), "เลือก", new { @class = "form-control" })
                                             <div class="select-dropdown"></div>
                                         </div>
                                     </div>
@@ -67,7 +64,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="comment">Description for Developer :</label>
+                                        <label for="comment">รายละเอียดงานของผู้พัฒนาซอฟแวร์ :</label>
                                         @Html.TextAreaFor(m => m.SubTasksDes, new { @class = "form-control", @type = "TextArea" })
                                     </div>
                                 </div>
@@ -85,7 +82,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        <label class="label" style="margin-right: 10px">Send Date:</label>
+                                        <label class="label" style="margin-right: 10px">กำหนดส่ง:</label>
                                         @Html.TextBoxFor(m => m.SubTaskDateSend, new { @class = "form-control", @type = "date" })
                                     </div>
                                 </div>
@@ -106,7 +103,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">Description for Tester :</label>
+                                <label for="comment">รายละเอียดของผู้ทดสอบ :</label>
                                 @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control", @type = "TextArea" })
                             </div>
                         </div>
@@ -135,7 +132,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="comment">Description for Quality Assurance :</label>
+                                        <label for="comment">รายละเอียดของผู้ตรวจสอบ :</label>
                                         @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control", @type = "TextArea" })
                                     </div>
                                 </div>

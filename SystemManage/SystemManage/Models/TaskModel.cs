@@ -18,11 +18,11 @@ namespace SystemManage.Models
         public string DescriptionTest { get; set; }
         public int TestID { get; set; }
         public DateTime TestSentDate { get; set; }
-        public byte TestStatus { get; set; }
+        public int TestStatus { get; set; }
         public string DescriptionQA { get; set; }
         public int QAID { get; set; }
         public DateTime QASentDate { get; set; }
-        public byte QAStatus { get; set; }
+        public int QAStatus { get; set; }
         public string AttachShow { get; set; }
         public string AttachFile { get; set; }
         public DateTime CreateDate { get; set; }
@@ -43,7 +43,8 @@ namespace SystemManage.Models
         public string SubTaskNames { get; set; }
         public int SubTaskID { get; set; }
         public int Handle { get; set; }
-        
+        public LevelTask level { get; set; }
+
         public List<ProjectMember> DevList { get; set; }
         public List<ProjectMember> TestList { get; set; }
         public List<ProjectMember> QAList { get; set; }
@@ -51,5 +52,12 @@ namespace SystemManage.Models
         public List<string> DevName { get; set; }
         public List<string> TestName { get; set; }
         public List<string> QAName { get; set; }
+
+        public enum LevelTask
+        {
+            ยาก,
+            ปานกลาง,
+            ง่าย,
+        }
     }
 }

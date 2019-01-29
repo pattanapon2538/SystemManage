@@ -14,6 +14,7 @@ namespace SystemManage.Controllers
         // GET: Member
         public ActionResult ListMember()
         {
+
             var projectID = Convert.ToInt32(Session["ProjectID"]);
             List<UserModel> UserList = new List<UserModel>();
             var user = db.Users.OrderByDescending(m => m.User_ID).ToList();
@@ -72,6 +73,18 @@ namespace SystemManage.Controllers
             pm.Role = 2; 
             db.ProjectMembers.Add(pm);
             db.SaveChanges();
+            ///////////////////////////////////////
+            var Cb = db.Projects.Where(m => m.ProjectID == pm.ProjectID).FirstOrDefault();
+            var Email = db.Users.Where(m => m.User_ID == Cb.CreateBy).FirstOrDefault();
+            var Sendto = db.Users.Where(m => m.User_ID == UserID).FirstOrDefault();
+            string sender = Email.User_Email.ToString();
+            //string sender = "systemmanage59346@gmail.com";
+            string subject = Cb.Name;
+            string receiver = Sendto.User_Email.ToString();
+            //string receiver = "pattanapon2538@outlook.com";
+            string mess = Sendto.User_Name+"ได้รับสิทธ์ในการเข้าร่วมโครงการ"+Cb.Name;
+            InboxController i = new InboxController();
+            i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ListMember");
         }
         public ActionResult DeleteMember(int UserID)
@@ -79,6 +92,17 @@ namespace SystemManage.Controllers
             var pm = db.ProjectMembers.Where(m => m.UserID == UserID).FirstOrDefault();
             db.ProjectMembers.Remove(pm);
             db.SaveChanges();
+            var Cb = db.Projects.Where(m => m.ProjectID == pm.ProjectID).FirstOrDefault();
+            var Email = db.Users.Where(m => m.User_ID == Cb.CreateBy).FirstOrDefault();
+            var Sendto = db.Users.Where(m => m.User_ID == UserID).FirstOrDefault();
+            string sender = Email.User_Email.ToString();
+            //string sender = "systemmanage59346@gmail.com";
+            string subject = Cb.Name;
+            string receiver = Sendto.User_Email.ToString();
+            //string receiver = "pattanapon2538@outlook.com";
+            string mess = Sendto.User_Name + "คุณได้ออกจากโครงการ" + Cb.Name;
+            InboxController i = new InboxController();
+            i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ShowMember");
         }
         public ActionResult ShowMember()
