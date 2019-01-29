@@ -3426,6 +3426,7 @@
     <Content Include="Views\Inbox\Inbox.cshtml" />
     <Content Include="Views\Inbox\AddInbox.cshtml" />
     <Content Include="Views\Inbox\ReadMail.cshtml" />
+    <Content Include="Views\Inbox\ViewTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

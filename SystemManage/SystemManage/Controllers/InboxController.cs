@@ -169,5 +169,9 @@ namespace SystemManage.Controllers
             model.CreateBy = i.CreateBy.ToString();
             return View(model);
         }
+        public ActionResult ViewTest()
+        {
+            return View();
+        }
     }
 }
