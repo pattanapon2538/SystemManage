@@ -24,5 +24,6 @@ namespace SystemManage.Models
         public int TaskID { get; set; }
         public string TaskName { get; set; }
         public string Handle { get; set; }
+        public double percent_task { get; set; }
     }
 }

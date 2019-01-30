@@ -110,7 +110,7 @@ namespace SystemManage.Controllers
                     }
                     AVG = total / vs.Count;
                     var us = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
-                    us.AVG = total;
+                    us.AVG = AVG;
                     db.SaveChanges();
                 }
 
@@ -152,7 +152,7 @@ namespace SystemManage.Controllers
             }
             AVGs = totals / v.Count;
             var u = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
-            u.AVG = totals;
+            u.AVG = AVGs;
             db.SaveChanges();
             ModelState.Clear();
             return RedirectToAction("ShowTask","Task");
@@ -173,15 +173,15 @@ namespace SystemManage.Controllers
                 //PM และ CM
                 if (r.Role == 1 || r.Role == 5)
                 {
-                    TaskList.Add(new TaskModel
-                    {
-                        TaskID = i.TaskID,
-                        TaskName = i.TaskName,
-                        TotalPercent = i.TotalPercent,
-                        CreateDate = i.CreateDate,
-                        UpdateDate = i.UpdateDate,
-                        CreateBy = i.CreateBy
-                    });
+                    //TaskList.Add(new TaskModel
+                    //{
+                    //    TaskID = i.TaskID,
+                    //    TaskName = i.TaskName,
+                    //    TotalPercent = i.TotalPercent,
+                    //    CreateDate = i.CreateDate,
+                    //    UpdateDate = i.UpdateDate,
+                    //    CreateBy = i.CreateBy
+                    //});
                     Taskname = i.TaskName;
                     var item2 = db.SubTasks.Where(m => m.TaskID == i.TaskID).OrderByDescending(t => t.TaskID).ToList();
                     foreach (var s in item2)

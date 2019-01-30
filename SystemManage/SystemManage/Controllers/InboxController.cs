@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using SystemManage.Database;
+using SystemManage.Controllers;
 
 namespace SystemManage.Controllers
 {
@@ -43,8 +44,9 @@ namespace SystemManage.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddInbox(InboxModel model)
+        public ActionResult AddInbox(InboxModel model, HttpPostedFileBase file)
         {
+            UploadFileController up = new UploadFileController();
             Mail m = new Mail();
             Message ms = new Message();
             LogMessage lm = new LogMessage();
@@ -61,6 +63,7 @@ namespace SystemManage.Controllers
             ms.SendTo = Convert.ToInt32(model.SendTo);
             ms.CreateDate = DateTime.Now;
             ms.CreateBy = Convert.ToInt32(Session["userID"]);
+            up.Process(file);
             db.Messages.Add(ms);
             db.SaveChanges();
             lm.Log_Name = model.MailName;

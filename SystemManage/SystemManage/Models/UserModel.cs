@@ -38,7 +38,7 @@ namespace SystemManage.Models
         public string Permission { get; set; }
         public string Comment { get; set; }
         public int LanguageID { get; set; }
-        public int AVG { get; set; }
+        public double AVG { get; set; }
         public int Amount_Succ { get; set; }
         public int Amount_Non { get; set; }
         public int TotalCoding { get; set; }

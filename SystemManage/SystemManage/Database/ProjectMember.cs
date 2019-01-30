@@ -18,6 +18,7 @@ namespace SystemManage.Database
         public int ProjectID { get; set; }
         public int Role { get; set; }
         public int MemberID { get; set; }
+        public string Member_name { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual User User { get; set; }

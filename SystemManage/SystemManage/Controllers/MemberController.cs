@@ -44,28 +44,32 @@ namespace SystemManage.Controllers
             var PoList = db.Users.Where(m => m.User_ID == UserID).FirstOrDefault();
             if (PoList.Position_ID == 113)//PositionID = 113 Dev 
             {
-                pm.Role = 2; 
+                pm.Role = 2;
+                pm.Member_name = PoList.User_Name;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
                 return RedirectToAction("ListMember");
             }
             else if (PoList.Position_ID == 110)//PositionID = 110 Tester
             {
-                pm.Role = 3; 
+                pm.Role = 3;
+                pm.Member_name = PoList.User_Name;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
                 return RedirectToAction("ListMember");
             }
             else if (PoList.Position_ID == 142)//PositionID = 142 QA 
             {
-                pm.Role = 4; 
+                pm.Role = 4;
+                pm.Member_name = PoList.User_Name;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
                 return RedirectToAction("ListMember");
             }
             else if (PoList.Position_ID == 143)//PositionID = 143 ลูกค้า 
             {
-                pm.Role = 5; 
+                pm.Role = 5;
+                pm.Member_name = PoList.User_Name;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
                 return RedirectToAction("ListMember");

@@ -159,8 +159,10 @@
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\SITController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\UploadFileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Database\Defect.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
@@ -3430,10 +3432,14 @@
     <Content Include="Views\Inbox\ReadMail.cshtml" />
     <Content Include="Views\Inbox\ViewTest.cshtml" />
     <Content Include="Views\SIT\AddSIT.cshtml" />
+    <Content Include="Views\Report\Report.cshtml" />
+    <Content Include="Views\UploadFile\Index.cshtml" />
+    <Content Include="Views\UploadFile\Success.cshtml" />
+    <Content Include="Views\UploadFile\Success2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Uploade\" />
+    <Folder Include="Upload\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
