@@ -25,5 +25,7 @@ namespace SystemManage.Models
         public string TaskName { get; set; }
         public string Handle { get; set; }
         public double percent_task { get; set; }
+        public string TesterName { get; set; }
+        public string QAName { get; set; }
     }
 }

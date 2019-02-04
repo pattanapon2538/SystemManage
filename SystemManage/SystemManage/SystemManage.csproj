@@ -151,6 +151,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DefectController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\DefectModel.cs" />
     <Compile Include="Models\DocumentModel.cs" />
     <Compile Include="Models\InboxModel.cs" />
@@ -3436,11 +3438,12 @@
     <Content Include="Views\UploadFile\Index.cshtml" />
     <Content Include="Views\UploadFile\Success.cshtml" />
     <Content Include="Views\UploadFile\Success2.cshtml" />
+    <Content Include="Views\Project\DetailProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Upload\" />
-    <Folder Include="Views\Test\" />
+    <Folder Include="Views\Chart\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

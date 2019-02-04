@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 using System.Web.Mvc;
 
 namespace SystemManage.Models
 {
+    [DataContract]
     public class ProjectModel
     {
         public int ProjectID { get; set; }
@@ -24,6 +26,10 @@ namespace SystemManage.Models
         public string CreateBy { get; set; }
         public string UpdateBy { get; set; }
         public int ProjectRole { get; set; }
+        public int UserRole { get; set; }
+        //////////////////////////////////////
+        public string TaskName { get; set; }
+        public double TaskPercent { get; set; }
 
         public enum Status
         {
@@ -31,5 +37,8 @@ namespace SystemManage.Models
             Pause,
             Terminate,
         }
+       
+       
+
     }
 }

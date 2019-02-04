@@ -3,6 +3,8 @@
     ViewBag.Title = "ShowMember";
     Layout = "~/Views/Shared/_MainMenu.cshtml";
 }
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
 <div class="card">
     <div class="card-body">
         <div class="card">
@@ -27,25 +29,25 @@
                                     <th><center>ความยากของงานเฉลี่ย</center></th>
                                     <th><center>เปอร์เซ็นความสำเร็จ</center></th>
                                     <th><center>จำนวนการโค๊ต</center></th>
-                                    <th><center>ดูรายละเอียด</center></th>
-                                    <th><center>ออกจากโครงการ</center></th>
+                                    <th><center>รายละเอียด</center></th>
+                                    <th><center>ลบ</center></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
                                     foreach (var item in (List<UserModel>)ViewBag.DataList)
                                     {
-                                <tr>
-                                    <td><center>@item.User_Email</center></td>
-                                    <td><center>@item.User_Name</center></td>
-                                    <td><center>@item.User_LastName</center></td>
-                                    <td><center>@item.PositionName</center></td>
-                                    <td><center>@item.AVG</center></td>
-                                    <td><center>@item.Amount_Succ</center></td>
-                                    <td><center>@item.TotalCoding</center></td>
-                                    <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><center><i class="glyphicon fa fa-archive"></i></center></a></td>
-                                    <td><a href="@Url.Action("DeleteMember", new {UserID = item.Users_ID })"><center><i class="glyphicon fa fa-diamond"></i></center></a></td>
-                                </tr>
+                                        <tr>
+                                            <td><center>@item.User_Email</center></td>
+                                            <td><center>@item.User_Name</center></td>
+                                            <td><center>@item.User_LastName</center></td>
+                                            <td><center>@item.PositionName</center></td>
+                                            <td><center>@item.AVG</center></td>
+                                            <td><center>@item.Amount_Succ</center></td>
+                                            <td><center>@item.TotalCoding</center></td>
+                                            <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                            <td><a href="@Url.Action("DeleteMember", new {UserID = item.Users_ID })"><center><i class="fas fa-backspace"></i></center></a></td>
+                                        </tr>
 
                                     }
                                 }

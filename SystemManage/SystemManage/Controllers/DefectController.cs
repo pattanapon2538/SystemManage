@@ -93,10 +93,11 @@ namespace SystemManage.Controllers
         public ActionResult ShowDefect()
         {
             List<DefectModel> DefectList = new List<DefectModel>();
+            DefectModel model = new DefectModel();
             var item = db.Defects.OrderByDescending(s => s.Defect_ID).ToList();
-
             foreach(var i in item)
             {
+                model.CreateBy = i.CreateBy;
                 var item2 = db.SubTasks.Where(m => m.SubID == i.Sub_ID).FirstOrDefault();
                 var item3 = db.Tasks.Where(m => m.TaskID == item2.TaskID).FirstOrDefault();
                 var Dev = db.Users.Where(m => m.User_ID == item2.SubDevID).FirstOrDefault();
@@ -110,14 +111,14 @@ namespace SystemManage.Controllers
                     SubTaskName = item2.SubName,
                     Detail = i.Detail,
                     Status = i.Status,
-                    DevName = Dev.User_Email,
-                    TestName = Tester.User_Email,
-                    QAName = QA.User_Email,
+                    DevName = Dev.User_Name,
+                    TestName = Tester.User_Name,
+                    QAName = QA.User_Name,
                     CreateBy = i.CreateBy
                 });
             }
             ViewBag.DataList = DefectList;
-            return View();
+            return View(model);
         }
         public ActionResult DetailDefect(int DefectID)
         {

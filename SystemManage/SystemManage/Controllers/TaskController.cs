@@ -164,12 +164,14 @@ namespace SystemManage.Controllers
             string Taskname = null;
             string Handle = null;
             string DevName = null;
+            TaskModel model = new TaskModel();
             List<SubTaskModel> SubTaskList = new List<SubTaskModel>();
             List<TaskModel> TaskList = new List<TaskModel>();
             var item = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
             var r = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.UserID == userID).FirstOrDefault();
             foreach (var i in item)
             {
+                model.CreateBy = i.CreateBy;
                 //PM และ CM
                 if (r.Role == 1 || r.Role == 5)
                 {
@@ -335,12 +337,13 @@ namespace SystemManage.Controllers
           
             ViewBag.DataList2 = SubTaskList;
             ViewBag.DataList = TaskList;
-            return View();
+            return View(model);
         }
         public ActionResult DetailTask(String SubID)
         {
             Session["SubID"] = SubID;
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+            int userID = Convert.ToInt32(Session["userID"]);
             TaskModel model = new TaskModel();
             var st = db.SubTasks.Where(m => m.SubID.ToString() == SubID).FirstOrDefault();
             var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();

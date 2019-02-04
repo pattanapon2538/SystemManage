@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SystemManage.Models;
 using SystemManage.Database;
 using SystemManage.Controllers;
+using Newtonsoft.Json;
 
 namespace SystemManage.Controllers
 {
@@ -51,12 +52,14 @@ namespace SystemManage.Controllers
         public ActionResult ShowProject()
         {
             List<ProjectModel> projectlist = new List<ProjectModel>();
+            ProjectModel model = new ProjectModel();
             int userID = Convert.ToInt32(Session["userID"]);
             var member = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
             int countList = 0;
             double Percent = 0;
             foreach (var m in member)
             {
+                model.UserRole = m.Role;
                 var item = db.Projects.Where(p => p.ProjectID == m.ProjectID).FirstOrDefault();
                 var pm = db.Users.Where(u => u.User_ID == item.CreateBy).FirstOrDefault();
                 Project po = db.Projects.Where(pos => pos.ProjectID == item.ProjectID).FirstOrDefault();
@@ -99,7 +102,7 @@ namespace SystemManage.Controllers
                 Percent = 0;
             }
             ViewBag.dataList = projectlist;
-            return View();
+            return View(model);
         }
         public ActionResult EditProject(String ProjectID)
         {
@@ -200,6 +203,41 @@ namespace SystemManage.Controllers
             Session["ProjectID"] = p.ProjectID;
             Session["ProjectName"] = p.Name;
             return RedirectToAction("ShowTask", "Task");
+        }
+        public ActionResult DetailProject(int ProjectID)
+        {
+            ProjectModel model = new ProjectModel();
+            List<Chart> dataPoints = new List<Chart>();
+            List<ProjectModel> TaskList = new List<ProjectModel>();
+            var p = db.Projects.Where(m => m.ProjectID == ProjectID).FirstOrDefault();
+            var t = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
+            foreach (var c in t)
+            {
+                double Total = 0;
+                var s = db.SubTasks.Where(m => m.TaskID == c.TaskID).ToList();
+                foreach (var d in s)
+                {
+                    Total = Total + d.SubPercent;
+                }
+                Total = Total / s.Count;
+                c.TotalPercent = Total;
+                db.SaveChanges();
+            }
+            Session["ProjectName"] = p.Name;
+            model.ProjectDescription = p.Description;
+            double total = 100/ t.Count;
+            foreach (var item in t)
+            {
+                double TaskPercent = (item.TotalPercent / 100) * total;
+                dataPoints.Add(new Chart(item.TaskName, TaskPercent));
+                TaskList.Add(new ProjectModel {
+                    TaskName = item.TaskName,
+                    TaskPercent = item.TotalPercent
+                });
+            }
+            ViewBag.DataList2 = TaskList;
+            ViewBag.DataList = JsonConvert.SerializeObject(dataPoints);
+            return View(model);
         }
     }
 }

@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using SystemManage.Models;
 using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
 using SystemManage.Database;
 using SystemManage.Controllers;
+using System.IO;
 
 namespace SystemManage.Controllers
 {
@@ -171,10 +171,6 @@ namespace SystemManage.Controllers
             model.SendTo = i.SendTo.ToString();
             model.CreateBy = i.CreateBy.ToString();
             return View(model);
-        }
-        public ActionResult ViewTest()
-        {
-            return View();
         }
     }
 }
