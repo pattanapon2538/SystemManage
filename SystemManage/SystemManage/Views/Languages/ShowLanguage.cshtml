@@ -4,6 +4,12 @@
     ViewBag.Title = "ShowLanguage";
     Layout = "~/Views/Shared/AddminLayout.cshtml";
 }
+@{
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <div class="container">
     <div class="login-box ptb--100">
@@ -51,16 +57,16 @@
                                             var i = 1;
                                             foreach (var item in (List<LanguageOfTypeModel>)ViewBag.DataList)
                                             {
-                                        <tr>
-                                            <td>@i</td>
-                                            <td>@item.Name</td>
-                                            <td>
-                                                <span style="cursor:pointer" onclick="EditDetail('@item.languageID')"><i class="fas fa-book-open"></i></span>
-                                            </td>
-                                        <td>
-                                            <a href="@Url.Action("DeleteLanguage", new {languageID = item.languageID})"><i class="fas fa-backspace"></i></a>
-                                        </td>
-                                        </tr>
+                                                <tr>
+                                                    <td>@i</td>
+                                                    <td>@item.Name</td>
+                                                    <td>
+                                                        <span style="cursor:pointer" onclick="EditDetail('@item.languageID')"><i class="fas fa-book-open"></i></span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("DeleteLanguage", new {languageID = item.languageID})"><i class="fas fa-backspace"></i></a>
+                                                    </td>
+                                                </tr>
                                                 i++;
                                             }
                                         }
@@ -84,7 +90,7 @@
             success: function (data)
             {
                 $("#languageID").val(data.languageID);
-                $("#Name").val(data.Name);  
+                $("#Name").val(data.Name);
             }
         });
     }

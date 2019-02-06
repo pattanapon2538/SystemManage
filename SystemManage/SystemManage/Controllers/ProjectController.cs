@@ -22,32 +22,39 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddProject(ProjectModel model)
         {
-            InboxController i = new InboxController();
-            Project p = new Project();
-            ProjectMember pm = new ProjectMember();
-            p.Name = model.ProjectName;
-            p.Description = model.ProjectDescription;
-            p.SendDate = model.ProjectSendDate;
-            p.Status = 1;
-            p.CreateBy = Convert.ToInt32(Session["userID"]);
-            p.CreateDate = DateTime.Now;
-            db.Projects.Add(p);
-            db.SaveChanges();
-            pm.ProjectID = p.ProjectID;
-            pm.UserID = Convert.ToInt32(Session["userID"]);
-            pm.Role = 1; //1 = PM, 2= Dev, 3=Test, 4=QA, 5= Customer
-            db.ProjectMembers.Add(pm);
-            db.SaveChanges();
-            ModelState.Clear();
-            var Email = db.Users.Where(m => m.User_ID == p.CreateBy).FirstOrDefault();
-            string sender = Email.User_Email;
-            //string sender = "systemmanage59346@gmail.com";
-            string subject = model.ProjectName;
-            //string receiver = model.CreateBy.ToString();
-            string receiver = "plusth2538@gmail.com";
-            string mess = "ท่านได้มีการสร้างโครงการ" + model.ProjectName + "ตำแหน่งของคุณคือหัวโครงการ";
-            i.SendEmail(receiver, subject, mess, sender);
-            return RedirectToAction("ShowProject");
+            try
+            {
+                InboxController i = new InboxController();
+                Project p = new Project();
+                ProjectMember pm = new ProjectMember();
+                p.Name = model.ProjectName;
+                p.Description = model.ProjectDescription;
+                p.SendDate = model.ProjectSendDate;
+                p.Status = 1;
+                p.CreateBy = Convert.ToInt32(Session["userID"]);
+                p.CreateDate = DateTime.Now;
+                db.Projects.Add(p);
+                db.SaveChanges();
+                pm.ProjectID = p.ProjectID;
+                pm.UserID = Convert.ToInt32(Session["userID"]);
+                pm.Role = 1; //1 = PM, 2= Dev, 3=Test, 4=QA, 5= Customer
+                db.ProjectMembers.Add(pm);
+                db.SaveChanges();
+                ModelState.Clear();
+                var Email = db.Users.Where(m => m.User_ID == p.CreateBy).FirstOrDefault();
+                string sender = Email.User_Email;
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = model.ProjectName;
+                //string receiver = model.CreateBy.ToString();
+                string receiver = "plusth2538@gmail.com";
+                string mess = "ท่านได้มีการสร้างโครงการ" + model.ProjectName + "ตำแหน่งของคุณคือหัวโครงการ";
+                i.SendEmail(receiver, subject, mess, sender);
+                return RedirectToAction("ShowProject");
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
         public ActionResult ShowProject()
         {
@@ -110,6 +117,7 @@ namespace SystemManage.Controllers
             Project p = db.Projects.Where(m => m.ProjectID.ToString() == ProjectID).FirstOrDefault();
             Model.ProjectID = p.ProjectID;
             Model.ProjectName = p.Name;
+            Session["ProjectName"] = p.Name;
             Model.ProjectDescription = p.Description;
             Model.ProjectSendDate = p.SendDate;
             if (p.Status == 1)

@@ -1,6 +1,9 @@
 ﻿@using SystemManage.Models;
 @{
-    Layout = null;
+    if (Session["userID"] == null && Session["ProjectID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 <html>
 <head>

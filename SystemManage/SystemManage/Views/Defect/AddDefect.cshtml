@@ -4,6 +4,12 @@
     }
 </style>
 @{
+    if (Session["userID"] == null && Session["ProjectID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+@{
     ViewBag.Title = "AddDefect";
     @model SystemManage.Models.DefectModel
 }

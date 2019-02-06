@@ -8,16 +8,19 @@ using System.Web.Mvc;
 
 namespace SystemManage.Models
 {
-    [DataContract]
+    
     public class ProjectModel
     {
+        
         public int ProjectID { get; set; }
-        [Required(ErrorMessage = "กรุณาใส่ข้อมูลให้ถูกต้อง")]
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public string ProjectName { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public string ProjectDescription { get; set; }
         public int ProjectStatus { get; set; }
         public Status status { get; set; }
         public double TotalPercent { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ProjectSendDate { get; set; }

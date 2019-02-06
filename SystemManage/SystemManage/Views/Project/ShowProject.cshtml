@@ -1,5 +1,11 @@
 ﻿@using SystemManage.Models;
 @model SystemManage.Models.ProjectModel
+@{
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
 <html lang="en">
 <head>
     <title>My Project</title>
@@ -19,7 +25,7 @@
     <link rel="stylesheet" href="~/assets/css/slicknav.min.css">
 </head>
 <body>
-    
+
     <div class="container">
         <div class="card shadow" style="margin-top: 100px">
             <div class="card-body">
@@ -51,51 +57,51 @@
                                     var i = 1;
                                     foreach (var item in (List<ProjectModel>)ViewBag.DataList)
                                     {
-                                <tr>
-                                    <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><center><i class="fas fa-door-open"></i></center></a></td>
-                                    <td><center>@i</center></td>
-                                    <td><center>@item.ProjectName</center></td>
-                                    @if (item.ProjectStatus == 1)
-                                    {
-                                        <td><center>Processing</center></td>
-                                    }
-                                    else if (item.ProjectStatus == 2)
-                                    {
-                                        <td><center>Pause</center></td>
-                                    }
-                                    else if (item.ProjectStatus == 3)
-                                    {
-                                        <td><center>Terminate</center></td>
-                                    }
-                                    @{
-                                        item.TotalPercent = item.TotalPercent / 100;
-                                    }
-                                    <td><center>@item.TotalPercent.ToString("P02")</center></td>
-                                    <td><center>@item.ProjectSendDate.ToString("dd/MM/yyyy")</center></td>
-                                    <td><center>@item.CreateBy</center></td>
-                                    <td>
-                                        <center>
-                                            <a href="@Url.Action("DetailProject",new { ProjectID = item.ProjectID})"><i class="fas fa-book-open"></i></a>
-                                        </center>
-                                    </td>
-                                    @if (item.ProjectRole == 1)
-                                    {
-                                        <td>
-                                            <center>
-                                                <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="fas fa-wrench"></i></a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace"></i></a>
-                                            </center>
-                                        </td>
-                                    }
-                                </tr>
-                                        role=@item.ProjectRole;
+                                        <tr>
+                                            <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><center><i class="fas fa-door-open"></i></center></a></td>
+                                            <td><center>@i</center></td>
+                                            <td><center>@item.ProjectName</center></td>
+                                            @if (item.ProjectStatus == 1)
+                                            {
+                                                <td><center>Processing</center></td>
+                                            }
+                                            else if (item.ProjectStatus == 2)
+                                            {
+                                                <td><center>Pause</center></td>
+                                            }
+                                            else if (item.ProjectStatus == 3)
+                                            {
+                                                <td><center>Terminate</center></td>
+                                            }
+                                            @{
+                                                item.TotalPercent = item.TotalPercent / 100;
+                                            }
+                                            <td><center>@item.TotalPercent.ToString("P02")</center></td>
+                                            <td><center>@item.ProjectSendDate.ToString("dd/MM/yyyy")</center></td>
+                                            <td><center>@item.CreateBy</center></td>
+                                            <td>
+                                                <center>
+                                                    <a href="@Url.Action("DetailProject",new { ProjectID = item.ProjectID})"><i class="fas fa-book-open"></i></a>
+                                                </center>
+                                            </td>
+                                            @if (item.ProjectRole == 1)
+                                            {
+                                                <td>
+                                                    <center>
+                                                        <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="fas fa-wrench"></i></a>
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                        <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace"></i></a>
+                                                    </center>
+                                                </td>
+                                            }
+                                        </tr>
+                                        role = @item.ProjectRole;
                                         i++;
                                     }
-                                 }
+                                }
                             </tbody>
                         </table>
                     </div>
@@ -107,8 +113,9 @@
             </div>
             <div class="col-sm-3"></div>
             <div class="col-sm-3"></div>
-            <div class="col-sm-3"> @if (role != 5) { <a href="@Url.Action("AddProject")"><button type="button" class="btn btn-outline-primary btn-block shadow">สร้างโครงการ</button></a>}</div>
-        
+            <div class="col-sm-3"> @if (role != 5)
+            {<a href="@Url.Action("AddProject")"><button type="button" class="btn btn-outline-primary btn-block shadow">สร้างโครงการ</button></a>}</div>
+
         </div>
     </div>
 

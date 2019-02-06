@@ -4,6 +4,12 @@
     ViewBag.Title = "ShowMember";
     Layout = "~/Views/Shared/_MainMenu.cshtml";
 }
+@{
+    if (Session["userID"] == null && Session["ProjectID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
 <div class="card">
@@ -48,22 +54,22 @@
                                 @{
                                     foreach (var item in (List<UserModel>)ViewBag.DataList)
                                     {
-                                <tr>
-                                    <td><center>@item.User_Email</center></td>
-                                    <td><center>@item.User_Name</center></td>
-                                    <td><center>@item.User_LastName</center></td>
-                                    <td><center>@item.PositionName</center></td>
-                                    <td><center>@item.AVG</center></td>
-                                    <td><center>@item.Amount_Succ</center></td>
-                                    <td><center>@item.TotalCoding</center></td>
-                                    <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                    @{
-                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
-                                        {
-                                            <td><a href="@Url.Action("DeleteMember", new {UserID = item.Users_ID })"><center><i class="fas fa-backspace"></i></center></a></td>
-                                        }
-                                    }
-                                </tr>
+                                        <tr>
+                                            <td><center>@item.User_Email</center></td>
+                                            <td><center>@item.User_Name</center></td>
+                                            <td><center>@item.User_LastName</center></td>
+                                            <td><center>@item.PositionName</center></td>
+                                            <td><center>@item.AVG</center></td>
+                                            <td><center>@item.Amount_Succ</center></td>
+                                            <td><center>@item.TotalCoding</center></td>
+                                            <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                            @{
+                                                if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
+                                                {
+                                                    <td><a href="@Url.Action("DeleteMember", new {UserID = item.Users_ID })"><center><i class="fas fa-backspace"></i></center></a></td>
+                                                }
+                                            }
+                                        </tr>
 
                                     }
                                 }

@@ -11,16 +11,24 @@ namespace SystemManage.Models
     public class TaskModel
     {
         public int TaskID { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public string TaskName { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public string DescriptionTask { get; set; }
         public double TotalPercent { get; set; }
         public int Task_level { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public string DescriptionTest { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public int TestID { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public DateTime TestSentDate { get; set; }
         public int TestStatus { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public string DescriptionQA { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public int QAID { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public DateTime QASentDate { get; set; }
         public int QAStatus { get; set; }
         public string AttachShow { get; set; }
@@ -30,11 +38,17 @@ namespace SystemManage.Models
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
         public int ProjectID { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public List<string> SubTasksName { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public List<string> SubTasksDis { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public List<int> SubTaskDevID { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public List<DateTime> SubTaskSendDate { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public List<DateTime> SubTaskCreateDate { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลครบถ้วน")]
         public List<DateTime> SubTaskUpdate { get; set; }
         public int Status { get; set; }
         public int SubDevID { get; set; }
