@@ -189,10 +189,17 @@ namespace SystemManage.Controllers
                     foreach (var s in item2)
                     {
                         var nameDev = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
-                        var nameHandle = db.Users.Where(m => m.User_ID == s.Handle).FirstOrDefault();
                         DevName = nameDev.User_Name;
-                        Handle = nameHandle.User_Name;
-                    //    number = number + s.SubPercent;
+                        if (s.Handle == 0)
+                        {
+                            Handle = "ลูกค้า";
+                        }
+                        else
+                        {
+                            var nameHandle = db.Users.Where(m => m.User_ID == s.Handle).FirstOrDefault();
+                            Handle = nameHandle.User_Name;
+                        }
+                        //    number = number + s.SubPercent;
                         SubTaskList.Add(new SubTaskModel
                         {
                             TaskID = s.TaskID,
@@ -219,9 +226,16 @@ namespace SystemManage.Controllers
                     foreach (var s in st)
                     {
                         var nameDev = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
-                        var nameHandle = db.Users.Where(m => m.User_ID == s.Handle).FirstOrDefault();
                         DevName = nameDev.User_Name;
-                        Handle = nameHandle.User_Name;
+                        if (s.Handle == 0)
+                        {
+                            Handle = "ลูกค้า";
+                        }
+                        else
+                        {
+                            var nameHandle = db.Users.Where(m => m.User_ID == s.Handle).FirstOrDefault();
+                            Handle = nameHandle.User_Name;
+                        }
                         var t = db.Tasks.Where(m => m.TaskID == s.TaskID).FirstOrDefault();
                         TaskList.Add(new TaskModel
                         {
@@ -270,9 +284,16 @@ namespace SystemManage.Controllers
                         foreach (var si in st)
                         {
                             var nameDev = db.Users.Where(m => m.User_ID == si.SubDevID).FirstOrDefault();
-                            var nameHandle = db.Users.Where(m => m.User_ID == si.Handle).FirstOrDefault();
                             DevName = nameDev.User_Name;
-                            Handle = nameHandle.User_Name;
+                            if (si.Handle == 0)
+                            {
+                                Handle = "ลูกค้า";
+                            }
+                            else
+                            {
+                                var nameHandle = db.Users.Where(m => m.User_ID == si.Handle).FirstOrDefault();
+                                Handle = nameHandle.User_Name;
+                            }
                             SubTaskList.Add(new SubTaskModel
                             {
                                 TaskID = si.TaskID,
@@ -311,9 +332,15 @@ namespace SystemManage.Controllers
                         foreach (var si in st)
                         {
                             var nameDev = db.Users.Where(m => m.User_ID == si.SubDevID).FirstOrDefault();
-                            var nameHandle = db.Users.Where(m => m.User_ID == si.Handle).FirstOrDefault();
                             DevName = nameDev.User_Name;
-                            Handle = nameHandle.User_Name;
+                            if (si.Handle == 0)
+                            {
+                                Handle = "ลูกค้า";
+                            }
+                            else {
+                                var nameHandle = db.Users.Where(m => m.User_ID == si.Handle).FirstOrDefault();
+                                Handle = nameHandle.User_Name;
+                            }
                             SubTaskList.Add(new SubTaskModel
                             {
                                 TaskID = si.TaskID,
@@ -339,13 +366,13 @@ namespace SystemManage.Controllers
             ViewBag.DataList = TaskList;
             return View(model);
         }
-        public ActionResult DetailTask(String SubID)
+        public ActionResult DetailTask(int SubID)
         {
             Session["SubID"] = SubID;
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             int userID = Convert.ToInt32(Session["userID"]);
             TaskModel model = new TaskModel();
-            var st = db.SubTasks.Where(m => m.SubID.ToString() == SubID).FirstOrDefault();
+            var st = db.SubTasks.Where(m => m.SubID == SubID).FirstOrDefault();
             var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
             model.DevList = db.ProjectMembers.Where(m => m.ProjectID == t.ProjectID && m.Role == 2).ToList();
             model.SubTaskID = st.SubID;
@@ -354,6 +381,7 @@ namespace SystemManage.Controllers
             model.SubDevID = st.SubDevID;
             model.Handle = st.Handle;
             model.Status = st.SubStatus;
+            model.HaveDefect = st.HaveDefect;
             model.SubTaskDateSend = st.SubDevSend;
             model.TestList = db.ProjectMembers.Where(m => m.ProjectID == t.ProjectID && m.Role == 3).ToList();
             model.QAList = db.ProjectMembers.Where(m => m.ProjectID == t.ProjectID && m.Role == 4).ToList();
@@ -379,6 +407,7 @@ namespace SystemManage.Controllers
             model.QASentDate = t.QASentDate;
             model.DescriptionQA = t.DescriptionQA;
             model.CreateBy = t.CreateBy;
+            model.Comment = t.Comment;
             return View(model);
         }
         public ActionResult EditTask(TaskModel model)
@@ -447,6 +476,7 @@ namespace SystemManage.Controllers
                     db.SaveChanges();
                     t.UpdateDate = DateTime.Now;
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    t.Comment = model.Comment;
                     db.SaveChanges();
                 var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
                 var Sendto = db.Users.Where(m => m.User_ID == t.TestID).FirstOrDefault();
@@ -481,6 +511,7 @@ namespace SystemManage.Controllers
                     db.SaveChanges();
                     t.UpdateDate = DateTime.Now;
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    t.Comment = model.Comment;
                     db.SaveChanges();
                 var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
                 var Sendto = db.Users.Where(m => m.User_ID == t.QAID).FirstOrDefault();
@@ -510,11 +541,12 @@ namespace SystemManage.Controllers
                     st.SubStatus = 3;
                     st.SubPercent = 75;
                     st.UpdateDate = DateTime.Now;
-                    st.Handle = t.QAID;
+                    st.Handle = 0; //ลูกค้า
                     st.UpdateBy = Convert.ToInt32(Session["userID"]);
                     db.SaveChanges();
                     t.UpdateDate = DateTime.Now;
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    t.Comment = model.Comment;
                     db.SaveChanges();
                 var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
                 var Sendto = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
@@ -549,6 +581,7 @@ namespace SystemManage.Controllers
                     db.SaveChanges();
                     t.UpdateDate = DateTime.Now;
                     t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    t.Comment = model.Comment;
                     db.SaveChanges();
                 var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
                 var Sendto = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();

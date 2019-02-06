@@ -30,7 +30,7 @@ namespace SystemManage.Database
         public int TestStatus { get; set; }
         public string DescriptionQA { get; set; }
         public int QAID { get; set; }
-        public DateTime QASentDate { get; set; }
+        public System.DateTime QASentDate { get; set; }
         public int QAStatus { get; set; }
         public string AttachShow { get; set; }
         public string AttachFile { get; set; }
@@ -40,6 +40,7 @@ namespace SystemManage.Database
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
         public string DescriptionTask { get; set; }
+        public string Comment { get; set; }
     
         public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

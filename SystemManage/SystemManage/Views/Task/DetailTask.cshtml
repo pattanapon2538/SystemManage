@@ -163,15 +163,15 @@
                     <div class="row" style="margin-top: 15px">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">หมายเหตุ:</label>
                                 @{
-                                    if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                    <label for="comment">หมายเหตุ:</label>
+                                    if (Model.Status == 4 || Model.Handle != Convert.ToInt32(Session["userID"]) || Model.Status == 5)
                                     {
-                                        @Html.TextAreaFor(m => m.DescriptionTask, new { @Class = "form-control" })
+                                        @Html.TextAreaFor(m => m.Comment, new { @Class = "form-control", Readonly = "" })
                                     }
-                                    else
+                                    else if (Model.Handle == Convert.ToInt32(Session["userID"]))
                                     {
-                                        @Html.TextAreaFor(m => m.DescriptionTask, new { @Class = "form-control", Readonly ="" })
+                                        @Html.TextAreaFor(m => m.Comment, new { @Class = "form-control" })
                                     }
                                 }
                             </div>
@@ -185,7 +185,14 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">รายละเอียดของผู้ทดสอบ :</label>
-                                @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control", @type = "TextArea" })
+                                @if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                {
+                                    @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control", @type = "TextArea" })
+                                }
+                                else
+                                {
+                                    @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control", @type = "TextArea" ,Readonly= ""})
+                                }
                             </div>
                         </div>
                     </div>
@@ -233,7 +240,14 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="comment">รายละเอียดของผู้ตรวจสอบ :</label>
-                                        @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control", @type = "TextArea" })
+                                        @if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                        {
+                                            @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control", @type = "TextArea" })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control", @type = "TextArea", Readonly = "" })
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -278,9 +292,15 @@
                         <div class="row" style="margin-top: 20px">
                             <div class="col-sm-10"></div>
                             <div class="col-sm-2">
-                                @if (Model.TestID == Convert.ToInt32(Session["userID"]))
+                                @if (Model.Status != 4)
                                 {
-                                    <a href="@Url.Action("AddDefect","Defect")"><button type="button" class="btn btn-outline-success btn-block">Defect</button></a>
+                                    if (Model.CreateBy != Convert.ToInt32(Session["userID"]) || Model.SubDevID != Convert.ToInt32(Session["userID"]))
+                                    {
+                                        if (Model.Handle == Convert.ToInt32(Session["userID"]) || Model.Handle == 0)
+                                        {
+                                            <a href="@Url.Action("AddDefect","Defect")"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                                        }
+                                    }
                                 }
                             </div>
                         </div>
@@ -291,11 +311,20 @@
                                 </div>*@
                             </div>
                             <div class="col-sm-2">
-                                <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger">Back</button></a>
-                                @if (Model.Handle == Convert.ToInt32(Session["userID"]) || Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
+
+                                @if (Model.Handle == Convert.ToInt32(Session["userID"]) || Model.Handle == 0 || Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                 {
-                                    <button type="submit" class="btn btn-outline-primary">บันทึก</button>
+                                    if (Model.Status != 4 && Model.HaveDefect != 1)
+                                    {
+                                        <button type="submit" class="btn btn-outline-primary">บันทึก</button>
+                                    }
+                                    else if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        <button type="submit" class="btn btn-outline-primary">บันทึก</button>
+                                    }
                                 }
+
                             </div>
                         </div>
 

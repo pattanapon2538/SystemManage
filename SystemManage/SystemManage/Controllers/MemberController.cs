@@ -111,10 +111,11 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowMember()
         {
-            List<MemberModel> MemberList = new List<MemberModel>();
             List<UserModel> UserList = new List<UserModel>();
             int DataProjectID = Convert.ToInt32(Session["ProjectID"]);
+            UserModel model = new UserModel();
             var item = db.ProjectMembers.Where(m => m.ProjectID == DataProjectID).ToList();
+            var c = db.Projects.Where(m => m.ProjectID == DataProjectID).FirstOrDefault();
             foreach (var i in item)
             {
                 var item2 = db.Users.Where(m => m.User_ID == i.UserID).FirstOrDefault();
@@ -128,11 +129,12 @@ namespace SystemManage.Controllers
                     PositionName = dbPosition.Name,
                     TotalCoding = item2.TotalCoding,
                     Amount_Succ = item2.Amount_Succ,
-                    AVG = item2.AVG
+                    AVG = item2.AVG,
                 });
             }
+            model.ProjectCreateBy = c.CreateBy;
             ViewBag.DataList = UserList;
-            return View();
+            return View(model);
         }
     }
 }

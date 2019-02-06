@@ -216,6 +216,7 @@
           </Key>
           <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TaskName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DescriptionTask" Type="nvarchar" MaxLength="255" />
           <Property Name="TotalPercent" Type="float" Nullable="false" />
           <Property Name="Task_level" Type="int" />
           <Property Name="DescriptionTest" Type="nvarchar" MaxLength="255" />
@@ -233,7 +234,7 @@
           <Property Name="ProjectID" Type="int" Nullable="false" />
           <Property Name="CreateBy" Type="int" Nullable="false" />
           <Property Name="UpdateBy" Type="int" />
-          <Property Name="DescriptionTask" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Type_of_Contract">
           <Key>
@@ -908,6 +909,7 @@
           <Property Name="DescriptionTask" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Task" FromRole="Task" ToRole="Project" />
           <NavigationProperty Name="SubTasks" Relationship="SystemManageModel.FK_SubTask" FromRole="Task" ToRole="SubTask" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Type_of_Contract">
           <Key>
@@ -1390,6 +1392,7 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="SystemManageModel.Task">
               <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="DescriptionTask" ColumnName="DescriptionTask" />
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />

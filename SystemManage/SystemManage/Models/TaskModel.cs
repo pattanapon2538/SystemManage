@@ -44,6 +44,8 @@ namespace SystemManage.Models
         public int SubTaskID { get; set; }
         public int Handle { get; set; }
         public LevelTask level { get; set; }
+        public string Comment { get; set; }
+        public int HaveDefect { get; set; }
 
         public List<ProjectMember> DevList { get; set; }
         public List<ProjectMember> TestList { get; set; }

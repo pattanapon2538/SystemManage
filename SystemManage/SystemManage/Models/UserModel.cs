@@ -54,6 +54,8 @@ namespace SystemManage.Models
         public int Position_ID { get; set; }
         public string Phone { get; set; }
         public string PositionName { get; set; }
+        
+        public int ProjectCreateBy { get; set; }
         public HttpPostedFileBase File1 { get; set; }
         [NotMapped]
         public List<Position> PositionList { get; set; }

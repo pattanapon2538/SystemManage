@@ -49,6 +49,7 @@ namespace SystemManage.Controllers
                     var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();
                     s.HaveDefect = 1;
                     s.SubStatus = 5;
+                    s.SubPercent = 25;
                     db.SaveChanges();
                     var Email = db.Users.Where(m => m.User_ID == d.CreateBy).FirstOrDefault();
                     var Sendto = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
@@ -103,7 +104,38 @@ namespace SystemManage.Controllers
                 var Dev = db.Users.Where(m => m.User_ID == item2.SubDevID).FirstOrDefault();
                 var Tester = db.Users.Where(m => m.User_ID == item3.TestID).FirstOrDefault();
                 var QA = db.Users.Where(m => m.User_ID == item3.QAID).FirstOrDefault();
-                
+                //////////////////////////////////////////////////////////////////
+                int number = 0;
+                var d = db.Defects.Where(m => m.Sub_ID == i.Sub_ID).ToList();
+                foreach (var c in d)
+                {
+                    if (c.Status == 2)
+                    {
+                        number = number+1;
+                        if (number == d.Count)
+                        {
+                            var subtask = db.SubTasks.Where(m => m.SubID == c.Sub_ID).FirstOrDefault();
+                            subtask.HaveDefect = 0;
+                            var Handle = db.ProjectMembers.Where(m => m.UserID == subtask.Handle).FirstOrDefault();
+                            if (Handle.Role == 3)
+                            {
+                                subtask.SubStatus = 2;
+                            }
+                            else if (Handle.Role == 4)
+                            {
+                                subtask.SubStatus = 3;
+                            }
+                            else if (Handle.Role == 5)
+                            {
+                                subtask.SubStatus = 4;
+                            }
+                            db.SaveChanges();
+                            number = 0;
+                        }
+                    }
+                    
+                }
+
                 DefectList.Add(new DefectModel
                 {
                     TaskName = item3.TaskName,
