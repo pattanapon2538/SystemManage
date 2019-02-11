@@ -39,8 +39,8 @@ namespace SystemManage.Models
         public string Comment { get; set; }
         public int LanguageID { get; set; }
         public double AVG { get; set; }
-        public int Amount_Succ { get; set; }
-        public int Amount_Non { get; set; }
+        public double Amount_Succ { get; set; }
+        public double Amount_Non { get; set; }
         public int TotalCoding { get; set; }
         public string Speaking { get; set; }
         public string Reading { get; set; }

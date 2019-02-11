@@ -20,6 +20,12 @@ namespace SystemManage.Controllers
             var user = db.Users.OrderByDescending(m => m.User_ID).ToList();
                 foreach (var d in user)
                 {
+                double SuccPercent = 0;
+                if (d.Amount_Succ != 0)
+                    {
+                        var totalSucc = db.SubTasks.Where(m => m.SubDevID == d.User_ID).ToList();
+                        SuccPercent = (Convert.ToDouble(d.Amount_Succ) * 100)/ Convert.ToDouble(totalSucc.Count);
+                    }
                     var PositionDB = db.Positions.Where(m => m.Position_ID == d.Position_ID).FirstOrDefault();
                      UserList.Add(new UserModel
                      {
@@ -29,7 +35,7 @@ namespace SystemManage.Controllers
                          User_LastName = d.User_LastName,
                          PositionName = PositionDB.Name,
                          TotalCoding = d.TotalCoding,
-                         Amount_Succ = d.Amount_Succ,
+                         Amount_Succ = SuccPercent,
                          AVG = d.AVG
                      });
                          ViewBag.DataList = UserList;
@@ -118,7 +124,13 @@ namespace SystemManage.Controllers
             var c = db.Projects.Where(m => m.ProjectID == DataProjectID).FirstOrDefault();
             foreach (var i in item)
             {
+                double SuccPercent = 0;
                 var item2 = db.Users.Where(m => m.User_ID == i.UserID).FirstOrDefault();
+                if (item2.Amount_Succ != 0)
+                {
+                    var totalSucc = db.SubTasks.Where(m => m.SubDevID == item2.User_ID).ToList();
+                    SuccPercent = (Convert.ToDouble(item2.Amount_Succ) * 100) / Convert.ToDouble(totalSucc.Count);
+                }
                 var dbPosition = db.Positions.Where(m => m.Position_ID == item2.Position_ID).FirstOrDefault();
                 UserList.Add(new UserModel
                 {
@@ -128,7 +140,7 @@ namespace SystemManage.Controllers
                     User_LastName = item2.User_LastName,
                     PositionName = dbPosition.Name,
                     TotalCoding = item2.TotalCoding,
-                    Amount_Succ = item2.Amount_Succ,
+                    Amount_Succ = SuccPercent,
                     AVG = item2.AVG,
                 });
             }

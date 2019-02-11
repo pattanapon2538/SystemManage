@@ -58,8 +58,8 @@ namespace SystemManage.Controllers
             u.LanguageID = model.LanguageID; //Ref ??? Table Skills
             s.languageID = model.LanguageID;
             u.AVG = model.AVG;
-            u.Amount_Succ = model.Amount_Succ;
-            u.Amount_Non = model.Amount_Non;
+            u.Amount_Succ = Convert.ToInt32(model.Amount_Succ);
+            u.Amount_Non = Convert.ToInt32(model.Amount_Non);
             u.TotalCoding = model.TotalCoding;
             u.Speaking = Convert.ToInt32(model.Speaking);
             u.Reading = Convert.ToInt32(model.Reading);
