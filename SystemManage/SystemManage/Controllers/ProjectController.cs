@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SystemManage.Models;
 using SystemManage.Database;
 using SystemManage.Controllers;
+using Newtonsoft.Json;
 
 namespace SystemManage.Controllers
 {
@@ -21,42 +22,51 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddProject(ProjectModel model)
         {
-            InboxController i = new InboxController();
-            Project p = new Project();
-            ProjectMember pm = new ProjectMember();
-            p.Name = model.ProjectName;
-            p.Description = model.ProjectDescription;
-            p.SendDate = model.ProjectSendDate;
-            p.Status = 1;
-            p.CreateBy = Convert.ToInt32(Session["userID"]);
-            p.CreateDate = DateTime.Now;
-            db.Projects.Add(p);
-            db.SaveChanges();
-            pm.ProjectID = p.ProjectID;
-            pm.UserID = Convert.ToInt32(Session["userID"]);
-            pm.Role = 1; //1 = PM, 2= Dev, 3=Test, 4=QA, 5= Customer
-            db.ProjectMembers.Add(pm);
-            db.SaveChanges();
-            ModelState.Clear();
-            var Email = db.Users.Where(m => m.User_ID == p.CreateBy).FirstOrDefault();
-            string sender = Email.User_Email;
-            //string sender = "systemmanage59346@gmail.com";
-            string subject = model.ProjectName;
-            //string receiver = model.CreateBy.ToString();
-            string receiver = "plusth2538@gmail.com";
-            string mess = "ท่านได้มีการสร้างโครงการ" + model.ProjectName + "ตำแหน่งของคุณคือหัวโครงการ";
-            i.SendEmail(receiver, subject, mess, sender);
-            return RedirectToAction("ShowProject");
+            try
+            {
+                InboxController i = new InboxController();
+                Project p = new Project();
+                ProjectMember pm = new ProjectMember();
+                p.Name = model.ProjectName;
+                p.Description = model.ProjectDescription;
+                p.SendDate = model.ProjectSendDate;
+                p.Status = 1;
+                p.CreateBy = Convert.ToInt32(Session["userID"]);
+                p.CreateDate = DateTime.Now;
+                db.Projects.Add(p);
+                db.SaveChanges();
+                pm.ProjectID = p.ProjectID;
+                pm.UserID = Convert.ToInt32(Session["userID"]);
+                pm.Role = 1; //1 = PM, 2= Dev, 3=Test, 4=QA, 5= Customer
+                db.ProjectMembers.Add(pm);
+                db.SaveChanges();
+                ModelState.Clear();
+                var Email = db.Users.Where(m => m.User_ID == p.CreateBy).FirstOrDefault();
+                string sender = Email.User_Email;
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = model.ProjectName;
+                //string receiver = model.CreateBy.ToString();
+                string receiver = "plusth2538@gmail.com";
+                string mess = "ท่านได้มีการสร้างโครงการ" + model.ProjectName + "ตำแหน่งของคุณคือหัวโครงการ";
+                i.SendEmail(receiver, subject, mess, sender);
+                return RedirectToAction("ShowProject");
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
         public ActionResult ShowProject()
         {
             List<ProjectModel> projectlist = new List<ProjectModel>();
+            ProjectModel model = new ProjectModel();
             int userID = Convert.ToInt32(Session["userID"]);
             var member = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
             int countList = 0;
             double Percent = 0;
             foreach (var m in member)
             {
+                model.UserRole = m.Role;
                 var item = db.Projects.Where(p => p.ProjectID == m.ProjectID).FirstOrDefault();
                 var pm = db.Users.Where(u => u.User_ID == item.CreateBy).FirstOrDefault();
                 Project po = db.Projects.Where(pos => pos.ProjectID == item.ProjectID).FirstOrDefault();
@@ -99,7 +109,7 @@ namespace SystemManage.Controllers
                 Percent = 0;
             }
             ViewBag.dataList = projectlist;
-            return View();
+            return View(model);
         }
         public ActionResult EditProject(String ProjectID)
         {
@@ -107,6 +117,7 @@ namespace SystemManage.Controllers
             Project p = db.Projects.Where(m => m.ProjectID.ToString() == ProjectID).FirstOrDefault();
             Model.ProjectID = p.ProjectID;
             Model.ProjectName = p.Name;
+            Session["ProjectName"] = p.Name;
             Model.ProjectDescription = p.Description;
             Model.ProjectSendDate = p.SendDate;
             if (p.Status == 1)
@@ -200,6 +211,41 @@ namespace SystemManage.Controllers
             Session["ProjectID"] = p.ProjectID;
             Session["ProjectName"] = p.Name;
             return RedirectToAction("ShowTask", "Task");
+        }
+        public ActionResult DetailProject(int ProjectID)
+        {
+            ProjectModel model = new ProjectModel();
+            List<Chart> dataPoints = new List<Chart>();
+            List<ProjectModel> TaskList = new List<ProjectModel>();
+            var p = db.Projects.Where(m => m.ProjectID == ProjectID).FirstOrDefault();
+            var t = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
+            foreach (var c in t)
+            {
+                double Total = 0;
+                var s = db.SubTasks.Where(m => m.TaskID == c.TaskID).ToList();
+                foreach (var d in s)
+                {
+                    Total = Total + d.SubPercent;
+                }
+                Total = Total / s.Count;
+                c.TotalPercent = Total;
+                db.SaveChanges();
+            }
+            Session["ProjectName"] = p.Name;
+            model.ProjectDescription = p.Description;
+            double total = 100/ t.Count;
+            foreach (var item in t)
+            {
+                double TaskPercent = (item.TotalPercent / 100) * total;
+                dataPoints.Add(new Chart(item.TaskName, TaskPercent));
+                TaskList.Add(new ProjectModel {
+                    TaskName = item.TaskName,
+                    TaskPercent = item.TotalPercent
+                });
+            }
+            ViewBag.DataList2 = TaskList;
+            ViewBag.DataList = JsonConvert.SerializeObject(dataPoints);
+            return View(model);
         }
     }
 }

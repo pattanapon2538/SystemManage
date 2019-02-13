@@ -3,10 +3,16 @@
         max-width: 2800px;
     }
 </style>
-
+@{
+    if (Session["userID"] == null && Session["ProjectID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
 <!doctype html>
 <html lang="en">
 @model SystemManage.Models.TaskModel
+@using SystemManage.Models
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -73,7 +79,7 @@
 
     </script>
     <!-- end datepicker script -->
-    
+
     <title>Task</title>
 </head>
 <body>
@@ -85,16 +91,17 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="taskname">Task Name :</label>
+                                <label for="taskname">ชื่องาน :</label>
                                 @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.TaskName, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">Description for Task :</label>
-                                @Html.TextAreaFor(m => m.DescriptionTask, new { @class = "form-control" ,@type ="TextArea" })
+                                <label for="comment">รายละเอียดงาน :</label>
+                                @Html.TextAreaFor(m => m.DescriptionTask, new { @class = "form-control", @type = "TextArea" })
                             </div>
                         </div>
                     </div>
@@ -103,8 +110,9 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="taskname">Sub Task Name :</label>
+                                        <label for="taskname">ชื่องานรอง :</label>
                                         @Html.TextBoxFor(m => m.SubTasksName, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.SubTaskNames, string.Empty, new { @style = "color:red" })
                                     </div>
                                 </div>
                                 <div class="col-sm-1"></div>
@@ -119,13 +127,10 @@
                                             </select>
                                             <div class="select-dropdown"></div>
                                         </div>
-                                        <label class="label" for="level" style="margin-right: 10px">Level :</label>
+                                        <label class="label" for="level" style="margin-right: 10px">ระดับ :</label>
                                         <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                                            <select name="level">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                            </select>
+                                            @Html.DropDownListFor(m => m.level, new SelectList(Enum.GetValues(typeof(TaskModel.LevelTask))), "เลือก", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.level, string.Empty, new { @style = "color:red" })
                                             <div class="select-dropdown"></div>
                                         </div>
                                     </div>
@@ -134,8 +139,9 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="comment">Description for Developer :</label>
-                                        @Html.TextAreaFor(m => m.SubTasksDis, new { @class = "form-control",@type ="TextArea" })
+                                        <label for="comment">รายละเอียดของผู้พัฒนาระบบ:</label>
+                                        @Html.TextAreaFor(m => m.SubTasksDis, new { @class = "form-control", @type = "TextArea" })
+                                        @Html.ValidationMessageFor(m => m.SubTasksDis, string.Empty, new { @style = "color:red" })
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +150,8 @@
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>
                                         @*@Html.TextBoxFor(m => m.SubTaskDevID, new { @class = "form-control" })*@
-                                        @Html.DropDownListFor(m => m.SubTaskDevID, new SelectList(Model.DevList, "UserID", "UserID"), "Select", new {@class = "form-control" })
+                                        @Html.DropDownListFor(m => m.SubTaskDevID, new SelectList(Model.DevList, "UserID", "Member_name"), "Select", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.SubTaskDevID, string.Empty, new { @style = "color:red" })
                                     </div>
                                     <div class="form-group" style="margin-top: 20px">
                                         <input type="file" class="form-control-file" id="exampleFormControlFile1">
@@ -152,8 +159,9 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        <label class="label" style="margin-right: 10px">Send Date :</label>
+                                        <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
                                         @Html.TextBoxFor(m => m.SubTaskSendDate, new { @class = "form-control", @type = "date" })
+                                        @Html.ValidationMessageFor(m => m.SubTaskSendDate, string.Empty, new { @style = "color:red" })
                                     </div>
                                 </div>
                             </div>
@@ -165,8 +173,9 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">Description for Tester :</label>
-                                @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control",@type = "TextArea" })
+                                <label for="comment">รายละเอียดของผ้ทดสอบ :</label>
+                                @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control", @type = "TextArea" })
+                                @Html.ValidationMessageFor(m => m.DescriptionTest, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                     </div>
@@ -174,21 +183,24 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
-                                @Html.DropDownListFor(m => m.TestID, new SelectList(Model.TestList, "UserID", "UserID"), "Select", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.TestID, new SelectList(Model.TestList, "UserID", "Member_name"), "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.TestID, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">Send Date :</label>
+                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
                                 @Html.TextBoxFor(m => m.TestSentDate, new { @class = "form-control", @type = "date" })
+                                @Html.ValidationMessageFor(m => m.TestSentDate, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">Description for Quality Assurance :</label>
-                                @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control",@type ="TextArea" })
+                                <label for="comment">รายละเอียดของผู้ตรวจสอบคุณภาพ :</label>
+                                @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control", @type = "TextArea" })
+                                @Html.ValidationMessageFor(m => m.DescriptionQA, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                     </div>
@@ -196,13 +208,15 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้ตรวจงาน :</label>
-                                @Html.DropDownListFor(m => m.QAID, new SelectList(Model.QAList, "UserID", "UserID"), "Select", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.QAID, new SelectList(Model.QAList, "UserID", "Member_name"), "Select", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.QAID, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">Send Date :</label>
-                                @Html.TextBoxFor(m => m.QASentDate, new { @class = "form-control" , @type ="date"})
+                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
+                                @Html.TextBoxFor(m => m.QASentDate, new { @class = "form-control", @type = "date" })
+                                @Html.ValidationMessageFor(m => m.QASentDate, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                     </div>

@@ -16,7 +16,7 @@
     <title>AddInbox</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("AddInbox", "Inbox", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
+    @using (Ajax.BeginForm("AddInbox", "Inbox", new AjaxOptions { HttpMethod = FormMethod.Post.ToString()}, new { enctype = "multipart/form-data" }))
     {
     <div class="container">
         <div class="card" style="margin-top: 20px">
@@ -44,7 +44,8 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                            <input type="file" class="form-control-file" name="file">
+                            @*@Html.TextBoxFor(m => m.AttachFile1,new {@class = "form-control-file" ,@type ="file"})*@
                         </div>
                     </div>
                 </div>

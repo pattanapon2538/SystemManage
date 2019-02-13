@@ -17,28 +17,35 @@ namespace SystemManage.Controllers
         }
         public ActionResult CheckLogin(string User_Email, string User_Password)
         {
-            if (!string.IsNullOrEmpty(User_Email) && !string.IsNullOrEmpty(User_Password))
+            try
             {
-                var user = db.Users.Where(c => c.User_Email == User_Email && c.User_Password == User_Password).FirstOrDefault();
-                if (user.Permisstion == "A")
+                if (!string.IsNullOrEmpty(User_Email) && !string.IsNullOrEmpty(User_Password))
                 {
-                    if (user != null)
+                    var user = db.Users.Where(c => c.User_Email == User_Email && c.User_Password == User_Password).FirstOrDefault();
+                    if (user.Permisstion == "A")
                     {
-                        Session["userID"] = user.User_ID;
-                        return RedirectToAction("ShowPosition", "Position");
+                        if (user != null)
+                        {
+                            Session["userID"] = user.User_ID;
+                            return RedirectToAction("ShowPosition", "Position");
+                        }
                     }
-                }
-                else if (user.Permisstion == "P" || user.Permisstion == "C")
-                {
-                    if (user != null)
+                    else if (user.Permisstion == "P" || user.Permisstion == "C")
                     {
-                        Session["userID"] = user.User_ID;
-                        return RedirectToAction("ShowProject", "Project");
-                    }
+                        if (user != null)
+                        {
+                            Session["userID"] = user.User_ID;
+                            return RedirectToAction("ShowProject", "Project");
+                        }
 
+                    }
                 }
+                return View("Index");
             }
-            return View("Index");
+            catch (Exception)
+            {
+                return View("Index");
+            }
         }
         
     }

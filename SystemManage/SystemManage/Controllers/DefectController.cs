@@ -49,6 +49,7 @@ namespace SystemManage.Controllers
                     var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();
                     s.HaveDefect = 1;
                     s.SubStatus = 5;
+                    s.SubPercent = 25;
                     db.SaveChanges();
                     var Email = db.Users.Where(m => m.User_ID == d.CreateBy).FirstOrDefault();
                     var Sendto = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
@@ -93,16 +94,48 @@ namespace SystemManage.Controllers
         public ActionResult ShowDefect()
         {
             List<DefectModel> DefectList = new List<DefectModel>();
+            DefectModel model = new DefectModel();
             var item = db.Defects.OrderByDescending(s => s.Defect_ID).ToList();
-
             foreach(var i in item)
             {
+                model.CreateBy = i.CreateBy;
                 var item2 = db.SubTasks.Where(m => m.SubID == i.Sub_ID).FirstOrDefault();
                 var item3 = db.Tasks.Where(m => m.TaskID == item2.TaskID).FirstOrDefault();
                 var Dev = db.Users.Where(m => m.User_ID == item2.SubDevID).FirstOrDefault();
                 var Tester = db.Users.Where(m => m.User_ID == item3.TestID).FirstOrDefault();
                 var QA = db.Users.Where(m => m.User_ID == item3.QAID).FirstOrDefault();
-                
+                //////////////////////////////////////////////////////////////////
+                int number = 0;
+                var d = db.Defects.Where(m => m.Sub_ID == i.Sub_ID).ToList();
+                foreach (var c in d)
+                {
+                    if (c.Status == 2)
+                    {
+                        number = number+1;
+                        if (number == d.Count)
+                        {
+                            var subtask = db.SubTasks.Where(m => m.SubID == c.Sub_ID).FirstOrDefault();
+                            subtask.HaveDefect = 0;
+                            var Handle = db.ProjectMembers.Where(m => m.UserID == subtask.Handle).FirstOrDefault();
+                            if (Handle.Role == 3)
+                            {
+                                subtask.SubStatus = 2;
+                            }
+                            else if (Handle.Role == 4)
+                            {
+                                subtask.SubStatus = 3;
+                            }
+                            else if (Handle.Role == 5)
+                            {
+                                subtask.SubStatus = 4;
+                            }
+                            db.SaveChanges();
+                            number = 0;
+                        }
+                    }
+                    
+                }
+
                 DefectList.Add(new DefectModel
                 {
                     TaskName = item3.TaskName,
@@ -110,14 +143,14 @@ namespace SystemManage.Controllers
                     SubTaskName = item2.SubName,
                     Detail = i.Detail,
                     Status = i.Status,
-                    DevName = Dev.User_Email,
-                    TestName = Tester.User_Email,
-                    QAName = QA.User_Email,
+                    DevName = Dev.User_Name,
+                    TestName = Tester.User_Name,
+                    QAName = QA.User_Name,
                     CreateBy = i.CreateBy
                 });
             }
             ViewBag.DataList = DefectList;
-            return View();
+            return View(model);
         }
         public ActionResult DetailDefect(int DefectID)
         {

@@ -1,10 +1,16 @@
 ﻿<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-
+@{
+    if (Session["userID"] == null && Session["ProjectID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
 @{
     ViewBag.Title = "ShowDefect";
     Layout = "~/Views/Shared/_MainMenu.cshtml";
 }
 @using SystemManage.Models;
+@model SystemManage.Models.DefectModel
 <div id="flip">Click to slide down panel</div>
 <div class="card">
     <div class="card-body" style="margin: auto" id="panel">
@@ -115,7 +121,12 @@
                             <th><center>ผู้ทดสอบ</center></th>
                             <th><center>ผู้ตรวจคุณภาพ</center></th>
                             <th><center>รายละเอียด</center></th>
-                            <th><center>ลบ</center></th>
+                            @{
+                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                {
+                                    <th><center>ลบ</center></th>
+                                }
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -155,11 +166,6 @@
                                             <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-backspace"></i></center></a>
                                         </td>
                                     }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-
                                 </tr>
                                 ++n;
                             }

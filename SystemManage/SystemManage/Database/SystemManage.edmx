@@ -120,6 +120,7 @@
           <Property Name="ProjectID" Type="int" Nullable="false" />
           <Property Name="Role" Type="int" Nullable="false" />
           <Property Name="MemberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Member_name" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="SIT">
           <Key>
@@ -215,6 +216,7 @@
           </Key>
           <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TaskName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DescriptionTask" Type="nvarchar" MaxLength="255" />
           <Property Name="TotalPercent" Type="float" Nullable="false" />
           <Property Name="Task_level" Type="int" />
           <Property Name="DescriptionTest" Type="nvarchar" MaxLength="255" />
@@ -232,7 +234,7 @@
           <Property Name="ProjectID" Type="int" Nullable="false" />
           <Property Name="CreateBy" Type="int" Nullable="false" />
           <Property Name="UpdateBy" Type="int" />
-          <Property Name="DescriptionTask" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Type_of_Contract">
           <Key>
@@ -272,7 +274,7 @@
           <Property Name="Permisstion" Type="nvarchar" MaxLength="3" />
           <Property Name="comment" Type="nvarchar" MaxLength="50" />
           <Property Name="LanguageID" Type="int" Nullable="false" />
-          <Property Name="AVG" Type="int" />
+          <Property Name="AVG" Type="float" />
           <Property Name="Amount_Succ" Type="int" />
           <Property Name="Amount_Non" Type="int" />
           <Property Name="TotalCoding" Type="int" />
@@ -572,6 +574,7 @@
           <EntitySet Name="Defects" EntityType="SystemManageModel.Defect" />
           <EntitySet Name="Documents" EntityType="SystemManageModel.Document" />
           <EntitySet Name="Language_of_Type" EntityType="SystemManageModel.Language_of_Type" />
+          <EntitySet Name="LogMessages" EntityType="SystemManageModel.LogMessage" />
           <EntitySet Name="Mails" EntityType="SystemManageModel.Mail" />
           <EntitySet Name="Messages" EntityType="SystemManageModel.Message" />
           <EntitySet Name="Positions" EntityType="SystemManageModel.Position" />
@@ -579,6 +582,7 @@
           <EntitySet Name="ProjectMembers" EntityType="SystemManageModel.ProjectMember" />
           <EntitySet Name="SITs" EntityType="SystemManageModel.SIT" />
           <EntitySet Name="SITSteps" EntityType="SystemManageModel.SITStep" />
+          <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
           <EntitySet Name="SubDefects" EntityType="SystemManageModel.SubDefect" />
           <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
           <EntitySet Name="SubTaskSubmisstions" EntityType="SystemManageModel.SubTaskSubmisstion" />
@@ -592,6 +596,10 @@
           <AssociationSet Name="FK_SubDefect" Association="SystemManageModel.FK_SubDefect">
             <End Role="Defect" EntitySet="Defects" />
             <End Role="SubDefect" EntitySet="SubDefects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_languaeID" Association="SystemManageModel.FK_languaeID">
+            <End Role="Language_of_Type" EntitySet="Language_of_Type" />
+            <End Role="Skill" EntitySet="Skills" />
           </AssociationSet>
           <AssociationSet Name="FK_Languages" Association="SystemManageModel.FK_Languages">
             <End Role="Language_of_Type" EntitySet="Language_of_Type" />
@@ -629,6 +637,10 @@
             <End Role="SubTask" EntitySet="SubTasks" />
             <End Role="SITStep" EntitySet="SITSteps" />
           </AssociationSet>
+          <AssociationSet Name="FK_User" Association="SystemManageModel.FK_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Skill" EntitySet="Skills" />
+          </AssociationSet>
           <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
             <End Role="Task" EntitySet="Tasks" />
             <End Role="SubTask" EntitySet="SubTasks" />
@@ -641,16 +653,6 @@
             <End Role="Type_of_Contract" EntitySet="Type_of_Contract" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-          <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
-          <AssociationSet Name="FK_languaeID" Association="SystemManageModel.FK_languaeID">
-            <End Role="Language_of_Type" EntitySet="Language_of_Type" />
-            <End Role="Skill" EntitySet="Skills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User" Association="SystemManageModel.FK_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Skill" EntitySet="Skills" />
-          </AssociationSet>
-          <EntitySet Name="LogMessages" EntityType="SystemManageModel.LogMessage" />
         </EntityContainer>
         <EntityType Name="Defect">
           <Key>
@@ -694,14 +696,28 @@
           <Property Name="UpdateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateBy" Type="Int32" />
           <Property Name="UpdateBy" Type="Int32" />
-          <NavigationProperty Name="Users" Relationship="SystemManageModel.FK_Languages" FromRole="Language_of_Type" ToRole="User" />
           <NavigationProperty Name="Skills" Relationship="SystemManageModel.FK_languaeID" FromRole="Language_of_Type" ToRole="Skill" />
+          <NavigationProperty Name="Users" Relationship="SystemManageModel.FK_Languages" FromRole="Language_of_Type" ToRole="User" />
+        </EntityType>
+        <EntityType Name="LogMessage">
+          <Key>
+            <PropertyRef Name="Log_ID" />
+          </Key>
+          <Property Name="Log_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Log_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Log_Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow1" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="Recive" Type="Int32" />
+          <Property Name="Message_ID" Type="Int32" />
         </EntityType>
         <EntityType Name="Mail">
           <Key>
             <PropertyRef Name="Mail_ID" />
           </Key>
-          <Property Name="Mail_ID" Type="Int32" Nullable="false" />
+          <Property Name="Mail_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Int32" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -712,7 +728,7 @@
           <Key>
             <PropertyRef Name="Message_ID" />
           </Key>
-          <Property Name="Message_ID" Type="Int32" Nullable="false" />
+          <Property Name="Message_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Mail_ID" Type="Int32" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Detail" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
@@ -763,6 +779,7 @@
           <Property Name="ProjectID" Type="Int32" Nullable="false" />
           <Property Name="Role" Type="Int32" Nullable="false" />
           <Property Name="MemberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Member_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Project" FromRole="ProjectMember" ToRole="Project" />
           <NavigationProperty Name="User" Relationship="SystemManageModel.FK_UserID" FromRole="ProjectMember" ToRole="User" />
         </EntityType>
@@ -794,6 +811,17 @@
           <Property Name="Sub_ID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SIT" Relationship="SystemManageModel.FK_Step" FromRole="SITStep" ToRole="SIT" />
           <NavigationProperty Name="SubTask" Relationship="SystemManageModel.FK_Sub" FromRole="SITStep" ToRole="SubTask" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="SkillsID" />
+          </Key>
+          <Property Name="SkillsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="languageID" Type="Int32" Nullable="false" />
+          <Property Name="level_of_lg" Type="Int32" />
+          <NavigationProperty Name="Language_of_Type" Relationship="SystemManageModel.FK_languaeID" FromRole="Skill" ToRole="Language_of_Type" />
+          <NavigationProperty Name="User" Relationship="SystemManageModel.FK_User" FromRole="Skill" ToRole="User" />
         </EntityType>
         <EntityType Name="SubDefect">
           <Key>
@@ -881,6 +909,7 @@
           <Property Name="DescriptionTask" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Task" FromRole="Task" ToRole="Project" />
           <NavigationProperty Name="SubTasks" Relationship="SystemManageModel.FK_SubTask" FromRole="Task" ToRole="SubTask" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Type_of_Contract">
           <Key>
@@ -921,7 +950,7 @@
           <Property Name="Permisstion" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LanguageID" Type="Int32" Nullable="false" />
-          <Property Name="AVG" Type="Int32" />
+          <Property Name="AVG" Type="Double" />
           <Property Name="Amount_Succ" Type="Int32" />
           <Property Name="Amount_Non" Type="Int32" />
           <Property Name="TotalCoding" Type="Int32" />
@@ -939,8 +968,8 @@
           <NavigationProperty Name="Language_of_Type" Relationship="SystemManageModel.FK_Languages" FromRole="User" ToRole="Language_of_Type" />
           <NavigationProperty Name="Position" Relationship="SystemManageModel.FK_Position" FromRole="User" ToRole="Position" />
           <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_UserID" FromRole="User" ToRole="ProjectMember" />
-          <NavigationProperty Name="Type_of_Contract" Relationship="SystemManageModel.FK_Contact" FromRole="User" ToRole="Type_of_Contract" />
           <NavigationProperty Name="Skill" Relationship="SystemManageModel.FK_User" FromRole="User" ToRole="Skill" />
+          <NavigationProperty Name="Type_of_Contract" Relationship="SystemManageModel.FK_Contact" FromRole="User" ToRole="Type_of_Contract" />
         </EntityType>
         <Association Name="FK_Defect">
           <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="1" />
@@ -963,6 +992,18 @@
             </Principal>
             <Dependent Role="SubDefect">
               <PropertyRef Name="DefectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_languaeID">
+          <End Type="SystemManageModel.Language_of_Type" Role="Language_of_Type" Multiplicity="1" />
+          <End Type="SystemManageModel.Skill" Role="Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language_of_Type">
+              <PropertyRef Name="languageID" />
+            </Principal>
+            <Dependent Role="Skill">
+              <PropertyRef Name="languageID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1074,6 +1115,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User">
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
+          <End Type="SystemManageModel.Skill" Role="Skill" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Skill">
+              <PropertyRef Name="SkillsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SubTask">
           <End Type="SystemManageModel.Task" Role="Task" Multiplicity="1" />
           <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="*" />
@@ -1110,55 +1163,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Skill">
-          <Key>
-            <PropertyRef Name="SkillsID" />
-          </Key>
-          <Property Name="SkillsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="languageID" Type="Int32" Nullable="false" />
-          <Property Name="level_of_lg" Type="Int32" />
-          <NavigationProperty Name="Language_of_Type" Relationship="SystemManageModel.FK_languaeID" FromRole="Skill" ToRole="Language_of_Type" />
-          <NavigationProperty Name="User" Relationship="SystemManageModel.FK_User" FromRole="Skill" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_languaeID">
-          <End Type="SystemManageModel.Language_of_Type" Role="Language_of_Type" Multiplicity="1" />
-          <End Type="SystemManageModel.Skill" Role="Skill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Language_of_Type">
-              <PropertyRef Name="languageID" />
-            </Principal>
-            <Dependent Role="Skill">
-              <PropertyRef Name="languageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User">
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
-          <End Type="SystemManageModel.Skill" Role="Skill" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="Skill">
-              <PropertyRef Name="SkillsID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="LogMessage">
-          <Key>
-            <PropertyRef Name="Log_ID" />
-          </Key>
-          <Property Name="Log_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Log_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Log_Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="AttachShow1" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="0" />
-          <Property Name="CreateBy" Type="Int32" />
-          <Property Name="Recive" Type="Int32" />
-          <Property Name="Message_ID" Type="Int32" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1206,6 +1210,21 @@
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="languageID" ColumnName="languageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogMessages">
+            <EntityTypeMapping TypeName="SystemManageModel.LogMessage">
+              <MappingFragment StoreEntitySet="LogMessage">
+                <ScalarProperty Name="Message_ID" ColumnName="Message_ID" />
+                <ScalarProperty Name="Recive" ColumnName="Recive" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
+                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
+                <ScalarProperty Name="Log_Message" ColumnName="Log_Message" />
+                <ScalarProperty Name="Log_Name" ColumnName="Log_Name" />
+                <ScalarProperty Name="Log_ID" ColumnName="Log_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1268,6 +1287,7 @@
           <EntitySetMapping Name="ProjectMembers">
             <EntityTypeMapping TypeName="SystemManageModel.ProjectMember">
               <MappingFragment StoreEntitySet="ProjectMember">
+                <ScalarProperty Name="Member_name" ColumnName="Member_name" />
                 <ScalarProperty Name="MemberID" ColumnName="MemberID" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
@@ -1299,6 +1319,16 @@
                 <ScalarProperty Name="Step" ColumnName="Step" />
                 <ScalarProperty Name="SIT_ID" ColumnName="SIT_ID" />
                 <ScalarProperty Name="SITStep1" ColumnName="SITStep" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="SystemManageModel.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="level_of_lg" ColumnName="level_of_lg" />
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1362,6 +1392,7 @@
           <EntitySetMapping Name="Tasks">
             <EntityTypeMapping TypeName="SystemManageModel.Task">
               <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="DescriptionTask" ColumnName="DescriptionTask" />
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
@@ -1438,31 +1469,6 @@
                 <ScalarProperty Name="User_Password" ColumnName="User_Password" />
                 <ScalarProperty Name="User_Email" ColumnName="User_Email" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Skills">
-            <EntityTypeMapping TypeName="SystemManageModel.Skill">
-              <MappingFragment StoreEntitySet="Skills">
-                <ScalarProperty Name="level_of_lg" ColumnName="level_of_lg" />
-                <ScalarProperty Name="languageID" ColumnName="languageID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LogMessages">
-            <EntityTypeMapping TypeName="SystemManageModel.LogMessage">
-              <MappingFragment StoreEntitySet="LogMessage">
-                <ScalarProperty Name="Message_ID" ColumnName="Message_ID" />
-                <ScalarProperty Name="Recive" ColumnName="Recive" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
-                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
-                <ScalarProperty Name="Log_Message" ColumnName="Log_Message" />
-                <ScalarProperty Name="Log_Name" ColumnName="Log_Name" />
-                <ScalarProperty Name="Log_ID" ColumnName="Log_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

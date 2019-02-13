@@ -38,9 +38,9 @@ namespace SystemManage.Models
         public string Permission { get; set; }
         public string Comment { get; set; }
         public int LanguageID { get; set; }
-        public int AVG { get; set; }
-        public int Amount_Succ { get; set; }
-        public int Amount_Non { get; set; }
+        public double AVG { get; set; }
+        public double Amount_Succ { get; set; }
+        public double Amount_Non { get; set; }
         public int TotalCoding { get; set; }
         public string Speaking { get; set; }
         public string Reading { get; set; }
@@ -54,11 +54,19 @@ namespace SystemManage.Models
         public int Position_ID { get; set; }
         public string Phone { get; set; }
         public string PositionName { get; set; }
+        public int Role { get; set; }
+
+        public int ProjectCreateBy { get; set; }
         public HttpPostedFileBase File1 { get; set; }
         [NotMapped]
         public List<Position> PositionList { get; set; }
         public List<Type_of_Contract> ContractsList { get; set; }
         public List<Language_of_Type> LanguageList { get; set; }
+        //////////////////////////////////////
+        public string TaskName { get; set; }
+        public string Level { get; set; }
+        public int RoundCoding { get; set; }
+       
     }
    
 }

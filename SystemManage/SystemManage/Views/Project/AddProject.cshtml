@@ -3,10 +3,17 @@
         max-width: 2800px;
     }
 </style>
+@{
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
 @model SystemManage.Models.ProjectModel
 <html>
 <head>
-    <title>New Project</title>
+    <title>สร้างโครงการ</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -34,11 +41,13 @@
                             <div class="form-group">
                                 <label for="usr">ชื่อโครงการ :</label>
                                 @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.ProjectName, string.Empty, new { @style = "color:red" })
+                                @Html.ValidationMessageFor(m => m.ProjectName, "", new { @class = "text-danger" })
+
                             </div>
                             <div class="form-group">
                                 <label for="comment">รายละเอียด :</label>
-                                @Html.TextAreaFor(m => m.ProjectDescription, new { @class = "form-control" , @type = "TextArea" })
+                                @Html.TextAreaFor(m => m.ProjectDescription, new { @class = "form-control", @type = "TextArea" })
+                                @Html.ValidationMessageFor(m => m.ProjectDescription, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -49,7 +58,8 @@
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
                                 <div>
-                                    @Html.TextBoxFor(m => m.ProjectSendDate, new { @type = "date" ,@class ="form-control"})
+                                    @Html.TextBoxFor(m => m.ProjectSendDate, new { @type = "date", @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.ProjectSendDate, "", new { @class = "text-danger" })
                                     @*<i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>*@
                                 </div>
                             </div>

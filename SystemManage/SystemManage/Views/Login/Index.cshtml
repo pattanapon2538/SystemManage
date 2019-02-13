@@ -3,26 +3,23 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 login-sec">
-                <h2 class="text-center">Login</h2>
+                <h2 class="text-center">ล็อกอิน</h2>
                 @using (Ajax.BeginForm("CheckLogin", "Login", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
                 {
-                    <div class="form-group">
-                        <label for="exampleInputEmail1" class="text-uppercase">Username</label>
-                        @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1" class="text-uppercase">Password</label>
-                        @Html.PasswordFor(m => m.User_Password, new { @class = "form-control" })
-                    </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1" class="text-uppercase">บัญชีผู้ใช่</label>
+                    @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.User_Email, string.Empty, new { @style = "color:red" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1" class="text-uppercase">รหัสผู้ใช่งาน</label>
+                    @Html.PasswordFor(m => m.User_Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.User_Password, string.Empty, new { @style = "color:red" })
+
+                </div>
 
                     <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input">
-
-
-                            <small>Remember Me</small>
-                        </label>
-                        <button type="submit" class="btn btn-login float-right">Login</button>
+                        <button type="submit" class="btn btn-login float-right">เข้าสู่ระบบ</button>
                     </div>
 
                 }

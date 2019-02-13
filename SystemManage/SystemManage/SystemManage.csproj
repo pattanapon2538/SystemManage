@@ -151,6 +151,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\DefectController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
@@ -159,7 +160,10 @@
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\PositionController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SITController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
+    <Compile Include="Controllers\UploadFileController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Database\Defect.cs">
       <DependentUpon>SystemManage.tt</DependentUpon>
@@ -233,6 +237,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\DefectModel.cs" />
     <Compile Include="Models\DocumentModel.cs" />
     <Compile Include="Models\InboxModel.cs" />
@@ -241,6 +246,7 @@
     <Compile Include="Models\MemberModel.cs" />
     <Compile Include="Models\PositionModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\SITModel.cs" />
     <Compile Include="Models\SkillModel.cs" />
     <Compile Include="Models\SubTaskModel.cs" />
     <Compile Include="Models\TaskModel.cs" />
@@ -3427,11 +3433,18 @@
     <Content Include="Views\Inbox\AddInbox.cshtml" />
     <Content Include="Views\Inbox\ReadMail.cshtml" />
     <Content Include="Views\Inbox\ViewTest.cshtml" />
+    <Content Include="Views\SIT\AddSIT.cshtml" />
+    <Content Include="Views\Report\Report.cshtml" />
+    <Content Include="Views\UploadFile\Index.cshtml" />
+    <Content Include="Views\UploadFile\Success.cshtml" />
+    <Content Include="Views\UploadFile\Success2.cshtml" />
+    <Content Include="Views\Project\DetailProject.cshtml" />
+    <Content Include="Views\Member\HistoryUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Uploade\" />
-    <Folder Include="Views\Test\" />
+    <Folder Include="Upload\" />
+    <Folder Include="Views\Chart\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

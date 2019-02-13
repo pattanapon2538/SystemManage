@@ -1,0 +1,27 @@
+﻿@model SystemManage.Models.SubTaskModel
+@using SystemManage.Models
+@{
+    ViewBag.Title = "Report";
+}
+
+<h2>@Session["ProjectName"]</h2>
+@{
+    foreach (var c in (List<SubTaskModel>)ViewBag.DataList)
+    {
+        <label for="comment">ชื่องาน :</label>
+        <h2>@c.TaskName</h2>
+        <label for="comment">เปอร์เซ็นความคืบหน้า :</label>
+        @c.percent_task
+        <label for="comment">ชื่องานรอง :</label>
+        @c.SubName
+        <label for="comment">ผู้พัฒนาซอฟแวร์ :</label>
+        @c.SubDevID
+        <label for="comment">ผู้ทดสอบ :</label>
+        @c.TesterName
+        <label for="comment">ผู้ตรวจคุณภาพ :</label>
+        @c.QAName
+        <label for="comment">วันที่สร้าง :</label>
+        @c.CreateDate
+    }
+}
+

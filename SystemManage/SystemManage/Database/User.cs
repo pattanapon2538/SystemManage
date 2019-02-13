@@ -42,7 +42,7 @@ namespace SystemManage.Database
         public string Permisstion { get; set; }
         public string comment { get; set; }
         public int LanguageID { get; set; }
-        public int AVG { get; set; }
+        public double AVG { get; set; }
         public int Amount_Succ { get; set; }
         public int Amount_Non { get; set; }
         public int TotalCoding { get; set; }
@@ -62,7 +62,7 @@ namespace SystemManage.Database
         public virtual Position Position { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectMember> ProjectMembers { get; set; }
-        public virtual Type_of_Contract Type_of_Contract { get; set; }
         public virtual Skill Skill { get; set; }
+        public virtual Type_of_Contract Type_of_Contract { get; set; }
     }
 }

@@ -19,6 +19,25 @@ namespace SystemManage.Controllers
             u.PositionList = db.Positions.ToList<Position>();
             u.ContractsList = db.Type_of_Contract.ToList<Type_of_Contract>();
             u.LanguageList = db.Language_of_Type.ToList<Language_of_Type>();
+            List<UserModel> model = new List<UserModel>();
+            var item = db.Users.ToList();
+            foreach (var i in item)
+            {
+                model.Add(new UserModel
+                {
+                    Users_ID = i.User_ID,
+                    User_Email = i.User_Email,
+                    User_Password = i.User_Password,
+                    User_Name = i.User_Name,
+                    User_LastName = i.User_LastName,
+                    Gender = i.Gender,
+                    Address = i.Address,
+                    Contract_ID = i.Contract_ID,
+                    Position_ID = i.Position_ID,
+                    LanguageID = i.LanguageID,
+                });
+            }
+            ViewBag.DataList = model;
             return View(u);
         }
         [HttpPost]
@@ -58,8 +77,8 @@ namespace SystemManage.Controllers
             u.LanguageID = model.LanguageID; //Ref ??? Table Skills
             s.languageID = model.LanguageID;
             u.AVG = model.AVG;
-            u.Amount_Succ = model.Amount_Succ;
-            u.Amount_Non = model.Amount_Non;
+            u.Amount_Succ = Convert.ToInt32(model.Amount_Succ);
+            u.Amount_Non = Convert.ToInt32(model.Amount_Non);
             u.TotalCoding = model.TotalCoding;
             u.Speaking = Convert.ToInt32(model.Speaking);
             u.Reading = Convert.ToInt32(model.Reading);
@@ -95,6 +114,19 @@ namespace SystemManage.Controllers
             }
             ViewBag.DataList = model;
             return View();
+        }
+        public ActionResult DetailUser(int userID)
+        {
+            User model = new User();
+            var u = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
+            model.User_ID = u.User_ID;
+            model.User_Name = u.User_Name;
+            model.User_LastName = u.User_LastName;
+            model.User_Email = u.User_Email;
+            model.BirthDate = u.BirthDate;
+            model.Address = u.Address;
+            model.Contract_ID = u.Contract_ID;
+            return View(model);
         }
     }
     

@@ -1,6 +1,12 @@
 ﻿@model SystemManage.Models.DefectModel
 @using SystemManage.Models
 @{
+    if (Session["userID"] == null && Session["ProjectID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+@{
     ViewBag.Title = "DetailDefect";
 }
 <body>
@@ -20,7 +26,7 @@
                             <div class="form-group">
                                 <label for="taskname">ชื่องาน :</label>
                                 @Html.HiddenFor(m => m.Defect_ID)
-                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" ,@readonly = "" })
+                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control", @readonly = "" })
                             </div>
                         </div>
                     </div>
@@ -43,7 +49,7 @@
                                 }
                                 else
                                 {
-                                    @Html.TextBoxFor(m => m.Detail, new { @class = "form-control", @type = "TextArea" , @readonly = "" })
+                                    @Html.TextBoxFor(m => m.Detail, new { @class = "form-control", @type = "TextArea", @readonly = "" })
                                 }
                             </div>
                         </div>
@@ -52,7 +58,7 @@
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>
-                                @Html.TextBoxFor(m => m.DevName, new { @class = "form-control" , @readonly = "" })
+                                @Html.TextBoxFor(m => m.DevName, new { @class = "form-control", @readonly = "" })
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -83,7 +89,7 @@
                                 {
                                     <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
                                     <div class="rs-select2 js-select-simple select--no-search ">
-                                        @Html.DropDownListFor(m => m.StatusDev, new SelectList(Enum.GetValues(typeof(DefectModel.StatusDefectDev))), "เลือกสถานะ", new { @class = "form-control"})
+                                        @Html.DropDownListFor(m => m.StatusDev, new SelectList(Enum.GetValues(typeof(DefectModel.StatusDefectDev))), "เลือกสถานะ", new { @class = "form-control" })
                                         <div class="select-dropdown"></div>
                                     </div>
                                 }
@@ -113,7 +119,7 @@
                             <a href="@Url.Action("ShowDefect","Defect")"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
                             @if (Model.CreateBy == Convert.ToInt32(Session["userID"]) || Model.DevID == Convert.ToInt32(Session["userID"]))
                             {
-                            <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
+                                <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
                             }
                         </div>
                     </div>

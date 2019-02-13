@@ -4,6 +4,13 @@
     ViewBag.Title = "ShowContact";
     Layout = "~/Views/Shared/AddminLayout.cshtml";
 }
+@{
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <div class="container">
     <div class="login-box ptb--100">
         @using (Ajax.BeginForm("AddContact", "Contact",
@@ -13,7 +20,7 @@
             <form>
                 <div class="login-form-body shadow " style="border-style:solid ;border-width: 1px">
                     <div class="form-group row">
-                        <label for="language" class="col-sm-6 col-form-label">Contact of Type: </label>
+                        <label for="language" class="col-sm-6 col-form-label">ประเภทสัญญา: </label>
                         <div class="col-sm-6">
                             @Html.HiddenFor(m => m.Contrat_ID, new { @class = "form-control" })
                             @Html.TextBoxFor(m => m.Contrat_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
@@ -21,13 +28,13 @@
                         </div>
                         <div class="mt">
                         </div>
-                        <label for="language" class="col-sm-6 col-form-label">Detail: </label>
+                        <label for="language" class="col-sm-6 col-form-label">รายละเอียด: </label>
                         <div class="col-sm-6">
                             @Html.TextAreaFor(m => m.Contrat_Detail, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
                         </div>
                     </div>
                     <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
-                        <button id="form_submit" type="submit">Add</button>
+                        <button id="form_submit" type="submit">เพิ่ม</button>
                     </div>
                 </div>
             </form>
@@ -45,13 +52,11 @@
                                 <table id="dataTable2" class="text-center dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="dataTable2_info" style="width: 1131px;">
                                     <thead class="text-capitalize">
                                         <tr role="row">
-                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 140px;" aria-sort="ascending" aria-label="No.: activate to sort column descending">No.</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 275px;">Contact of Type</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">Detail</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Create Date</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Update Date</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">Edit</th>
-                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Delete</th>
+                                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 140px;" aria-sort="ascending" aria-label="No.: activate to sort column descending">อันดับ.</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 275px;">ประเภทสัญญา</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">รายละเอียด</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">แก้ไข</th>
+                                            <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">ลบ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -63,19 +68,11 @@
                                                     <td>@i</td>
                                                     <td>@item.Contrat_Name</td>
                                                     <td>@item.Contrat_Detail</td>
-                                                    <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
-                                                    <td>@if (item.UpdateDate >= item.CreateDate)
-                                                         {
-
-                                                            @item.UpdateDate.ToString("dd/MM/yyyy");
-
-                                                         }
+                                                    <td>
+                                                        <span style="cursor:pointer" onclick="EditDetail('@item.Contrat_ID')"><i class="fas fa-book-open"></i></span>
                                                     </td>
                                                     <td>
-                                                        <span style="cursor:pointer" onclick="EditDetail('@item.Contrat_ID')"><i class="glyphicon fa fa-diamond"></i></span>
-                                                    </td>
-                                                    <td>
-                                                        <a href="@Url.Action("DeleteContact", new {Contrat_ID = item.Contrat_ID})"><i class="glyphicon fa fa-archive"></i></a>
+                                                        <a href="@Url.Action("DeleteContact", new {Contrat_ID = item.Contrat_ID})"><i class="fas fa-backspace"></i></a>
                                                     </td>
                                                 </tr>
                                                 i++;

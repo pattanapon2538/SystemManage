@@ -1,8 +1,17 @@
-﻿@using SystemManage.Models;
+﻿@using SystemManage.Models
+@model SystemManage.Models.UserModel
 @{
     ViewBag.Title = "ShowMember";
     Layout = "~/Views/Shared/_MainMenu.cshtml";
 }
+@{
+    if (Session["userID"] == null && Session["ProjectID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
 <div class="card">
     <div class="card-body">
         <div class="card">
@@ -12,7 +21,12 @@
                         <h1 style="margin-bottom: 20pt">สมาชิกในโครงการ</h1>
                     </div>
                     <div class="col-sm-1" style="margin: auto">
-                        <a href="@Url.Action("ListMember")"><button type="button" class="btn btn-outline-success">เพิ่มสมาชิก</button></a>
+                        @{
+                            if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
+                            {
+                                <a href="@Url.Action("ListMember")"><button type="button" class="btn btn-outline-success">เพิ่มสมาชิก</button></a>
+                            }
+                        }
                     </div>
                 </div>
                 <div class="row">
@@ -20,15 +34,20 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="table-info">
-                                    <th>อีเมล</th>
-                                    <th>ชื่อ</th>
-                                    <th>นามสกุล</th>
-                                    <th>ตำแหน่ง</th>
-                                    <th>ความยากของงานเฉลี่ย</th>
-                                    <th>เปอร์เซ็นความสำเร็จ</th>
-                                    <th>จำนวนการโค๊ต</th>
-                                    <th>ดูรายละเอียด</th>
-                                    <th>ลบออกจากโครงการ</th>
+                                    <th><center>อีเมล</center></th>
+                                    <th><center>ชื่อ</center></th>
+                                    <th><center>นามสกุล</center></th>
+                                    <th><center>ตำแหน่ง</center></th>
+                                    <th><center>ความยากของงานเฉลี่ย</center></th>
+                                    <th><center>เปอร์เซ็นความสำเร็จ</center></th>
+                                    <th><center>จำนวนการโค๊ต</center></th>
+                                    <th><center>รายละเอียด</center></th>
+                                    @{
+                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
+                                        {
+                                            <th><center>ลบ</center></th>
+                                        }
+                                    }
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,15 +55,20 @@
                                     foreach (var item in (List<UserModel>)ViewBag.DataList)
                                     {
                                 <tr>
-                                    <td>@item.User_Email</td>
-                                    <td>@item.User_Name</td>
-                                    <td>@item.User_LastName</td>
-                                    <td>@item.PositionName</td>
-                                    <td>@item.AVG</td>
-                                    <td>@item.Amount_Succ</td>
-                                    <td>@item.TotalCoding</td>
-                                    <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><i class="glyphicon fa fa-archive"></i></a></td>
-                                    <td><a href="@Url.Action("DeleteMember", new {UserID = item.Users_ID })"><i class="glyphicon fa fa-diamond"></i></a></td>
+                                    <td><center>@item.User_Email</center></td>
+                                    <td><center>@item.User_Name</center></td>
+                                    <td><center>@item.User_LastName</center></td>
+                                    <td><center>@item.PositionName</center></td>
+                                    <td><center>@item.AVG</center></td>
+                                    <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                    <td><center>@item.TotalCoding</center></td>
+                                    <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                    @{
+                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
+                                        {
+                                            <td><a href="@Url.Action("DeleteMember", new {UserID = item.Users_ID })"><center><i class="fas fa-backspace"></i></center></a></td>
+                                        }
+                                    }
                                 </tr>
 
                                     }

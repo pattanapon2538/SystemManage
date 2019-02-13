@@ -32,30 +32,44 @@
             });
         });
     </script>
+    <style>
+        /*.box:visited, .box  {
+            text-decoration: none;
+            color: black;
+            margin-right: 5px;
+            border: 1px solid transparent;
+        }*/
+        .box:hover {
+            background-color: #ffffff;
+            border: 1px solid #102447;
+            border-radius: 5px;
+            box-shadow: 0 0 11px rgba(33,33,33,.2);
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="row">
 
             <div class="col-sm-2">
-                <a class="navbar-brand" href="@Url.Action("ShowTask","Task")"><img src="~/icon/paper.png" width="42.66" height="42.66"></a>
-                <h6 style="margin-left: -1pt">Project</h6>
+                <a class="navbar-brand" href="@Url.Action("ShowTask","Task")"><center><img src="~/icon/paper.png" width="42.66" height="42.66"></center></a>
+                <center><h6 style="margin-left: -1pt">งาน</h6></center>
             </div>
             <div class="col-sm-2">
-                <a class="navbar-brand" href="@Url.Action("Inbox","Inbox")"><img src="~/icon/contact.png" width="42.66" height="42.66"></a>
-                <h6>Inbox</h6>
+                <a class="navbar-brand" href="@Url.Action("Inbox","Inbox")"><center><img src="~/icon/contact.png" width="42.66" height="42.66"></center></a>
+                <center><h6>ข้อความ</h6></center>
             </div>
             <div class="col-sm-2">
-                <a class="navbar-brand" href="#"><img src="~/icon/inbox.png" width="42.66" height="42.66"></a>
-                <h6 style="margin-left: -10pt">Document</h6>
+                <a class="navbar-brand" href="#"><center><img src="~/icon/inbox.png" width="42.66" height="42.66"></center></a>
+                <center><h6 style="margin-left: -10pt">เอกสาร</h6></center>
             </div>
             <div class="col-sm-2">
-                <a class="navbar-brand" href="@Url.Action("ShowDefect","Defect")"><img src="~/icon/virus.png" width="42.66" height="42.66"></a>
-                <h6>Defect</h6>
+                <a class="navbar-brand" href="@Url.Action("ShowDefect","Defect")"><center><img src="~/icon/virus.png" width="42.66" height="42.66"></center></a>
+                <center><h6>ข้อผิดพลาด</h6></center>
             </div>
             <div class="col-sm-2">
-                <a class="navbar-brand" href="@Url.Action("ShowMember","Member")"><img src="~/icon/team.png" width="42.66" height="42.66"></a>
-                <h6>Team</h6>
+                <a class="navbar-brand" href="@Url.Action("ShowMember","Member")"><center><img src="~/icon/team.png" width="42.66" height="42.66"></center></a>
+                <center><h6>ทีม</h6></center>
             </div>
         </div>
     </nav>
