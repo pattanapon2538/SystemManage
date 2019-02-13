@@ -1,242 +1,257 @@
 ﻿@model SystemManage.Models.UserModel
 @using SystemManage.Models;
+
 @{
-    ViewBag.Title = "AddUser";
+    ViewBag.Title = "ShowUser";
     Layout = "~/Views/Shared/AddminLayout.cshtml";
 }
-<div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-    <div class="wrapper wrapper--w680">
-        <div class="card card-4">
-            <div class="card-body">
-                <h2 class="title">Create Account</h2>
-                @using (Ajax.BeginForm("AddUser", "User",
-                    new AjaxOptions { HttpMethod = FormMethod.Post.ToString()}, new { enctype = "multipart/form-data"}))
-                {
-                    <form>
-                        <div class="row row-space"><!--Row แรก-->
-                            <div class="col-2">
-                                <div>
-                                    <label class="label">Email</label>
-                                    @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.User_Email, string.Empty, new { @style = "color:red" })
+<style>
+    th, td {
+        white-space: nowrap;
+    }
+</style>
+<div class="container">
+    <div class="login-box ptb--100">
+        @using (Ajax.BeginForm("AddUser", "User",
+             new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <form>
+                <div class="login-form-body shadow " style="border-style:solid ;border-width: 1px;margin-left: -200px;width:800px">
+                    <h2 class="text-center" style="margin-bottom:20px;margin-top:-10px">ประวัติส่วนตัว</h2>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ชื่อ : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">นามสกุล : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_LastName, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">วันเดือนปีเกิด : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", @type = "date" })
+                            @Html.ValidationMessageFor(m => m.BirthDate, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">เพศ : </label>
+                        <div class="col-sm-4">
+                            @*@Html.DropDownListFor(m => m.Gender, new SelectList(Enum.GetValues(typeof(Genders))), "เลือกเพศ")*@
+                            @Html.ValidationMessageFor(m => m.Gender, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ที่อยู่ : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.Address, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">เบอร์โทร : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.Gender, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">สัญญา : </label>
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(m => m.Contract_ID, new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "ประเภทสัญญา")
+                            @Html.ValidationMessageFor(m => m.Contract_ID, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">สัญญาจาก : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.ContractFrom, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.ContractFrom, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">วันเริ่มสัญญา : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.Date_of_Started, new { @type = "date", @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Date_of_Started, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">วันสิ้นสุดสัญญา:</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.Date_of_Ended, new { @type = "date", @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Date_of_Ended, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 1 : </label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile1">
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 2:</label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile2">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 3 : </label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile3">
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่4 :</label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile4">
+                        </div>
+                    </div>
+                    <h2 class="text-center" style="margin-top:30px;margin-bottom:10px">บัญชีผู้ใช้งาน</h2>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">อีเมล์ : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_Email, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">รหัสผ่าน : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_Password, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_Password, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">รหัสผ่านอีกครั้ง: </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_RePassword, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_RePassword, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">ตำแหน่งงาน : </label>
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "กำหนดตำแหน่ง")
+                            @Html.ValidationMessageFor(m => m.Position_ID, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ทักษะภาษาโปรแกรม : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.ContractFrom, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.ContractFrom, string.Empty, new { @style = "color:red" })
+                            @*@Html.DropDownListFor(m => m.Contract_ID, new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "Select")*@
+                            @*@Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "", "Contrat_Name"), "กำหนดสิทธิ์")*@
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">กำหนดสิทธิ์ : </label>
+                        <div class="col-sm-4">
+                            <div class="col-sm-12">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="optradio" style="margin-left:-100px">ฝ่ายบริหารจัดการระบบ
+                                    </label>
                                 </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Password</label>
-                                    @Html.TextBoxFor(m => m.User_Password, new { @type = "Password", @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.User_Password, string.Empty, new { @style = "color:red" })
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="optradio" style="margin-left:-100px">ฝ่ายจัดการโครงการ
+                                    </label>
+                                </div>
+                                <div class="form-check ">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="optradio" style="margin-left:-100px">ฝ่ายตรวจสอบ
+                                    </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Name</label>
-                                    @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
+                        <label for="language" class="col-sm-2 col-form-label">ทักษะภาษาอังกฤษ:</label>
+                        <div class="col-sm-4">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">ฟัง : </label>
+                                        @*@Html.DropDownListFor(m => m.Gender, new SelectList(Enum.GetValues(typeof(Levels))), "ระดับ")*@
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">พูด : </label>
+                                        @*@Html.DropDownListFor(m => m.Gender, new SelectList(Enum.GetValues(typeof(Levels))), "ระดับ")*@
+                                    </div>
                                 </div>
-                            </div>
-                            <div lass="col-2">
-                                <div class="input-group">
-                                    <label class="label">Retype Password</label>
-                                    @Html.TextBoxFor(m => m.User_RePassword, new { @type = "Password", @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.User_RePassword, string.Empty, new { @style = "color:red" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Lastname</label>
-                                    @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.User_LastName, string.Empty, new { @style = "color:red" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Gender</label>
-                                    <div class="p-t-10">
-                                        <label class="radio-container m-r-45">
-                                            Male
-                                            @Html.RadioButton("Gender", "M")
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-container">
-                                            Female
-                                            @Html.RadioButton("Gender", "F")
-                                            <span class="checkmark"></span>
-                                        </label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">อ่าน : </label>
+                                        @*@Html.DropDownListFor(m => m.Gender, new SelectList(Enum.GetValues(typeof(Levels))), "ระดับ")*@
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">เขียน : </label>
+                                        @*@Html.DropDownListFor(m => m.Gender, new SelectList(Enum.GetValues(typeof(Levels))), "ระดับ")*@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <div class="input-group">
-                                        <label class="label">Phone</label>
-                                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                    </div>
+                    <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
+                        <button id="form_submit" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
 
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Birthday</label>
-                                    <div class="input-group-icon">
-                                        @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control" })
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+    <div class="row" id="tb-data">
+        <div class="col-12 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="data-tables datatable-primary">
+                        <div id="dataTable2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div style="overflow-x:auto;">
+                                        <table id="dataTable2" class="text-center dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="dataTable2_info" style="width: 1131px;overflow-x:auto">
+                                            <thead class="text-capitalize">
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 140px;" aria-sort="ascending" aria-label="No.: activate to sort column descending">อันดับ</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 275px;">อีเมล์</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">ชื่อ</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">นามสกุล</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">เพศ</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">วันเกิด</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">ที่อยู่</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">สัญญา</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">วันเรื่มสัญญา</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">วันสิ้นสุดสัญญา</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">Edit</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    var ia = 1;
+                                                    foreach (var item in (List<UserModel>)ViewBag.DataList)
+                                                    {
+                                                        <tr>
+                                                            <td>@ia</td>
+                                                            <td>@item.Users_ID</td>
+                                                            <td>@item.User_Email</td>
+                                                            <td>@item.User_Name</td>
+                                                            @*@<td>@item.User_LastName</td>*@
+                                                            <td>@item.Users_ID</td>
+                                                            <td>@item.User_Email</td>
+                                                            <td>@item.User_Name</td>
+                                                            <td>@item.User_LastName</td>
+                                                            <td>@item.CreateDate.ToString("dd/MM/yyyy")</td>
+                                                            <td>
+                                                                @if (item.UpdateDate >= item.CreateDate)
+                                                                {
+                                                                    @item.UpdateDate.ToString("dd/mm/yyyy");
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                <span style="cursor:pointer" onclick="EditDetail('@item.Position_ID')"><i class="glyphicon fa fa-diamond"></i></span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="@Url.Action("DeletePosition", new {Position_ID = item.Position_ID})"><i class="glyphicon fa fa-archive"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        ia++;
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="input-group">
-                            <label class="label">Address</label>
-                            @Html.TextAreaFor(m => m.Address, new { @class = "form-control" })
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Type of Contract</label>
-                                    @*<div class="rs-select2 js-select-simple select--no-search">*@
-                                    @Html.DisplayNameFor(m => m.Contract_ID)
-                                    @Html.DropDownListFor(m => m.Contract_ID,
-                                   new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "Select")
-                                    @*</div>*@
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <div class="input-group">
-                                        <label class="label">Contract From</label>
-                                        @Html.TextBoxFor(m => m.ContractFrom, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Date of Started Contract</label>
-                                    <div class="input-group-icon">
-                                        @Html.TextBoxFor(m => m.Date_of_Started, new { @class = "form-control" })
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Date of Ended Contract</label>
-                                    <div class="input-group-icon">
-                                        @Html.TextBoxFor(m => m.Date_of_Ended, new { @class = "form-control" })
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group" onsubmit="return AjexPost(this)">
-                                    <label class="label">Document References</label>
-                                    <input id="file" name="file" type="file">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">Position</label>
-                                    @Html.DisplayNameFor(m => m.Position_ID)
-                                    @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "Select")
-                                </div>
-                            </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Skills</label>
-                                    @Html.DisplayNameFor(m => m.LanguageID)
-                                    @Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "Select", new { @class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">level</label>
-                                    @Html.DisplayNameFor(m => m.LanguageID)
-                                    @Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "Select", new { @class = "form-control" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <label class="label">English Communication</label>
-                                <div class="row row-space">
-                                    <div class="col-2">
-                                        <div class="input-group">
-                                            <label class="label">Speaking</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                                <div class="input-group">
-                                        ดีมาก @Html.RadioButtonFor(m => m.Speaking,"3", new { })
-                                        พอใช้ @Html.RadioButtonFor(m => m.Speaking,"2")
-                                        แย่  @Html.RadioButtonFor(m => m.Speaking,"1")
-                                </div>
-                            </div>
-                        <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Reading</label>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    ดีมาก @Html.RadioButtonFor(m => m.Reading, "3", new { })
-                                    พอใช้ @Html.RadioButtonFor(m => m.Reading, "2")
-                                    แย่  @Html.RadioButtonFor(m => m.Reading, "1")
-
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Listening</label>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    ดีมาก @Html.RadioButtonFor(m => m.Listening, "3", new { })
-                                    พอใช้ @Html.RadioButtonFor(m => m.Listening, "2")
-                                    แย่  @Html.RadioButtonFor(m => m.Listening, "1")
-                                </div>
-                            </div>
-                        <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Writing</label>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    ดีมาก @Html.RadioButtonFor(m => m.Writng, "3", new { })
-                                    พอใช้ @Html.RadioButtonFor(m => m.Writng, "2")
-                                    แย่  @Html.RadioButtonFor(m => m.Writng, "1")
-                                </div>
-                            </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                ฝ่ายบริหารจัดการระบบ @Html.RadioButtonFor(m => m.Permission, "A", new { }) <!--A = Admin-->
-                                ฝ่ายบริหารจัดการโครงการ @Html.RadioButtonFor(model => model.Permission, "P")<!--P = Programmer-->
-                                ลูกค้า @Html.RadioButtonFor(model => model.Permission, "C")<!--C = Customer-->
-                            </div>
-                        </div>
-                        <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
-                            <button id="form_submit" type="submit">Add</button>
-                        </div>
-                    </form>
-                }
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>

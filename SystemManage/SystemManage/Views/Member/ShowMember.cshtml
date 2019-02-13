@@ -60,7 +60,7 @@
                                     <td><center>@item.User_LastName</center></td>
                                     <td><center>@item.PositionName</center></td>
                                     <td><center>@item.AVG</center></td>
-                                    <td><center>@item.Amount_Succ</center></td>
+                                    <td><center>@item.Amount_Succ.ToString("P1")</center></td>
                                     <td><center>@item.TotalCoding</center></td>
                                     <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
                                     @{

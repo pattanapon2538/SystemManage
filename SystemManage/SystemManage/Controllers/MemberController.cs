@@ -22,11 +22,15 @@ namespace SystemManage.Controllers
                 {
                 double SuccPercent = 0;
                 if (d.Amount_Succ != 0)
-                    {
-                        var totalSucc = db.SubTasks.Where(m => m.SubDevID == d.User_ID).ToList();
-                        SuccPercent = (Convert.ToDouble(d.Amount_Succ) * 100)/ Convert.ToDouble(totalSucc.Count);
-                    }
-                    var PositionDB = db.Positions.Where(m => m.Position_ID == d.Position_ID).FirstOrDefault();
+                {
+                    var totalProject = db.Projects.Where(m => m.CreateBy == d.User_ID).ToList();
+                    var totalSubDev = db.SubTasks.Where(m => m.SubDevID == d.User_ID).ToList();
+                    var totalSubTester = db.Tasks.Where(m => m.TestID == d.User_ID).ToList();
+                    var totalSubQA = db.Tasks.Where(m => m.QAID == d.User_ID).ToList();
+                    int totalWork = totalSubDev.Count + totalSubTester.Count + totalSubQA.Count+ totalProject.Count;
+                    SuccPercent = Convert.ToDouble(d.Amount_Succ) / totalWork;
+                }
+                var PositionDB = db.Positions.Where(m => m.Position_ID == d.Position_ID).FirstOrDefault();
                      UserList.Add(new UserModel
                      {
                          Users_ID = d.User_ID,
@@ -36,7 +40,7 @@ namespace SystemManage.Controllers
                          PositionName = PositionDB.Name,
                          TotalCoding = d.TotalCoding,
                          Amount_Succ = SuccPercent,
-                         AVG = d.AVG
+                         AVG = d.AVG //ความยากของงาน
                      });
                          ViewBag.DataList = UserList;
                 }
@@ -128,8 +132,12 @@ namespace SystemManage.Controllers
                 var item2 = db.Users.Where(m => m.User_ID == i.UserID).FirstOrDefault();
                 if (item2.Amount_Succ != 0)
                 {
-                    var totalSucc = db.SubTasks.Where(m => m.SubDevID == item2.User_ID).ToList();
-                    SuccPercent = (Convert.ToDouble(item2.Amount_Succ) * 100) / Convert.ToDouble(totalSucc.Count);
+                    var totalProject = db.Projects.Where(m => m.CreateBy == i.UserID).ToList();
+                    var totalSubDev = db.SubTasks.Where(m => m.SubDevID == i.UserID).ToList();
+                    var totalSubTester = db.Tasks.Where(m => m.TestID == i.UserID).ToList();
+                    var totalSubQA = db.Tasks.Where(m => m.QAID == i.UserID).ToList();
+                    int totalWork = totalSubDev.Count + totalSubTester.Count + totalSubQA.Count + totalProject.Count;
+                    SuccPercent = Convert.ToDouble(item2.Amount_Succ) / totalWork;
                 }
                 var dbPosition = db.Positions.Where(m => m.Position_ID == item2.Position_ID).FirstOrDefault();
                 UserList.Add(new UserModel
@@ -147,6 +155,90 @@ namespace SystemManage.Controllers
             model.ProjectCreateBy = c.CreateBy;
             ViewBag.DataList = UserList;
             return View(model);
+        }
+        public ActionResult HistoryUser(int userID)
+        {
+            UserModel model = new UserModel();
+            List<UserModel> TaskList = new List<UserModel>();
+            var u = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
+            int projectID = Convert.ToInt32(Session["ProjectID"]);
+            var PM = db.ProjectMembers.Where(m => m.UserID == userID && m.ProjectID == projectID).FirstOrDefault();
+            model.Users_ID = u.User_ID;
+            model.User_Name = u.User_Name;
+            model.User_LastName = u.User_LastName;
+            model.User_Email = u.User_Email;
+            model.Phone = u.Phone;
+            model.Contract_ID = u.Contract_ID;
+            model.Position_ID = u.Position_ID;
+            model.Date_of_Started = u.Date_of_Started;
+            model.Date_of_Ended = u.Date_of_Ended;
+            model.Role = PM.Role;
+            model.Comment = u.comment;
+            model.Amount_Succ = u.Amount_Succ;
+            model.Amount_Non = u.Amount_Non;
+            var Work = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
+            foreach (var item in Work)
+            {
+                if (item.Role == 1)
+                {
+                        var TaskName = db.Projects.Where(m => m.ProjectID == item.ProjectID).FirstOrDefault();
+                        double total = 0;
+                        var Level = db.Tasks.Where(m => m.ProjectID == item.ProjectID).ToList();
+                        foreach (var count in Level)
+                        {
+                            total = Convert.ToDouble(count.Task_level) + total;
+                        }
+                        total = total / Level.Count;
+                        TaskList.Add(new UserModel
+                        {
+                            TaskName = TaskName.Name,
+                            Level = total.ToString(),
+                            RoundCoding = 0
+                        });
+                    }
+                else if (item.Role == 2)
+                {
+                    var TaskDev = db.SubTasks.Where(m => m.SubDevID == userID).ToList();
+                    foreach (var item3 in TaskDev)
+                    {
+                        var Task = db.Tasks.Where(m => m.TaskID == item3.TaskID).FirstOrDefault();
+                        TaskList.Add(new UserModel
+                        {
+                            TaskName = item3.SubName,
+                            Level = Task.Task_level.ToString(),
+                            RoundCoding = item3.RoundCoding
+                        });
+                    }
+                }
+                else if (item.Role == 3)
+                {
+                    var TaskTester = db.Tasks.Where(m => m.TestID == userID).ToList();
+                    foreach (var item4 in TaskTester)
+                    {
+                        TaskList.Add(new UserModel
+                        {
+                            TaskName = item4.TaskName,
+                            Level = item4.Task_level.ToString(),
+                            RoundCoding = 0
+                        });
+                    }
+                }
+                else if (item.Role == 4)
+                {
+                    var TaskQA = db.Tasks.Where(m => m.QAID == userID).ToList();
+                    foreach (var item5 in TaskQA)
+                    {
+                        TaskList.Add(new UserModel
+                        {
+                            TaskName = item5.TaskName,
+                            Level = item5.Task_level.ToString(),
+                            RoundCoding = 0
+                        });
+                    }
+                }
+            }
+            ViewBag.DataList = TaskList;
+            return View();
         }
     }
 }

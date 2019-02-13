@@ -175,9 +175,9 @@
                                         <td>@item.User_LastName</td>
                                         <td>@item.PositionName</td>
                                         <td>@item.AVG</td>
-                                        <td>@item.Amount_Succ</td>
+                                        <td>@item.Amount_Succ.ToString("P2")</td>
                                         <td>@item.TotalCoding</td>
-                                        <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><i class="glyphicon fa fa-archive"></i></a></td>
+                                        <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><i class="glyphicon fa fa-archive"></i></a></td>
                                         <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><i class="glyphicon fa fa-diamond"></i></a></td>
                                     </tr>
                                 };

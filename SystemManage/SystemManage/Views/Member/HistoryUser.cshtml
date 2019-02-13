@@ -1,0 +1,16 @@
+﻿@model SystemManage.Models.UserModel
+@using SystemManage.Models
+@{
+    ViewBag.Title = "HistoryUser";
+}
+<h2>HistoryUser</h2>
+
+@{
+    foreach (var item in (List<UserModel>)ViewBag.DataList)
+    {
+        @item.TaskName
+        @item.Level
+        @item.RoundCoding<br>
+    }
+
+ }
