@@ -17,8 +17,7 @@ namespace SystemManage.Controllers
         }
         public ActionResult CheckLogin(string User_Email, string User_Password)
         {
-            try
-            {
+          
                 if (!string.IsNullOrEmpty(User_Email) && !string.IsNullOrEmpty(User_Password))
                 {
                     var user = db.Users.Where(c => c.User_Email == User_Email && c.User_Password == User_Password).FirstOrDefault();
@@ -41,11 +40,7 @@ namespace SystemManage.Controllers
                     }
                 }
                 return View("Index");
-            }
-            catch (Exception)
-            {
-                return View("Index");
-            }
+           
         }
         
     }

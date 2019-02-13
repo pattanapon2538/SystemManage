@@ -158,10 +158,13 @@ namespace SystemManage.Controllers
         }
         public ActionResult HistoryUser(int userID)
         {
+            
             UserModel model = new UserModel();
+            model.ContractsList = db.Type_of_Contract.ToList<Type_of_Contract>();
+            model.PositionList = db.Positions.ToList<Position>();
             List<UserModel> TaskList = new List<UserModel>();
             var u = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
-            int projectID = Convert.ToInt32(Session["ProjectID"]);
+            int projectID = 2007;// Convert.ToInt32(Session["ProjectID"]);
             var PM = db.ProjectMembers.Where(m => m.UserID == userID && m.ProjectID == projectID).FirstOrDefault();
             model.Users_ID = u.User_ID;
             model.User_Name = u.User_Name;
@@ -238,7 +241,7 @@ namespace SystemManage.Controllers
                 }
             }
             ViewBag.DataList = TaskList;
-            return View();
+            return View(model);
         }
     }
 }
