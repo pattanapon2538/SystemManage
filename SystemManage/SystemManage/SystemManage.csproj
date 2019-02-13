@@ -3440,6 +3440,7 @@
     <Content Include="Views\UploadFile\Success2.cshtml" />
     <Content Include="Views\Project\DetailProject.cshtml" />
     <Content Include="Views\Member\HistoryUser.cshtml" />
+    <Content Include="Views\Shared\_History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
