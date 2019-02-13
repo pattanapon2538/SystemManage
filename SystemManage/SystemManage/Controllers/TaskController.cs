@@ -50,6 +50,7 @@ namespace SystemManage.Controllers
                 }
                 t.DescriptionTest = model.DescriptionTest;
                 t.TestID = model.TestID; //เลือกการค้นหาจาก Table Member ที่ Role เป็น Tester = 4 
+               
                 t.TestSentDate = model.TestSentDate;
                 t.TestStatus = model.TestStatus;
                 t.DescriptionQA = model.DescriptionQA;
@@ -62,6 +63,23 @@ namespace SystemManage.Controllers
                 t.CreateBy = Convert.ToInt32(Session["userID"]);
                 db.Tasks.Add(t);
                 db.SaveChanges();
+                var tester = db.Tasks.Where(m => m.TestID == model.TestID).ToList();
+                int total_tester = 0;
+                foreach (var item in tester)
+                {
+                    total_tester = total_tester + item.Task_level;
+                }
+                total_tester = total_tester / tester.Count;
+                var User_Tester = db.Users.Where(m => m.User_ID == model.TestID).FirstOrDefault();
+                User_Tester.AVG = total_tester;
+                db.SaveChanges();
+                var QA = db.Tasks.Where(m => m.QAID == model.QAID).ToList();
+                int total_QA = 0;
+                foreach (var item2 in QA)
+                {
+                    total_QA = total_QA + item2.Task_level;
+                }
+                total_QA = total_QA / QA.Count;
                 /////////////////////////////////////
                 var Host = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
                 var recevier = db.Users.Where(m => m.User_ID == model.TestID).FirstOrDefault();
@@ -114,6 +132,7 @@ namespace SystemManage.Controllers
                         var us = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
                         us.AVG = AVG;
                         db.SaveChanges();
+
                     }
 
                     ModelState.Clear();
