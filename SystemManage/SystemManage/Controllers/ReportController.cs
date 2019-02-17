@@ -11,12 +11,13 @@ namespace SystemManage.Controllers
     public class ReportController : Controller
     {
         Entities db = new Entities();
+
         // GET: Report
         public ActionResult Report()
         {
-            
             List<SubTaskModel> subTasksReport = new List<SubTaskModel>();
-            int projectID = Convert.ToInt32(Session["ProjectID"]);
+            List<SubTaskModel> Team = new List<SubTaskModel>();
+            int projectID = 2007;//Convert.ToInt32(Session["ProjectID"]);
             var t = db.Tasks.Where(m => m.ProjectID == projectID).ToList();
             foreach (var c in t)
             {
@@ -31,7 +32,8 @@ namespace SystemManage.Controllers
                     var QA = db.Users.Where(m => m.User_ID == c.QAID).FirstOrDefault();
                     string Handle = u.User_Name;
                     string DevName = y.User_Name;
-                    subTasksReport.Add(new SubTaskModel {
+                    subTasksReport.Add(new SubTaskModel
+                    {
                         TaskID = c.TaskID,
                         TaskName = c.TaskName,
                         percent_task = c.TotalPercent,
@@ -47,13 +49,46 @@ namespace SystemManage.Controllers
                         SubDevSend = d.SubDevSend,
                         CreateDate = d.CreateDate,
                         UpdateDate = d.UpdateDate,
-                        CreateBy = d.CreateBy
+                        CreateBy = d.CreateBy,
                     });
                 }
                 Total = Total / s.Count;
                 c.TotalPercent = Total;
                 db.SaveChanges();
             }
+            string P_Name = null, D_Name = null, T_Name = null, Q_Name = null;
+            var p = db.ProjectMembers.Where(m => m.ProjectID == projectID).OrderBy(m=>m.Role).ToList();
+            foreach (var item in p)
+            {
+                if (item.Role == 1)
+                {
+                    var N = db.Users.Where(m => m.User_ID == item.UserID).FirstOrDefault();
+                    P_Name = N.User_Name;
+                }
+                else if (item.Role == 2)
+                {
+                    var N = db.Users.Where(m => m.User_ID == item.UserID).FirstOrDefault();
+                    D_Name = N.User_Name;
+                }
+                else if (item.Role == 3)
+                {
+                    var N = db.Users.Where(m => m.User_ID == item.UserID).FirstOrDefault();
+                    T_Name = N.User_Name;
+                }
+                else if (item.Role == 4)
+                {
+                    var N = db.Users.Where(m => m.User_ID == item.UserID).FirstOrDefault();
+                    Q_Name = N.User_Name;
+                }
+                Team.Add(new SubTaskModel {
+                    PM = P_Name,
+                    Dev = D_Name,
+                    Tester = T_Name,
+                    QA = Q_Name,
+                    Role = item.Role
+                });
+            }
+            ViewBag.DataList2 = Team;
             ViewBag.DataList = subTasksReport;
             return View();
         }

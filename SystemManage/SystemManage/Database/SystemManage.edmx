@@ -111,6 +111,7 @@
           <Property Name="UpdateDate" Type="date" />
           <Property Name="CreateBy" Type="int" Nullable="false" />
           <Property Name="UpdateBy" Type="int" />
+          <Property Name="SIT_Menu" Type="int" />
         </EntityType>
         <EntityType Name="ProjectMember">
           <Key>
@@ -770,6 +771,7 @@
           <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_Project" FromRole="Project" ToRole="ProjectMember" />
           <NavigationProperty Name="SITs" Relationship="SystemManageModel.FK_SIT" FromRole="Project" ToRole="SIT" />
           <NavigationProperty Name="Tasks" Relationship="SystemManageModel.FK_Task" FromRole="Project" ToRole="Task" />
+          <Property Name="SIT_Menu" Type="Int32" />
         </EntityType>
         <EntityType Name="ProjectMember">
           <Key>
@@ -1271,6 +1273,7 @@
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="SystemManageModel.Project">
               <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="SIT_Menu" ColumnName="SIT_Menu" />
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />

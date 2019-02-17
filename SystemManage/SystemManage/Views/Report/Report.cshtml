@@ -2,26 +2,204 @@
 @using SystemManage.Models
 @{
     ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_History.cshtml";
 }
+<div class="container">
+    <div class="card">
+        <div class="card-body shadow" style="margin-top:50px;border-radius:10px">
+            <div class="row">
+                <div class="login-form-body" style="border:solid;;border-width:1px;margin:auto">
+                    <div class="col-sm-12">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>ชื่อโครงการ : </td>
+                                    <td>@Session["ProjectName"] </td>
+                                </tr>
+                                <tr>
+                                    <td>งาน : </td>
+                                </tr>
+                                @{
+                                    var i = 0;
+                                    var a = 0;
+                                    var c = 1;
+                                    var s = 1;
+                                    foreach (var n in (List<SubTaskModel>)ViewBag.DataList)
+                                    {
+                                        i = n.TaskID;
+                                        if (i == a)
+                                        {
+                                            s++;
+                                            <tr>
+                                            <tr>
+                                                <td>
+                                                <td>
+                                                <td>@s. @n.SubName</td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>ผู้พัฒนา : @n.SubDevID</td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>ผู้ทดสอบ : @n.TesterName</td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>ผู้ตรวจสอบ : @n.QAName</td>
+                                            </tr>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            s = 1;
+                                            <tr>
+                                                <td>
+                                                <td>@c. @n.TaskName</td>
+                                            <tr>
+                                                <td>
+                                                <td>
+                                                <td>@s. @n.SubName</td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>ผู้พัฒนา : @n.SubDevID</td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>ผู้ทดสอบ : @n.TesterName</td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>ผู้ตรวจสอบ : @n.QAName</td>
+                                            </tr>
+                                            </tr>
+                                            a = i;
+                                        }
+                                        c++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <table>
+                            <tbody>
+                                @{
+                                    <tr>
+                                        <td>ผู้มีส่วนเกี่ยวข้องกับโครงการ : </td>
+                                    </tr>
+                                    int r = 0;
+                                    foreach (var item in (List<SubTaskModel>)ViewBag.DataList2)
+                                    {
+                                        if (item.Role == 1)
+                                        {
+                                            <tr>
+                                                <td>
+                                                <td>ผู้จัดการโครงการ : </td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                    @item.PM
+                                                </td>
+                                            </tr>
+                                        }
+                                        else if (item.Role == 2)
+                                        {
+                                            if (r != item.Role)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                    <td>ผู้พัฒนา : </td>
+                                                    <td>
+                                                    <td>
+                                                    <td>
+                                                        @item.Dev
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>
+                                                    <td></td>
+                                                    <td>
+                                                    <td>
+                                                    <td>
+                                                        @item.Dev
+                                                    </td>
+                                                </tr>
+                                            }
+                                            r = item.Role;
+                                        }
+                                        else if (item.Role == 3)
+                                        {
+                                            if (r != item.Role)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                    <td>ผู้ทดสอบ : </td>
+                                                    <td>
+                                                    <td>
+                                                    <td>
+                                                        @item.Tester
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>
+                                                    <td></td>
+                                                    <td>
+                                                    <td>
+                                                    <td>
+                                                        @item.Tester
+                                                    </td>
+                                                </tr>
+                                            }
 
-<h2>@Session["ProjectName"]</h2>
-@{
-    foreach (var c in (List<SubTaskModel>)ViewBag.DataList)
-    {
-        <label for="comment">ชื่องาน :</label>
-        <h2>@c.TaskName</h2>
-        <label for="comment">เปอร์เซ็นความคืบหน้า :</label>
-        @c.percent_task
-        <label for="comment">ชื่องานรอง :</label>
-        @c.SubName
-        <label for="comment">ผู้พัฒนาซอฟแวร์ :</label>
-        @c.SubDevID
-        <label for="comment">ผู้ทดสอบ :</label>
-        @c.TesterName
-        <label for="comment">ผู้ตรวจคุณภาพ :</label>
-        @c.QAName
-        <label for="comment">วันที่สร้าง :</label>
-        @c.CreateDate
-    }
-}
-
+                                            r = item.Role;
+                                        }
+                                        else if (item.Role == 4)
+                                        {
+                                            if (r != item.Role)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                    <td>ผู้ตรวจสอบ : </td>
+                                                    <td>
+                                                    <td>
+                                                    <td>
+                                                        @item.QA
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>
+                                                    <td></td>
+                                                    <td>
+                                                    <td>
+                                                    <td>
+                                                        @item.QA
+                                                    </td>
+                                                </tr>
+                                            }
+                                            r = item.Role;
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
