@@ -1,44 +1,287 @@
-﻿@model List<SystemManage.Models.UserModel>
+﻿@model SystemManage.Models.UserModel
 @using SystemManage.Models;
 
 @{
     ViewBag.Title = "ShowUser";
+    Layout = "~/Views/Shared/AddminLayout.cshtml";
 }
+<style>
+    th, td {
+        white-space: nowrap;
+    }
+</style>
 <div class="container">
-    <table class="tabel table-bordered">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>User_ID</th>
-                <th>User_Email</th>
-                <th>User_Password</th>
-                <th>User_Name</th>
-                <th>User_LastName</th>
-                <th>Address</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{ 
-                var i = 1;
-                foreach (var item in (List<UserModel>)ViewBag.DataList)
-                {
-                    <tr>
-                        <td>@i</td>
-                        <td>@item.Users_ID</td>
-                        <td>@item.User_Email</td>
-                        <td>@item.User_Password</td>
-                        <td>@item.User_Name</td>
-                        <td>@item.User_LastName</td>
-                        <td>@item.Address</td>    
-                    </tr>
-                    i++;
-                }
+    <div class="login-box ptb--100">
+        @using (Ajax.BeginForm("AddUser", "User",
+             new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <form>
+                <div class="login-form-body shadow " style="border-style:solid ;border-width: 1px;margin-left: -200px;width:800px">
+                    <h2 class="text-center" style="margin-bottom:20px;margin-top:-10px">ประวัติส่วนตัว</h2>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ชื่อ : </label>
+                        <div class="col-sm-4">
+                            @Html.HiddenFor(m => m.Users_ID)
+                            @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล"})
+                            @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">นามสกุล : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล"})
+                            @Html.ValidationMessageFor(m => m.User_LastName, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">วันเดือนปีเกิด : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", @type = "date" })
+                            @Html.ValidationMessageFor(m => m.BirthDate, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">เพศ : </label>
+                        <div class="col-sm-4">
+                            @{
+                                if (Model.Users_ID == 0)
+                                {
+                                    @Html.DropDownListFor(m => m.Gender, new SelectList(Enum.GetValues(typeof(UserModel.Sex))), "เลือก", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Gender, string.Empty, new { @style = "color:red" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(m => m.Genders, new SelectList(Enum.GetValues(typeof(UserModel.Sex))), "เลือก", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Genders, string.Empty, new { @style = "color:red" })
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ที่อยู่ : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.Address, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">เบอร์โทร : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.Gender, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">สัญญา : </label>
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(m => m.Contract_ID, new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "ประเภทสัญญา",new {@class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Contract_ID, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">สัญญาจาก : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.ContractFrom, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.ContractFrom, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">วันเริ่มสัญญา : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.Date_of_Started, new { @type = "date", @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Date_of_Started, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">วันสิ้นสุดสัญญา:</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.Date_of_Ended, new { @type = "date", @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Date_of_Ended, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 1 : </label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile1">
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 2:</label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile2">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 3 : </label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile3">
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่4 :</label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile4">
+                        </div>
+                    </div>
+                    <h2 class="text-center" style="margin-top:30px;margin-bottom:10px">บัญชีผู้ใช้งาน</h2>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">อีเมล์ : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_Email, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">รหัสผ่าน : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_Password, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_Password, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">รหัสผ่านอีกครั้ง: </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_RePassword, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_RePassword, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">ตำแหน่งงาน : </label>
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "กำหนดตำแหน่ง",new {@class ="form-control" })
+                            @Html.ValidationMessageFor(m => m.Position_ID, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ทักษะภาษาโปรแกรม : </label>
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "เลือกภาษา",new { @class ="form-control"})
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">กำหนดสิทธิ์ : </label>
+                        <div class="col-sm-4">
+                            <div class="col-sm-12">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        ฝ่ายบริหารจัดการระบบ
+                                    </label>
+                                    @Html.RadioButtonFor(m => m.Permission, "A")
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        ฝ่ายจัดการโครงการ
+                                    </label>
+                                    @Html.RadioButtonFor(m => m.Permission, "P")
+                                </div>
+                                <div class="form-check ">
+                                    <label class="form-check-label">
+                                        ลูกค้า
+                                    </label>
+                                     @Html.RadioButtonFor(m => m.Permission, "C")
+                                </div>
+                            </div>
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">ทักษะภาษาอังกฤษ:</label>
+                        <div class="col-sm-4">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">ฟัง : </label>
+                                        @Html.DropDownListFor(m => m.Listening, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">พูด : </label>
+                                        @Html.DropDownListFor(m => m.Speaking, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">อ่าน : </label>
+                                        @Html.DropDownListFor(m => m.Reading, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">เขียน : </label>
+                                        @Html.DropDownListFor(m => m.Writng, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
+                        <button id="form_submit" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
 
-
-
-            }
-
-        </tbody>
-    </table>
+    <div class="row" id="tb-data">
+        <div class="col-12 mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="data-tables datatable-primary">
+                        <div id="dataTable2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div style="overflow-x:auto;">
+                                        <table id="dataTable2" class="text-center dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="dataTable2_info" style="width: 1131px;overflow-x:auto">
+                                            <thead class="text-capitalize">
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 2px;" aria-sort="ascending" aria-label="No.: activate to sort column descending">อันดับ</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 100px;">อีเมล์</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">ชื่อ</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">นามสกุล</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">ตำแหน่ง</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">สัญญา</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 20px;">Edit</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 20px;">Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    var ia = 1;
+                                                    foreach (var item in (List<UserModel>)ViewBag.DataList)
+                                                    {
+                                                        <tr>
+                                                            <td>@ia</td>
+                                                            <td>@item.User_Email</td>
+                                                            <td>@item.User_Name</td>
+                                                            <td>@item.User_LastName</td>
+                                                            <td>@item.PositionName</td>
+                                                            <td>@item.ContactName</td>
+                                                            <td>
+                                                                <span style="cursor:pointer" onclick="DetailUser('@item.Users_ID')"><i class="glyphicon fa fa-diamond"></i></span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="@Url.Action("DeleteUser", new {userID = item.Users_ID})"><i class="glyphicon fa fa-archive"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                        ia++;
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+    <script>
+        function DetailUser(Users_ID) {
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action("DetailUser", "User"))",
+                data: { Users_ID: Users_ID },
+                dataType: "json",
+                success: function (data) {
+                    $("#Users_ID").val(data.UserID);
+                    $("#User_Name").val(data.Name);
+                    $("#User_LastName").val(data.LastName);
+                    $("#User_Email").val(data.Email);
+                    $("#BirthDate").val(data.BirthDate);
+                    $("#Address").val(data.Address);
+                    $("#Contract_ID").val(data.Contract);
+                    $("#ContractFrom").val(data.ContractFrom);
+                    $("#Position_ID").val(data.Postition);
+                    $("#Phone").val(data.Phone);
+                    $("#Permission").val(data.Permission);
+                    $("#Date_of_Started").val(data.Started);
+                    $("#Date_of_Ended").val(data.Ended);
+                    $("#User_Password").val(data.Password);
+                    $("#LanguageID").val(data.Language);
+                    $("#Genders").val(data.Genders);
+                    $("#Speaking").val(data.Speaking);
+                    $("#Reading").val(data.Reading);
+                    $("#Writng").val(data.Writng);
+                    $("#Listening").val(data.Listening);
+                }
+            });
+        }
+    </script>

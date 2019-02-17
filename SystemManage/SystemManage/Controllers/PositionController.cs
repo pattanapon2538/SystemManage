@@ -96,7 +96,6 @@ namespace SystemManage.Controllers
        
         public ActionResult DeletePosition(int Position_ID)
         {
-            PositionModel Model = new PositionModel();
             Position r = db.Positions.Where(w => w.Position_ID == Position_ID).FirstOrDefault();
             db.Positions.Remove(r);
             db.SaveChanges();

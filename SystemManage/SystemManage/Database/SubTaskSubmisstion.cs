@@ -15,10 +15,10 @@ namespace SystemManage.Database
     public partial class SubTaskSubmisstion
     {
         public int Submit_ID { get; set; }
-        public Nullable<System.DateTime> AssignDate { get; set; }
-        public Nullable<System.DateTime> Deadline { get; set; }
-        public Nullable<System.DateTime> SubmitDate { get; set; }
-        public Nullable<int> HandleBy { get; set; }
+        public DateTime AssignDate { get; set; }
+        public DateTime Deadline { get; set; }
+        public DateTime SubmitDate { get; set; }
+        public int HandleBy { get; set; }
         public int SubID { get; set; }
     
         public virtual SubTask SubTask { get; set; }

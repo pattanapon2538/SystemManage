@@ -21,7 +21,7 @@ namespace SystemManage.Models
         public string User_Name { get; set; }
         public string User_LastName { get; set; }
         public string Gender { get; set; }
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public string Address { get; set; }
         public string ContractFrom { get; set; }
         public DateTime Date_of_Started { get; set; }
@@ -54,6 +54,7 @@ namespace SystemManage.Models
         public int Position_ID { get; set; }
         public string Phone { get; set; }
         public string PositionName { get; set; }
+        public string ContactName { get; set;  }
         public int Role { get; set; }
 
         public int ProjectCreateBy { get; set; }
@@ -66,7 +67,24 @@ namespace SystemManage.Models
         public string TaskName { get; set; }
         public string Level { get; set; }
         public int RoundCoding { get; set; }
-       
+        public Levels _Speaking { get; set; }
+        public Levels _Reading { get; set; }
+        public Levels _Writng { get; set; }
+        public Levels _Listening { get; set; }
+        public Sex Genders { get; set; }
+
+        public enum Levels
+        {
+            ต่ำ,
+            ปานกลาง,
+            สูง,
+        }
+        public enum Sex
+        {
+            ชาย,
+            หญิง,
+        }
+
     }
    
 }

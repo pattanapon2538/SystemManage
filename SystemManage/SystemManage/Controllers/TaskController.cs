@@ -80,6 +80,9 @@ namespace SystemManage.Controllers
                     total_QA = total_QA + item2.Task_level;
                 }
                 total_QA = total_QA / QA.Count;
+                var User_QA = db.Users.Where(m => m.User_ID == model.QAID).FirstOrDefault();
+                User_QA.AVG = total_QA;
+                db.SaveChanges();
                 /////////////////////////////////////
                 var Host = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
                 var recevier = db.Users.Where(m => m.User_ID == model.TestID).FirstOrDefault();

@@ -16,7 +16,6 @@
         <EntityTypeShape EntityType="SystemManageModel.ProjectMember" Width="1.5" PointX="5.25" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.SIT" Width="1.5" PointX="13.875" PointY="8.125" />
         <EntityTypeShape EntityType="SystemManageModel.SITStep" Width="1.5" PointX="13.75" PointY="5.125" />
-        <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="5.25" PointY="5.875" />
         <EntityTypeShape EntityType="SystemManageModel.SubDefect" Width="1.5" PointX="7.25" PointY="6.25" />
         <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="11.75" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.SubTaskSubmisstion" Width="1.5" PointX="13.875" PointY="2.375" />
@@ -25,7 +24,6 @@
         <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="3" PointY="2.375" />
         <AssociationConnector Association="SystemManageModel.FK_Defect" />
         <AssociationConnector Association="SystemManageModel.FK_SubDefect" />
-        <AssociationConnector Association="SystemManageModel.FK_languaeID" />
         <AssociationConnector Association="SystemManageModel.FK_Languages" />
         <AssociationConnector Association="SystemManageModel.FK_Mail" />
         <AssociationConnector Association="SystemManageModel.FK_Position" />
@@ -35,10 +33,12 @@
         <AssociationConnector Association="SystemManageModel.FK_UserID" />
         <AssociationConnector Association="SystemManageModel.FK_Step" />
         <AssociationConnector Association="SystemManageModel.FK_Sub" />
-        <AssociationConnector Association="SystemManageModel.FK_User" />
         <AssociationConnector Association="SystemManageModel.FK_SubTask" />
         <AssociationConnector Association="SystemManageModel.SubID" />
         <AssociationConnector Association="SystemManageModel.FK_Contact" />
+        <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="5.25" PointY="5.375" />
+        <AssociationConnector Association="SystemManageModel.FK_languaeID" />
+        <AssociationConnector Association="SystemManageModel.FK_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

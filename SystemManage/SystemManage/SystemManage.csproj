@@ -3411,7 +3411,6 @@
     <Content Include="Views\Languages\DetailLanguages.cshtml" />
     <Content Include="Views\Contact\DetailContact.cshtml" />
     <Content Include="Views\Position\ShowPosition.cshtml" />
-    <Content Include="Views\User\AddUser.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\User\ShowUser.cshtml" />
     <Content Include="Views\Shared\AddminLayout.cshtml" />

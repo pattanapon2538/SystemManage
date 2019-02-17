@@ -18,6 +18,7 @@ namespace SystemManage.Database
         public User()
         {
             this.ProjectMembers = new HashSet<ProjectMember>();
+            this.Skills = new HashSet<Skill>();
         }
     
         public int User_ID { get; set; }
@@ -62,7 +63,8 @@ namespace SystemManage.Database
         public virtual Position Position { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProjectMember> ProjectMembers { get; set; }
-        public virtual Skill Skill { get; set; }
         public virtual Type_of_Contract Type_of_Contract { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Skill> Skills { get; set; }
     }
 }

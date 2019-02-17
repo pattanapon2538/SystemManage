@@ -30,7 +30,7 @@ namespace SystemManage.Database
         public int TestStatus { get; set; }
         public string DescriptionQA { get; set; }
         public int QAID { get; set; }
-        public System.DateTime QASentDate { get; set; }
+        public DateTime QASentDate { get; set; }
         public int QAStatus { get; set; }
         public string AttachShow { get; set; }
         public string AttachFile { get; set; }
