@@ -27,5 +27,9 @@ namespace SystemManage.Models
         public double percent_task { get; set; }
         public string TesterName { get; set; }
         public string QAName { get; set; }
+        public int TestID { get;set; }
+        public int QAID { get; set; }
+        public string Member_name { get; set; }
+        public int Role { get; set; }
     }
 }

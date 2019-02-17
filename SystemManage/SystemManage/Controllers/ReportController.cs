@@ -11,13 +11,15 @@ namespace SystemManage.Controllers
     public class ReportController : Controller
     {
         Entities db = new Entities();
+
         // GET: Report
         public ActionResult Report()
         {
             
             List<SubTaskModel> subTasksReport = new List<SubTaskModel>();
-            int projectID = Convert.ToInt32(Session["ProjectID"]);
+            int projectID = 2007;//Convert.ToInt32(Session["ProjectID"]);
             var t = db.Tasks.Where(m => m.ProjectID == projectID).ToList();
+            var p = db.ProjectMembers.Where(m => m.ProjectID == projectID).ToList();
             foreach (var c in t)
             {
                 double Total = 0;
@@ -47,8 +49,13 @@ namespace SystemManage.Controllers
                         SubDevSend = d.SubDevSend,
                         CreateDate = d.CreateDate,
                         UpdateDate = d.UpdateDate,
-                        CreateBy = d.CreateBy
-                    });
+                        CreateBy = d.CreateBy,
+                        TestID = c.TestID,
+                        QAID = c.QAID
+                });
+                    foreach (var a in p) {
+                        var Member_Name = a.Member_name;
+                    }
                 }
                 Total = Total / s.Count;
                 c.TotalPercent = Total;
