@@ -17,7 +17,7 @@ namespace SystemManage.Controllers
         {
             
             List<SubTaskModel> subTasksReport = new List<SubTaskModel>();
-            int projectID = 2007;//Convert.ToInt32(Session["ProjectID"]);
+            int projectID = Convert.ToInt32(Session["ProjectID"]) == 0 ? 2007 : Convert.ToInt32(Session["ProjectID"]);
             var t = db.Tasks.Where(m => m.ProjectID == projectID).ToList();
             var p = db.ProjectMembers.Where(m => m.ProjectID == projectID).ToList();
             foreach (var c in t)

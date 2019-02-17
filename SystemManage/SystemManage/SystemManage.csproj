@@ -317,8 +317,11 @@
     <Content Include="assets\js\bar-chart.js" />
     <Content Include="assets\js\bootstrap.min.js" />
     <Content Include="assets\js\global.js" />
+    <Content Include="assets\js\jquery.rowspanizer.js" />
+    <Content Include="assets\js\jquery.rowspanizer.min.js" />
     <Content Include="assets\js\jquery.slicknav.min.js" />
     <Content Include="assets\js\jquery.slimscroll.min.js" />
+    <Content Include="assets\js\jquery.table.marge.js" />
     <Content Include="assets\js\line-chart.js" />
     <Content Include="assets\js\maps.js" />
     <Content Include="assets\js\metisMenu.min.js" />
