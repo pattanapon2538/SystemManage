@@ -10,7 +10,7 @@
     Layout = "~/Views/Shared/_MainMenu.cshtml";
 }
 @using SystemManage.Models;
-@model SystemManage.Models.DefectModel
+@model SystemManage.Models.SITModel
 <div id="flip"><center><i class="fas fa-arrow-down"></i></center></div>
 <div class="card">
     <div class="card-body" style="margin: auto" id="panel">
@@ -105,6 +105,22 @@
         </div>
     </div>
 </div>
+<div class="card-body">
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-9"></div>
+        <div class="col-sm-1">
+            @{
+                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                {
+                    <a href="@Url.Action("AddSIT", "SIT")"><button type="button" class="btn btn-success btn-block">ทดสอบ</button></a>
+                }
+            }
+        </div>
+        <div class="col-sm-1">
+        </div>
+    </div>
+</div>
 <div class="card">
     <div class="card-body">
         <div class="row">
@@ -113,13 +129,9 @@
                     <thead>
                         <tr class="table-info">
                             <th><center>ลำดับ</center></th>
-                            <th><center>งาน</center></th>
-                            <th><center>งานรอง</center></th>
-                            <th><center>สถานะ</center></th>
-                            <th><center>ผู้พัฒนา</center></th>
-                            <th><center>ผู้ทดสอบ</center></th>
-                            <th><center>ผู้ตรวจคุณภาพ</center></th>
+                            <th><center>ชื่อ</center></th>
                             <th><center>รายละเอียด</center></th>
+                            <th><center></center></th>
                             @{
                                 if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                 {
@@ -131,40 +143,13 @@
                     <tbody>
                         @{
                             int n = 1;
-                            foreach (var i in (List<DefectModel>)ViewBag.DataList)
+                            foreach (var i in (List<SITModel>)ViewBag.DataList)
                             {
                                 <tr>
                                     <td><center>@n</center></td>
-                                    <td><center>@i.TaskName</center></td>
-                                    <td><center>@i.SubTaskName</center></td>
-                                    @if (i.Status == 0)
-                                    {
-                                        <td><center>รอการแก้ไข</center></td>
-                                    }
-                                    else if (i.Status == 1)
-                                    {
-                                        <td><center>รอการตรวจสอบ</center></td>
-                                    }
-                                    else if (i.Status == 2)
-                                    {
-                                        <td><center>แก้ไขแล้ว</center></td>
-                                    }
-                                    else if (i.Status == 3)
-                                    {
-                                        <td><center>แก้ไขอีกครั้ง</center></td>
-                                    }
-                                    <td><center>@i.DevName</center></td>
-                                    <td><center>@i.TestName</center></td>
-                                    <td><center>@i.QAName</center></td>
-                                    <td>
-                                        <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-book-open"></i></center></a>
-                                    </td>
-                                    @if (i.CreateBy == Convert.ToInt32(Session["userID"]))
-                                    {
-                                        <td>
-                                            <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-backspace"></i></center></a>
-                                        </td>
-                                    }
+                                    <td><center>@i.Name</center></td>
+                                    <td><center>@i.Detail</center></td>
+                                    <td><center>@i.CreateDate</center></td>
                                 </tr>
                                 ++n;
                             }
@@ -175,3 +160,4 @@
         </div>
     </div>
 </div>
+

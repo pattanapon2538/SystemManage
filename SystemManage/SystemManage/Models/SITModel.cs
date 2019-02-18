@@ -16,7 +16,7 @@ namespace SystemManage.Models
         public string AttachShow { get; set; }
         public string AttachFile { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
         public int Task_ID { get; set; }

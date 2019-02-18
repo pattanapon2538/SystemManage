@@ -391,6 +391,7 @@
     <Content Include="icon\project.png" />
     <Content Include="icon\report.png" />
     <Content Include="icon\report.svg" />
+    <Content Include="icon\sit.png" />
     <Content Include="icon\subtask.png" />
     <Content Include="icon\team.png" />
     <Content Include="icon\team.svg" />
@@ -3444,6 +3445,7 @@
     <Content Include="Views\Project\DetailProject.cshtml" />
     <Content Include="Views\Member\HistoryUser.cshtml" />
     <Content Include="Views\Shared\_History.cshtml" />
+    <Content Include="Views\SIT\ShowSIT.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

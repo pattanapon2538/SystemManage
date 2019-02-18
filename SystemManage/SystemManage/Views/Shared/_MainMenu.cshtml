@@ -1,4 +1,4 @@
-﻿<!doctype html>
+﻿    <!doctype html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -48,31 +48,40 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="row">
-
-            <div class="col-sm-2">
-                <a class="navbar-brand" href="@Url.Action("ShowTask","Task")"><center><img src="~/icon/paper.png" width="42.66" height="42.66"></center></a>
-                <center><h6 style="margin-left: -1pt">งาน</h6></center>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-2 box" style="text-align:center">
+                            <a class="navbar-brand" href="@Url.Action("ShowTask","Task")"><img src="~/icon/paper.png" width="42.66" height="42.66"></a>
+                            <h6 >งาน</h6>
+                        </div>
+                        <div class="col-sm-2 box" style="text-align:center">
+                            <a class="navbar-brand" href="@Url.Action("Inbox","Inbox")"><img src="~/icon/contact.png" width="42.66" height="42.66"></a>
+                            <h6>ข้อความ</h6>
+                        </div>
+                        <div class="col-sm-2 box" style="text-align:center">
+                            <a class="navbar-brand" href="@Url.Action("AddSIT", "SIT")"><img src="~/icon/inbox.png" width="42.66" height="42.66"></a>
+                            <h6>เอกสาร</h6>
+                        </div> 
+                        <div class="col-sm-2 box" style="text-align:center">
+                            <a class="navbar-brand" href="@Url.Action("ShowDefect","Defect")"><img src="~/icon/virus.png" width="42.66" height="42.66"></a>
+                            <h6>ข้อผิดพลาด</h6>
+                        </div>
+                        <div class="col-sm-2 box" style="text-align:center">
+                            <a class="navbar-brand" href="@Url.Action("ShowSIT","SIT")"><img src="~/icon/sit.png" width="42.66" height="42.66"></a>
+                            <h6>ทดสอบระบบ</h6>
+                        </div>
+                        <div class="col-sm-2 box" style="text-align:center">
+                            <a class="navbar-brand" href="@Url.Action("ShowMember","Member")"><img src="~/icon/team.png" width="42.66" height="42.66"></a>
+                            <h6>ทีม</h6>
+                        </div>
+                    </div>
             </div>
-            <div class="col-sm-2">
-                <a class="navbar-brand" href="@Url.Action("Inbox","Inbox")"><center><img src="~/icon/contact.png" width="42.66" height="42.66"></center></a>
-                <center><h6>ข้อความ</h6></center>
+            <div class="col-sm-4">
+                    <div class="row">
+                    </div>
             </div>
-            <div class="col-sm-2">
-                <a class="navbar-brand" href="#"><center><img src="~/icon/inbox.png" width="42.66" height="42.66"></center></a>
-                <center><h6 style="margin-left: -10pt">เอกสาร</h6></center>
-            </div>
-            <div class="col-sm-2">
-                <a class="navbar-brand" href="@Url.Action("ShowDefect","Defect")"><center><img src="~/icon/virus.png" width="42.66" height="42.66"></center></a>
-                <center><h6>ข้อผิดพลาด</h6></center>
-            </div>
-            <div class="col-sm-2">
-                <a class="navbar-brand" href="@Url.Action("ShowMember","Member")"><center><img src="~/icon/team.png" width="42.66" height="42.66"></center></a>
-                <center><h6>ทีม</h6></center>
-            </div>
-        </div>
-    </nav>
+        </nav>
     @RenderBody()
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

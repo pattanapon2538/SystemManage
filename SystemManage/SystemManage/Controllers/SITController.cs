@@ -36,5 +36,23 @@ namespace SystemManage.Controllers
             db.SaveChanges();
             return RedirectToAction("ShowTask", "Task");
         }
+        public ActionResult ShowSIT()
+        {
+            SITModel data = new SITModel();
+            List<SITModel> model = new List<SITModel>();
+            int projectID = Convert.ToInt32(Session["ProjectID"]);
+            data.CreateBy = Convert.ToInt32(Session["userID"]);
+            var sit = db.SITs.Where(m => m.Project_ID == projectID).ToList();
+            foreach (var n in sit) {
+                model.Add(new SITModel {
+                    SIT_ID = n.SIT_ID,
+                    Name = n.Name,
+                    Detail = n.Detail,
+                    CreateDate = n.CreateDate
+                });
+            }
+            ViewBag.DataList = model;
+            return View(data);
+        }
     }
 }
