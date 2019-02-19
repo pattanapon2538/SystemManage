@@ -58,6 +58,7 @@ namespace SystemManage.Models
         public string PositionName { get; set; }
         public string ContactName { get; set;  }
         public int Role { get; set; }
+        public int Check_Role { get; set; }
 
         public int ProjectCreateBy { get; set; }
         public HttpPostedFileBase File1 { get; set; }

@@ -77,7 +77,7 @@
                                     }
                                     <td><center>@item.Amount_Succ.ToString("P1")</center></td>
                                     <td><center>@item.TotalCoding</center></td>
-                                    <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                    <td><a href="@Url.Action("HistoryUser",new {userID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
                                     @{
                                         if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
                                         {

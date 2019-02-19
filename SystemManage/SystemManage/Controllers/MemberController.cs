@@ -44,6 +44,7 @@ namespace SystemManage.Controllers
                      });
                          ViewBag.DataList = UserList;
                 }
+                TempData["Not_role"] = 1;
                 return View();
         }
         public ActionResult AddMember(int UserID)
@@ -154,24 +155,30 @@ namespace SystemManage.Controllers
             }
             model.ProjectCreateBy = c.CreateBy;
             ViewBag.DataList = UserList;
+            TempData["Not_Role"] = 0;
             return View(model);
         }
-        public ActionResult HistoryUser(int userID= 2373)
+        public ActionResult HistoryUser(int userID)
         { 
             UserModel model = new UserModel();
             List<UserModel> TaskList = new List<UserModel>();
             var u = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
             double SuccPercent = 0;
+            double NonPercent = 0;
+            var totalProject = db.Projects.Where(m => m.CreateBy == u.User_ID).ToList();
+            var totalSubDev = db.SubTasks.Where(m => m.SubDevID == u.User_ID).ToList();
+            var totalSubTester = db.Tasks.Where(m => m.TestID == u.User_ID).ToList();
+            var totalSubQA = db.Tasks.Where(m => m.QAID == u.User_ID).ToList();
+            int totalWork = totalSubDev.Count + totalSubTester.Count + totalSubQA.Count + totalProject.Count;
             if (u.Amount_Succ != 0)
             {
-                var totalProject = db.Projects.Where(m => m.CreateBy == u.User_ID).ToList();
-                var totalSubDev = db.SubTasks.Where(m => m.SubDevID == u.User_ID).ToList();
-                var totalSubTester = db.Tasks.Where(m => m.TestID == u.User_ID).ToList();
-                var totalSubQA = db.Tasks.Where(m => m.QAID == u.User_ID).ToList();
-                int totalWork = totalSubDev.Count + totalSubTester.Count + totalSubQA.Count + totalProject.Count;
                 SuccPercent = Convert.ToDouble(u.Amount_Succ) / totalWork;
             }
-            int projectID = 2007;//Convert.ToInt32(Session["ProjectID"]);
+            if (u.Amount_Non != 0)
+            {
+                NonPercent = Convert.ToDouble(u.Amount_Non) / totalWork;
+            }
+            int projectID = Convert.ToInt32(Session["ProjectID"]);
             var PM = db.ProjectMembers.Where(m => m.UserID == userID && m.ProjectID == projectID).FirstOrDefault();
             model.PositionList = db.Positions.ToList();
             model.ContractsList = db.Type_of_Contract.ToList();
@@ -207,9 +214,10 @@ namespace SystemManage.Controllers
             model.Date_of_Ended = u.Date_of_Ended;
             model.Comment = u.comment;
             model.Percent_Succ = SuccPercent;
-            model.Percent_Non = 1 - SuccPercent;
+            model.Percent_Non = NonPercent;
             model.Amount_Succ = u.Amount_Succ;
             model.Amount_Non = u.Amount_Non;
+            model.Check_Role = Convert.ToInt32(TempData["Not_Role"]);
             var Work = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
             foreach (var item in Work)
             {
