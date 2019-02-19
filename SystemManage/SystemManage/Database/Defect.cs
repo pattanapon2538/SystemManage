@@ -32,8 +32,8 @@ namespace SystemManage.Database
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
     
-        public virtual SubTask SubTask { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubDefect> SubDefects { get; set; }
+        public virtual SubTask SubTask { get; set; }
     }
 }

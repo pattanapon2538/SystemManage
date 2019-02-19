@@ -40,7 +40,9 @@ namespace SystemManage.Models
         public int LanguageID { get; set; }
         public double AVG { get; set; }
         public double Amount_Succ { get; set; }
+        public double Percent_Succ { get; set; }
         public double Amount_Non { get; set; }
+        public double Percent_Non { get; set; }
         public int TotalCoding { get; set; }
         public string Speaking { get; set; }
         public string Reading { get; set; }
@@ -72,6 +74,7 @@ namespace SystemManage.Models
         public Levels _Writng { get; set; }
         public Levels _Listening { get; set; }
         public Sex Genders { get; set; }
+        public _Role Roles { get; set; }
 
         public enum Levels
         {
@@ -83,6 +86,14 @@ namespace SystemManage.Models
         {
             ชาย,
             หญิง,
+        }
+        public enum _Role
+        {
+            ผู้จัดการโครงการ,
+            ผู้พัฒนาซอฟแวร์,
+            ผู้ทดสอบ,
+            ผู้ตรวจคุณภาพ,
+            ลูกค้า
         }
 
     }

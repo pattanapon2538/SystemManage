@@ -120,6 +120,7 @@
                             <th><center>ผู้พัฒนา</center></th>
                             <th><center>ผู้ทดสอบ</center></th>
                             <th><center>ผู้ตรวจคุณภาพ</center></th>
+                            <th><center>กำหนดส่ง</center></th>
                             <th><center>รายละเอียด</center></th>
                             @{
                                 if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
@@ -157,6 +158,7 @@
                                     <td><center>@i.DevName</center></td>
                                     <td><center>@i.TestName</center></td>
                                     <td><center>@i.QAName</center></td>
+                                    <td><center>@i.SendDate.ToShortDateString()</center></td>
                                     <td>
                                         <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-book-open"></i></center></a>
                                     </td>

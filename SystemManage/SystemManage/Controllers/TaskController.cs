@@ -42,11 +42,11 @@ namespace SystemManage.Controllers
                 }
                 else if (model.level.ToString() == "ปานกลาง")
                 {
-                    t.Task_level = 2;
+                    t.Task_level = 3;
                 }
                 else if (model.level.ToString() == "ยาก")
                 {
-                    t.Task_level = 3;
+                    t.Task_level = 5;
                 }
                 t.DescriptionTest = model.DescriptionTest;
                 t.TestID = model.TestID; //เลือกการค้นหาจาก Table Member ที่ Role เป็น Tester = 4 
@@ -194,6 +194,7 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowTask()
         {
+            Session["Save"] = 0;
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             int userID = Convert.ToInt32(Session["userID"]);
             string Taskname = null;
@@ -442,7 +443,11 @@ namespace SystemManage.Controllers
             model.QASentDate = t.QASentDate;
             model.DescriptionQA = t.DescriptionQA;
             model.CreateBy = t.CreateBy;
-            model.Comment = t.Comment;
+            model.Send = 0;
+            model.Comment_CM = st.Comment_CM;
+            model.Comment_Dev = st.Comment_Dev;
+            model.Comment_Tester = st.Comment_Tester;
+            model.Comment_QA = st.Comment_QA;
             return View(model);
         }
         public ActionResult EditTask(TaskModel model)
@@ -508,163 +513,36 @@ namespace SystemManage.Controllers
             }
             //Dev
             else if (r.Role == 2)
-            {   
-                    st.SubStatus = 1;
-                    st.SubPercent = 25;
-                    st.Handle = t.TestID;
-                    st.UpdateDate = DateTime.Now;
-                    st.UpdateBy = Convert.ToInt32(Session["userID"]);
-                    ++st.RoundCoding;
-                    ++PointCode.TotalCoding;
-                    db.SaveChanges();
-                    t.UpdateDate = DateTime.Now;
-                    t.UpdateBy = Convert.ToInt32(Session["userID"]);
-                    t.Comment = model.Comment;
-                    db.SaveChanges();
-                    ts.SubID = st.SubID;
-                    ts.HandleBy = t.TestID;
-                    ts.SubmitDate = DateTime.Now;
-                    ts.AssignDate = t.CreateDate;
-                    ts.Deadline = t.TestSentDate;
-                    db.SubTaskSubmisstions.Add(ts);
-                    db.SaveChanges();
-                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
-                var Sendto = db.Users.Where(m => m.User_ID == t.TestID).FirstOrDefault();
-                string sender = Email.User_Email.ToString();
-                //string sender = "systemmanage59346@gmail.com";
-                string subject = t.TaskName + "" + st.SubName;
-                string receiver = Sendto.User_Email.ToString();
-                //string receiver = "pattanapon2538@outlook.com";
-                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
-                InboxController i = new InboxController();
-                i.SendEmail(receiver, subject, mess, sender);
-                if (st.SubDevSend >= st.UpdateDate)
-                {
-                    PointCode.Amount_Succ = PointCode.Amount_Succ + 1;
-                    db.SaveChanges();
-                }
-                else if (st.SubDevSend < st.UpdateDate)
-                {
-                    PointCode.Amount_Non = PointCode.Amount_Non + 1;
-                    db.SaveChanges();
-                }
-                return RedirectToAction("ShowTask");
+            {
+                st.Comment_Dev = model.Comment_Dev;
+                db.SaveChanges();
+                Session["Save"] = 1;
+                return RedirectToAction("DetailTask", "Task", new { SubID = model.SubTaskID });
             }
             //Tester
             else if (r.Role == 3)
             {
-                    st.SubStatus = 2;
-                    st.SubPercent = 50;
-                    st.Handle = t.QAID;
-                    st.UpdateDate = DateTime.Now;
-                    st.UpdateBy = Convert.ToInt32(Session["userID"]);
-                    db.SaveChanges();
-                    t.UpdateDate = DateTime.Now;
-                    t.UpdateBy = Convert.ToInt32(Session["userID"]);
-                    t.Comment = model.Comment;
-                    db.SaveChanges();
-                    ts.SubID = st.SubID;
-                    ts.HandleBy = t.QAID;
-                    ts.SubmitDate = DateTime.Now;
-                    ts.AssignDate = t.CreateDate;
-                    ts.Deadline = t.QASentDate;
-                    db.SubTaskSubmisstions.Add(ts);
-                    db.SaveChanges();
-                    var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
-                var Sendto = db.Users.Where(m => m.User_ID == t.QAID).FirstOrDefault();
-                string sender = Email.User_Email.ToString();
-                //string sender = "systemmanage59346@gmail.com";
-                string subject = t.TaskName + "" + st.SubName;
-                string receiver = Sendto.User_Email.ToString();
-                //string receiver = "pattanapon2538@outlook.com";
-                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
-                InboxController i = new InboxController();
-                i.SendEmail(receiver, subject, mess, sender);
-                if (t.TestSentDate >= t.UpdateDate)
-                {
-                    PointCode.Amount_Succ = PointCode.Amount_Succ + 1;
-                    db.SaveChanges();
-                }
-                else if (t.TestSentDate < t.UpdateDate)
-                {
-                    PointCode.Amount_Non = PointCode.Amount_Non + 1;
-                    db.SaveChanges();
-                }
-                return RedirectToAction("ShowTask");
+                st.Comment_Tester = model.Comment_Tester;
+                db.SaveChanges();
+                Session["Save"] = 1;
+                return View("DetailTask", "Task", new { SubID = model.SubTaskID });
             }
             //QA
             else if (r.Role == 4)
             {
-                    st.SubStatus = 3;
-                    st.SubPercent = 75;
-                    st.UpdateDate = DateTime.Now;
-                    st.Handle = 0; //ลูกค้า
-                    st.UpdateBy = Convert.ToInt32(Session["userID"]);
-                    db.SaveChanges();
-                    t.UpdateDate = DateTime.Now;
-                    t.UpdateBy = Convert.ToInt32(Session["userID"]);
-                    t.Comment = model.Comment;
-                    db.SaveChanges();
-                    ts.SubID = st.SubID;
-                    ts.HandleBy = t.QAID;
-                    ts.SubmitDate = DateTime.Now;
-                    ts.AssignDate = t.CreateDate;
-                    ts.Deadline = t.QASentDate;
-                    db.SubTaskSubmisstions.Add(ts);
-                    db.SaveChanges();
-                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
-                var Sendto = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
-                string sender = Email.User_Email.ToString();
-                //string sender = "systemmanage59346@gmail.com";
-                string subject = t.TaskName + "" + st.SubName;
-                string receiver = Sendto.User_Email.ToString();
-                //string receiver = "pattanapon2538@outlook.com";
-                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
-                InboxController i = new InboxController();
-                i.SendEmail(receiver, subject, mess, sender);
-                if (t.QASentDate >= t.UpdateDate)
-                {
-                    PointCode.Amount_Succ = PointCode.Amount_Succ + 1;
-                    db.SaveChanges();
-                }
-                else if (t.QASentDate < t.UpdateDate)
-                {
-                    PointCode.Amount_Non = PointCode.Amount_Non + 1;
-                    db.SaveChanges();
-                }
-                return RedirectToAction("ShowTask");
+                st.Comment_QA = model.Comment_QA;
+                db.SaveChanges();
+                Session["Save"] = 1;
+                return View("DetailTask", "Task", new { SubID = model.SubTaskID });
+
             }
             //CM
             else if (r.Role == 5)
             {
-                    st.SubStatus = 4;
-                    st.SubPercent = 100;
-                    st.UpdateDate = DateTime.Now;
-                    st.Handle = Convert.ToInt32(Session["userID"]);
-                    st.UpdateBy = Convert.ToInt32(Session["userID"]);
-                    db.SaveChanges();
-                    t.UpdateDate = DateTime.Now;
-                    t.UpdateBy = Convert.ToInt32(Session["userID"]);
-                    t.Comment = model.Comment;
-                    db.SaveChanges();
-                    ts.SubID = st.SubID;
-                    ts.HandleBy = Convert.ToInt32(Session["userID"]);
-                    ts.SubmitDate = DateTime.Now;
-                    ts.AssignDate = t.CreateDate;
-                    ts.Deadline = DateTime.Now;
-                    db.SubTaskSubmisstions.Add(ts);
-                    db.SaveChanges();
-                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
-                var Sendto = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
-                string sender = Email.User_Email.ToString();
-                //string sender = "systemmanage59346@gmail.com";
-                string subject = t.TaskName + "" + st.SubName;
-                string receiver = Sendto.User_Email.ToString();
-                //string receiver = "pattanapon2538@outlook.com";
-                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
-                InboxController i = new InboxController();
-                i.SendEmail(receiver, subject, mess, sender);
-                return RedirectToAction("ShowTask");
+                st.Comment_CM = model.Comment_CM;
+                db.SaveChanges();
+                Session["Save"] = 1;
+                return View("DetailTask", "Task", new { SubID = model.SubTaskID });
             }
             return RedirectToAction("ShowTask");
         }
@@ -691,6 +569,177 @@ namespace SystemManage.Controllers
             string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
             InboxController i = new InboxController();
             i.SendEmail(receiver, subject, mess, sender);
+            return RedirectToAction("ShowTask");
+        }
+        public ActionResult SendTask(int SubID)
+        {
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+            int userID = Convert.ToInt32(Session["userID"]);
+            SubTaskSubmisstion ts = new SubTaskSubmisstion();
+            SubTask st = db.SubTasks.Where(m => m.SubID == SubID).FirstOrDefault();
+            Task t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
+            User PointCode = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
+            ProjectMember r = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.UserID == userID).FirstOrDefault();
+            //Dev
+            if (r.Role == 2)
+            {
+                st.SubStatus = 1;
+                st.SubPercent = 25;
+                st.Handle = t.TestID;
+                st.UpdateDate = DateTime.Now;
+                st.UpdateBy = Convert.ToInt32(Session["userID"]);
+                ++st.RoundCoding;
+                ++PointCode.TotalCoding;
+                db.SaveChanges();
+                t.UpdateDate = DateTime.Now;
+                t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                db.SaveChanges();
+                ts.SubID = st.SubID;
+                ts.HandleBy = t.TestID;
+                ts.SubmitDate = DateTime.Now;
+                ts.AssignDate = t.CreateDate;
+                ts.Deadline = t.TestSentDate;
+                db.SubTaskSubmisstions.Add(ts);
+                db.SaveChanges();
+                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
+                var Sendto = db.Users.Where(m => m.User_ID == t.TestID).FirstOrDefault();
+                string sender = Email.User_Email.ToString();
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = t.TaskName + "" + st.SubName;
+                string receiver = Sendto.User_Email.ToString();
+                //string receiver = "pattanapon2538@outlook.com";
+                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
+                if (st.SubDevSend >= st.UpdateDate)
+                {
+                    PointCode.Amount_Succ = PointCode.Amount_Succ + 1;
+                    db.SaveChanges();
+                }
+                else if (st.SubDevSend < st.UpdateDate)
+                {
+                    PointCode.Amount_Non = PointCode.Amount_Non + 1;
+                    db.SaveChanges();
+                }
+                Session["Save"] = 0;
+                return RedirectToAction("ShowTask");
+            }
+            //Tester
+            else if (r.Role == 3)
+            {
+                st.SubStatus = 2;
+                st.SubPercent = 50;
+                st.Handle = t.QAID;
+                st.UpdateDate = DateTime.Now;
+                st.UpdateBy = Convert.ToInt32(Session["userID"]);
+                db.SaveChanges();
+                t.UpdateDate = DateTime.Now;
+                t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                db.SaveChanges();
+                ts.SubID = st.SubID;
+                ts.HandleBy = t.QAID;
+                ts.SubmitDate = DateTime.Now;
+                ts.AssignDate = t.CreateDate;
+                ts.Deadline = t.QASentDate;
+                db.SubTaskSubmisstions.Add(ts);
+                db.SaveChanges();
+                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
+                var Sendto = db.Users.Where(m => m.User_ID == t.QAID).FirstOrDefault();
+                string sender = Email.User_Email.ToString();
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = t.TaskName + "" + st.SubName;
+                string receiver = Sendto.User_Email.ToString();
+                //string receiver = "pattanapon2538@outlook.com";
+                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
+                if (t.TestSentDate >= t.UpdateDate)
+                {
+                    PointCode.Amount_Succ = PointCode.Amount_Succ + 1;
+                    db.SaveChanges();
+                }
+                else if (t.TestSentDate < t.UpdateDate)
+                {
+                    PointCode.Amount_Non = PointCode.Amount_Non + 1;
+                    db.SaveChanges();
+                }
+                Session["Save"] = 0;
+                return RedirectToAction("ShowTask");
+            }
+            //QA
+            else if (r.Role == 4)
+            {
+                st.SubStatus = 3;
+                st.SubPercent = 75;
+                st.UpdateDate = DateTime.Now;
+                st.Handle = 0; //ลูกค้า
+                st.UpdateBy = Convert.ToInt32(Session["userID"]);
+                db.SaveChanges();
+                t.UpdateDate = DateTime.Now;
+                t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                db.SaveChanges();
+                ts.SubID = st.SubID;
+                ts.HandleBy = t.QAID;
+                ts.SubmitDate = DateTime.Now;
+                ts.AssignDate = t.CreateDate;
+                ts.Deadline = t.QASentDate;
+                db.SubTaskSubmisstions.Add(ts);
+                db.SaveChanges();
+                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
+                var Sendto = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
+                string sender = Email.User_Email.ToString();
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = t.TaskName + "" + st.SubName;
+                string receiver = Sendto.User_Email.ToString();
+                //string receiver = "pattanapon2538@outlook.com";
+                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
+                if (t.QASentDate >= t.UpdateDate)
+                {
+                    PointCode.Amount_Succ = PointCode.Amount_Succ + 1;
+                    db.SaveChanges();
+                }
+                else if (t.QASentDate < t.UpdateDate)
+                {
+                    PointCode.Amount_Non = PointCode.Amount_Non + 1;
+                    db.SaveChanges();
+                }
+                Session["Save"] = 0;
+                return RedirectToAction("ShowTask");
+            }
+            //CM
+            else if (r.Role == 5)
+            {
+                st.SubStatus = 4;
+                st.SubPercent = 100;
+                st.UpdateDate = DateTime.Now;
+                st.Handle = Convert.ToInt32(Session["userID"]);
+                st.UpdateBy = Convert.ToInt32(Session["userID"]);
+                db.SaveChanges();
+                t.UpdateDate = DateTime.Now;
+                t.UpdateBy = Convert.ToInt32(Session["userID"]);
+                db.SaveChanges();
+                ts.SubID = st.SubID;
+                ts.HandleBy = Convert.ToInt32(Session["userID"]);
+                ts.SubmitDate = DateTime.Now;
+                ts.AssignDate = t.CreateDate;
+                ts.Deadline = DateTime.Now;
+                db.SubTaskSubmisstions.Add(ts);
+                db.SaveChanges();
+                var Email = db.Users.Where(m => m.User_ID == st.UpdateBy).FirstOrDefault();
+                var Sendto = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
+                string sender = Email.User_Email.ToString();
+                //string sender = "systemmanage59346@gmail.com";
+                string subject = t.TaskName + "" + st.SubName;
+                string receiver = Sendto.User_Email.ToString();
+                //string receiver = "pattanapon2538@outlook.com";
+                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                InboxController i = new InboxController();
+                i.SendEmail(receiver, subject, mess, sender);
+                Session["Save"] = 0;
+                return RedirectToAction("ShowTask");
+            }
             return RedirectToAction("ShowTask");
         }
     }

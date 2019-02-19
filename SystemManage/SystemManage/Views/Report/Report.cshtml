@@ -17,78 +17,15 @@
                                     <td>@Session["ProjectName"] </td>
                                 </tr>
                                 <tr>
-                                    <td>งาน : </td>
+                                    <td><br></td>
                                 </tr>
-                                @{
-                                    var i = 0;
-                                    var a = 0;
-                                    var c = 1;
-                                    var s = 1;
-                                    foreach (var n in (List<SubTaskModel>)ViewBag.DataList)
-                                    {
-                                        i = n.TaskID;
-                                        if (i == a)
-                                        {
-                                            s++;
-                                            <tr>
-                                            <tr>
-                                                <td>
-                                                <td>
-                                                <td>@s. @n.SubName</td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>ผู้พัฒนา : @n.SubDevID</td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>ผู้ทดสอบ : @n.TesterName</td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>ผู้ตรวจสอบ : @n.QAName</td>
-                                            </tr>
-                                            </tr>
-                                        }
-                                        else
-                                        {
-                                            s = 1;
-                                            <tr>
-                                                <td>
-                                                <td>@c. @n.TaskName</td>
-                                            <tr>
-                                                <td>
-                                                <td>
-                                                <td>@s. @n.SubName</td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>ผู้พัฒนา : @n.SubDevID</td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>ผู้ทดสอบ : @n.TesterName</td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>ผู้ตรวจสอบ : @n.QAName</td>
-                                            </tr>
-                                            </tr>
-                                            a = i;
-                                        }
-                                        c++;
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                        <table>
-                            <tbody>
+                                <tr>
+                                    <td>รายละเอียดโครงการ :</td>
+                                    <td>@Model.ProjectDetail</td>
+                                </tr>
+                                <tr>
+                                    <td><br></td>
+                                </tr>
                                 @{
                                     <tr>
                                         <td>ผู้มีส่วนเกี่ยวข้องกับโครงการ : </td>
@@ -195,6 +132,73 @@
                                         }
                                     }
                                 }
+                                <tr>
+                                    <td>งาน : </td>
+                                </tr>
+                                @{
+                                    var i = 0;
+                                    var a = 0;
+                                    var c = 1;
+                                    var s = 1;
+                                    foreach (var n in (List<SubTaskModel>)ViewBag.DataList)
+                                    {
+                                        i = n.TaskID;
+                                        if (i == a)
+                                        {
+                                            s++;
+                                            <tr>
+                                            <tr>
+                                                <td>
+                                                <td>
+                                                <td>@s. @n.SubName</td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>ผู้พัฒนา : @n.SubDevID</td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                            </tr>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            s = 1;
+                                            <tr>
+                                                <td>
+                                                <td>- @n.TaskName</td>
+                                                <td>ผู้ทดสอบ : @n.TesterName</td>
+                                                <td>ผู้ตรวจสอบ : @n.QAName</td>
+                                            <tr>
+                                                <td>
+                                                <td>
+                                                <td>@s. @n.SubName</td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>ผู้พัฒนา : @n.SubDevID</td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                            </tr>
+                                            </tr>
+                                            a = i;
+                                        }
+                                        c++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                        <table>
+                            <tbody>
+                                
                             </tbody>
                         </table>
                     </div>

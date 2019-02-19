@@ -58,8 +58,11 @@ namespace SystemManage.Models
         public int SubTaskID { get; set; }
         public int Handle { get; set; }
         public LevelTask level { get; set; }
-        public string Comment { get; set; }
         public int HaveDefect { get; set; }
+        public string Comment_Dev { get; set; }
+        public string Comment_Tester { get; set; }
+        public string Comment_QA { get; set; }
+        public string Comment_CM { get; set; }
 
         public List<ProjectMember> DevList { get; set; }
         public List<ProjectMember> TestList { get; set; }
@@ -75,5 +78,7 @@ namespace SystemManage.Models
             ปานกลาง,
             ง่าย,
         }
+        ///////////////////////////
+        public int Send { get; set; }
     }
 }

@@ -61,7 +61,7 @@ namespace SystemManage.Controllers
             List<ProjectModel> projectlist = new List<ProjectModel>();
             ProjectModel model = new ProjectModel();
             int userID = Convert.ToInt32(Session["userID"]);
-            var member = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
+            var member = db.ProjectMembers.Where(m => m.UserID == userID).OrderBy(m => m.ProjectID).ToList();
             int countList = 0;
             double Percent = 0;
             foreach (var m in member)
@@ -185,7 +185,6 @@ namespace SystemManage.Controllers
                 }
                 db.Tasks.Remove(item);
             }
-            db.Projects.Remove(d);
             var pm = db.ProjectMembers.Where(s => s.ProjectID == ProjectID).ToList();
             foreach (var c in pm)
             {
@@ -198,9 +197,9 @@ namespace SystemManage.Controllers
                 string mess = "โครงการ" + d.Name + "ได้ถูกลบ";
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
+                db.ProjectMembers.Remove(c);
             }
-            var pm2 = db.ProjectMembers.Where(s => s.ProjectID == ProjectID).FirstOrDefault();
-            db.ProjectMembers.Remove(pm2);
+            db.Projects.Remove(d);
             db.SaveChanges();
             return RedirectToAction("ShowProject");
         }
@@ -236,8 +235,8 @@ namespace SystemManage.Controllers
             double total = 100/ t.Count;
             foreach (var item in t)
             {
-                double TaskPercent = (item.TotalPercent / 100) * total;
-                dataPoints.Add(new Chart(item.TaskName, TaskPercent));
+                //double TaskPercent = (item.TotalPercent / 100) * total;
+                dataPoints.Add(new Chart(item.TaskName, item.TotalPercent /*TaskPercent*/));
                 TaskList.Add(new ProjectModel {
                     TaskName = item.TaskName,
                     TaskPercent = item.TotalPercent

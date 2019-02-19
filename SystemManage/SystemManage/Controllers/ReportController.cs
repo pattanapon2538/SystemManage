@@ -15,9 +15,12 @@ namespace SystemManage.Controllers
         // GET: Report
         public ActionResult Report()
         {
+            SubTaskModel model = new SubTaskModel();
             List<SubTaskModel> subTasksReport = new List<SubTaskModel>();
             List<SubTaskModel> Team = new List<SubTaskModel>();
-            int projectID = 2007;//Convert.ToInt32(Session["ProjectID"]);
+            int projectID = Convert.ToInt32(Session["ProjectID"]);
+            var project = db.Projects.Where(m => m.ProjectID == projectID).FirstOrDefault();
+            model.ProjectDetail = project.Description;
             var t = db.Tasks.Where(m => m.ProjectID == projectID).ToList();
             foreach (var c in t)
             {
@@ -90,7 +93,7 @@ namespace SystemManage.Controllers
             }
             ViewBag.DataList2 = Team;
             ViewBag.DataList = subTasksReport;
-            return View();
+            return View(model);
         }
     }
 }

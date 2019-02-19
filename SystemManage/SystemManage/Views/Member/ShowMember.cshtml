@@ -34,7 +34,6 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="table-info">
-                                    <th><center>อีเมล</center></th>
                                     <th><center>ชื่อ</center></th>
                                     <th><center>นามสกุล</center></th>
                                     <th><center>ตำแหน่ง</center></th>
@@ -55,11 +54,27 @@
                                     foreach (var item in (List<UserModel>)ViewBag.DataList)
                                     {
                                 <tr>
-                                    <td><center>@item.User_Email</center></td>
                                     <td><center>@item.User_Name</center></td>
                                     <td><center>@item.User_LastName</center></td>
                                     <td><center>@item.PositionName</center></td>
-                                    <td><center>@item.AVG</center></td>
+                                    @{
+                                        if (item.AVG >= 1 && item.AVG < 2.5)
+                                        {
+                                            <td><center>ง่าย</center></td>
+                                        }
+                                        else if (item.AVG >= 2.5 && item.AVG < 3.5)
+                                        {
+                                            <td><center>ปานกลาง</center></td>
+                                        }
+                                        else if (item.AVG > 3.5 && item.AVG <= 5)
+                                        {
+                                            <td><center>ยาก</center></td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                    }
                                     <td><center>@item.Amount_Succ.ToString("P1")</center></td>
                                     <td><center>@item.TotalCoding</center></td>
                                     <td><a href="@Url.Action("DetailUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>

@@ -32,5 +32,6 @@ namespace SystemManage.Models
         public string PM { get; set; }
         public string Dev { get; set; }
         public int Role { get; set; }
+        public string ProjectDetail { get; set; }
     }
 }

@@ -46,7 +46,7 @@
             var i = 1;
             $("#add").click(function () {
                 i++;
-                 var domElement = $('<div class="card" id="defect" ' + 'i' + '> <div class="card-body "> <div class="row"> <div class="col-sm-6"> <div class="form-group"> <label for="taskname">งาน :</label>  @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" }) </div> </div> <div class="col-sm-5"></div> <div class="col-sm-1"> <a href="#" id="cancel"><img src = "~icon/cancel.png" ></a> </div> </div> <div class="row"> <div class="col-sm-6"> <div class="form-group"> <label for="taskname">งานรอง :</label> @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control" }) </div> </div> </div> <div class="row"> <div class="col-sm-12"> <div class="form-group"> <label for="comment">รายละเอียดข้อผิดพลาด :</label> @Html.TextBoxFor(m => m.DetailList, new { @class = "form-control" ,@Type = "TextArea" }) </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="input-group"> <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label> @Html.TextBoxFor(m => m.DevName, new {  @class = "form-control" }) </div> </div> <div class="col-sm-4"> <div class="form-group"> <input type="file" class="form-control-file" id="exampleFormControlFile1"> </div> </div> <div class="col-sm-4"> <div class="input-group"> <label class="label" style="margin-right: 10px">กำหนดส่ง :</label> @Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control" ,@type = "date" }) </div> </div> </div> </div> </div>  ');
+                 var domElement = $('<div class="row"> <div class="col-sm-12"> <div class="form-group"> <label for="comment">รายละเอียดข้อผิดพลาด:</label> <textarea class="form-control" cols="20" id="DetailList" name="DetailList" rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 118px;"></textarea> </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="input-group"> <label class="label" style="margin-right: 10px">กำหนดส่ง :</label> <input class="form-control" id="SendDateList" name="SendDateList" type="date" value=""> </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="form-group"> <input type="file" class="form-control-file" id="exampleFormControlFile1"> </div> </div> </div>');
                 $(this).parent('div').before(domElement);
             });
         });
@@ -91,13 +91,19 @@
                                 @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+
+
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="taskname">ชื่องานรอง :</label>
                                 @Html.HiddenFor(m => m.Sub_ID)
                                 @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>
+                                @Html.TextBoxFor(m => m.DevName, new { readOnreadOnly = true, @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -110,12 +116,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-4">
-                            <div class="input-group">
-                                <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>
-                                @Html.TextBoxFor(m => m.DevName, new { readOnreadOnly = true, @class = "form-control" })
-                            </div>
-                        </div>
+                        
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>

@@ -22,6 +22,7 @@ namespace SystemManage.Database
     
         public int TaskID { get; set; }
         public string TaskName { get; set; }
+        public string DescriptionTask { get; set; }
         public double TotalPercent { get; set; }
         public int Task_level { get; set; }
         public string DescriptionTest { get; set; }
@@ -39,8 +40,6 @@ namespace SystemManage.Database
         public int ProjectID { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
-        public string DescriptionTask { get; set; }
-        public string Comment { get; set; }
     
         public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

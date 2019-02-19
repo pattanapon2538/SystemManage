@@ -156,24 +156,58 @@ namespace SystemManage.Controllers
             ViewBag.DataList = UserList;
             return View(model);
         }
-        public ActionResult HistoryUser(int userID)
-        {
+        public ActionResult HistoryUser(int userID= 2373)
+        { 
             UserModel model = new UserModel();
             List<UserModel> TaskList = new List<UserModel>();
             var u = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
-            int projectID = Convert.ToInt32(Session["ProjectID"]);
+            double SuccPercent = 0;
+            if (u.Amount_Succ != 0)
+            {
+                var totalProject = db.Projects.Where(m => m.CreateBy == u.User_ID).ToList();
+                var totalSubDev = db.SubTasks.Where(m => m.SubDevID == u.User_ID).ToList();
+                var totalSubTester = db.Tasks.Where(m => m.TestID == u.User_ID).ToList();
+                var totalSubQA = db.Tasks.Where(m => m.QAID == u.User_ID).ToList();
+                int totalWork = totalSubDev.Count + totalSubTester.Count + totalSubQA.Count + totalProject.Count;
+                SuccPercent = Convert.ToDouble(u.Amount_Succ) / totalWork;
+            }
+            int projectID = 2007;//Convert.ToInt32(Session["ProjectID"]);
             var PM = db.ProjectMembers.Where(m => m.UserID == userID && m.ProjectID == projectID).FirstOrDefault();
+            model.PositionList = db.Positions.ToList();
+            model.ContractsList = db.Type_of_Contract.ToList();
+            if (PM.Role == 1)
+            {
+                model.Roles = UserModel._Role.ผู้จัดการโครงการ;
+            }
+            else if (PM.Role == 2)
+            {
+                model.Roles = UserModel._Role.ผู้พัฒนาซอฟแวร์;
+            }
+            else if (PM.Role == 3)
+            {
+                model.Roles = UserModel._Role.ผู้ทดสอบ;
+            }
+            else if (PM.Role == 4)
+            {
+                model.Roles = UserModel._Role.ผู้ตรวจคุณภาพ;
+            }
+            else if (PM.Role == 5)
+            {
+                model.Roles = UserModel._Role.ลูกค้า;
+            }
+            model.Position_ID = u.Position_ID;
+            model.Contract_ID = u.Contract_ID;
             model.Users_ID = u.User_ID;
             model.User_Name = u.User_Name;
             model.User_LastName = u.User_LastName;
             model.User_Email = u.User_Email;
             model.Phone = u.Phone;
             model.Contract_ID = u.Contract_ID;
-            model.Position_ID = u.Position_ID;
             model.Date_of_Started = u.Date_of_Started;
             model.Date_of_Ended = u.Date_of_Ended;
-            model.Role = PM.Role;
             model.Comment = u.comment;
+            model.Percent_Succ = SuccPercent;
+            model.Percent_Non = 1 - SuccPercent;
             model.Amount_Succ = u.Amount_Succ;
             model.Amount_Non = u.Amount_Non;
             var Work = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
@@ -238,7 +272,7 @@ namespace SystemManage.Controllers
                 }
             }
             ViewBag.DataList = TaskList;
-            return View();
+            return View(model);
         }
     }
 }

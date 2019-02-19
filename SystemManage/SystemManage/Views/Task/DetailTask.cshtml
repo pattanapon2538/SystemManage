@@ -13,7 +13,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<title>Task</title>
+<title>งาน</title>
 @using (Html.BeginForm("EditTask", "Task", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -170,14 +170,107 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             @{
-                                <label for="comment">หมายเหตุ:</label>
-                                if (Model.Status == 4 || Model.Handle != Convert.ToInt32(Session["userID"]) || Model.Status == 5)
+                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                 {
-                                    @Html.TextAreaFor(m => m.Comment, new { @Class = "form-control", Readonly = "" })
+                                    <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                    <label for="comment">หมายเหตุผู้ทดสอบ:</label>
+                                    @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
+                                    <label for="comment">หมายเหตุผู้ตรวจสอบ:</label>
+                                    @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
+                                    <label for="comment">หมายเหตุลูกค้า:</label>
+                                    @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", Readonly = "" })
                                 }
-                                else if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                else if (Model.Status == 0)
                                 {
-                                    @Html.TextAreaFor(m => m.Comment, new { @Class = "form-control" })
+                                    if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                    }
+                                }
+                                else if (Model.Status == 1)
+                                {
+                                    if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control" })
+
+                                    }
+                                    else
+                                    {
+                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
+                                    }
+
+                                }
+                                else if (Model.Status == 2)
+                                {
+                                    if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุผู้ตรวจสอบ:</label>
+                                        @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control" })
+
+                                    }
+                                    else
+                                    {
+                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุผู้ตรวจสอบ:</label>
+                                        @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
+                                    }
+                                }
+                                else if (Model.Status == 3)
+                                {
+                                    if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุผู้ตรวจสอบ:</label>
+                                        @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุลูกค้า:</label>
+                                        @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", })
+
+                                    }
+                                    else
+                                    {
+                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                        @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุผู้ตรวจสอบ:</label>
+                                        @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
+                                        <label for="comment"> หมายเหตุลูกค้า:</label>
+                                        @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", Readonly = "" })
+                                    }
+                                }
+                                else
+                                {
+                                    <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                    <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                    @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
+                                    <label for="comment"> หมายเหตุผู้ตรวจสอบ:</label>
+                                    @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
+                                    <label for="comment"> หมายเหตุลูกค้า:</label>
+                                    @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", Readonly = "" })
                                 }
                             }
                         </div>
@@ -300,7 +393,7 @@
                     <div class="col-sm-2">
                         @if (Model.Status != 4)
                         {
-                            if (Model.CreateBy != Convert.ToInt32(Session["userID"]) || Model.SubDevID != Convert.ToInt32(Session["userID"]))
+                            if (Model.CreateBy != Convert.ToInt32(Session["userID"]) && Model.SubDevID != Convert.ToInt32(Session["userID"]))
                             {
                                 if (Model.Handle == Convert.ToInt32(Session["userID"]) || Model.Handle == 0)
                                 {
@@ -323,7 +416,16 @@
                         {
                             if (Model.Status != 4 && Model.HaveDefect != 1)
                             {
-                                <button type="submit" class="btn btn-outline-primary">บันทึก</button>
+                                if (Convert.ToInt32(Session["Save"]) == 0)
+                                {
+                                    <button type="submit" class="btn btn-outline-success">บันทึก</button>
+                                }
+                                else
+                                {   
+                                    <button type="submit" class="btn btn-outline-success">บันทึก</button>
+                                    <a href="@Url.Action("SendTask","Task",new {SubID = Model.SubTaskID })"><button type="button" class="btn btn-outline-success">ส่งงาน</button></a>
+                                }
+
                             }
                             else if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                             {

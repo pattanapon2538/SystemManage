@@ -37,6 +37,10 @@ namespace SystemManage.Database
         public int Handle { get; set; }
         public int HaveDefect { get; set; }
         public int RoundCoding { get; set; }
+        public string Comment_Dev { get; set; }
+        public string Comment_Tester { get; set; }
+        public string Comment_QA { get; set; }
+        public string Comment_CM { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Defect> Defects { get; set; }
