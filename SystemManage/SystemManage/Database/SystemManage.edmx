@@ -20,6 +20,7 @@
           <Property Name="UpdateDate" Type="date" />
           <Property Name="CreateBy" Type="int" Nullable="false" />
           <Property Name="UpdateBy" Type="int" />
+          <Property Name="Project_ID" Type="int" />
         </EntityType>
         <EntityType Name="Document">
           <Key>
@@ -319,6 +320,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Defect_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
+          <End Role="Defect" Type="Self.Defect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Defect">
+              <PropertyRef Name="Project_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_languaeID">
           <End Role="Language_of_Type" Type="Self.Language_of_Type" Multiplicity="1" />
           <End Role="Skills" Type="Self.Skills" Multiplicity="*" />
@@ -526,6 +539,10 @@
             <End Role="SubTask" EntitySet="SubTask" />
             <End Role="Defect" EntitySet="Defect" />
           </AssociationSet>
+          <AssociationSet Name="FK_Defect_Project" Association="Self.FK_Defect_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Defect" EntitySet="Defect" />
+          </AssociationSet>
           <AssociationSet Name="FK_languaeID" Association="Self.FK_languaeID">
             <End Role="Language_of_Type" EntitySet="Language_of_Type" />
             <End Role="Skills" EntitySet="Skills" />
@@ -678,6 +695,10 @@
             <End Role="SubTask" EntitySet="SubTasks" />
             <End Role="SubTaskSubmisstion" EntitySet="SubTaskSubmisstions" />
           </AssociationSet>
+          <AssociationSet Name="FK_Defect_Project" Association="SystemManageModel.FK_Defect_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Defect" EntitySet="Defects" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Defect">
           <Key>
@@ -696,6 +717,8 @@
           <Property Name="UpdateBy" Type="Int32" />
           <NavigationProperty Name="SubDefects" Relationship="SystemManageModel.FK_SubDefect" FromRole="Defect" ToRole="SubDefect" />
           <NavigationProperty Name="SubTask" Relationship="SystemManageModel.FK_Defect" FromRole="Defect" ToRole="SubTask" />
+          <Property Name="Project_ID" Type="Int32" />
+          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Defect_Project" FromRole="Defect" ToRole="Project" />
         </EntityType>
         <EntityType Name="Language_of_Type">
           <Key>
@@ -783,6 +806,7 @@
           <Property Name="SIT_Menu" Type="Int32" />
           <NavigationProperty Name="Documents" Relationship="SystemManageModel.FK_ProjectID" FromRole="Project" ToRole="Document" />
           <NavigationProperty Name="Tasks" Relationship="SystemManageModel.FK_Task" FromRole="Project" ToRole="Task" />
+          <NavigationProperty Name="Defects" Relationship="SystemManageModel.FK_Defect_Project" FromRole="Project" ToRole="Defect" />
         </EntityType>
         <EntityType Name="ProjectMember">
           <Key>
@@ -1207,6 +1231,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Defect_Project">
+          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="0..1" />
+          <End Type="SystemManageModel.Defect" Role="Defect" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Defect">
+              <PropertyRef Name="Project_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1216,6 +1252,7 @@
           <EntitySetMapping Name="Defects">
             <EntityTypeMapping TypeName="SystemManageModel.Defect">
               <MappingFragment StoreEntitySet="Defect">
+                <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />

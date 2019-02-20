@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7defb4f02a1646268b3c899f232c21b3" Name="Diagram1" ZoomLevel="56">
-        <EntityTypeShape EntityType="SystemManageModel.Defect" Width="1.5" PointX="11.625" PointY="8.375" />
+        <EntityTypeShape EntityType="SystemManageModel.Defect" Width="1.5" PointX="7.25" PointY="10.125" />
         <EntityTypeShape EntityType="SystemManageModel.Language_of_Type" Width="1.5" PointX="0.75" PointY="5.625" />
         <EntityTypeShape EntityType="SystemManageModel.LogMessage" Width="1.5" PointX="15.625" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.Mail" Width="1.5" PointX="5.375" PointY="8.375" />
@@ -40,6 +40,7 @@
         <AssociationConnector Association="SystemManageModel.FK_Sub" />
         <AssociationConnector Association="SystemManageModel.FK_SubTask" />
         <AssociationConnector Association="SystemManageModel.SubID" />
+        <AssociationConnector Association="SystemManageModel.FK_Defect_Project" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

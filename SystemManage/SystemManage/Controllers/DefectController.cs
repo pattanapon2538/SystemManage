@@ -28,6 +28,7 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddDefect(DefectModel model)
         {
+            int projectID = Convert.ToInt32(Session["ProjectID"]);
             Defect d = new Defect();
             SubTask st = new SubTask();
             int SubID = Convert.ToInt32(Session["SubID"]);
@@ -44,6 +45,7 @@ namespace SystemManage.Controllers
                     d.AttachShow = "0";
                     d.CreateDate = DateTime.Now;
                     d.CreateBy = Convert.ToInt32(Session["userID"]);
+                    d.Project_ID = projectID;
                     db.Defects.Add(d);
                     db.SaveChanges();
                     var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();
@@ -55,7 +57,7 @@ namespace SystemManage.Controllers
                     var Sendto = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
                     string sender = Email.User_Email.ToString();
                     //string sender = "systemmanage59346@gmail.com";
-                    string subject = "Defect หัวข้อ"+ st.SubName;
+                    string subject = "Defect หัวข้อ" + st.SubName;
                     string receiver = Sendto.User_Email.ToString();
                     //string receiver = "pattanapon2538@outlook.com";
                     string mess = "มีข้อผิดพลาดในหัวข้อ" + st.SubName;
@@ -72,6 +74,7 @@ namespace SystemManage.Controllers
                 d.AttachShow = "0";
                 d.CreateDate = DateTime.Now;
                 d.CreateBy = Convert.ToInt32(Session["userID"]);
+                d.Project_ID = projectID;
                 db.Defects.Add(d);
                 db.SaveChanges();
                 var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();
@@ -95,8 +98,9 @@ namespace SystemManage.Controllers
         {
             List<DefectModel> DefectList = new List<DefectModel>();
             DefectModel model = new DefectModel();
-            var item = db.Defects.OrderByDescending(s => s.Defect_ID).ToList();
-            foreach(var i in item)
+            int projectID = Convert.ToInt32(Session["ProjectID"]);
+            var item = db.Defects.Where(m => m.Project_ID == projectID).OrderByDescending(s => s.Defect_ID).ToList();
+            foreach (var i in item)
             {
                 model.CreateBy = i.CreateBy;
                 var item2 = db.SubTasks.Where(m => m.SubID == i.Sub_ID).FirstOrDefault();
@@ -111,7 +115,7 @@ namespace SystemManage.Controllers
                 {
                     if (c.Status == 2)
                     {
-                        number = number+1;
+                        number = number + 1;
                         if (number == d.Count)
                         {
                             var subtask = db.SubTasks.Where(m => m.SubID == c.Sub_ID).FirstOrDefault();
@@ -133,7 +137,7 @@ namespace SystemManage.Controllers
                             number = 0;
                         }
                     }
-                    
+
                 }
 
                 DefectList.Add(new DefectModel
@@ -230,8 +234,12 @@ namespace SystemManage.Controllers
             string mess = "ได้ลบหัวข้อ" + u.SubName;
             InboxController ms = new InboxController();
             ms.SendEmail(receiver, subject, mess, sender);
-            return RedirectToAction("ShowDefect","Defect");
+            return RedirectToAction("ShowDefect", "Defect");
         }
-        
+        public ActionResult Defect_Dev(int SubID)
+        {
+            DefectModel model = new DefectModel();
+            return View();
+        }
     }
 }

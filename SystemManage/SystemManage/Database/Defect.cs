@@ -31,9 +31,11 @@ namespace SystemManage.Database
         public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
+        public int Project_ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubDefect> SubDefects { get; set; }
         public virtual SubTask SubTask { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

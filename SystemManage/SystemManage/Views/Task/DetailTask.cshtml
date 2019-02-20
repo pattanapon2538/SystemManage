@@ -397,7 +397,14 @@
                             {
                                 if (Model.Handle == Convert.ToInt32(Session["userID"]) || Model.Handle == 0)
                                 {
-                                    <a href="@Url.Action("AddDefect","Defect")"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                                    <a href="@Url.Action("AddDefect", "Defect")"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                                }
+                            }
+                            else if (Model.Status == 5)
+                            {
+                                if (Model.SubDevID == Convert.ToInt32(Session["userId"]))
+                                {
+                                    <a href="@Url.Action("AddDefect", "Defect")"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
                                 }
                             }
                         }
