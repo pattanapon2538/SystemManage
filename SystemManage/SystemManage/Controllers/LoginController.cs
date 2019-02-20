@@ -13,6 +13,8 @@ namespace SystemManage.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            Session["userID"] = null;
+            Session["ProjectID"] = null;
             return View();
         }
         public ActionResult CheckLogin(string User_Email, string User_Password)
@@ -27,6 +29,7 @@ namespace SystemManage.Controllers
                         if (user != null)
                         {
                             Session["userID"] = user.User_ID;
+                            Session["userName"] = user.User_Name;
                             return RedirectToAction("ShowPosition", "Position");
                         }
                     }
@@ -35,6 +38,7 @@ namespace SystemManage.Controllers
                         if (user != null)
                         {
                             Session["userID"] = user.User_ID;
+                            Session["userName"] = user.User_Name;
                             return RedirectToAction("ShowProject", "Project");
                         }
 

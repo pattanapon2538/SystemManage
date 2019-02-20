@@ -383,9 +383,11 @@
     <Content Include="icon\event.png" />
     <Content Include="icon\file.png" />
     <Content Include="icon\group.png" />
+    <Content Include="icon\home.png" />
     <Content Include="icon\inbox.png" />
     <Content Include="icon\paper.png" />
     <Content Include="icon\plus.png" />
+    <Content Include="icon\profile_m.png" />
     <Content Include="icon\project.png" />
     <Content Include="icon\report.png" />
     <Content Include="icon\report.svg" />

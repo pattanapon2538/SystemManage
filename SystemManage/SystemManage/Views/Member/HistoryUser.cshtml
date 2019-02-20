@@ -27,25 +27,62 @@ chart.render();
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">อีเมล์ : </label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control", Readonly = "" })
-                            @Html.ValidationMessageFor(m => m.User_Email, string.Empty, new { @style = "color:red" })
+                            @{
+                                if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
+                                {
+                                    @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.User_Email, string.Empty, new { @style = "color:red" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control", Readonly = "" })
+                                }
+                            }
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">ชื่อ : </label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", Readonly = "" })
-                            @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
-                        </div>
+                            @{
+                                if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
+                                {
+                                    @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control"})
+                                    @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", Readonly = "" })
+                                }
+                             }
+                            </div>
                     </div>
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">นามสกุล : </label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control", Readonly = "" })
-                            @Html.ValidationMessageFor(m => m.User_LastName, string.Empty, new { @style = "color:red" })
+                            @{
+                                if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
+                                {
+                                    @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.User_LastName, string.Empty, new { @style = "color:red" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control", Readonly = "" })
+                                }
+                            }
+
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">เบอร์โทร : </label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", Readonly = "" })
-                            @Html.ValidationMessageFor(m => m.Phone, string.Empty, new { @style = "color:red" })
+                            @{
+                                if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
+                                {
+                                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control"})
+                                    @Html.ValidationMessageFor(m => m.Phone, string.Empty, new { @style = "color:red" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", Readonly = "" })
+                                }
+                            }
                         </div>
                     </div>
                     <div class="form-group row">
@@ -79,14 +116,21 @@ chart.render();
                             @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "กำหนดตำแหน่ง", new { @class = "form-control", disabled = "ture" })
                             @Html.ValidationMessageFor(m => m.Position_ID, string.Empty, new { @style = "color:red" })
                         </div>
-                        @{
+                         @{
                             if (Model.Check_Role != 1)
-                            {
-                                <label for="language" class="col-sm-2 col-form-label">บทบาทในโปรเจค : </label>
-                                <div class="col-sm-4">
-                                    @Html.DropDownListFor(m => m.Roles, new SelectList(Enum.GetValues(typeof(UserModel._Role))), "เลือก", new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.Role, string.Empty, new { @style = "color:red" })
-                                </div>
+                            { 
+                                if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
+                                {
+                                    <label for="language" class="col-sm-2 col-form-label">บทบาทในโปรเจค : </label>
+                                    <div class="col-sm-4">
+                                        @Html.DropDownListFor(m => m.Roles, new SelectList(Enum.GetValues(typeof(UserModel._Role))), "เลือก", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Role, string.Empty, new { @style = "color:red" })
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(m => m.Roles, new SelectList(Enum.GetValues(typeof(UserModel._Role))), "เลือก", new { @class = "form-control" , disabled = "ture" })
+                                }
                             }
                         }
                     </div>

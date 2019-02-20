@@ -43,17 +43,55 @@
             box-shadow: 0 0 11px rgba(33,33,33,.2);
         }
     </style>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            left: -100px
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                font-size: 12 px
+            }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="col-sm-4">
             <div class="row">
                 <div class="col-sm-2 box" style="text-align:center">
-                    <a class="navbar-brand" href="@Url.Action("ShowTask","Task")"><img src="~/icon/paper.png" width="42.66" height="42.66"></a>
+                    <a class="navbar-brand" href="@Url.Action("ShowProject", "Project")"><img src="~/icon/home.png" width="42.66" height="42.66" style="margin-top:5px;margin-left:5px"></a>
+                    <h6 style="margin-top:-3px;margin-left:-3px">โครงการ</h6>
+                </div>
+                <div class="col-sm-2 box" style="text-align:center">
+                    <a class="navbar-brand" href="@Url.Action("ShowTask", "Task")"><img src="~/icon/paper.png" width="42.66" height="42.66"></a>
                     <h6>งาน</h6>
                 </div>
                 <div class="col-sm-2 box" style="text-align:center">
-                    <a class="navbar-brand" href="@Url.Action("Inbox","Inbox")"><img src="~/icon/contact.png" width="42.66" height="42.66"></a>
+                    <a class="navbar-brand" href="@Url.Action("Inbox", "Inbox")"><img src="~/icon/contact.png" width="42.66" height="42.66"></a>
                     <h6>ข้อความ</h6>
                 </div>
                 <div class="col-sm-2 box" style="text-align:center">
@@ -61,21 +99,41 @@
                     <h6>เอกสาร</h6>
                 </div>
                 <div class="col-sm-2 box" style="text-align:center">
-                    <a class="navbar-brand" href="@Url.Action("ShowDefect","Defect")"><img src="~/icon/virus.png" width="42.66" height="42.66"></a>
+                    <a class="navbar-brand" href="@Url.Action("ShowDefect", "Defect")"><img src="~/icon/virus.png" width="42.66" height="42.66"></a>
                     <h6>ข้อผิดพลาด</h6>
                 </div>
                 <div class="col-sm-2 box" style="text-align:center">
-                    <a class="navbar-brand" href="@Url.Action("ShowSIT","SIT")"><img src="~/icon/sit.png" width="42.66" height="42.66"></a>
+                    <a class="navbar-brand" href="@Url.Action("ShowSIT", "SIT")"><img src="~/icon/sit.png" width="42.66" height="42.66"></a>
                     <h6>ทดสอบระบบ</h6>
                 </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row">
                 <div class="col-sm-2 box" style="text-align:center">
-                    <a class="navbar-brand" href="@Url.Action("ShowMember","Member")"><img src="~/icon/team.png" width="42.66" height="42.66"></a>
+                    <a class="navbar-brand" href="@Url.Action("ShowMember", "Member")"><img src="~/icon/team.png" width="42.66" height="42.66"></a>
                     <h6>ทีม</h6>
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="row">
+                <div class="col-sm-4 " style="text-align:center">
+                </div>
+                <div class="col-sm-4 " style="text-align:center">
+                </div>
+                <div class="col-sm-1" style="text-align:center">
+                </div>
+                <div class="col-sm-3" style="text-align:center;padding:0">
+                    <div class="dropdown">
+                        <img src="~/icon/profile_m.png" class="dropbtn" width="42.66" height="42.66" style="margin-left:12px;cursor:pointer" onclick="myFunction()"></a>
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="@Url.Action("HistoryUser","Member",new {userID = Convert.ToInt32(Session["userID"]) })">รายละเอียดผู้ใช้</a>
+                            <a href="@Url.Action("Index","Login")">ออกจากระบบ</a>
+                        </div>
+                        <h6>สวัสดี @Session["userName"]</h6>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -109,3 +167,21 @@
     <script src="~/Scripts/jquery-3.3.1.js"></script>
 </body>
 </html>
+
+<script>
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
