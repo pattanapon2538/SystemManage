@@ -404,7 +404,7 @@
                             {
                                 if (Model.SubDevID == Convert.ToInt32(Session["userId"]))
                                 {
-                                    <a href="@Url.Action("AddDefect", "Defect")"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                                    <a href="@Url.Action("Defect_Dev", "Defect",new { SubID = Model.SubTaskID})"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
                                 }
                             }
                         }

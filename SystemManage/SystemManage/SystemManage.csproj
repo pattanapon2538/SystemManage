@@ -3443,6 +3443,7 @@
     <Content Include="Views\Member\HistoryUser.cshtml" />
     <Content Include="Views\Shared\_History.cshtml" />
     <Content Include="Views\SIT\ShowSIT.cshtml" />
+    <Content Include="Views\Defect\Defect_Dev.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

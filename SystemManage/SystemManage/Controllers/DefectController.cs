@@ -239,7 +239,56 @@ namespace SystemManage.Controllers
         public ActionResult Defect_Dev(int SubID)
         {
             DefectModel model = new DefectModel();
-            return View();
+            List<DefectModel> DefectList = new List<DefectModel>();
+            var Defect = db.Defects.Where(m => m.Sub_ID == SubID).OrderBy(m => m.Defect_ID).ToList();
+            foreach (var item in Defect)
+            {
+                var Dev = db.SubTasks.Where(m => m.SubID == item.Sub_ID).FirstOrDefault();
+                var Task = db.Tasks.Where(m => m.TaskID == Dev.TaskID).FirstOrDefault();
+                var User = db.Users.Where(m => m.User_ID == Dev.SubDevID).FirstOrDefault();
+                model.DevID = Dev.SubDevID;
+                model.TaskName = Task.TaskName;
+                model.SubTaskName = Dev.SubName;
+                model.DevName = User.User_Name;
+                if (item.Status == 0)
+                {
+                    DefectList.Add(new DefectModel
+                    {
+                        Defect_ID = item.Defect_ID,
+                        Detail = item.Detail,
+                        Status = item.Status,
+                    });
+                }
+                else if (item.Status == 1)
+                {
+                    DefectList.Add(new DefectModel
+                    {
+                        Defect_ID = item.Defect_ID,
+                        Detail = item.Detail,
+                        Status = item.Status,
+                    });
+                }
+                else if (item.Status == 2)
+                {
+                    DefectList.Add(new DefectModel
+                    {
+                        Defect_ID = item.Defect_ID,
+                        Detail = item.Detail,
+                        Status = item.Status,
+                    });
+                }
+                else if (item.Status == 3)
+                {
+                    DefectList.Add(new DefectModel
+                    {
+                        Defect_ID = item.Defect_ID,
+                        Detail = item.Detail,
+                        Status = item.Status,
+                    });
+                }
+            }
+            ViewBag.DataList = DefectList; ;
+            return View(model);
         }
     }
 }
