@@ -170,7 +170,7 @@
                                 foreach (var item in (List<UserModel>)ViewBag.DataList)
                                 {
                                     <tr>
-                                        <td><center><i class="glyphicon fa fa-star"></i></center></td>
+                                        <td><center><span style="cursor:pointer" onclick="Follow('@item.Users_ID')"><img src="~/icon/star.png" width="20" height="20"></span></center></td>
                                         <td><center>@item.User_Name</center></td>
                                         <td><center>@item.User_LastName</center></td>
                                         <td><center>@item.PositionName</center></td>
@@ -214,3 +214,19 @@
 <script src="~/assets/js/metisMenu.min.js"></script>
 <script src="~/assets/js/jquery.slimscroll.min.js"></script>
 <script src="~/assets/js/jquery.slicknav.min.js"></script>
+
+<script>
+    function Follow(userID) {
+
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action("Follows", "Member"))",
+            data: { userID: userID },
+            dataType: "json",
+            success: function (data)
+            {
+                $("#userID").val(data.userID);
+            }
+        });
+    }
+</script>

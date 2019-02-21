@@ -43,5 +43,6 @@ namespace SystemManage.Database
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<SubTask> SubTasks { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<Follow> Follows { get; set; }
     }
 }

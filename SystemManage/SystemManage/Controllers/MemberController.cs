@@ -14,12 +14,21 @@ namespace SystemManage.Controllers
         // GET: Member
         public ActionResult ListMember()
         {
-
+            var userID = Convert.ToInt32(Session["userID"]);
             var projectID = Convert.ToInt32(Session["ProjectID"]);
             List<UserModel> UserList = new List<UserModel>();
+            List<FollowModel> F_List = new List<FollowModel>();
             var user = db.Users.OrderByDescending(m => m.User_ID).ToList();
-                foreach (var d in user)
-                {
+            var f = db.Follows.Where(m => m.PM_ID == userID).ToList();
+            foreach (var u in f)
+            {
+                F_List.Add(new FollowModel {
+                    PM_ID = u.PM_ID,
+                    user_ID = u.user_ID
+                });
+            }
+            foreach (var d in user)
+            {
                 double SuccPercent = 0;
                 if (d.Amount_Succ != 0)
                 {
@@ -41,9 +50,10 @@ namespace SystemManage.Controllers
                          TotalCoding = d.TotalCoding,
                          Amount_Succ = SuccPercent,
                          AVG = d.AVG //ความยากของงาน
-                     });
-                         ViewBag.DataList = UserList;
-                }
+                     });    
+            }
+                ViewBag.DataList = UserList;
+                ViewBag.DataList2 = F_List;
                 TempData["Not_role"] = 1;
                 return View();
         }
@@ -281,6 +291,27 @@ namespace SystemManage.Controllers
             }
             ViewBag.DataList = TaskList;
             return View(model);
+        }
+        public ActionResult Follows(string userID)
+        {
+            int PM = Convert.ToInt32(Session["userID"]);
+            int User = Convert.ToInt32(userID);
+            var CF = db.Follows.Where(m => m.user_ID == User && m.PM_ID == PM).FirstOrDefault();
+            if (CF != null)
+            {
+                db.Follows.Remove(CF);
+                db.SaveChanges();
+            }
+            else
+            {
+                Follow f = new Follow();
+                f.user_ID = Convert.ToInt32(userID);
+                f.PM_ID = Convert.ToInt32(Session["userID"]);
+
+                db.Follows.Add(f);
+                db.SaveChanges();
+            }
+            return Json(JsonRequestBehavior.AllowGet);
         }
     }
 }

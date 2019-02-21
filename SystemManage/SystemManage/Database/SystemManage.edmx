@@ -37,6 +37,14 @@
           <Property Name="UpdateBy" Type="int" />
           <Property Name="Project_ID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Follow">
+          <Key>
+            <PropertyRef Name="Follow_ID" />
+          </Key>
+          <Property Name="user_ID" Type="int" Nullable="false" />
+          <Property Name="PM_ID" Type="int" Nullable="false" />
+          <Property Name="Follow_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="Language_of_Type">
           <Key>
             <PropertyRef Name="languageID" />
@@ -368,6 +376,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PM">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="PM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Position">
           <End Role="Position" Type="Self.Position" Multiplicity="1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -488,6 +508,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_F">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="user_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserID">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="ProjectMember" Type="Self.ProjectMember" Multiplicity="*" />
@@ -515,6 +547,7 @@
         <EntityContainer Name="SystemManageModelStoreContainer">
           <EntitySet Name="Defect" EntityType="Self.Defect" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Follow" EntityType="Self.Follow" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Language_of_Type" EntityType="Self.Language_of_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogMessage" EntityType="Self.LogMessage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mail" EntityType="Self.Mail" Schema="dbo" store:Type="Tables" />
@@ -555,6 +588,10 @@
             <End Role="Mail" EntitySet="Mail" />
             <End Role="Message" EntitySet="Message" />
           </AssociationSet>
+          <AssociationSet Name="FK_PM" Association="Self.FK_PM">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
           <AssociationSet Name="FK_Position" Association="Self.FK_Position">
             <End Role="Position" EntitySet="Position" />
             <End Role="Users" EntitySet="Users" />
@@ -594,6 +631,10 @@
           <AssociationSet Name="FK_User" Association="Self.FK_User">
             <End Role="Users" EntitySet="Users" />
             <End Role="Skills" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_F" Association="Self.FK_User_F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Follow" EntitySet="Follow" />
           </AssociationSet>
           <AssociationSet Name="FK_UserID" Association="Self.FK_UserID">
             <End Role="Users" EntitySet="Users" />
@@ -698,6 +739,15 @@
           <AssociationSet Name="FK_Defect_Project" Association="SystemManageModel.FK_Defect_Project">
             <End Role="Project" EntitySet="Projects" />
             <End Role="Defect" EntitySet="Defects" />
+          </AssociationSet>
+          <EntitySet Name="Follows" EntityType="SystemManageModel.Follow" />
+          <AssociationSet Name="FK_PM" Association="SystemManageModel.FK_PM">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Follow" EntitySet="Follows" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_F" Association="SystemManageModel.FK_User_F">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Follow" EntitySet="Follows" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Defect">
@@ -944,6 +994,8 @@
           <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_UserID" FromRole="User" ToRole="ProjectMember" />
           <NavigationProperty Name="Type_of_Contract" Relationship="SystemManageModel.FK_Contact" FromRole="User" ToRole="Type_of_Contract" />
           <NavigationProperty Name="Skills" Relationship="SystemManageModel.FK_User" FromRole="User" ToRole="Skill" />
+          <NavigationProperty Name="Follows" Relationship="SystemManageModel.FK_PM" FromRole="User" ToRole="Follow" />
+          <NavigationProperty Name="Follows1" Relationship="SystemManageModel.FK_User_F" FromRole="User" ToRole="Follow" />
         </EntityType>
         <Association Name="FK_SubDefect">
           <End Type="SystemManageModel.Defect" Role="Defect" Multiplicity="1" />
@@ -1240,6 +1292,40 @@
             </Principal>
             <Dependent Role="Defect">
               <PropertyRef Name="Project_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Follow">
+          <Key>
+            <PropertyRef Name="Follow_ID" />
+          </Key>
+          <Property Name="user_ID" Type="Int32" Nullable="false" />
+          <Property Name="PM_ID" Type="Int32" Nullable="false" />
+          <Property Name="Follow_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="SystemManageModel.FK_PM" FromRole="Follow" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="SystemManageModel.FK_User_F" FromRole="Follow" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_PM">
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
+          <End Type="SystemManageModel.Follow" Role="Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="PM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_F">
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
+          <End Type="SystemManageModel.Follow" Role="Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="user_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1555,6 +1641,15 @@
                 <ScalarProperty Name="DescriptionTask" ColumnName="DescriptionTask" />
                 <ScalarProperty Name="TaskName" ColumnName="TaskName" />
                 <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Follows">
+            <EntityTypeMapping TypeName="SystemManageModel.Follow">
+              <MappingFragment StoreEntitySet="Follow">
+                <ScalarProperty Name="Follow_ID" ColumnName="Follow_ID" />
+                <ScalarProperty Name="PM_ID" ColumnName="PM_ID" />
+                <ScalarProperty Name="user_ID" ColumnName="user_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
