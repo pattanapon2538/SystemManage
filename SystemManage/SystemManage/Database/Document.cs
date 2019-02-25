@@ -14,7 +14,7 @@ namespace SystemManage.Database
     
     public partial class Document
     {
-        public string DocumentID { get; set; }
+        public int DocumentID { get; set; }
         public string DocumentName { get; set; }
         public string DocumentDetail { get; set; }
         public string AttachShow { get; set; }

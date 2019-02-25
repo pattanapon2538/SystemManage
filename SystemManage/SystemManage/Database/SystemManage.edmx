@@ -26,11 +26,11 @@
           <Key>
             <PropertyRef Name="DocumentID" />
           </Key>
-          <Property Name="DocumentID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DocumentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DocumentName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="DocumentDetail" Type="nvarchar" MaxLength="255" />
-          <Property Name="AttachShow" Type="nvarchar" MaxLength="200" />
-          <Property Name="AttachFile" Type="nvarchar" MaxLength="200" />
+          <Property Name="DocumentDetail" Type="nvarchar(max)" />
+          <Property Name="AttachShow" Type="nvarchar(max)" />
+          <Property Name="AttachFile" Type="nvarchar(max)" />
           <Property Name="CreateDate" Type="date" Nullable="false" />
           <Property Name="UpdateDate" Type="date" />
           <Property Name="CreateBy" Type="int" Nullable="false" />
@@ -41,9 +41,9 @@
           <Key>
             <PropertyRef Name="Follow_ID" />
           </Key>
-          <Property Name="user_ID" Type="int" Nullable="false" />
-          <Property Name="PM_ID" Type="int" Nullable="false" />
           <Property Name="Follow_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PM_ID" Type="int" Nullable="false" />
+          <Property Name="user_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Language_of_Type">
           <Key>
@@ -709,11 +709,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Skill" EntitySet="Skills" />
           </AssociationSet>
-          <EntitySet Name="Documents" EntityType="SystemManageModel.Document" />
-          <AssociationSet Name="FK_ProjectID" Association="SystemManageModel.FK_ProjectID">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="Document" EntitySet="Documents" />
-          </AssociationSet>
           <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
           <EntitySet Name="Tasks" EntityType="SystemManageModel.Task" />
           <AssociationSet Name="FK_Defect" Association="SystemManageModel.FK_Defect">
@@ -748,6 +743,11 @@
           <AssociationSet Name="FK_User_F" Association="SystemManageModel.FK_User_F">
             <End Role="User" EntitySet="Users" />
             <End Role="Follow" EntitySet="Follows" />
+          </AssociationSet>
+          <EntitySet Name="Documents" EntityType="SystemManageModel.Document" />
+          <AssociationSet Name="FK_ProjectID" Association="SystemManageModel.FK_ProjectID">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Document" EntitySet="Documents" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Defect">
@@ -854,9 +854,9 @@
           <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_Project" FromRole="Project" ToRole="ProjectMember" />
           <NavigationProperty Name="SITs" Relationship="SystemManageModel.FK_SIT" FromRole="Project" ToRole="SIT" />
           <Property Name="SIT_Menu" Type="Int32" />
-          <NavigationProperty Name="Documents" Relationship="SystemManageModel.FK_ProjectID" FromRole="Project" ToRole="Document" />
           <NavigationProperty Name="Tasks" Relationship="SystemManageModel.FK_Task" FromRole="Project" ToRole="Task" />
           <NavigationProperty Name="Defects" Relationship="SystemManageModel.FK_Defect_Project" FromRole="Project" ToRole="Defect" />
+          <NavigationProperty Name="Documents" Relationship="SystemManageModel.FK_ProjectID" FromRole="Project" ToRole="Document" />
         </EntityType>
         <EntityType Name="ProjectMember">
           <Key>
@@ -1140,34 +1140,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Document">
-          <Key>
-            <PropertyRef Name="DocumentID" />
-          </Key>
-          <Property Name="DocumentID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DocumentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="DocumentDetail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="AttachShow" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
-          <Property Name="CreateBy" Type="Int32" Nullable="false" />
-          <Property Name="UpdateBy" Type="Int32" />
-          <Property Name="Project_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_ProjectID" FromRole="Document" ToRole="Project" />
-        </EntityType>
-        <Association Name="FK_ProjectID">
-          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
-          <End Type="SystemManageModel.Document" Role="Document" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectID" />
-            </Principal>
-            <Dependent Role="Document">
-              <PropertyRef Name="Project_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="SubTask">
           <Key>
             <PropertyRef Name="SubID" />
@@ -1326,6 +1298,34 @@
             </Principal>
             <Dependent Role="Follow">
               <PropertyRef Name="user_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="DocumentID" />
+          </Key>
+          <Property Name="DocumentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocumentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentDetail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="Project_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_ProjectID" FromRole="Document" ToRole="Project" />
+        </EntityType>
+        <Association Name="FK_ProjectID">
+          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="SystemManageModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Project_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1577,22 +1577,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Documents">
-            <EntityTypeMapping TypeName="SystemManageModel.Document">
-              <MappingFragment StoreEntitySet="Document">
-                <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
-                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
-                <ScalarProperty Name="AttachShow" ColumnName="AttachShow" />
-                <ScalarProperty Name="DocumentDetail" ColumnName="DocumentDetail" />
-                <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
-                <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SubTasks">
             <EntityTypeMapping TypeName="SystemManageModel.SubTask">
               <MappingFragment StoreEntitySet="SubTask">
@@ -1650,6 +1634,22 @@
                 <ScalarProperty Name="Follow_ID" ColumnName="Follow_ID" />
                 <ScalarProperty Name="PM_ID" ColumnName="PM_ID" />
                 <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="SystemManageModel.Document">
+              <MappingFragment StoreEntitySet="Document">
+                <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
+                <ScalarProperty Name="AttachShow" ColumnName="AttachShow" />
+                <ScalarProperty Name="DocumentDetail" ColumnName="DocumentDetail" />
+                <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
+                <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

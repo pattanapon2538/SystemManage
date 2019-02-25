@@ -54,13 +54,6 @@
         <div class="col-sm-1"></div>
         <div class="col-sm-9"></div>
         <div class="col-sm-2">
-            @*@{
-                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
-                    {
-                        <a href="@Url.Action("AddSIT", "SIT")"><button type="button" class="btn btn-success btn-block">ทดสอบ</button></a>
-                    }
-                }*@
-
             <a href="@Url.Action("Index", "UploadFile")"><button type="button" class="btn btn-success btn-block">+ เพิ่มเอกสาร </button></a>
 </div>
     </div>
@@ -78,7 +71,12 @@
                             <th><center></center></th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+
+
+
+
+                    </tbody>
                 </table>
             </div>
         </div>

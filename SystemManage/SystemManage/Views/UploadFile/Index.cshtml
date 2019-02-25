@@ -1,4 +1,4 @@
-﻿@model SystemManage.Models.InboxModel
+﻿@model SystemManage.Models.DocumentModel
 <style>
     input, select, textarea {
         max-width: 2800px;
@@ -16,35 +16,29 @@
     <title>AddInbox</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("AddInbox", "Inbox", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }, new { enctype = "multipart/form-data" }))
+    @using (Ajax.BeginForm("AddDocument", "UploadFileController", new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), OnSuccess="data" }, new { enctype = "multipart/form-data" }))
     {
         <div class="container">
             <div class="card" style="margin-top: 20px">
                 <div class="card-body" style="margin: auto">
                     <div class="row">
                         <div class="col-sm-12">
-                            <label class="label">เรื่อง :</label>
-                            @Html.TextBoxFor(m => m.MailName, new { @class = "form-control" })
+                            <label class="label">ชื่อเอกสาร :</label>
+                            @Html.TextBoxFor(m => m.DocumentName, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">รายละเอียด:</label>
-                                @Html.TextAreaFor(m => m.MailDetail, new { @class = "form-control" })
+                                @Html.TextAreaFor(m => m.DocumentDetail, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-8">
-                            <div class="input-group">
-                                <label class="label" style="margin-right: 10px">ถึง :</label>
-                                @Html.TextBoxFor(m => m.SendTo, new { @class = "form-control" })
-                            </div>
-                        </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <input type="file" class="form-control-file" name="file">
+                                @Html.TextBoxFor(m => m.AttachFile, new {type ="file" ,@class = "form-control-file" })
                                 @*@Html.TextBoxFor(m => m.AttachFile1,new {@class = "form-control-file" ,@type ="file"})*@
                             </div>
                         </div>
@@ -66,3 +60,7 @@
 </body>
 </html>
 @*@using (Html.BeginForm("Process", "UploadFile", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+<script>
+    function post(data)
+    function post2(data2)
+</script>

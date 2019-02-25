@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7defb4f02a1646268b3c899f232c21b3" Name="Diagram1" ZoomLevel="56">
-        <EntityTypeShape EntityType="SystemManageModel.Defect" Width="1.5" PointX="7.25" PointY="10.125" />
+        <EntityTypeShape EntityType="SystemManageModel.Defect" Width="1.5" PointX="7.375" PointY="7.375" />
         <EntityTypeShape EntityType="SystemManageModel.Language_of_Type" Width="1.5" PointX="0.625" PointY="7.75" />
         <EntityTypeShape EntityType="SystemManageModel.LogMessage" Width="1.5" PointX="15.625" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.Mail" Width="1.5" PointX="5.375" PointY="8.375" />
@@ -31,8 +31,6 @@
         <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="5.25" PointY="5.375" />
         <AssociationConnector Association="SystemManageModel.FK_languaeID" />
         <AssociationConnector Association="SystemManageModel.FK_User" />
-        <EntityTypeShape EntityType="SystemManageModel.Document" Width="1.5" PointX="7.25" PointY="6.75" />
-        <AssociationConnector Association="SystemManageModel.FK_ProjectID" />
         <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="11.5" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.Task" Width="1.5" PointX="9.375" PointY="2.375" />
         <AssociationConnector Association="SystemManageModel.FK_Defect" />
@@ -44,6 +42,8 @@
         <EntityTypeShape EntityType="SystemManageModel.Follow" Width="1.5" PointX="0.5" PointY="2.375" />
         <AssociationConnector Association="SystemManageModel.FK_PM" />
         <AssociationConnector Association="SystemManageModel.FK_User_F" />
+        <EntityTypeShape EntityType="SystemManageModel.Document" Width="1.5" PointX="11.75" PointY="8.875" />
+        <AssociationConnector Association="SystemManageModel.FK_ProjectID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
