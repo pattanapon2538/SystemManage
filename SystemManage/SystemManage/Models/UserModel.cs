@@ -96,7 +96,7 @@ namespace SystemManage.Models
             ผู้ตรวจคุณภาพ,
             ลูกค้า
         }
-
+        public int Follow_C { get; set; }
     }
    
 }

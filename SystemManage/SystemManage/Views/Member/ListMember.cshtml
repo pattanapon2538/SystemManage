@@ -1,4 +1,5 @@
 ﻿@using SystemManage.Models;
+@model SystemManage.Models.UserModel
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 
 @{
@@ -27,6 +28,13 @@
     <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="~/assets/css/slicknav.min.css">
     <title>เพิ่มสมาชิกในโครงการ</title>
+    <style>
+        .star:hover {
+            content: url('/icon/star_yellow.png');
+            height: 20px;
+            width: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="card" style="border: none">
@@ -166,38 +174,130 @@
                         </thead>
                         <tbody>
                             @{
-
                                 foreach (var item in (List<UserModel>)ViewBag.DataList)
                                 {
-                                    <tr>
-                                        <td><center><span style="cursor:pointer" onclick="Follow('@item.Users_ID')"><img src="~/icon/star.png" width="20" height="20"></span></center></td>
-                                        <td><center>@item.User_Name</center></td>
-                                        <td><center>@item.User_LastName</center></td>
-                                        <td><center>@item.PositionName</center></td>
-                                        @{
-                                            if (item.AVG >= 1 && item.AVG < 2.5)
-                                            {
-                                                <td><center>ง่าย</center></td>
+                                    foreach (var item2 in (List<FollowModel>)ViewBag.DataList2)
+                                    {
+                                        <tr>
+                                            @{
+                                                if (item.Users_ID == item2.user_ID)
+                                                {
+                                                    <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star_yellow.png" width="20" height="20"></a></center></td>
+                                                    <td><center>@item.User_Name</center></td>
+                                                    <td><center>@item.User_LastName</center></td>
+                                                    <td><center>@item.PositionName</center></td>
+
+                                                    if (item.AVG >= 1 && item.AVG < 2.5)
+                                                    {
+                                                        <td><center>ง่าย</center></td>
+                                                    }
+                                                    else if (item.AVG >= 2.5 && item.AVG < 3.5)
+                                                    {
+                                                        <td><center>ปานกลาง</center></td>
+                                                    }
+                                                    else if (item.AVG > 3.5 && item.AVG <= 5)
+                                                    {
+                                                        <td><center>ยาก</center></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+
+                                                    <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                                    <td><center>@item.TotalCoding</center></td>
+                                                    <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                                    <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
+                                                }
                                             }
-                                            else if (item.AVG >= 2.5 && item.AVG < 3.5)
-                                            {
-                                                <td><center>ปานกลาง</center></td>
-                                            }
-                                            else if (item.AVG > 3.5 && item.AVG <= 5)
-                                            {
-                                                <td><center>ยาก</center></td>
-                                            }
-                                            else
-                                            {
-                                                <td></td>
-                                            }
-                                        }
-                                        <td><center>@item.Amount_Succ.ToString("P1")</center></td>
-                                        <td><center>@item.TotalCoding</center></td>
-                                        <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                        <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
-                                    </tr>
+
+                                        </tr>
+                                    }
                                 };
+                            }
+                            @{
+                                if (Model.Follow_C == 0)
+                                {
+                                    foreach (var item in (List<UserModel>)ViewBag.DataList)
+                                    {
+                                        <tr>
+                                            @{
+                                                <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
+                                                <td><center>@item.User_Name</center></td>
+                                                <td><center>@item.User_LastName</center></td>
+                                                <td><center>@item.PositionName</center></td>
+
+                                                if (item.AVG >= 1 && item.AVG < 2.5)
+                                                {
+                                                    <td><center>ง่าย</center></td>
+                                                }
+                                                else if (item.AVG >= 2.5 && item.AVG < 3.5)
+                                                {
+                                                    <td><center>ปานกลาง</center></td>
+                                                }
+                                                else if (item.AVG > 3.5 && item.AVG <= 5)
+                                                {
+                                                    <td><center>ยาก</center></td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+
+                                                <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                                <td><center>@item.TotalCoding</center></td>
+                                                <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                                <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
+
+                                            }
+                                        </tr>
+
+                                    };
+                                }
+                                else
+                                {
+                                    foreach (var item in (List<UserModel>)ViewBag.DataList)
+                                    {
+                                        foreach (var item2 in (List<FollowModel>)ViewBag.DataList2)
+                                        {
+                                            <tr>
+                                                @{
+                                                    if (item.Users_ID != item2.user_ID)
+                                                    {
+                                                        <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
+                                                        <td><center>@item.User_Name</center></td>
+                                                        <td><center>@item.User_LastName</center></td>
+                                                        <td><center>@item.PositionName</center></td>
+
+                                                        if (item.AVG >= 1 && item.AVG < 2.5)
+                                                        {
+                                                            <td><center>ง่าย</center></td>
+                                                        }
+                                                        else if (item.AVG >= 2.5 && item.AVG < 3.5)
+                                                        {
+                                                            <td><center>ปานกลาง</center></td>
+                                                        }
+                                                        else if (item.AVG > 3.5 && item.AVG <= 5)
+                                                        {
+                                                            <td><center>ยาก</center></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td></td>
+                                                        }
+
+                                                        <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                                        <td><center>@item.TotalCoding</center></td>
+                                                        <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                                        <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
+                                                    }
+                                                }
+
+                                            </tr>
+                                        }
+                                    };
+                                }
+
                             }
                         </tbody>
                     </table>
@@ -216,7 +316,18 @@
 <script src="~/assets/js/jquery.slicknav.min.js"></script>
 
 <script>
-    function Follow(userID) {
+    //var click = '/icon/star.png';
+    //var clicked = '/icon/star_yellow.png';
+
+    //$('.star').click(function () {
+    //    if ($(this).attr('src') === click) {
+    //        $(this).attr('src', clicked);
+    //    } else {
+    //        $(this).attr('src', click)
+    //    }
+    //})
+
+    @*function Follow(userID) {
 
         $.ajax({
             type: "POST",
@@ -229,4 +340,5 @@
             }
         });
     }
-</script>
+
+</script>*@

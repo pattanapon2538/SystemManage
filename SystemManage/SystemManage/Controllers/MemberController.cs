@@ -18,8 +18,10 @@ namespace SystemManage.Controllers
             var projectID = Convert.ToInt32(Session["ProjectID"]);
             List<UserModel> UserList = new List<UserModel>();
             List<FollowModel> F_List = new List<FollowModel>();
-            var user = db.Users.OrderByDescending(m => m.User_ID).ToList();
-            var f = db.Follows.Where(m => m.PM_ID == userID).ToList();
+            var user = db.Users.OrderBy(m => m.User_ID).ToList();
+            UserModel model = new UserModel();
+            var f = db.Follows.Where(m => m.PM_ID == userID).OrderBy(m => m.Follow_ID).ToList();
+            model.Follow_C = f.Count();
             foreach (var u in f)
             {
                 F_List.Add(new FollowModel {
@@ -55,7 +57,7 @@ namespace SystemManage.Controllers
                 ViewBag.DataList = UserList;
                 ViewBag.DataList2 = F_List;
                 TempData["Not_role"] = 1;
-                return View();
+                return View(model);
         }
         public ActionResult AddMember(int UserID)
         {
@@ -311,7 +313,8 @@ namespace SystemManage.Controllers
                 db.Follows.Add(f);
                 db.SaveChanges();
             }
-            return Json(JsonRequestBehavior.AllowGet);
+            return RedirectToAction("ListMember","Member");
+            //return Json(JsonRequestBehavior.AllowGet);
         }
     }
 }
