@@ -1,0 +1,113 @@
+﻿<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+@{
+    if (Session["userID"] == null && Session["ProjectID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+@{
+    ViewBag.Title = "เอกสาร";
+    Layout = "~/Views/Shared/_MainMenu.cshtml";
+}
+@using SystemManage.Models;
+@model SystemManage.Models.DocumentModel
+<div id="flip"><center><i class="fas fa-arrow-down"></i></center></div>
+<div class="card">
+    <div class="card-body" style="margin: auto" id="panel">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h1 class="text-center" style="margin-bottom: 20pt">เอกสาร</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">ชื่อเอกสาร</span>
+                    </div>
+                    <input type="text" id="tk" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="input-group">
+                    <label class="label" for="subject" style="margin-right: 10px">ประเภทเอกสาร:</label>
+                    <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                        <select name="subject">
+                            <option>0</option>
+                        </select>
+                        <div class="select-dropdown"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div style="margin: auto;margin-top: 20px">
+                <button type="button" class="btn btn-primary">Search</button>
+                <button type="button" class="btn btn-basic">Clear</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="card-body">
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-9"></div>
+        <div class="col-sm-2">
+            @*@{
+                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                    {
+                        <a href="@Url.Action("AddSIT", "SIT")"><button type="button" class="btn btn-success btn-block">ทดสอบ</button></a>
+                    }
+                }*@
+
+            <a href="@Url.Action("Index", "UploadFile")"><button type="button" class="btn btn-success btn-block">+ เพิ่มเอกสาร </button></a>
+</div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 " style="overflow-x:auto">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="table-info">
+                            <th><center>ลำดับ</center></th>
+                            <th><center>ชื่อเอกสาร</center></th>
+                            <th><center>ประเภทของเอกสาร</center></th>
+                            <th><center></center></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@{
+        Layout = null;
+    }
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+    </head>
+    <body>
+        @using (Html.BeginForm("Process", "UploadFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @ViewBag.Error
+            <table cellpadding="2" cellspacing="2">
+                <tr>
+                    <td>Photo</td>
+                    <td><input type="file" name="photo" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="submit" value="Upload" /></td>
+                </tr>
+            </table>
+        }
+    </body>
+    </html>*@

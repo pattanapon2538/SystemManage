@@ -51,6 +51,11 @@ namespace SystemManage.Controllers
                 return View("Success");
             }
         }
+        public ActionResult ShowDocument()
+        {
+
+            return View();
+        }
     }    
 }
          
