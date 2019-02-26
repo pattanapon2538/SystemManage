@@ -22,7 +22,6 @@ namespace SystemManage.Models
         public double TotalPercent { get; set; }
         [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ProjectSendDate { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }

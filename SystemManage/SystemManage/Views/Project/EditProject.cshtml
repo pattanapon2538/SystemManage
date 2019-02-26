@@ -57,7 +57,7 @@
                         <div class="input-group">
                             <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
                             <div class="input-group-icon">
-                                @Html.TextBoxFor(m => m.ProjectSendDate, new { @class = "form-control", @type = "date" })
+                                @Html.TextBoxFor(x => x.ProjectSendDate, "{0:dd/MM/yyyy}", new { @class = "date" ,type = "date" })
                             </div>
                         </div>
                     </div>

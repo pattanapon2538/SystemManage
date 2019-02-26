@@ -320,6 +320,7 @@
     <Content Include="assets\js\global.js" />
     <Content Include="assets\js\jquery.slicknav.min.js" />
     <Content Include="assets\js\jquery.slimscroll.min.js" />
+    <Content Include="assets\js\jquery.validate.min.js" />
     <Content Include="assets\js\line-chart.js" />
     <Content Include="assets\js\maps.js" />
     <Content Include="assets\js\metisMenu.min.js" />

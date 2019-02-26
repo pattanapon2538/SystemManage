@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SystemManage.Database;
+using SystemManage.Models;
 
 namespace SystemManage.Controllers
 {
@@ -13,9 +14,10 @@ namespace SystemManage.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            UserModel model = new UserModel();
             Session["userID"] = null;
             Session["ProjectID"] = null;
-            return View();
+            return View(model);
         }
         public ActionResult CheckLogin(string User_Email, string User_Password)
         {
@@ -43,12 +45,24 @@ namespace SystemManage.Controllers
                         }
 
                     }
+                    else
+                    {
+                        return PartialView("Index" , new UserModel
+                        {
+                            User_EmailError = "รหัสผิด",
+                            User_PasswordError = "รหัสผิด",
+                        });
+                    }
                 }
                 return View("Index");
             }
             catch (Exception)
             {
-                return View("Index");
+                return PartialView("Index" , new UserModel
+                {
+                    User_EmailError = "รหัสผิด",
+                    User_PasswordError = "รหัสผิด",
+                });
             }
         }
         

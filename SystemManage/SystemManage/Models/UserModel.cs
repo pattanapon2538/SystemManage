@@ -14,8 +14,10 @@ namespace SystemManage.Models
         public int Users_ID { get; set; }
         [Required(ErrorMessage = "กรุณาใส่ Email ให้ถูกต้อง")]
         public string User_Email { get; set; }
+        public string User_EmailError { get; set; }
         [Required(ErrorMessage = "กรุณาใส่ Password ให้ถูกต้อง")]
         public string User_Password { get; set; }
+        public string User_PasswordError { get; set; }
         [Required(ErrorMessage = "กรุณาใส่ Password ให้ถูกต้อง")]
         public string User_RePassword { get; set; }
         public string User_Name { get; set; }
