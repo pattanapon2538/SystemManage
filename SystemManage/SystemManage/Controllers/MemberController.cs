@@ -318,5 +318,131 @@ namespace SystemManage.Controllers
             return RedirectToAction("ListMember","Member");
             //return Json(JsonRequestBehavior.AllowGet);
         }
+        public ActionResult Profile(int userID)
+        {
+            UserModel model = new UserModel();
+            List<UserModel> TaskList = new List<UserModel>();
+            var u = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
+            double SuccPercent = 0;
+            double NonPercent = 0;
+            var totalProject = db.Projects.Where(m => m.CreateBy == u.User_ID).ToList();
+            var totalSubDev = db.SubTasks.Where(m => m.SubDevID == u.User_ID).ToList();
+            var totalSubTester = db.Tasks.Where(m => m.TestID == u.User_ID).ToList();
+            var totalSubQA = db.Tasks.Where(m => m.QAID == u.User_ID).ToList();
+            int totalWork = totalSubDev.Count + totalSubTester.Count + totalSubQA.Count + totalProject.Count;
+            if (u.Amount_Succ != 0)
+            {
+                SuccPercent = Convert.ToDouble(u.Amount_Succ) / totalWork;
+            }
+            if (u.Amount_Non != 0)
+            {
+                NonPercent = Convert.ToDouble(u.Amount_Non) / totalWork;
+            }
+            int projectID = Convert.ToInt32(Session["ProjectID"]);
+            var PM = db.ProjectMembers.Where(m => m.UserID == userID && m.ProjectID == projectID).FirstOrDefault();
+            model.PositionList = db.Positions.ToList();
+            model.ContractsList = db.Type_of_Contract.ToList();
+            model.LanguageList = db.Language_of_Type.OrderBy(m => m.languageID).ToList();
+            if (PM.Role == 1)
+            {
+                model.Roles = UserModel._Role.ผู้จัดการโครงการ;
+            }
+            else if (PM.Role == 2)
+            {
+                model.Roles = UserModel._Role.ผู้พัฒนาซอฟแวร์;
+            }
+            else if (PM.Role == 3)
+            {
+                model.Roles = UserModel._Role.ผู้ทดสอบ;
+            }
+            else if (PM.Role == 4)
+            {
+                model.Roles = UserModel._Role.ผู้ตรวจคุณภาพ;
+            }
+            else if (PM.Role == 5)
+            {
+                model.Roles = UserModel._Role.ลูกค้า;
+            }
+            model.LanguageID = u.LanguageID;
+            model.Position_ID = u.Position_ID;
+            model.Contract_ID = u.Contract_ID;
+            model.Users_ID = u.User_ID;
+            model.User_Name = u.User_Name;
+            model.User_LastName = u.User_LastName;
+            model.User_Email = u.User_Email;
+            model.Phone = u.Phone;
+            model.Contract_ID = u.Contract_ID;
+            model.Date_of_Started = u.Date_of_Started;
+            model.Date_of_Ended = u.Date_of_Ended;
+            model.Comment = u.comment;
+            model.Percent_Succ = SuccPercent;
+            model.Percent_Non = NonPercent;
+            model.Amount_Succ = u.Amount_Succ;
+            model.Amount_Non = u.Amount_Non;
+            model.Check_Role = Convert.ToInt32(TempData["Not_Role"]);
+            var Work = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
+            foreach (var item in Work)
+            {
+                if (item.Role == 1)
+                {
+                    var TaskName = db.Projects.Where(m => m.ProjectID == item.ProjectID).FirstOrDefault();
+                    double total = 0;
+                    var Level = db.Tasks.Where(m => m.ProjectID == item.ProjectID).ToList();
+                    foreach (var count in Level)
+                    {
+                        total = Convert.ToDouble(count.Task_level) + total;
+                    }
+                    total = total / Level.Count;
+                    TaskList.Add(new UserModel
+                    {
+                        TaskName = TaskName.Name,
+                        Level = total.ToString(),
+                        RoundCoding = 0
+                    });
+                }
+                else if (item.Role == 2)
+                {
+                    var TaskDev = db.SubTasks.Where(m => m.SubDevID == userID).ToList();
+                    foreach (var item3 in TaskDev)
+                    {
+                        var Task = db.Tasks.Where(m => m.TaskID == item3.TaskID).FirstOrDefault();
+                        TaskList.Add(new UserModel
+                        {
+                            TaskName = item3.SubName,
+                            Level = Task.Task_level.ToString(),
+                            RoundCoding = item3.RoundCoding
+                        });
+                    }
+                }
+                else if (item.Role == 3)
+                {
+                    var TaskTester = db.Tasks.Where(m => m.TestID == userID).ToList();
+                    foreach (var item4 in TaskTester)
+                    {
+                        TaskList.Add(new UserModel
+                        {
+                            TaskName = item4.TaskName,
+                            Level = item4.Task_level.ToString(),
+                            RoundCoding = 0
+                        });
+                    }
+                }
+                else if (item.Role == 4)
+                {
+                    var TaskQA = db.Tasks.Where(m => m.QAID == userID).ToList();
+                    foreach (var item5 in TaskQA)
+                    {
+                        TaskList.Add(new UserModel
+                        {
+                            TaskName = item5.TaskName,
+                            Level = item5.Task_level.ToString(),
+                            RoundCoding = 0
+                        });
+                    }
+                }
+            }
+            ViewBag.DataList = TaskList;
+            return View(model);
+        }
     }
 }

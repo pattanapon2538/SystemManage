@@ -232,7 +232,10 @@ namespace SystemManage.Controllers
             }
             Session["ProjectName"] = p.Name;
             model.ProjectDescription = p.Description;
-            double total = 100/ t.Count;
+            if (t.Count != 0)
+            {
+                double total = 100 / t.Count;
+            }
             foreach (var item in t)
             {
                 //double TaskPercent = (item.TotalPercent / 100) * total;

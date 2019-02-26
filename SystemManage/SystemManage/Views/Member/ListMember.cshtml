@@ -228,7 +228,7 @@
                                         {
                                         <tr>
                                             @{
-                                                if (item.Users_ID != item2.user_ID)
+                                                if (item2.user_ID != item.Users_ID)
                                                 {
                                                     <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
                                                     <td><center>@item.User_Name</center></td>

@@ -128,7 +128,7 @@
                     <div class="dropdown">
                         <img src="~/icon/profile_m.png" class="dropbtn" width="42.66" height="42.66" style="margin-left:12px;cursor:pointer" onclick="myFunction()"></a>
                         <div id="myDropdown" class="dropdown-content">
-                            <a href="@Url.Action("HistoryUser","Member",new {userID = Convert.ToInt32(Session["userID"]) })">รายละเอียดผู้ใช้</a>
+                            <a href="@Url.Action("Profile","Member",new {userID = Convert.ToInt32(Session["userID"]) })">รายละเอียดผู้ใช้</a>
                             <a href="@Url.Action("Index","Login")">ออกจากระบบ</a>
                         </div>
                         <h6>สวัสดี @Session["userName"]</h6>

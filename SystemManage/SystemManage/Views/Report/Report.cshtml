@@ -2,33 +2,54 @@
 @using SystemManage.Models
 @{
     ViewBag.Title = "Report";
-    Layout = "~/Views/Shared/_History.cshtml";
+    //Layout = "~/Views/Shared/_History.cshtml";
 }
+<style>
+</style>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <div class="container">
     <div class="card">
+        <h1 class="text-left" style="margin-top:10px;margin-bottom:-50px;margin-left:150px;border-radius:20px">รายงานโครงการ</h1>
         <div class="card-body shadow" style="margin-top:50px;border-radius:10px">
             <div class="row">
-                <div class="login-form-body" style="border:solid;;border-width:1px;margin:auto">
+                <div class="login-form-body shadow" style="border:solid;border-width:1px;width:800px;margin:auto;border-radius:20px">
                     <div class="col-sm-12">
-                        <table>
+                        <table class="table-borderless" style="margin-left:50px;margin-top:20px;margin-bottom:20px">
                             <tbody>
                                 <tr>
-                                    <td>ชื่อโครงการ : </td>
-                                    <td>@Session["ProjectName"] </td>
+                                    <td><u>ชื่อโครงการ</u> : @Session["ProjectName"] </td>
                                 </tr>
                                 <tr>
                                     <td><br></td>
                                 </tr>
                                 <tr>
-                                    <td>รายละเอียดโครงการ :</td>
-                                    <td>@Model.ProjectDetail</td>
+                                    <td><u>รายละเอียดโครงการ</u> :</td>
+                                </tr>
+                                <tr>
+                                    <td><br /></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left:50px">@Model.ProjectDetail</td>
                                 </tr>
                                 <tr>
                                     <td><br></td>
                                 </tr>
                                 @{
                                     <tr>
-                                        <td>ผู้มีส่วนเกี่ยวข้องกับโครงการ : </td>
+                                        <td><u>ผู้มีส่วนเกี่ยวข้องกับโครงการ</u> : </td>
+                                    </tr>
+                                    <tr>
+                                        <td><br /></td>
                                     </tr>
                                     int r = 0;
                                     foreach (var item in (List<SubTaskModel>)ViewBag.DataList2)
@@ -36,13 +57,10 @@
                                         if (item.Role == 1)
                                         {
                                             <tr>
-                                                <td>
-                                                <td>ผู้จัดการโครงการ : </td>
-                                                <td>
+                                                <td style="padding-left:50px"><u>ผู้จัดการโครงการ</u> : @item.PM </td>
                                                 <td>
                                                 <td>
-                                                    @item.PM
-                                                </td>
+                                                <td></td>
                                             </tr>
                                         }
                                         else if (item.Role == 2)
@@ -50,25 +68,18 @@
                                             if (r != item.Role)
                                             {
                                                 <tr>
-                                                    <td>
-                                                    <td>ผู้พัฒนา : </td>
-                                                    <td>
+                                                    <td style="padding-left:50px"><u>ผู้พัฒนา</u> : @item.Dev </td>
                                                     <td>
                                                     <td>
-                                                        @item.Dev
-                                                    </td>
+                                                    <td></td>
                                                 </tr>
                                             }
                                             else
                                             {
                                                 <tr>
+                                                    <td style="padding-left:115px"> @item.Dev</td>
                                                     <td>
                                                     <td></td>
-                                                    <td>
-                                                    <td>
-                                                    <td>
-                                                        @item.Dev
-                                                    </td>
                                                 </tr>
                                             }
                                             r = item.Role;
@@ -78,25 +89,19 @@
                                             if (r != item.Role)
                                             {
                                                 <tr>
-                                                    <td>
-                                                    <td>ผู้ทดสอบ : </td>
-                                                    <td>
+                                                    <td style="padding-left:50px"><u>ผู้ทดสอบ</u> :  @item.Tester</td>
                                                     <td>
                                                     <td>
-                                                        @item.Tester
-                                                    </td>
+                                                    <td></td>
                                                 </tr>
                                             }
                                             else
                                             {
                                                 <tr>
+                                                    <td style="padding-left:123px">@item.Tester</td>
+                                                    <td>
                                                     <td>
                                                     <td></td>
-                                                    <td>
-                                                    <td>
-                                                    <td>
-                                                        @item.Tester
-                                                    </td>
                                                 </tr>
                                             }
 
@@ -107,19 +112,15 @@
                                             if (r != item.Role)
                                             {
                                                 <tr>
-                                                    <td>
-                                                    <td>ผู้ตรวจสอบ : </td>
-                                                    <td>
+                                                    <td style="padding-left:50px"><u>ผู้ตรวจสอบ</u> : @item.QA</td>
                                                     <td>
                                                     <td>
-                                                        @item.QA
-                                                    </td>
+                                                    <td></td>
                                                 </tr>
                                             }
                                             else
                                             {
                                                 <tr>
-                                                    <td>
                                                     <td></td>
                                                     <td>
                                                     <td>
@@ -133,7 +134,10 @@
                                     }
                                 }
                                 <tr>
-                                    <td>งาน : </td>
+                                    <td><br /></td>
+                                </tr>
+                                <tr>
+                                    <td><u>งาน</u> : </td>
                                 </tr>
                                 @{
                                     var i = 0;
@@ -147,63 +151,53 @@
                                         {
                                             s++;
                                             <tr>
-                                            <tr>
-                                                <td>
-                                                <td>
-                                                <td>@s. @n.SubName</td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>ผู้พัฒนา : @n.SubDevID</td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                            </tr>
+                                                <td style="padding-left:166px">@s. @n.SubName</td>
+                                                <td style="padding-left:30px"><u>ผู้พัฒนา</u> : @n.SubDevID</td>
                                             </tr>
                                         }
                                         else
                                         {
                                             s = 1;
                                             <tr>
-                                                <td>
-                                                <td>- @n.TaskName</td>
-                                                <td>ผู้ทดสอบ : @n.TesterName</td>
-                                                <td>ผู้ตรวจสอบ : @n.QAName</td>
-                                            <tr>
-                                                <td>
-                                                <td>
-                                                <td>@s. @n.SubName</td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>ผู้พัฒนา : @n.SubDevID</td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
-                                                <td>
+                                                <td style="padding-left:50px"><u>งานหลัก</u> : @n.TaskName</td>
                                             </tr>
+                                            <tr>
+                                                <td style="padding-left:50px"><u>ผู้ทดสอบ</u> : @n.TesterName</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-left:50px"><u>ผู้ตรวจสอบ</u> : @n.QAName</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-left:100px"><u>งานย่อย</u> : @s. @n.SubName</td>
+                                                <td style="padding-left:30px"><u>ผู้พัฒนา</u> : @n.SubDevID</td>
+                                                <td>
+                                                <td>
+                                                <td></td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
+                                                <td>
                                             </tr>
                                             a = i;
                                         }
                                         c++;
                                     }
+
                                 }
                             </tbody>
                         </table>
                         <table>
-                            <tbody>
-                                
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <a href="@Url.Action("ShowTask","Task")"><button type="button" class="btn btn-outline-danger " style="">กลับ</button></a>
         </div>
     </div>
 </div>
