@@ -165,7 +165,7 @@
                                 <th><center>ชื่อ</center></th>
                                 <th><center>นามสกุล</center></th>
                                 <th><center>ตำแหน่ง</center></th>
-                                <th><center>ความยากของงาน</center></th>
+                                <th><center>ความยากของงาน   <span style="cursor:pointer" onclick="information()"><i class="fas fa-info-circle"></i></span></center></th>
                                 <th><center>เปอร์เซ็นความสำเร็จ</center></th>
                                 <th><center>จำนวนการโค๊ต</center></th>
                                 <th><center>ดูรายละเอียด</center></th>
@@ -186,24 +186,7 @@
                                                     <td><center>@item.User_Name</center></td>
                                                     <td><center>@item.User_LastName</center></td>
                                                     <td><center>@item.PositionName</center></td>
-
-                                                    if (item.AVG >= 1 && item.AVG < 2.5)
-                                                    {
-                                                        <td><center>ง่าย</center></td>
-                                                    }
-                                                    else if (item.AVG >= 2.5 && item.AVG < 3.5)
-                                                    {
-                                                        <td><center>ปานกลาง</center></td>
-                                                    }
-                                                    else if (item.AVG > 3.5 && item.AVG <= 5)
-                                                    {
-                                                        <td><center>ยาก</center></td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td></td>
-                                                    }
-
+                                                    <td><center>@item.AVG</center></td>
                                                     <td><center>@item.Amount_Succ.ToString("P1")</center></td>
                                                     <td><center>@item.TotalCoding</center></td>
                                                     <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
@@ -226,24 +209,7 @@
                                                 <td><center>@item.User_Name</center></td>
                                                 <td><center>@item.User_LastName</center></td>
                                                 <td><center>@item.PositionName</center></td>
-
-                                                if (item.AVG >= 1 && item.AVG < 2.5)
-                                                {
-                                                    <td><center>ง่าย</center></td>
-                                                }
-                                                else if (item.AVG >= 2.5 && item.AVG < 3.5)
-                                                {
-                                                    <td><center>ปานกลาง</center></td>
-                                                }
-                                                else if (item.AVG > 3.5 && item.AVG <= 5)
-                                                {
-                                                    <td><center>ยาก</center></td>
-                                                }
-                                                else
-                                                {
-                                                    <td></td>
-                                                }
-
+                                                <td><center>@item.AVG</center></td>
                                                 <td><center>@item.Amount_Succ.ToString("P1")</center></td>
                                                 <td><center>@item.TotalCoding</center></td>
                                                 <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
@@ -260,40 +226,23 @@
                                     {
                                         foreach (var item2 in (List<FollowModel>)ViewBag.DataList2)
                                         {
-                                            <tr>
-                                                @{
-                                                    if (item.Users_ID != item2.user_ID)
-                                                    {
-                                                        <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
-                                                        <td><center>@item.User_Name</center></td>
-                                                        <td><center>@item.User_LastName</center></td>
-                                                        <td><center>@item.PositionName</center></td>
-
-                                                        if (item.AVG >= 1 && item.AVG < 2.5)
-                                                        {
-                                                            <td><center>ง่าย</center></td>
-                                                        }
-                                                        else if (item.AVG >= 2.5 && item.AVG < 3.5)
-                                                        {
-                                                            <td><center>ปานกลาง</center></td>
-                                                        }
-                                                        else if (item.AVG > 3.5 && item.AVG <= 5)
-                                                        {
-                                                            <td><center>ยาก</center></td>
-                                                        }
-                                                        else
-                                                        {
-                                                            <td></td>
-                                                        }
-
-                                                        <td><center>@item.Amount_Succ.ToString("P1")</center></td>
-                                                        <td><center>@item.TotalCoding</center></td>
-                                                        <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                        <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
-                                                    }
+                                        <tr>
+                                            @{
+                                                if (item.Users_ID != item2.user_ID)
+                                                {
+                                                    <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
+                                                    <td><center>@item.User_Name</center></td>
+                                                    <td><center>@item.User_LastName</center></td>
+                                                    <td><center>@item.PositionName</center></td>
+                                                    <td><center>@item.AVG</center></td>
+                                                    <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                                    <td><center>@item.TotalCoding</center></td>
+                                                    <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                                    <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
                                                 }
+                                            }
 
-                                            </tr>
+                                        </tr>
                                         }
                                     };
                                 }
@@ -314,8 +263,12 @@
 <script src="~/assets/js/metisMenu.min.js"></script>
 <script src="~/assets/js/jquery.slimscroll.min.js"></script>
 <script src="~/assets/js/jquery.slicknav.min.js"></script>
-
 <script>
+    function information() {
+        alert("0 = ยังไม่เคยทำงาน \n1 - 2.9 = ง่าย\n3 - 4.9 = ปานกลาง\n 5 = ยาก");
+    }
+</script>
+@*<script>
     //var click = '/icon/star.png';
     //var clicked = '/icon/star_yellow.png';
 
@@ -327,7 +280,7 @@
     //    }
     //})
 
-    @*function Follow(userID) {
+    function Follow(userID) {
 
         $.ajax({
             type: "POST",

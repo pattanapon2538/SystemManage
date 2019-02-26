@@ -20,6 +20,7 @@ namespace SystemManage.Models
         public string User_RePassword { get; set; }
         public string User_Name { get; set; }
         public string User_LastName { get; set; }
+        public string NikcName { get; set; }
         public string Gender { get; set; }
         public DateTime BirthDate { get; set; }
         public string Address { get; set; }

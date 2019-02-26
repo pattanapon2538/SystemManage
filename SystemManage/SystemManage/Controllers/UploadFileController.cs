@@ -37,11 +37,58 @@ namespace SystemManage.Controllers
             d.Project_ID = projectID;
             db.Documents.Add(d);
             db.SaveChanges();
-            return Json(d.DocumentID, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("ShowDocument");
         }
         public ActionResult ShowDocument()
         {
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+            List<DocumentModel> DocumentList = new List<DocumentModel>();
+            var d = db.Documents.Where(m => m.Project_ID == ProjectID).ToList();
+            foreach (var item in d)
+            {
+                string[] Type = item.AttachShow.Split(".".ToCharArray());
+                DocumentList.Add(new DocumentModel {
+                    DocumentID = item.DocumentID,
+                    DocumentName = item.DocumentName,
+                    AttachShow = Type[0],
+                    Type = Type[1],
+                    CreateDate = item.CreateDate
+                });
+            }
+            ViewBag.DataList = DocumentList;
             return View();
+        }
+        public ActionResult EditDocument(DocumentModel model)
+        {
+            var d = db.Documents.Where(m => m.DocumentID == model.DocumentID).FirstOrDefault();
+            d.DocumentName = model.DocumentName;
+            d.DocumentDetail = model.DocumentDetail;
+            var data = Process(model.AttachFile);
+            string[] txt = data.Split(",".ToCharArray());
+            string fileName = txt[0];
+            string path = txt[1];
+            d.AttachShow = fileName;
+            d.AttachFile = path;
+            db.SaveChanges();
+            return RedirectToAction("ShowDocument");
+        }
+        public ActionResult DetailDocument(int DocumentID)
+        {
+            var d = db.Documents.Where(m => m.DocumentID == DocumentID).FirstOrDefault();
+            DocumentModel model = new DocumentModel();
+            model.DocumentID = d.DocumentID;
+            model.DocumentName = d.DocumentName;
+            model.DocumentDetail = d.DocumentDetail;
+            model.AttachShow = d.AttachShow;
+            return View(model);
+        }
+        public ActionResult DeleteDocument(int DocumentID)
+        {
+            var d = db.Documents.Where(m => m.DocumentID == DocumentID).FirstOrDefault();
+            System.IO.File.Delete(d.AttachFile);
+            db.Documents.Remove(d);
+            db.SaveChanges();
+            return RedirectToAction("ShowDocument");
         }
         private bool isValidContentType(string contentType)
         {

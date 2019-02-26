@@ -7,10 +7,11 @@ namespace SystemManage.Models
 {
     public class DocumentModel
     {
-        public string DocumentID { get; set; }
+        public int DocumentID { get; set; }
         public string DocumentName { get; set; }
         public string DocumentDetail { get; set; }
         public string RoleID { get; set; }
+        public string Type { get; set; }
         public string AttachShow { get; set; }
         public HttpPostedFileBase AttachFile { get; set; }
         public DateTime CreateDate { get; set; }

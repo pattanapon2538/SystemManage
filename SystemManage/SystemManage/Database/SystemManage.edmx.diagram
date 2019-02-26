@@ -18,19 +18,13 @@
         <EntityTypeShape EntityType="SystemManageModel.SubDefect" Width="1.5" PointX="9.5" PointY="8.25" />
         <EntityTypeShape EntityType="SystemManageModel.SubTaskSubmisstion" Width="1.5" PointX="13.875" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.Type_of_Contract" Width="1.5" PointX="0.625" PointY="10.5" />
-        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="3" PointY="2.375" />
         <AssociationConnector Association="SystemManageModel.FK_SubDefect" />
-        <AssociationConnector Association="SystemManageModel.FK_Languages" />
         <AssociationConnector Association="SystemManageModel.FK_Mail" />
-        <AssociationConnector Association="SystemManageModel.FK_Position" />
         <AssociationConnector Association="SystemManageModel.FK_Project" />
         <AssociationConnector Association="SystemManageModel.FK_SIT" />
-        <AssociationConnector Association="SystemManageModel.FK_UserID" />
         <AssociationConnector Association="SystemManageModel.FK_Step" />
-        <AssociationConnector Association="SystemManageModel.FK_Contact" />
         <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="5.25" PointY="5.375" />
         <AssociationConnector Association="SystemManageModel.FK_languaeID" />
-        <AssociationConnector Association="SystemManageModel.FK_User" />
         <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="11.5" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.Task" Width="1.5" PointX="9.375" PointY="2.375" />
         <AssociationConnector Association="SystemManageModel.FK_Defect" />
@@ -40,10 +34,16 @@
         <AssociationConnector Association="SystemManageModel.SubID" />
         <AssociationConnector Association="SystemManageModel.FK_Defect_Project" />
         <EntityTypeShape EntityType="SystemManageModel.Follow" Width="1.5" PointX="0.5" PointY="2.375" />
-        <AssociationConnector Association="SystemManageModel.FK_PM" />
-        <AssociationConnector Association="SystemManageModel.FK_User_F" />
         <EntityTypeShape EntityType="SystemManageModel.Document" Width="1.5" PointX="11.75" PointY="8.875" />
         <AssociationConnector Association="SystemManageModel.FK_ProjectID" />
+        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="2.875" PointY="2.375" />
+        <AssociationConnector Association="SystemManageModel.FK_PM" />
+        <AssociationConnector Association="SystemManageModel.FK_User_F" />
+        <AssociationConnector Association="SystemManageModel.FK_Languages" />
+        <AssociationConnector Association="SystemManageModel.FK_Position" />
+        <AssociationConnector Association="SystemManageModel.FK_UserID" />
+        <AssociationConnector Association="SystemManageModel.FK_User" />
+        <AssociationConnector Association="SystemManageModel.FK_Contact" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

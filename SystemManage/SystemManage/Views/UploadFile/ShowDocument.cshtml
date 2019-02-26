@@ -68,14 +68,24 @@
                             <th><center>ลำดับ</center></th>
                             <th><center>ชื่อเอกสาร</center></th>
                             <th><center>ประเภทของเอกสาร</center></th>
-                            <th><center></center></th>
+                            <th><center>แก้ไข</center></th>
+                            <th><center>ลบ</center></th>
                         </tr>
                     </thead>
                     <tbody>
-
-
-
-
+                        @{
+                            int i = 1;
+                            foreach (var item in (List<DocumentModel>)ViewBag.DataList)
+                            {
+                                <tr>
+                                    <td><center>@i</center></td>
+                                    <td><center>@item.DocumentName</center></td>
+                                    <td><center>@item.Type</center></td>
+                                    <td><center><a href="@Url.Action("DetailDocument",new {DocumentID = item.DocumentID })"><i class="fas fa-book-open"></i></a></center></td>
+                                     <td><center><a href="@Url.Action("DeleteDocument",new {DocumentID = item.DocumentID })"><i class="fas fa-backspace"></i></a></center></td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </div>

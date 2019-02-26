@@ -274,7 +274,7 @@
           <Property Name="Gender" Type="char" MaxLength="1" />
           <Property Name="BirthDate" Type="date" />
           <Property Name="Address" Type="nvarchar" MaxLength="100" />
-          <Property Name="ContractFrom" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContractFrom" Type="nvarchar" MaxLength="100" />
           <Property Name="Date_of_Started" Type="date" />
           <Property Name="Date_of_Ended" Type="date" />
           <Property Name="AttachShow1" Type="nvarchar" MaxLength="200" />
@@ -303,6 +303,7 @@
           <Property Name="Contract_ID" Type="int" Nullable="false" />
           <Property Name="Position_ID" Type="int" Nullable="false" />
           <Property Name="Phone" Type="nvarchar" MaxLength="13" />
+          <Property Name="NickName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Contact">
           <End Role="Type_of_Contract" Type="Self.Type_of_Contract" Multiplicity="1" />
@@ -663,22 +664,13 @@
           <EntitySet Name="SubDefects" EntityType="SystemManageModel.SubDefect" />
           <EntitySet Name="SubTaskSubmisstions" EntityType="SystemManageModel.SubTaskSubmisstion" />
           <EntitySet Name="Type_of_Contract" EntityType="SystemManageModel.Type_of_Contract" />
-          <EntitySet Name="Users" EntityType="SystemManageModel.User" />
           <AssociationSet Name="FK_SubDefect" Association="SystemManageModel.FK_SubDefect">
             <End Role="Defect" EntitySet="Defects" />
             <End Role="SubDefect" EntitySet="SubDefects" />
           </AssociationSet>
-          <AssociationSet Name="FK_Languages" Association="SystemManageModel.FK_Languages">
-            <End Role="Language_of_Type" EntitySet="Language_of_Type" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
           <AssociationSet Name="FK_Mail" Association="SystemManageModel.FK_Mail">
             <End Role="Mail" EntitySet="Mails" />
             <End Role="Message" EntitySet="Messages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Position" Association="SystemManageModel.FK_Position">
-            <End Role="Position" EntitySet="Positions" />
-            <End Role="User" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_Project" Association="SystemManageModel.FK_Project">
             <End Role="Project" EntitySet="Projects" />
@@ -688,25 +680,13 @@
             <End Role="Project" EntitySet="Projects" />
             <End Role="SIT" EntitySet="SITs" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserID" Association="SystemManageModel.FK_UserID">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ProjectMember" EntitySet="ProjectMembers" />
-          </AssociationSet>
           <AssociationSet Name="FK_Step" Association="SystemManageModel.FK_Step">
             <End Role="SIT" EntitySet="SITs" />
             <End Role="SITStep" EntitySet="SITSteps" />
           </AssociationSet>
-          <AssociationSet Name="FK_Contact" Association="SystemManageModel.FK_Contact">
-            <End Role="Type_of_Contract" EntitySet="Type_of_Contract" />
-            <End Role="User" EntitySet="Users" />
-          </AssociationSet>
           <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
           <AssociationSet Name="FK_languaeID" Association="SystemManageModel.FK_languaeID">
             <End Role="Language_of_Type" EntitySet="Language_of_Type" />
-            <End Role="Skill" EntitySet="Skills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User" Association="SystemManageModel.FK_User">
-            <End Role="User" EntitySet="Users" />
             <End Role="Skill" EntitySet="Skills" />
           </AssociationSet>
           <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
@@ -736,6 +716,12 @@
             <End Role="Defect" EntitySet="Defects" />
           </AssociationSet>
           <EntitySet Name="Follows" EntityType="SystemManageModel.Follow" />
+          <EntitySet Name="Documents" EntityType="SystemManageModel.Document" />
+          <AssociationSet Name="FK_ProjectID" Association="SystemManageModel.FK_ProjectID">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="Document" EntitySet="Documents" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="SystemManageModel.User" />
           <AssociationSet Name="FK_PM" Association="SystemManageModel.FK_PM">
             <End Role="User" EntitySet="Users" />
             <End Role="Follow" EntitySet="Follows" />
@@ -744,10 +730,25 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Follow" EntitySet="Follows" />
           </AssociationSet>
-          <EntitySet Name="Documents" EntityType="SystemManageModel.Document" />
-          <AssociationSet Name="FK_ProjectID" Association="SystemManageModel.FK_ProjectID">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="Document" EntitySet="Documents" />
+          <AssociationSet Name="FK_Languages" Association="SystemManageModel.FK_Languages">
+            <End Role="Language_of_Type" EntitySet="Language_of_Type" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Position" Association="SystemManageModel.FK_Position">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserID" Association="SystemManageModel.FK_UserID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ProjectMember" EntitySet="ProjectMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User" Association="SystemManageModel.FK_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Skill" EntitySet="Skills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contact" Association="SystemManageModel.FK_Contact">
+            <End Role="Type_of_Contract" EntitySet="Type_of_Contract" />
+            <End Role="User" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Defect">
@@ -780,8 +781,8 @@
           <Property Name="UpdateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateBy" Type="Int32" />
           <Property Name="UpdateBy" Type="Int32" />
-          <NavigationProperty Name="Users" Relationship="SystemManageModel.FK_Languages" FromRole="Language_of_Type" ToRole="User" />
           <NavigationProperty Name="Skills" Relationship="SystemManageModel.FK_languaeID" FromRole="Language_of_Type" ToRole="Skill" />
+          <NavigationProperty Name="Users" Relationship="SystemManageModel.FK_Languages" FromRole="Language_of_Type" ToRole="User" />
         </EntityType>
         <EntityType Name="LogMessage">
           <Key>
@@ -948,55 +949,6 @@
           <Property Name="UpdateBy" Type="Int32" />
           <NavigationProperty Name="Users" Relationship="SystemManageModel.FK_Contact" FromRole="Type_of_Contract" ToRole="User" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="User_ID" />
-          </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="User_Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="User_LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="BirthDate" Type="DateTime" Precision="0" />
-          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ContractFrom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Date_of_Started" Type="DateTime" Precision="0" />
-          <Property Name="Date_of_Ended" Type="DateTime" Precision="0" />
-          <Property Name="AttachShow1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachShow2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachShow3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachShow4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Permisstion" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LanguageID" Type="Int32" Nullable="false" />
-          <Property Name="AVG" Type="Double" />
-          <Property Name="Amount_Succ" Type="Int32" />
-          <Property Name="Amount_Non" Type="Int32" />
-          <Property Name="TotalCoding" Type="Int32" />
-          <Property Name="Speaking" Type="Int32" />
-          <Property Name="Reading" Type="Int32" />
-          <Property Name="Writng" Type="Int32" />
-          <Property Name="Listening" Type="Int32" />
-          <Property Name="CreateDate" Type="DateTime" Precision="0" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
-          <Property Name="CreateBy" Type="Int32" />
-          <Property Name="UpdateBy" Type="Int32" />
-          <Property Name="Contract_ID" Type="Int32" Nullable="false" />
-          <Property Name="Position_ID" Type="Int32" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Language_of_Type" Relationship="SystemManageModel.FK_Languages" FromRole="User" ToRole="Language_of_Type" />
-          <NavigationProperty Name="Position" Relationship="SystemManageModel.FK_Position" FromRole="User" ToRole="Position" />
-          <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_UserID" FromRole="User" ToRole="ProjectMember" />
-          <NavigationProperty Name="Type_of_Contract" Relationship="SystemManageModel.FK_Contact" FromRole="User" ToRole="Type_of_Contract" />
-          <NavigationProperty Name="Skills" Relationship="SystemManageModel.FK_User" FromRole="User" ToRole="Skill" />
-          <NavigationProperty Name="Follows" Relationship="SystemManageModel.FK_PM" FromRole="User" ToRole="Follow" />
-          <NavigationProperty Name="Follows1" Relationship="SystemManageModel.FK_User_F" FromRole="User" ToRole="Follow" />
-        </EntityType>
         <Association Name="FK_SubDefect">
           <End Type="SystemManageModel.Defect" Role="Defect" Multiplicity="1" />
           <End Type="SystemManageModel.SubDefect" Role="SubDefect" Multiplicity="*" />
@@ -1009,18 +961,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Languages">
-          <End Type="SystemManageModel.Language_of_Type" Role="Language_of_Type" Multiplicity="1" />
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Language_of_Type">
-              <PropertyRef Name="languageID" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="LanguageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Mail">
           <End Type="SystemManageModel.Mail" Role="Mail" Multiplicity="0..1" />
           <End Type="SystemManageModel.Message" Role="Message" Multiplicity="*" />
@@ -1030,18 +970,6 @@
             </Principal>
             <Dependent Role="Message">
               <PropertyRef Name="Mail_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Position">
-          <End Type="SystemManageModel.Position" Role="Position" Multiplicity="1" />
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Position">
-              <PropertyRef Name="Position_ID" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="Position_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1069,18 +997,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserID">
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
-          <End Type="SystemManageModel.ProjectMember" Role="ProjectMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="ProjectMember">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Step">
           <End Type="SystemManageModel.SIT" Role="SIT" Multiplicity="1" />
           <End Type="SystemManageModel.SITStep" Role="SITStep" Multiplicity="*" />
@@ -1090,18 +1006,6 @@
             </Principal>
             <Dependent Role="SITStep">
               <PropertyRef Name="SIT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Contact">
-          <End Type="SystemManageModel.Type_of_Contract" Role="Type_of_Contract" Multiplicity="1" />
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Type_of_Contract">
-              <PropertyRef Name="Contrat_ID" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="Contract_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1125,18 +1029,6 @@
             </Principal>
             <Dependent Role="Skill">
               <PropertyRef Name="languageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User">
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
-          <End Type="SystemManageModel.Skill" Role="Skill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="Skill">
-              <PropertyRef Name="User_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1277,30 +1169,6 @@
           <NavigationProperty Name="User" Relationship="SystemManageModel.FK_PM" FromRole="Follow" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="SystemManageModel.FK_User_F" FromRole="Follow" ToRole="User" />
         </EntityType>
-        <Association Name="FK_PM">
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
-          <End Type="SystemManageModel.Follow" Role="Follow" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="Follow">
-              <PropertyRef Name="PM_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_F">
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
-          <End Type="SystemManageModel.Follow" Role="Follow" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="Follow">
-              <PropertyRef Name="user_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Document">
           <Key>
             <PropertyRef Name="DocumentID" />
@@ -1326,6 +1194,140 @@
             </Principal>
             <Dependent Role="Document">
               <PropertyRef Name="Project_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContractFrom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Date_of_Started" Type="DateTime" Precision="0" />
+          <Property Name="Date_of_Ended" Type="DateTime" Precision="0" />
+          <Property Name="AttachShow1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Permisstion" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LanguageID" Type="Int32" Nullable="false" />
+          <Property Name="AVG" Type="Double" />
+          <Property Name="Amount_Succ" Type="Int32" />
+          <Property Name="Amount_Non" Type="Int32" />
+          <Property Name="TotalCoding" Type="Int32" />
+          <Property Name="Speaking" Type="Int32" />
+          <Property Name="Reading" Type="Int32" />
+          <Property Name="Writng" Type="Int32" />
+          <Property Name="Listening" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="Contract_ID" Type="Int32" Nullable="false" />
+          <Property Name="Position_ID" Type="Int32" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Follows" Relationship="SystemManageModel.FK_PM" FromRole="User" ToRole="Follow" />
+          <NavigationProperty Name="Follows1" Relationship="SystemManageModel.FK_User_F" FromRole="User" ToRole="Follow" />
+          <NavigationProperty Name="Language_of_Type" Relationship="SystemManageModel.FK_Languages" FromRole="User" ToRole="Language_of_Type" />
+          <NavigationProperty Name="Position" Relationship="SystemManageModel.FK_Position" FromRole="User" ToRole="Position" />
+          <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_UserID" FromRole="User" ToRole="ProjectMember" />
+          <NavigationProperty Name="Skills" Relationship="SystemManageModel.FK_User" FromRole="User" ToRole="Skill" />
+          <NavigationProperty Name="Type_of_Contract" Relationship="SystemManageModel.FK_Contact" FromRole="User" ToRole="Type_of_Contract" />
+        </EntityType>
+        <Association Name="FK_PM">
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
+          <End Type="SystemManageModel.Follow" Role="Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="PM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_F">
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
+          <End Type="SystemManageModel.Follow" Role="Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="user_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Languages">
+          <End Type="SystemManageModel.Language_of_Type" Role="Language_of_Type" Multiplicity="1" />
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language_of_Type">
+              <PropertyRef Name="languageID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="LanguageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Position">
+          <End Type="SystemManageModel.Position" Role="Position" Multiplicity="1" />
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="Position_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Position_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserID">
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
+          <End Type="SystemManageModel.ProjectMember" Role="ProjectMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="ProjectMember">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User">
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
+          <End Type="SystemManageModel.Skill" Role="Skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Skill">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contact">
+          <End Type="SystemManageModel.Type_of_Contract" Role="Type_of_Contract" Multiplicity="1" />
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_of_Contract">
+              <PropertyRef Name="Contrat_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Contract_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1524,49 +1526,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="SystemManageModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Position_ID" ColumnName="Position_ID" />
-                <ScalarProperty Name="Contract_ID" ColumnName="Contract_ID" />
-                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Listening" ColumnName="Listening" />
-                <ScalarProperty Name="Writng" ColumnName="Writng" />
-                <ScalarProperty Name="Reading" ColumnName="Reading" />
-                <ScalarProperty Name="Speaking" ColumnName="Speaking" />
-                <ScalarProperty Name="TotalCoding" ColumnName="TotalCoding" />
-                <ScalarProperty Name="Amount_Non" ColumnName="Amount_Non" />
-                <ScalarProperty Name="Amount_Succ" ColumnName="Amount_Succ" />
-                <ScalarProperty Name="AVG" ColumnName="AVG" />
-                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="Permisstion" ColumnName="Permisstion" />
-                <ScalarProperty Name="AttachFile4" ColumnName="AttachFile4" />
-                <ScalarProperty Name="AttachFile3" ColumnName="AttachFile3" />
-                <ScalarProperty Name="AttachFile2" ColumnName="AttachFile2" />
-                <ScalarProperty Name="AttachFile1" ColumnName="AttachFile1" />
-                <ScalarProperty Name="AttachShow4" ColumnName="AttachShow4" />
-                <ScalarProperty Name="AttachShow3" ColumnName="AttachShow3" />
-                <ScalarProperty Name="AttachShow2" ColumnName="AttachShow2" />
-                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
-                <ScalarProperty Name="Date_of_Ended" ColumnName="Date_of_Ended" />
-                <ScalarProperty Name="Date_of_Started" ColumnName="Date_of_Started" />
-                <ScalarProperty Name="ContractFrom" ColumnName="ContractFrom" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="User_LastName" ColumnName="User_LastName" />
-                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
-                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
-                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Skills">
             <EntityTypeMapping TypeName="SystemManageModel.Skill">
               <MappingFragment StoreEntitySet="Skills">
@@ -1650,6 +1609,50 @@
                 <ScalarProperty Name="DocumentDetail" ColumnName="DocumentDetail" />
                 <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
                 <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SystemManageModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Position_ID" ColumnName="Position_ID" />
+                <ScalarProperty Name="Contract_ID" ColumnName="Contract_ID" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Listening" ColumnName="Listening" />
+                <ScalarProperty Name="Writng" ColumnName="Writng" />
+                <ScalarProperty Name="Reading" ColumnName="Reading" />
+                <ScalarProperty Name="Speaking" ColumnName="Speaking" />
+                <ScalarProperty Name="TotalCoding" ColumnName="TotalCoding" />
+                <ScalarProperty Name="Amount_Non" ColumnName="Amount_Non" />
+                <ScalarProperty Name="Amount_Succ" ColumnName="Amount_Succ" />
+                <ScalarProperty Name="AVG" ColumnName="AVG" />
+                <ScalarProperty Name="LanguageID" ColumnName="LanguageID" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="Permisstion" ColumnName="Permisstion" />
+                <ScalarProperty Name="AttachFile4" ColumnName="AttachFile4" />
+                <ScalarProperty Name="AttachFile3" ColumnName="AttachFile3" />
+                <ScalarProperty Name="AttachFile2" ColumnName="AttachFile2" />
+                <ScalarProperty Name="AttachFile1" ColumnName="AttachFile1" />
+                <ScalarProperty Name="AttachShow4" ColumnName="AttachShow4" />
+                <ScalarProperty Name="AttachShow3" ColumnName="AttachShow3" />
+                <ScalarProperty Name="AttachShow2" ColumnName="AttachShow2" />
+                <ScalarProperty Name="AttachShow1" ColumnName="AttachShow1" />
+                <ScalarProperty Name="Date_of_Ended" ColumnName="Date_of_Ended" />
+                <ScalarProperty Name="Date_of_Started" ColumnName="Date_of_Started" />
+                <ScalarProperty Name="ContractFrom" ColumnName="ContractFrom" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="User_LastName" ColumnName="User_LastName" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

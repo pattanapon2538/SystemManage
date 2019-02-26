@@ -194,6 +194,7 @@ namespace SystemManage.Controllers
             var PM = db.ProjectMembers.Where(m => m.UserID == userID && m.ProjectID == projectID).FirstOrDefault();
             model.PositionList = db.Positions.ToList();
             model.ContractsList = db.Type_of_Contract.ToList();
+            model.LanguageList = db.Language_of_Type.OrderBy(m => m.languageID).ToList();
             if (PM.Role == 1)
             {
                 model.Roles = UserModel._Role.ผู้จัดการโครงการ;
@@ -214,6 +215,7 @@ namespace SystemManage.Controllers
             {
                 model.Roles = UserModel._Role.ลูกค้า;
             }
+            model.LanguageID = u.LanguageID;
             model.Position_ID = u.Position_ID;
             model.Contract_ID = u.Contract_ID;
             model.Users_ID = u.User_ID;

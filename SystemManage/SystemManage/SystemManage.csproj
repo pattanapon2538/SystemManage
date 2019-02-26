@@ -3449,6 +3449,7 @@
     <Content Include="Views\SIT\ShowSIT.cshtml" />
     <Content Include="Views\Defect\Defect_Dev.cshtml" />
     <Content Include="Views\UploadFile\ShowDocument.cshtml" />
+    <Content Include="Views\UploadFile\DetailDocument.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

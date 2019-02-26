@@ -17,10 +17,10 @@ namespace SystemManage.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.ProjectMembers = new HashSet<ProjectMember>();
-            this.Skills = new HashSet<Skill>();
             this.Follows = new HashSet<Follow>();
             this.Follows1 = new HashSet<Follow>();
+            this.ProjectMembers = new HashSet<ProjectMember>();
+            this.Skills = new HashSet<Skill>();
         }
     
         public int User_ID { get; set; }
@@ -60,17 +60,18 @@ namespace SystemManage.Database
         public int Contract_ID { get; set; }
         public int Position_ID { get; set; }
         public string Phone { get; set; }
+        public string NickName { get; set; }
     
-        public virtual Language_of_Type Language_of_Type { get; set; }
-        public virtual Position Position { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProjectMember> ProjectMembers { get; set; }
-        public virtual Type_of_Contract Type_of_Contract { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Skill> Skills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Follow> Follows { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Follow> Follows1 { get; set; }
+        public virtual Language_of_Type Language_of_Type { get; set; }
+        public virtual Position Position { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectMember> ProjectMembers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Skill> Skills { get; set; }
+        public virtual Type_of_Contract Type_of_Contract { get; set; }
     }
 }

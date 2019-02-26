@@ -20,6 +20,7 @@ namespace SystemManage.Controllers
             {
                 var r = db.Users.Where(m => m.User_ID == model.Users_ID).FirstOrDefault();
                 r.User_ID = model.Users_ID;
+                r.NickName = model.NikcName;
                 r.User_Email = model.User_Email;
                 r.User_Name = model.User_Name;
                 r.User_Password = model.User_Password;
@@ -45,6 +46,7 @@ namespace SystemManage.Controllers
                 u.User_Email = model.User_Email;
                 u.User_Password = model.User_Password;
                 u.User_Name = model.User_Name;
+                u.NickName = model.NikcName;
                 u.User_LastName = model.User_LastName;
                 if (model.Gender == "ชาย")
                 {
@@ -169,6 +171,7 @@ namespace SystemManage.Controllers
                     Users_ID = i.User_ID,
                     User_Email = i.User_Email,
                     User_Name = i.User_Name,
+                    NikcName = i.NickName,
                     User_LastName = i.User_LastName,
                     Gender = i.Gender,
                     PositionName = P_Name.Name,
@@ -187,6 +190,7 @@ namespace SystemManage.Controllers
             model.Users_ID = u.User_ID;
             model.User_Name = u.User_Name;
             model.User_LastName = u.User_LastName;
+            model.NikcName = u.NickName;
             model.User_Email = u.User_Email;
             model.BirthDate = u.BirthDate;
             model.Address = u.Address;

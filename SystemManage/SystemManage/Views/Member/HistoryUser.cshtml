@@ -18,152 +18,198 @@ var chart = new CanvasJS.Chart("chartContainer", {
 chart.render();
 }
 </script>
-    <div class="container">
-        <div class="login-box ptb--100">
+<div class="container">
+    <div class="login-box ptb--100">
+        @using (Ajax.BeginForm("AddUser", "User",
+             new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }))
+        {
             @Html.AntiForgeryToken()
             <form>
                 <div class="login-form-body shadow " style="border-style:solid ;border-width: 1px;margin-left: -200px;width:800px">
                     <h2 class="text-center" style="margin-bottom:20px;margin-top:-10px">ประวัติส่วนตัว</h2>
                     <div class="form-group row">
-                        <label for="language" class="col-sm-2 col-form-label">อีเมล์ : </label>
+                        <label for="language" class="col-sm-2 col-form-label">ชื่อ : </label>
+                        <div class="col-sm-4">
+                            @Html.HiddenFor(m => m.Users_ID)
+                            @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">นามสกุล : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.User_LastName, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">วันเดือนปีเกิด : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", @type = "date" })
+                            @Html.ValidationMessageFor(m => m.BirthDate, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">เพศ : </label>
                         <div class="col-sm-4">
                             @{
-                                if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
+                                if (Model.Users_ID == 0)
                                 {
-                                    @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.User_Email, string.Empty, new { @style = "color:red" })
+                                    @Html.DropDownListFor(m => m.Gender, new SelectList(Enum.GetValues(typeof(UserModel.Sex))), "เลือก", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Gender, string.Empty, new { @style = "color:red" })
                                 }
                                 else
                                 {
-                                    @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control", Readonly = "" })
+                                    @Html.DropDownListFor(m => m.Genders, new SelectList(Enum.GetValues(typeof(UserModel.Sex))), "เลือก", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Genders, string.Empty, new { @style = "color:red" })
                                 }
                             }
                         </div>
-                        <label for="language" class="col-sm-2 col-form-label">ชื่อ : </label>
-                        <div class="col-sm-4">
-                            @{
-                                if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
-                                {
-                                    @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control"})
-                                    @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
-                                }
-                                else
-                                {
-                                    @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", Readonly = "" })
-                                }
-                             }
-                            </div>
                     </div>
                     <div class="form-group row">
-                        <label for="language" class="col-sm-2 col-form-label">นามสกุล : </label>
+                        <label for="language" class="col-sm-2 col-form-label">ที่อยู่ : </label>
                         <div class="col-sm-4">
-                            @{
-                                if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
-                                {
-                                    @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.User_LastName, string.Empty, new { @style = "color:red" })
-                                }
-                                else
-                                {
-                                    @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control", Readonly = "" })
-                                }
-                            }
-
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.Address, string.Empty, new { @style = "color:red" })
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">เบอร์โทร : </label>
                         <div class="col-sm-4">
-                            @{
-                                if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
-                                {
-                                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control"})
-                                    @Html.ValidationMessageFor(m => m.Phone, string.Empty, new { @style = "color:red" })
-                                }
-                                else
-                                {
-                                    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", Readonly = "" })
-                                }
-                            }
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                            @Html.ValidationMessageFor(m => m.Gender, string.Empty, new { @style = "color:red" })
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">สัญญา : </label>
                         <div class="col-sm-4">
-                            @Html.DropDownListFor(m => m.Contract_ID, new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "ประเภทสัญญา", new { @class = "form-control", disabled = "ture" })
+                            @Html.DropDownListFor(m => m.Contract_ID, new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "ประเภทสัญญา", new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Contract_ID, string.Empty, new { @style = "color:red" })
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">สัญญาจาก : </label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.ContractFrom, new { @class = "form-control", Readonly = "" })
+                            @Html.TextBoxFor(m => m.ContractFrom, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
                             @Html.ValidationMessageFor(m => m.ContractFrom, string.Empty, new { @style = "color:red" })
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">วันเริ่มสัญญา : </label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.Date_of_Started, new { @type = "date", @class = "form-control", Readonly = "" })
+                            @Html.TextBoxFor(m => m.Date_of_Started, new { @type = "date", @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Date_of_Started, string.Empty, new { @style = "color:red" })
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">วันสิ้นสุดสัญญา:</label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.Date_of_Ended, new { @type = "date", @class = "form-control", Readonly = "" })
+                            @Html.TextBoxFor(m => m.Date_of_Ended, new { @type = "date", @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Date_of_Ended, string.Empty, new { @style = "color:red" })
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 1 : </label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile1">
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 2:</label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile2">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 3 : </label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile3">
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่4 :</label>
+                        <div class="col-sm-4">
+                            <input type="file" class="form-control-file" id="AttachFile4">
+                        </div>
+                    </div>
+                    <h2 class="text-center" style="margin-top:30px;margin-bottom:10px">บัญชีผู้ใช้งาน</h2>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">อีเมล์ : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_Email, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_Email, string.Empty, new { @style = "color:red" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">รหัสผ่าน : </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_Password, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_Password, string.Empty, new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">รหัสผ่านอีกครั้ง: </label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(m => m.User_RePassword, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.ValidationMessageFor(m => m.User_RePassword, string.Empty, new { @style = "color:red" })
+                        </div>
                         <label for="language" class="col-sm-2 col-form-label">ตำแหน่งงาน : </label>
                         <div class="col-sm-4">
-                            @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "กำหนดตำแหน่ง", new { @class = "form-control", disabled = "ture" })
+                            @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "กำหนดตำแหน่ง", new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Position_ID, string.Empty, new { @style = "color:red" })
                         </div>
-                         @{
-                            if (Model.Check_Role != 1)
-                            { 
-                                if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
-                                {
-                                    <label for="language" class="col-sm-2 col-form-label">บทบาทในโปรเจค : </label>
-                                    <div class="col-sm-4">
-                                        @Html.DropDownListFor(m => m.Roles, new SelectList(Enum.GetValues(typeof(UserModel._Role))), "เลือก", new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.Role, string.Empty, new { @style = "color:red" })
+                    </div>
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-2 col-form-label">ทักษะภาษาโปรแกรม : </label>
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "เลือกภาษา", new { @class = "form-control" })
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">กำหนดสิทธิ์ : </label>
+                        <div class="col-sm-4">
+                            <div class="col-sm-12">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        ฝ่ายบริหารจัดการระบบ
+                                    </label>
+                                    @Html.RadioButtonFor(m => m.Permission, "A")
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        ฝ่ายจัดการโครงการ
+                                    </label>
+                                    @Html.RadioButtonFor(m => m.Permission, "P")
+                                </div>
+                                <div class="form-check ">
+                                    <label class="form-check-label">
+                                        ลูกค้า
+                                    </label>
+                                    @Html.RadioButtonFor(m => m.Permission, "C")
+                                </div>
+                            </div>
+                        </div>
+                        <label for="language" class="col-sm-2 col-form-label">ทักษะภาษาอังกฤษ:</label>
+                        <div class="col-sm-4">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">ฟัง : </label>
+                                        @Html.DropDownListFor(m => m.Listening, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
                                     </div>
-                                }
-                                else
-                                {
-                                    @Html.DropDownListFor(m => m.Roles, new SelectList(Enum.GetValues(typeof(UserModel._Role))), "เลือก", new { @class = "form-control" , disabled = "ture" })
-                                }
-                            }
-                        }
-                    </div>
-                    <div class="form-group row">
-                        <label for="language" class="col-sm-4 col-form-label">ทักษะภาษาโปรแกรม : </label>
-                        <div class="col-sm-8">
-                            @Html.TextAreaFor(m => m.LanguageID, new { @type = "text", @class = "form-control", Readonly = "" })
-                            @Html.ValidationMessageFor(m => m.LanguageID, string.Empty, new { @style = "color:red" })
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">พูด : </label>
+                                        @Html.DropDownListFor(m => m.Speaking, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">อ่าน : </label>
+                                        @Html.DropDownListFor(m => m.Reading, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="language" class="col-form-label">เขียน : </label>
+                                        @Html.DropDownListFor(m => m.Writng, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label for="language" class="col-sm-4 col-form-label">ข้อคิดเห็น : </label>
-                        <div class="col-sm-8">
-                            @{
-                                if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
-                                {
-                                    @Html.TextAreaFor(m => m.LanguageID, new { @type = "text", @class = "form-control" })
-                                    @Html.ValidationMessageFor(m => m.LanguageID, string.Empty, new { @style = "color:red" })
-                                }
-                                else
-                                {
-                                    @Html.TextAreaFor(m => m.LanguageID, new { @type = "text", @class = "form-control", Readonly = "" })
-                                }
-                            }
-
-                        </div>
+                    <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
+                        <button id="form_submit" type="submit">Submit</button>
                     </div>
-                    <div class="login-form-body" style="border-style:solid;border-width:1px">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                @*<div id="chartContainer" style="height: 250px; width: 100%;"></div>*@
-                                <canvas id="doughnutChart" width="400" height="250"></canvas>
-                                <script>
+                </div>
+            </form>
+        }
+    </div>
+    <div class="login-form-body" style="border-style:solid;border-width:1px">
+        <div class="row">
+            <div class="col-sm-6">
+                @*<div id="chartContainer" style="height: 250px; width: 100%;"></div>*@
+                <canvas id="doughnutChart" width="400" height="250"></canvas>
+                <script>
                                 @{
                                     double Succ = Math.Round(Model.Percent_Succ * 100, 1);
                                     double Non = Math.Round(Model.Percent_Non * 100, 1);
@@ -184,39 +230,39 @@ chart.render();
                                         responsive: true
                                     }
                                 });
-                                </script>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="col-sm-12">
-                                    <div class="form-group row">
-                                        <label for="language" class="col-sm-4 col-form-label">เปอร์เซ็นต์ความสำเร็จ </label>
-                                        <div class="col-sm-8">
-                                            @Model.Percent_Succ.ToString("P1")
-                                            @Model.Amount_Succ<br>
-                                            @Model.Percent_Non.ToString("P1")
-                                            @Model.Amount_Non<br>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group row">
-                                        <label for="language" class="col-sm-4 col-form-label">งานที่ได้รับ </label>
-                                        <div class="col-sm-8">
-                                            @{
-                                                foreach (var item in (List<UserModel>)ViewBag.DataList)
-                                                {
-                                                    @item.TaskName
-                                                    @item.Level
-                                                    @item.RoundCoding<br>
-                                                }
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                </script>
+            </div>
+            <div class="col-sm-6">
+                <div class="col-sm-12">
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-4 col-form-label">เปอร์เซ็นต์ความสำเร็จ </label>
+                        <div class="col-sm-8">
+                            @Model.Percent_Succ.ToString("P1")
+                            @Model.Amount_Succ<br>
+                            @Model.Percent_Non.ToString("P1")
+                            @Model.Amount_Non<br>
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-12">
+                    <div class="form-group row">
+                        <label for="language" class="col-sm-4 col-form-label">งานที่ได้รับ </label>
+                        <div class="col-sm-8">
+                            @{
+                                foreach (var item in (List<UserModel>)ViewBag.DataList)
+                                {
+                                    @item.TaskName
+                                    @item.Level
+                                    @item.RoundCoding<br>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
             </form>
         </div>
     </div>
