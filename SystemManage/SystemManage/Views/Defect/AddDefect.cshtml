@@ -88,7 +88,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="taskname">ชื่องาน :</label>
-                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" , ReadOnly = ""})
                             </div>
                         </div>
 
@@ -97,21 +97,22 @@
                             <div class="form-group">
                                 <label for="taskname">ชื่องานรอง :</label>
                                 @Html.HiddenFor(m => m.Sub_ID)
-                                @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control" , Readonly = ""})
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>
-                                @Html.TextBoxFor(m => m.DevName, new { readOnreadOnly = true, @class = "form-control" })
+                                @Html.TextBoxFor(m => m.DevName, new { readOnreadOnly = true, @class = "form-control" , ReadOnly ="" })
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">รายละเอียดข้อผิดพลาด:</label>
+                                <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดข้อผิดพลาด:</label>
                                 @Html.TextAreaFor(m => m.DetailList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.DetailList,Model.Error_Detail, new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
@@ -119,8 +120,9 @@
                         
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
                                 @Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control", @type = "date" })
+                                @Html.ValidationMessageFor(m => m.SendDateList, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>

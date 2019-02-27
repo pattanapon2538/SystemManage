@@ -1,5 +1,8 @@
-﻿@model SystemManage.Models.DefectModel
-@using SystemManage.Models
+﻿<style>
+    input, select, textarea {
+        max-width: 2800px;
+    }
+</style>
 @{
     if (Session["userID"] == null && Session["ProjectID"] == null)
     {
@@ -7,12 +10,72 @@
     }
 }
 @{
-    ViewBag.Title = "DetailDefect";
+    ViewBag.Title = "AddDefect";
+    @model SystemManage.Models.DefectModel
 }
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+    <script>
+
+        //***scritpt datepicker***//
+        $(function () {
+            $("#datepicker1").datepicker();
+            $("#datepicker2").datepicker();
+            $("#datepicker3").datepicker();
+            $("#datepicker4").datepicker();
+            $("#datepicker5").datepicker();
+            $("#datepicker6").datepicker();
+            $("#datepicker7").datepicker();
+            $("#datepicker8").datepicker();
+            $("#datepicker9").datepicker();
+            $("#datepicker10").datepicker();
+        });
+        //***//
+
+        //***script addsubtask***//
+        $(document).ready(function () {
+            var i = 1;
+            $("#add").click(function () {
+                i++;
+                 var domElement = $('<div class="row"> <div class="col-sm-12"> <div class="form-group"> <label for="comment">รายละเอียดข้อผิดพลาด:</label> <textarea class="form-control" cols="20" id="DetailList" name="DetailList" rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 118px;"></textarea> </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="input-group"> <label class="label" style="margin-right: 10px">กำหนดส่ง :</label> <input class="form-control" id="SendDateList" name="SendDateList" type="date" value=""> </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="form-group"> <input type="file" class="form-control-file" id="exampleFormControlFile1"> </div> </div> </div>');
+                $(this).parent('div').before(domElement);
+            });
+        });
+        //***//
+
+        //***script deletesubtask***//
+        $(document).on('click', '#cancel', function () {
+            var c = confirm("ยืนยันการลบที่จะลบ Defect นี้");
+            if (c == true) {
+                $(this).parent('div').parent('div').parent('div').parent('div').remove();
+            }
+
+        });
+        //***//
+
+        //***script confrimrefresh***//
+        window.onbeforeunload = function () {
+            return "ข้อมูลไม่ได้บันทึก";
+        };
+                            //***//
+
+    </script>
+    <!-- end datepicker script -->
+
+    <title>Defect</title>
+</head>
 <body>
-    @using (Html.BeginForm("SeveData", "Defect", FormMethod.Post))
+    @using (Ajax.BeginForm("SaveData", "Defect", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
     {
-        @Html.AntiForgeryToken()
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
@@ -25,83 +88,60 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="taskname">ชื่องาน :</label>
-                                @Html.HiddenFor(m => m.Defect_ID)
-                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control", @readonly = "" })
+                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control", ReadOnly = "" })
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+
+
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="taskname">ชื่องานรอง :</label>
                                 @Html.HiddenFor(m => m.Sub_ID)
-                                @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control", @readonly = "" })
+                                @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control", Readonly = "" })
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>
+                                @Html.TextBoxFor(m => m.DevName, new { readOnreadOnly = true, @class = "form-control", ReadOnly = "" })
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">รายละเอียดข้อผิดพลาด:</label>
-                                @if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
-                                {
-                                    @Html.TextBoxFor(m => m.Detail, new { @class = "form-control", @type = "TextArea" })
+                                @{
+                                    <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดข้อผิดพลาด:</label>
+                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
+
+                                        @Html.TextAreaFor(m => m.Detail, new { @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextAreaFor(m => m.Detail, new { @class = "form-control", Readonly = "" })
+                                    }
                                 }
-                                else
-                                {
-                                    @Html.TextBoxFor(m => m.Detail, new { @class = "form-control", @type = "TextArea", @readonly = "" })
-                                }
+
                             </div>
                         </div>
                     </div>
                     <div class="row">
+
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>
-                                @Html.TextBoxFor(m => m.DevName, new { @class = "form-control", @readonly = "" })
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="input-group">
-                                @if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
-                                {
-                                    <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
-                                    @Html.TextBoxFor(m => m.SendDate, new { @class = "form-control", @type = "date" })
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
+                                @{
+                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        @Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control", @type = "date" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control", @type = "date" ,Readonly = ""})
+                                    }
+
                                 }
-                                else
-                                {
-                                    <label class="label" style="margin-right: 10px">กำหนดส่ง:</label>
-                                    @Html.TextBoxFor(m => m.SendDate, new { @class = "form-control", @type = "date", @readonly = "" })
-                                }
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="input-group">
-                                @if (Model.DevID == Convert.ToInt32(Session["userID"]) && Model.Status == 2)
-                                {
-                                    <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
-                                    <div class="rs-select2 js-select-simple select--no-search ">
-                                        @Html.DropDownListFor(m => m.StatusDev, new SelectList(Enum.GetValues(typeof(DefectModel.StatusDefectDev))), "เลือกสถานะ", new { @class = "form-control", @disabled = "disabled" })
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                }
-                                else if (Model.DevID == Convert.ToInt32(Session["userID"]))
-                                {
-                                    <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
-                                    <div class="rs-select2 js-select-simple select--no-search ">
-                                        @Html.DropDownListFor(m => m.StatusDev, new SelectList(Enum.GetValues(typeof(DefectModel.StatusDefectDev))), "เลือกสถานะ", new { @class = "form-control" })
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                }
-                                else if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
-                                {
-                                    <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
-                                    <div class="rs-select2 js-select-simple select--no-search ">
-                                        @Html.DropDownListFor(m => m.StatusTest, new SelectList(Enum.GetValues(typeof(DefectModel.StatusDefectTest))), "เลือกสถานะ", new { @class = "form-control" })
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                }
-                                @Html.HiddenFor(m => m.CreateBy)
                             </div>
                         </div>
                     </div>
@@ -116,11 +156,9 @@
                         <div class="col-sm-10">
                         </div>
                         <div class="col-sm-2">
-                            <a href="@Url.Action("ShowDefect","Defect")"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
-                            @if (Model.CreateBy == Convert.ToInt32(Session["userID"]) || Model.DevID == Convert.ToInt32(Session["userID"]))
-                            {
-                                <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
-                            }
+                            <a href="@Url.Action("ShowTask", "Task", new { SubTask = Session["SubTask"] })"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
+                            <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
+
                         </div>
                     </div>
                 </div>
@@ -128,9 +166,4 @@
         </div>
     }
 </body>
-<style>
-    input, select, textarea {
-        max-width: 2800px;
-    }
-</style>
-
+</html>

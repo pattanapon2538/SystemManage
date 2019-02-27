@@ -13,6 +13,7 @@ namespace SystemManage.Models
         public string Detail { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public DateTime SendDate { get; set; }
         public int Status { get; set; }
         public string AttachShow { get; set; }
@@ -31,7 +32,7 @@ namespace SystemManage.Models
         public string DevName { get; set; }
         public string TestName { get; set; }
         public string QAName { get; set; }
-
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public List<string> DetailList { get; set; }
         public List<int> StausList { get; set; }
         public List<string> AttachShowList { get; set; }
@@ -48,5 +49,6 @@ namespace SystemManage.Models
             Close,
             ReCoding
         }
+        public string Error_Detail { get; set; }
     }
 }

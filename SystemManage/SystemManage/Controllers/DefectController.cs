@@ -28,18 +28,50 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddDefect(DefectModel model)
         {
-            int projectID = Convert.ToInt32(Session["ProjectID"]);
-            Defect d = new Defect();
-            SubTask st = new SubTask();
-            int SubID = Convert.ToInt32(Session["SubID"]);
-            var count = model.DetailList.Count;
-            if (count > 1)
+            if (model.DetailList[0] != "")
             {
-                for (int i = 0; i < count; ++i)
+                int projectID = Convert.ToInt32(Session["ProjectID"]);
+                Defect d = new Defect();
+                SubTask st = new SubTask();
+                int SubID = Convert.ToInt32(Session["SubID"]);
+                var count = model.DetailList.Count;
+                if (count > 1)
+                {
+                    for (int i = 0; i < count; ++i)
+                    {
+                        d.Sub_ID = model.Sub_ID;
+                        d.Detail = model.DetailList[i].ToString();
+                        d.SendDate = model.SendDateList[i];
+                        d.Status = 0;
+                        d.AttachFile = "0";
+                        d.AttachShow = "0";
+                        d.CreateDate = DateTime.Now;
+                        d.CreateBy = Convert.ToInt32(Session["userID"]);
+                        d.Project_ID = projectID;
+                        db.Defects.Add(d);
+                        db.SaveChanges();
+                        var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();
+                        s.HaveDefect = 1;
+                        s.SubStatus = 5;
+                        s.SubPercent = 25;
+                        db.SaveChanges();
+                        var Email = db.Users.Where(m => m.User_ID == d.CreateBy).FirstOrDefault();
+                        var Sendto = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
+                        string sender = Email.User_Email.ToString();
+                        //string sender = "systemmanage59346@gmail.com";
+                        string subject = "Defect หัวข้อ" + st.SubName;
+                        string receiver = Sendto.User_Email.ToString();
+                        //string receiver = "pattanapon2538@outlook.com";
+                        string mess = "มีข้อผิดพลาดในหัวข้อ" + st.SubName;
+                        InboxController ms = new InboxController();
+                        ms.SendEmail(receiver, subject, mess, sender);
+                    }
+                }
+                else
                 {
                     d.Sub_ID = model.Sub_ID;
-                    d.Detail = model.DetailList[i].ToString();
-                    d.SendDate = model.SendDateList[i];
+                    d.Detail = model.DetailList[0].ToString();
+                    d.SendDate = model.SendDateList[0];
                     d.Status = 0;
                     d.AttachFile = "0";
                     d.AttachShow = "0";
@@ -51,7 +83,6 @@ namespace SystemManage.Controllers
                     var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();
                     s.HaveDefect = 1;
                     s.SubStatus = 5;
-                    s.SubPercent = 25;
                     db.SaveChanges();
                     var Email = db.Users.Where(m => m.User_ID == d.CreateBy).FirstOrDefault();
                     var Sendto = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
@@ -64,35 +95,10 @@ namespace SystemManage.Controllers
                     InboxController ms = new InboxController();
                     ms.SendEmail(receiver, subject, mess, sender);
                 }
+                return RedirectToAction("ShowDefect");
             }
-            else {
-                d.Sub_ID = model.Sub_ID;
-                d.Detail = model.DetailList[0].ToString();
-                d.SendDate = model.SendDateList[0];
-                d.Status = 0;
-                d.AttachFile = "0";
-                d.AttachShow = "0";
-                d.CreateDate = DateTime.Now;
-                d.CreateBy = Convert.ToInt32(Session["userID"]);
-                d.Project_ID = projectID;
-                db.Defects.Add(d);
-                db.SaveChanges();
-                var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();
-                s.HaveDefect = 1;
-                s.SubStatus = 5;
-                db.SaveChanges();
-                var Email = db.Users.Where(m => m.User_ID == d.CreateBy).FirstOrDefault();
-                var Sendto = db.Users.Where(m => m.User_ID == s.SubDevID).FirstOrDefault();
-                string sender = Email.User_Email.ToString();
-                //string sender = "systemmanage59346@gmail.com";
-                string subject = "Defect หัวข้อ" + st.SubName;
-                string receiver = Sendto.User_Email.ToString();
-                //string receiver = "pattanapon2538@outlook.com";
-                string mess = "มีข้อผิดพลาดในหัวข้อ" + st.SubName;
-                InboxController ms = new InboxController();
-                ms.SendEmail(receiver, subject, mess, sender);
-            }
-            return RedirectToAction("ShowDefect");
+            return View(new DefectModel {
+            Error_Detail = "กรุณาใส่ข้อมูลให้ครบถ้วน"});
         }
         public ActionResult ShowDefect()
         {

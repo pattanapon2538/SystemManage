@@ -16,37 +16,37 @@
     <title>AddInbox</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("AddInbox", "Inbox", new AjaxOptions { HttpMethod = FormMethod.Post.ToString()}, new { enctype = "multipart/form-data" }))
+    @using (Ajax.BeginForm("AddInbox", "Inbox", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }, new { enctype = "multipart/form-data" }))
     {
-    <div class="container">
-        <div class="card" style="margin-top: 20px">
-            <div class="card-body" style="margin: auto">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <label class="label">@Html.Label("*", new { @style = "color:red" }) เรื่อง :</label>
-                        @Html.TextBoxFor(m => m.MailName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.MailName, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียด:</label>
-                            @Html.TextAreaFor(m => m.MailDetail, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.MailDetail, "", new { @class = "text-danger" })
+        <div class="container">
+            <div class="card" style="margin-top: 50px">
+                <div class="card-body" style="margin: auto">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="label">@Html.Label("*", new { @style = "color:red" }) เรื่อง :</label>
+                            @Html.TextBoxFor(m => m.MailName, new { @class = "form-control", @placeholder = "กรุณาใส่ชื่อเรื่อง" })
+                            @Html.ValidationMessageFor(m => m.MailName, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-8">
-                        <div class="input-group">
-                            <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ถึง :</label>
-                            @Html.TextBoxFor(m => m.SendTo, new { @class = "form-control" })
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียด:</label>
+                                @Html.TextAreaFor(m => m.MailDetail, new { @class = "form-control", @style = "resize:none;height:150px", @placeholder = "กรุณาใส่รายละเอียด" })
+                                @Html.ValidationMessageFor(m => m.MailDetail, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="input-group">
-                            <label class="label" style="margin-right: 10px"></label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ถึง :</label>
+                                @Html.TextBoxFor(m => m.SendTo, new { @class = "form-control", @placeholder = "ผู้รับ" })
+                            </div>
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 10px"></label>
                                 @Html.ValidationMessageFor(m => m.SendTo, "", new { @class = "text-danger" })
-                        </div>
+                            </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -55,16 +55,16 @@
                             </div>
                         </div>
                     </div>
-                <di v class="row" style="margin-top: 20px;margin-bottom: 20px">
-                    <div class="col-sm-8">
-                    </div>
-                    <div class="col-sm-4">
-                        <a href="@Url.Action("Inbox")"><button type="button" class="btn btn-outline-danger">ยกเลิก</button></a>
-                        <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
-                    </div>
+                    <di v class="row" style="margin-top: 20px;margin-bottom: 20px">
+                        <div class="col-sm-8">
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="@Url.Action("Inbox")"><button type="button" class="btn btn-outline-danger">ยกเลิก</button></a>
+                            <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
+                        </div>
+                </div>
             </div>
         </div>
-    </div>
     }
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
