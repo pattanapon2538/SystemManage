@@ -11,6 +11,10 @@
     input, select, textarea {
         max-width: 2800px;
     }
+
+    table {
+        text-align: center;
+    }
 </style>
 <!doctype html>
 <html lang="en">
@@ -52,9 +56,10 @@ chart.render();
                 <div class="card" style="margin-top: 20px">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <H3>รายละเอียด</H3>
+                            </div>
+                            <div class="col-sm-4">
                             </div>
                             <div class="col-sm-4">
                                 <H3>งาน</H3>
@@ -62,58 +67,57 @@ chart.render();
                             <div class="col-sm-2"></div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
                                 <div class="card">
                                     <div class="card-body">
                                         @Model.ProjectDescription
-                                        @*@Html.TextAreaFor(m => m.ProjectDescription, new { @class = "form-control", @type = "TextArea" })*@
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <table>
-                                            <tbody>
-                                                @{
-                                                    foreach (var item in (List<ProjectModel>)ViewBag.DataList2)
-                                                    {
-                                                        <tr>
-                                                            <td>
-                                                                @item.TaskName
-                                                            </td>
-                                                            @{item.TaskPercent = item.TaskPercent / 100;
-                                                            }
-                                                            <td style="padding-left:70px">
-                                                                @item.TaskPercent.ToString("P01")
-                                                            </td>
-                                                        </tr>
+                                <table class="table table-bordered">
+                                    <tbody>
+
+                                        <tr>
+                                            <th>ชื่องาน</th>
+                                            <th>เปอร์เซ็นต์</th>
+                                        </tr>
+                                        @{
+                                            foreach (var item in (List<ProjectModel>)ViewBag.DataList2)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @item.TaskName
+                                                    </td>
+                                                    @{item.TaskPercent = item.TaskPercent / 100;
                                                     }
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                                    <td>
+                                                        @item.TaskPercent.ToString("P01")
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="col-sm-2"></div>
                             </div>
-                            <div class="col-sm-2"></div>
                         </div>
                     </div>
+
                 </div>
-                <div class="row">
-                    <div class="col-sm-10"></div>
-                    <div class="col-sm-2">
-                        <a href="@Url.Action("ShowProject","Project")"><button type="button" class="btn btn-outline-danger btn-block" style="margin-top: 20px">กลับ</button></a>
-                    </div>
+            </div>
+            <div class="row" style="margin-bottom:10px;margin-right:10px">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-2">
+                    <a href="@Url.Action("ShowProject","Project")"><button type="button" class="btn btn-outline-danger btn-block">กลับ</button></a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

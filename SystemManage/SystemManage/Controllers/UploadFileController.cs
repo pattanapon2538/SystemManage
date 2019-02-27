@@ -20,24 +20,28 @@ namespace SystemManage.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddDocument(DocumentModel model)
+        public ActionResult Index(DocumentModel model)
         {
-            int projectID = Convert.ToInt32(Session["ProjectID"]);
-            Document d = new Document();
-            var data = Process(model.AttachFile);
-            string[] txt = data.Split(",".ToCharArray());
-            string fileName = txt[0];
-            string path = txt[1];
-            d.DocumentName = model.DocumentName;
-            d.DocumentDetail = model.DocumentDetail;
-            d.AttachFile = path;
-            d.AttachShow = fileName;
-            d.CreateDate = DateTime.Now;
-            d.CreateBy = Convert.ToInt32(Session["userID"]);
-            d.Project_ID = projectID;
-            db.Documents.Add(d);
-            db.SaveChanges();
-            return RedirectToAction("ShowDocument");
+            if (ModelState.IsValid)
+            {
+                int projectID = Convert.ToInt32(Session["ProjectID"]);
+                Document d = new Document();
+                var data = Process(model.AttachFile);
+                string[] txt = data.Split(",".ToCharArray());
+                string fileName = txt[0];
+                string path = txt[1];
+                d.DocumentName = model.DocumentName;
+                d.DocumentDetail = model.DocumentDetail;
+                d.AttachFile = path;
+                d.AttachShow = fileName;
+                d.CreateDate = DateTime.Now;
+                d.CreateBy = Convert.ToInt32(Session["userID"]);
+                d.Project_ID = projectID;
+                db.Documents.Add(d);
+                db.SaveChanges();
+                return RedirectToAction("ShowDocument");
+            }
+            return View();
         }
         public ActionResult ShowDocument()
         {

@@ -174,7 +174,8 @@ namespace SystemManage.Controllers
             model.MailID = i.Message_ID.ToString();
             model.MailName = i.Name;
             model.MailDetail = i.Detail;
-            model.SendTo = i.SendTo.ToString();
+            var u = db.Users.Where(m => m.User_ID == i.SendTo).FirstOrDefault();
+            model.SendTo = u.User_Name;
             model.CreateBy = i.CreateBy.ToString();
             return View(model);
         }
