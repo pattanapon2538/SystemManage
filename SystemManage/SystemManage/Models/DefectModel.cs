@@ -22,6 +22,8 @@ namespace SystemManage.Models
         public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
+        public string Comment_Test { get; set; }
+        public string Comment_Dev { get; set; }
         public StatusDefectDev StatusDev { get; set; }
         public StatusDefectTest StatusTest { get; set; }
 
@@ -41,13 +43,14 @@ namespace SystemManage.Models
 
         public enum StatusDefectDev
         {
-            FIXD,
-            Coding
+            อยู่ระหว่างการตอบรับ,
+            แก้ไขแล้ว,
+            กำลังแก้ไข
         }
         public enum StatusDefectTest
         {
-            Close,
-            ReCoding
+            ปิด,
+            แก้ไชใหม่
         }
         public string Error_Detail { get; set; }
     }

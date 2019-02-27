@@ -25,7 +25,6 @@ namespace SystemManage.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Defect> Defects { get; set; }
         public virtual DbSet<Language_of_Type> Language_of_Type { get; set; }
         public virtual DbSet<LogMessage> LogMessages { get; set; }
         public virtual DbSet<Mail> Mails { get; set; }
@@ -44,5 +43,6 @@ namespace SystemManage.Database
         public virtual DbSet<Follow> Follows { get; set; }
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Defect> Defects { get; set; }
     }
 }

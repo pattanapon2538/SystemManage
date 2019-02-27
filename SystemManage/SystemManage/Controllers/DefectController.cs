@@ -160,6 +160,7 @@ namespace SystemManage.Controllers
                 });
             }
             ViewBag.DataList = DefectList;
+            Session["Save_Defect"] = 0;
             return View(model);
         }
         public ActionResult DetailDefect(int DefectID)
@@ -178,51 +179,64 @@ namespace SystemManage.Controllers
             model.Status = item.Status;
             model.SendDate = item.SendDate;
             model.CreateBy = item.CreateBy;
+            model.Comment_Dev = item.Comment_Dev;
+            model.Comment_Test = item.Comment_Test;
             if (item.Status == 0)
             {
-                model.StatusDev = DefectModel.StatusDefectDev.Coding;
+                model.StatusDev = DefectModel.StatusDefectDev.อยู่ระหว่างการตอบรับ;
             }
             else if (item.Status == 1)
             {
-                model.StatusDev = DefectModel.StatusDefectDev.FIXD;
+                model.StatusDev = DefectModel.StatusDefectDev.กำลังแก้ไข;
             }
             else if (item.Status == 2)
             {
-                model.StatusTest = DefectModel.StatusDefectTest.Close;
+                model.StatusDev = DefectModel.StatusDefectDev.แก้ไขแล้ว;
             }
             else if (item.Status == 3)
             {
-                model.StatusTest = DefectModel.StatusDefectTest.ReCoding;
+                model.StatusTest = DefectModel.StatusDefectTest.ปิด;
+            }
+            else if (item.Status == 4)
+            {
+                model.StatusTest = DefectModel.StatusDefectTest.แก้ไชใหม่;
             }
             return View(model);
         }
-        public ActionResult SeveData(DefectModel model)
+        public ActionResult SaveData(DefectModel model)
         {
             var i = db.Defects.Where(m => m.Defect_ID == model.Defect_ID).FirstOrDefault();
             i.Detail = model.Detail;
             i.SendDate = model.SendDate;
             i.UpdateDate = DateTime.Now;
-            if (model.StatusDev.ToString() == "Coding" && model.CreateBy != Convert.ToInt32(Session["userID"]))
+            i.Comment_Dev = model.Comment_Dev;
+            i.Comment_Test = model.Comment_Test;
+            if (model.StatusDev.ToString() == "อยู่ระหว่างการตอบรับ" && model.CreateBy != Convert.ToInt32(Session["userID"]))
             {
                 i.Status = 0;
             }
-            else if (model.StatusDev.ToString() == "FIXD" && model.CreateBy != Convert.ToInt32(Session["userID"]))
+            else if (model.StatusDev.ToString() == "กำลังแก้ไข" && model.CreateBy != Convert.ToInt32(Session["userID"]))
             {
                 i.Status = 1;
             }
-            else if (model.StatusTest.ToString() == "Close" && model.CreateBy == Convert.ToInt32(Session["userID"]))
+            else if (model.StatusTest.ToString() == "แก้ไขแล้ว" && model.CreateBy == Convert.ToInt32(Session["userID"]))
             {
                 i.Status = 2;
             }
-            else if (model.StatusTest.ToString() == "Recoding" && model.CreateBy == Convert.ToInt32(Session["userID"]))
+            else if (model.StatusTest.ToString() == "ปิด" && model.CreateBy == Convert.ToInt32(Session["userID"]))
             {
                 i.Status = 3;
+            }
+            else if (model.StatusTest.ToString() == "แก้ไชใหม่" && model.CreateBy == Convert.ToInt32(Session["userID"]))
+            {
+                i.Status = 4;
             }
             //i.AttachFile =
             //i.AttachShow
             i.UpdateBy = Convert.ToInt32(Session["userID"]);
             db.SaveChanges();
-            return RedirectToAction("ShowDefect", "Defect");
+            Session["Save_Defect"] = 1;
+            return RedirectToAction("DetailDefect", "Defect", new { DefectID  = i.Defect_ID});
         }
         public ActionResult DeleteDefect(int DefectID)
         {
@@ -295,6 +309,10 @@ namespace SystemManage.Controllers
             }
             ViewBag.DataList = DefectList; ;
             return View(model);
+        }
+        public ActionResult Send_Defect()
+        {
+            return RedirectToAction("ShowDefect");
         }
     }
 }

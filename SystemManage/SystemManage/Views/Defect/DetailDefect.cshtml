@@ -9,9 +9,10 @@
         Response.Redirect("~/Login/Index");
     }
 }
+@using SystemManage.Models
+@model SystemManage.Models.DefectModel
 @{
-    ViewBag.Title = "AddDefect";
-    @model SystemManage.Models.DefectModel
+    ViewBag.Title = "เพิ่มข้อผิดพลาด";
 }
 <!doctype html>
 <html lang="en">
@@ -46,7 +47,7 @@
             var i = 1;
             $("#add").click(function () {
                 i++;
-                 var domElement = $('<div class="row"> <div class="col-sm-12"> <div class="form-group"> <label for="comment">รายละเอียดข้อผิดพลาด:</label> <textarea class="form-control" cols="20" id="DetailList" name="DetailList" rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 118px;"></textarea> </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="input-group"> <label class="label" style="margin-right: 10px">กำหนดส่ง :</label> <input class="form-control" id="SendDateList" name="SendDateList" type="date" value=""> </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="form-group"> <input type="file" class="form-control-file" id="exampleFormControlFile1"> </div> </div> </div>');
+                var domElement = $('<div class="row"> <div class="col-sm-12"> <div class="form-group"> <label for="comment">รายละเอียดข้อผิดพลาด:</label> <textarea class="form-control" cols="20" id="DetailList" name="DetailList" rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 118px;"></textarea> </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="input-group"> <label class="label" style="margin-right: 10px">กำหนดส่ง :</label> <input class="form-control" id="SendDateList" name="SendDateList" type="date" value=""> </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="form-group"> <input type="file" class="form-control-file" id="exampleFormControlFile1"> </div> </div> </div>');
                 $(this).parent('div').before(domElement);
             });
         });
@@ -66,7 +67,7 @@
         window.onbeforeunload = function () {
             return "ข้อมูลไม่ได้บันทึก";
         };
-                            //***//
+                                    //***//
 
     </script>
     <!-- end datepicker script -->
@@ -88,6 +89,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="taskname">ชื่องาน :</label>
+                                @Html.HiddenFor(m => m.Defect_ID)
                                 @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control", ReadOnly = "" })
                             </div>
                         </div>
@@ -127,7 +129,6 @@
                         </div>
                     </div>
                     <div class="row">
-
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
@@ -138,7 +139,7 @@
                                     }
                                     else
                                     {
-                                        @Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control", @type = "date" ,Readonly = ""})
+                                        @Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control", @type = "date", Readonly = "" })
                                     }
 
                                 }
@@ -146,23 +147,90 @@
                         </div>
                     </div>
                     <div class="row">
+
+                    </div>
+                    @{
+                        if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                        {
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <label class="label" style="margin-right: 10px">หมายเหตุผู้ทดสอบ :</label>
+                                        @Html.TextAreaFor(m => m.Comment_Test, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <label class="label" style="margin-right: 10px">หมายเหตุผู้พัฒนา :</label>
+                                        @Html.TextAreaFor(m => m.Comment_Dev, new { @class = "form-control", Readonly = "" })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else if (Model.DevID == Convert.ToInt32(Session["userID"]))
+                        {
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <label class="label" style="margin-right: 10px">หมายเหตุผู้ทดสอบ :</label>
+                                        @Html.TextAreaFor(m => m.Comment_Test, new { @class = "form-control", Readonly = "" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="input-group">
+                                        <label class="label" style="margin-right: 10px">หมายเหตุผู้พัฒนา :</label>
+                                        @Html.TextAreaFor(m => m.Comment_Dev, new { @class = "form-control"})
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                    <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <input type="file" class="form-control-file" id="exampleFormControlFile1">
                             </div>
                         </div>
+                        @{
+                            if (Model.DevID == Convert.ToInt32(Session["userID"]))
+                            {
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(m => m.StatusDev, new SelectList(Enum.GetValues(typeof(DefectModel.StatusDefectDev))), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            }
+                            else if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                            {
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(m => m.StatusTest, new SelectList(Enum.GetValues(typeof(DefectModel.StatusDefectTest))), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            }
+                        }
                     </div>
                     <div class="row" style="margin-top: 20px;margin-bottom: 20px">
                         <div class="col-sm-10">
                         </div>
                         <div class="col-sm-2">
                             <a href="@Url.Action("ShowTask", "Task", new { SubTask = Session["SubTask"] })"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
-                            <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
-
+                            <button type="submit" class="btn btn-outline-primary">บันทึก</button>
+                            @{
+                                if (Convert.ToInt32(Session["Save_Defect"]) == 1)
+                                {
+                                    <a href="@Url.Action("Send_Defect","Defect")"><button type="button" class="btn btn-outline-success">ส่งงาน</button></a>
+                                }
+                            }
                         </div>
                     </div>
                 </div>
-            </div>
+                        </div>
         </div>
     }
 </body>

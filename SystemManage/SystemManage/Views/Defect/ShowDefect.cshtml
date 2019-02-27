@@ -142,11 +142,11 @@
                                             <td><center>@i.SubTaskName</center></td>
                                             @if (i.Status == 0)
                                             {
-                                                <td><center>รอการแก้ไข</center></td>
+                                                <td><center>อยู่ระหว่างการตอบรับ</center></td>
                                             }
                                             else if (i.Status == 1)
                                             {
-                                                <td><center>รอการตรวจสอบ</center></td>
+                                                <td><center>กำลังแก้ไข</center></td>
                                             }
                                             else if (i.Status == 2)
                                             {
@@ -154,7 +154,11 @@
                                             }
                                             else if (i.Status == 3)
                                             {
-                                                <td><center>แก้ไขอีกครั้ง</center></td>
+                                                <td><center>ปิด</center></td>
+                                            }
+                                            else if (i.Status == 4)
+                                            {
+                                                <td><center>ปิด</center></td>
                                             }
                                             <td><center>@i.DevName</center></td>
                                             <td><center>@i.TestName</center></td>
