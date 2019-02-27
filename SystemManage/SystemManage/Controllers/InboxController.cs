@@ -46,42 +46,47 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddInbox(InboxModel model, HttpPostedFileBase file)
         {
-            UploadFileController up = new UploadFileController();
-            Mail m = new Mail();
-            Message ms = new Message();
-            LogMessage lm = new LogMessage();
-            InboxController s = new InboxController();
-            m.Name = model.MailName;
-            m.Status = 1;
-            m.CreateDate = DateTime.Now;
-            m.CreateBy = Convert.ToInt32(Session["userID"]);
-            db.Mails.Add(m);
-            db.SaveChanges();
-            ms.Mail_ID = m.Mail_ID;
-            ms.Name = model.MailName;
-            ms.Detail = model.MailDetail;
-            ms.SendTo = Convert.ToInt32(model.SendTo);
-            ms.CreateDate = DateTime.Now;
-            ms.CreateBy = Convert.ToInt32(Session["userID"]);
-            up.Process(file);
-            db.Messages.Add(ms);
-            db.SaveChanges();
-            lm.Log_Name = model.MailName;
-            lm.Log_Message = model.MailDetail;
-            lm.Recive = Convert.ToInt32(model.SendTo);
-            lm.CreateDate = DateTime.Now;
-            lm.CreateBy = ms.CreateBy;
-            lm.Message_ID = ms.Message_ID;
-            db.LogMessages.Add(lm);
-            db.SaveChanges();
-            var u = db.Users.Where(d => d.User_ID == ms.SendTo).FirstOrDefault();
-            string receiver = u.User_Email;
-            string subject = model.MailName;
-            string message = model.MailDetail;
-            var u2 = db.Users.Where(g => g.User_ID == m.CreateBy).FirstOrDefault();
-            string sender = u2.User_Email;
-            s.SendEmail(receiver, subject, message, sender);
-            return RedirectToAction("Inbox", "Inbox");
+            if (ModelState.IsValid)
+            {
+                UploadFileController up = new UploadFileController();
+                Mail m = new Mail();
+                Message ms = new Message();
+                LogMessage lm = new LogMessage();
+                InboxController s = new InboxController();
+                m.Name = model.MailName;
+                m.Status = 1;
+                m.CreateDate = DateTime.Now;
+                m.CreateBy = Convert.ToInt32(Session["userID"]);
+                db.Mails.Add(m);
+                db.SaveChanges();
+                ms.Mail_ID = m.Mail_ID;
+                ms.Name = model.MailName;
+                ms.Detail = model.MailDetail;
+                ms.SendTo = Convert.ToInt32(model.SendTo);
+                ms.CreateDate = DateTime.Now;
+                ms.CreateBy = Convert.ToInt32(Session["userID"]);
+                up.Process(file);
+                db.Messages.Add(ms);
+                db.SaveChanges();
+                lm.Log_Name = model.MailName;
+                lm.Log_Message = model.MailDetail;
+                lm.Recive = Convert.ToInt32(model.SendTo);
+                lm.CreateDate = DateTime.Now;
+                lm.CreateBy = ms.CreateBy;
+                lm.Message_ID = ms.Message_ID;
+                db.LogMessages.Add(lm);
+                db.SaveChanges();
+                var u = db.Users.Where(d => d.User_ID == ms.SendTo).FirstOrDefault();
+                string receiver = u.User_Email;
+                string subject = model.MailName;
+                string message = model.MailDetail;
+                var u2 = db.Users.Where(g => g.User_ID == m.CreateBy).FirstOrDefault();
+                string sender = u2.User_Email;
+                s.SendEmail(receiver, subject, message, sender);
+                return RedirectToAction("Inbox", "Inbox");
+            }
+            return View();
+            
         }
         public ActionResult SendEmail(string receiver, string subject, string message,string sender)
         {
@@ -167,6 +172,7 @@ namespace SystemManage.Controllers
             me.Status = 0;
             db.SaveChanges();
             model.MailID = i.Message_ID.ToString();
+            model.MailName = i.Name;
             model.MailDetail = i.Detail;
             model.SendTo = i.SendTo.ToString();
             model.CreateBy = i.CreateBy.ToString();

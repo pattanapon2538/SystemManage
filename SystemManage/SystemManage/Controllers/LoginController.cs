@@ -45,14 +45,6 @@ namespace SystemManage.Controllers
                         }
 
                     }
-                    else
-                    {
-                        return PartialView("Index" , new UserModel
-                        {
-                            User_EmailError = "รหัสผิด",
-                            User_PasswordError = "รหัสผิด",
-                        });
-                    }
                 }
                 return View("Index");
             }
@@ -60,8 +52,8 @@ namespace SystemManage.Controllers
             {
                 return PartialView("Index" , new UserModel
                 {
-                    User_EmailError = "รหัสผิด",
-                    User_PasswordError = "รหัสผิด",
+                    User_EmailError = "กรุณาตรวจสอบบัญชีเข้าใช้อีกครั้ง",
+                    User_PasswordError = "กรุณาตรวจสอบรหัสผ่านอีกครั้ง",
                 });
             }
         }

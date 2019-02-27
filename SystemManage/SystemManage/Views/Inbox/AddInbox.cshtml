@@ -23,37 +23,43 @@
             <div class="card-body" style="margin: auto">
                 <div class="row">
                     <div class="col-sm-12">
-                        <label class="label">เรื่อง :</label>
+                        <label class="label">@Html.Label("*", new { @style = "color:red" }) เรื่อง :</label>
                         @Html.TextBoxFor(m => m.MailName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.MailName, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="comment">รายละเอียด:</label>
-                            @Html.TextAreaFor(m => m.MailDetail, new { @class = "form-control"})
+                            <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียด:</label>
+                            @Html.TextAreaFor(m => m.MailDetail, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.MailDetail, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="input-group">
-                            <label class="label" style="margin-right: 10px">ถึง :</label>
+                            <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ถึง :</label>
                             @Html.TextBoxFor(m => m.SendTo, new { @class = "form-control" })
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <input type="file" class="form-control-file" name="file">
-                            @*@Html.TextBoxFor(m => m.AttachFile1,new {@class = "form-control-file" ,@type ="file"})*@
+                        <div class="input-group">
+                            <label class="label" style="margin-right: 10px"></label>
+                                @Html.ValidationMessageFor(m => m.SendTo, "", new { @class = "text-danger" })
+                        </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="file" class="form-control-file" name="file">
+                                @*@Html.TextBoxFor(m => m.AttachFile1,new {@class = "form-control-file" ,@type ="file"})*@
+                            </div>
                         </div>
                     </div>
-                </div>
                 <di v class="row" style="margin-top: 20px;margin-bottom: 20px">
                     <div class="col-sm-8">
                     </div>
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-outline-danger">ยกเลิก</button>
+                        <a href="@Url.Action("Inbox")"><button type="button" class="btn btn-outline-danger">ยกเลิก</button></a>
                         <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
                     </div>
             </div>

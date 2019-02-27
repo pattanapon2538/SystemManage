@@ -39,13 +39,13 @@
                         <div class="col-sm-12">
                             <h2 class="text-center">สร้างโครงการ</h2>
                             <div class="form-group">
-                                <label for="usr">ชื่อโครงการ :</label>
+                                <label for="usr">@Html.Label("*",new { @style = "color:red" }) ชื่อโครงการ :</label>
                                 @Html.TextBoxFor(m => m.ProjectName, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.ProjectName, "", new { @class = "text-danger" })
 
                             </div>
                             <div class="form-group">
-                                <label for="comment">รายละเอียด :</label>
+                                <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียด :</label>
                                 @Html.TextAreaFor(m => m.ProjectDescription, new { @class = "form-control", @type = "TextArea" })
                                 @Html.ValidationMessageFor(m => m.ProjectDescription, "", new { @class = "text-danger" })
                             </div>
@@ -56,7 +56,7 @@
                         <div class="col-sm-4"></div>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
                                 <div>
                                     @Html.TextBoxFor(m => m.ProjectSendDate, new { @type = "date", @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.ProjectSendDate, "", new { @class = "text-danger" })

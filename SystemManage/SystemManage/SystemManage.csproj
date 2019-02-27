@@ -256,6 +256,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\bootstrap-multiselect.css" />
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\default-css.css" />
     <Content Include="assets\css\font-awesome.min.css" />
@@ -316,6 +317,7 @@
     <Content Include="assets\images\team\team-author4.jpg" />
     <Content Include="assets\images\team\team-author5.jpg" />
     <Content Include="assets\js\bar-chart.js" />
+    <Content Include="assets\js\bootstrap-multiselect.js" />
     <Content Include="assets\js\bootstrap.min.js" />
     <Content Include="assets\js\global.js" />
     <Content Include="assets\js\jquery.slicknav.min.js" />

@@ -23,14 +23,14 @@
                         <div class="col-sm-12">
                             <label class="label">เรื่อง :</label>
                             @Html.HiddenFor(m => m.MailID)
-                            @Html.LabelFor(m => m.MailName, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.MailName, new { @class = "form-control" , Readonly = ""})
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">รายละเอียด:</label>
-                                @Html.LabelFor(m => m.MailDetail, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.MailDetail, new { @class = "form-control", Readonly = "" })
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         <div class="col-sm-8">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ถึง :</label>
-                                @Html.LabelFor(m => m.SendTo, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.SendTo, new { @class = "form-control", Readonly = "" })
                             </div>
                         </div>
                         <div class="col-sm-4">

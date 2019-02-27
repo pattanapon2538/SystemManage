@@ -3,6 +3,11 @@
         max-width: 2800px;
     }
 </style>
+<style>
+    star {
+        color: red;
+    }
+</style>
 @{
     if (Session["userID"] == null && Session["ProjectID"] == null)
     {
@@ -91,7 +96,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="taskname">ชื่องาน :</label>
+                                <label for="taskname">@Html.Label("*", new { @style = "color:red" }) ชื่องาน :</label>
                                 @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.TaskName, string.Empty, new { @style = "color:red" })
                             </div>
@@ -110,7 +115,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="taskname">ชื่องานรอง :</label>
+                                        <label for="taskname">@Html.Label("*",new { @style = "color:red" }) ชื่องานรอง :</label>
                                         @Html.TextBoxFor(m => m.SubTasksName, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.SubTaskNames, string.Empty, new { @style = "color:red" })
                                     </div>
@@ -139,7 +144,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="comment">รายละเอียดของผู้พัฒนาระบบ:</label>
+                                        <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดของผู้พัฒนาระบบ:</label>
                                         @Html.TextAreaFor(m => m.SubTasksDis, new { @class = "form-control", @type = "TextArea" })
                                         @Html.ValidationMessageFor(m => m.SubTasksDis, string.Empty, new { @style = "color:red" })
                                     </div>
@@ -148,7 +153,7 @@
                             <div class="row">
                                 <div class="col-sm-8">
                                     <div class="input-group">
-                                        <label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>
+                                        <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ผู้รับมอบหมาย :</label>
                                         @*@Html.TextBoxFor(m => m.SubTaskDevID, new { @class = "form-control" })*@
                                         @Html.DropDownListFor(m => m.SubTaskDevID, new SelectList(Model.DevList, "UserID", "Member_name"), "Select", new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.SubTaskDevID, string.Empty, new { @style = "color:red" })
@@ -159,7 +164,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
+                                        <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
                                         @Html.TextBoxFor(m => m.SubTaskSendDate, new { @class = "form-control", @type = "date" })
                                         @Html.ValidationMessageFor(m => m.SubTaskSendDate, string.Empty, new { @style = "color:red" })
                                     </div>
@@ -173,7 +178,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">รายละเอียดของผ้ทดสอบ :</label>
+                                <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดของผ้ทดสอบ :</label>
                                 @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control", @type = "TextArea" })
                                 @Html.ValidationMessageFor(m => m.DescriptionTest, string.Empty, new { @style = "color:red" })
                             </div>
@@ -182,14 +187,14 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ผู้ทดสอบ :</label>
                                 @Html.DropDownListFor(m => m.TestID, new SelectList(Model.TestList, "UserID", "Member_name"), "Select", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.TestID, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
                                 @Html.TextBoxFor(m => m.TestSentDate, new { @class = "form-control", @type = "date" })
                                 @Html.ValidationMessageFor(m => m.TestSentDate, string.Empty, new { @style = "color:red" })
                             </div>
@@ -198,7 +203,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">รายละเอียดของผู้ตรวจสอบคุณภาพ :</label>
+                                <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดของผู้ตรวจสอบคุณภาพ :</label>
                                 @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control", @type = "TextArea" })
                                 @Html.ValidationMessageFor(m => m.DescriptionQA, string.Empty, new { @style = "color:red" })
                             </div>
@@ -207,14 +212,14 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">ผู้ตรวจงาน :</label>
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ผู้ตรวจงาน :</label>
                                 @Html.DropDownListFor(m => m.QAID, new SelectList(Model.QAList, "UserID", "Member_name"), "Select", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.QAID, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
                                 @Html.TextBoxFor(m => m.QASentDate, new { @class = "form-control", @type = "date" })
                                 @Html.ValidationMessageFor(m => m.QASentDate, string.Empty, new { @style = "color:red" })
                             </div>

@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="taskname">ชื่องาน :</label>
+                            <label for="taskname">@Html.Label("*", new { @style = "color:red" }) ชื่องาน :</label>
                             @Html.HiddenFor(m => m.TaskID)
                             @{
                                 if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="comment">รายละเอียดงาน :</label>
+                            <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดงาน :</label>
                             @{
                                 if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                 {
@@ -63,7 +63,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="taskname">ชื่องานรอง :</label>
+                                    <label for="taskname">@Html.Label("*", new { @style = "color:red" }) ชื่องานรอง :</label>
                                     @Html.HiddenFor(m => m.SubTaskID)
                                     @{
                                         if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
@@ -81,7 +81,7 @@
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <label class="label" for="step" style="margin-right: 10px">Step :</label>
+                                    <label class="label" for="step" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) Step :</label>
                                     <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
                                         <select name="step">
                                             <option>1</option>
@@ -90,7 +90,7 @@
                                         </select>
                                         <div class="select-dropdown"></div>
                                     </div>
-                                    <label class="label" for="level" style="margin-right: 10px">ระดับ :</label>
+                                    <label class="label" for="level" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ระดับ :</label>
                                     <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
                                         @{
                                             if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
@@ -111,7 +111,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="comment">รายละเอียดงานของผู้พัฒนาซอฟแวร์ :</label>
+                                    <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดงานของผู้พัฒนาซอฟแวร์ :</label>
                                     @{
                                         if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                         {
@@ -129,7 +129,7 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>
+                                    <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ผู้รับมอบหมาย :</label>
 
                                     @{
                                         if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
@@ -149,7 +149,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <label class="label" style="margin-right: 10px">กำหนดส่ง:</label>
+                                    <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง:</label>
                                     @{
                                         if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                         {
@@ -185,12 +185,12 @@
                                 {
                                     if (Model.Handle == Convert.ToInt32(Session["userID"]))
                                     {
-                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
                                         @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control" })
                                     }
                                     else
                                     {
-                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
                                         @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
                                     }
                                 }
@@ -198,17 +198,17 @@
                                 {
                                     if (Model.Handle == Convert.ToInt32(Session["userID"]))
                                     {
-                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
                                         @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ทดสอบ:</label>
                                         @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control" })
 
                                     }
                                     else
                                     {
-                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
                                         @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ทดสอบ:</label>
                                         @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
                                     }
 
@@ -217,21 +217,21 @@
                                 {
                                     if (Model.Handle == Convert.ToInt32(Session["userID"]))
                                     {
-                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
                                         @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ทดสอบ:</label>
                                         @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุผู้ตรวจสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ตรวจสอบ:</label>
                                         @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control" })
 
                                     }
                                     else
                                     {
-                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
                                         @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ทดสอบ:</label>
                                         @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุผู้ตรวจสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ตรวจสอบ:</label>
                                         @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
                                     }
                                 }
@@ -239,37 +239,37 @@
                                 {
                                     if (Model.Handle == Convert.ToInt32(Session["userID"]))
                                     {
-                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
                                         @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ทดสอบ:</label>
                                         @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุผู้ตรวจสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ตรวจสอบ:</label>
                                         @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุลูกค้า:</label>
+                                    <label for="comment">หมายเหตุลูกค้า:</label>
                                         @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", })
 
                                     }
                                     else
                                     {
-                                        <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
                                         @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ทดสอบ:</label>
                                         @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุผู้ตรวจสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ตรวจสอบ:</label>
                                         @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
-                                        <label for="comment"> หมายเหตุลูกค้า:</label>
+                                    <label for="comment">หมายเหตุลูกค้า:</label>
                                         @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", Readonly = "" })
                                     }
                                 }
                                 else
                                 {
-                                    <label for="comment"> หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                    <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
                                     @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
-                                    <label for="comment"> หมายเหตุผู้ทดสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ทดสอบ:</label>
                                     @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
-                                    <label for="comment"> หมายเหตุผู้ตรวจสอบ:</label>
+                                    <label for="comment">หมายเหตุผู้ตรวจสอบ:</label>
                                     @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
-                                    <label for="comment"> หมายเหตุลูกค้า:</label>
+                                    <label for="comment">หมายเหตุลูกค้า:</label>
                                     @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", Readonly = "" })
                                 }
                             }
@@ -283,7 +283,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">รายละเอียดของผู้ทดสอบ :</label>
+                                <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดของผู้ทดสอบ :</label>
                                 @if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                 {
                                     @Html.TextAreaFor(m => m.DescriptionTest, new { @class = "form-control", @type = "TextArea" })
@@ -301,7 +301,7 @@
                     <div class="col-sm-8">
                         <div class="input-group">
                             <div class="col-sm-6">
-                                <label class="label" style="margin-right: 10px">ผู้ทดสอบ:</label>
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ผู้ทดสอบ:</label>
                                 @{
                                     if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                     {
@@ -315,7 +315,7 @@
                                 }
                             </div>
                             <div class="col-sm-6">
-                                <label class="label" style="margin-right: 10px">กำหนดส่ง:</label>
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง:</label>
                                 @{
                                     if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                     {
@@ -338,7 +338,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="comment">รายละเอียดของผู้ตรวจสอบ :</label>
+                                <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดของผู้ตรวจสอบ :</label>
                                 @if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                 {
                                     @Html.TextAreaFor(m => m.DescriptionQA, new { @class = "form-control", @type = "TextArea" })
@@ -357,7 +357,7 @@
                     <div class="col-sm-8">
                         <div class="input-group">
                             <div class="col-sm-6">
-                                <label class="label" style="margin-right: 10px">ผู้ตรวจงาน :</label>
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ผู้ตรวจงาน :</label>
                                 @{
                                     if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                     {
@@ -371,7 +371,7 @@
                                 }
                             </div>
                             <div class="col-sm-6">
-                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
+                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
                                 @{
                                     if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                     {
