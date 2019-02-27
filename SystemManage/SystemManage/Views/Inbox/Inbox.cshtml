@@ -3,61 +3,62 @@
 @{
     ViewBag.Title = "Inbox";
     Layout = "~/Views/Shared/_MainMenu.cshtml";
-}
-<div class="card">
-    <div class="card-body">
+}<div id="flip">
+    <center><i class="fas fa-arrow-down"></i></center><div>
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-4" style="margin: auto">
-                        <h1 style="margin-bottom: 20pt">Inbox</h1>
-                    </div>
-                    <div class="col-sm-6">    </div>
-                    <div class="col-sm-1" style="margin: auto">
-                        <a href="@Url.Action("AddInbox", "Inbox")"><button type="button" class="btn btn-outline-success">ส่งข้อความ</button></a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 " style="overflow-x:auto">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr class="table-info">
-                                    <th><center>ลำดับ</center></th>
-                                    <th><center>หัวข้อ</center></th>
-                                    <th><center>สถานะ</center></th>
-                                    <th><center>ผู้รับ</center></th>
-                                    <th><center>อ่าน</center></th>
-                                    <th><center>ลบ</center></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    int c = 1;
-                                    foreach (var item in (List<InboxModel>)ViewBag.DataList)
-                                    {
-                                        <tr>
-                                            <td><center>@c</center></td>
-                                            <td><center>@item.MailName</center></td>
-                                            @if (item.Status == 1)
-                                            {
-                                                <td><center>ใหม่</center></td>
-                                            }
-                                            else if (item.Status == 0)
-                                            {
-                                                <td><center>อ่านแล้ว</center></td>
-                                            }
-                                            <td><center>@item.SendTo</center></td>
-                                            <td><center><a href="@Url.Action("ReadMail", new { MailID = item.MailID })"><i class="fas fa-book-open"></i></a></center></td>
-                                            <td><center><a href="@Url.Action("DeleteMessage", new { MailID = item.MailID })"><i class="fas fa-backspace"></i></a></center></td>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4" style="margin: auto">
+                                <h1 style="margin-bottom: 20pt">ข้อความ</h1>
+                            </div>
+                            <div class="col-sm-6">    </div>
+                            <div class="col-sm-1" style="margin: auto">
+                                <a href="@Url.Action("AddInbox", "Inbox")"><button type="button" class="btn btn-outline-success">ส่งข้อความ</button></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 " style="overflow-x:auto">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="table-info">
+                                            <th><center>ลำดับ</center></th>
+                                            <th><center>หัวข้อ</center></th>
+                                            <th><center>สถานะ</center></th>
+                                            <th><center>ผู้รับ</center></th>
+                                            <th><center>อ่าน</center></th>
+                                            <th><center>ลบ</center></th>
                                         </tr>
-                                        ++c;
-                                    }
-                                }
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int c = 1;
+                                            foreach (var item in (List<InboxModel>)ViewBag.DataList)
+                                            {
+                                                <tr>
+                                                    <td><center>@c</center></td>
+                                                    <td><center>@item.MailName</center></td>
+                                                    @if (item.Status == 1)
+                                                    {
+                                                        <td><center>ใหม่</center></td>
+                                                    }
+                                                    else if (item.Status == 0)
+                                                    {
+                                                        <td><center>อ่านแล้ว</center></td>
+                                                    }
+                                                    <td><center>@item.SendTo</center></td>
+                                                    <td><center><a href="@Url.Action("ReadMail", new { MailID = item.MailID })"><i class="fas fa-book-open"></i></a></center></td>
+                                                    <td><center><a href="@Url.Action("DeleteMessage", new { MailID = item.MailID })"><i class="fas fa-backspace"></i></a></center></td>
+                                                </tr>
+                                                ++c;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>

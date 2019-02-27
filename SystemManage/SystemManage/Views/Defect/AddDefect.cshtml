@@ -1,9 +1,4 @@
-﻿<style>
-    input, select, textarea {
-        max-width: 2800px;
-    }
-</style>
-@{
+﻿@{
     if (Session["userID"] == null && Session["ProjectID"] == null)
     {
         Response.Redirect("~/Login/Index");
@@ -25,7 +20,6 @@
     <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
     <script>
-
         //***scritpt datepicker***//
         $(function () {
             $("#datepicker1").datepicker();
@@ -40,38 +34,43 @@
             $("#datepicker10").datepicker();
         });
         //***//
-
         //***script addsubtask***//
         $(document).ready(function () {
             var i = 1;
             $("#add").click(function () {
                 i++;
-                 var domElement = $('<div class="row"> <div class="col-sm-12"> <div class="form-group"> <label for="comment">รายละเอียดข้อผิดพลาด:</label> <textarea class="form-control" cols="20" id="DetailList" name="DetailList" rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 118px;"></textarea> </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="input-group"> <label class="label" style="margin-right: 10px">กำหนดส่ง :</label> <input class="form-control" id="SendDateList" name="SendDateList" type="date" value=""> </div> </div> </div> <div class="row"> <div class="col-sm-4"> <div class="form-group"> <input type="file" class="form-control-file" id="exampleFormControlFile1"> </div> </div> </div>');
+                var domElement = $('<div class ="card" id="new"><dic class ="card-body"><div class="row"> <div class="col-sm-12"><div class="form-group"> <label for="comment">รายละเอียดข้อผิดพลาด: </label> <label style="float:right"><a href="#div" id="cancel"><img src="/icon/cancel.png" width="24px" height="24px"></a></label> <textarea class="form-control" cols="20" id="DetailList" name="DetailList" rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 118px;"></textarea> </div> </div></div> <div class="row"> <div class="col-sm-6"> <div class="input-group"> <label class="label" style="margin-right: 10px">กำหนดส่ง :</label> <input class="form-control" id="SendDateList" name="SendDateList" type="date" value=""> </div> </div>  <div class="col-sm-6"> <div class="form-group"> <input type="file" class="form-control-file" id="exampleFormControlFile1"> </div> </div> </div></div> </div>');
                 $(this).parent('div').before(domElement);
             });
         });
         //***//
-
         //***script deletesubtask***//
         $(document).on('click', '#cancel', function () {
             var c = confirm("ยืนยันการลบที่จะลบ Defect นี้");
             if (c == true) {
-                $(this).parent('div').parent('div').parent('div').parent('div').remove();
+                $(this).parentsUntil("#new").parent().remove();
             }
-
         });
         //***//
-
         //***script confrimrefresh***//
         window.onbeforeunload = function () {
             return "ข้อมูลไม่ได้บันทึก";
         };
-                            //***//
-
+                                    //***//
     </script>
     <!-- end datepicker script -->
+    <style>
+        select, textarea {
+            max-width: 2800px;
+            height: 150px
+        }
 
-    <title>Defect</title>
+            textarea.form-control {
+                height: 150px;
+                resize: none;
+            }
+    </style>
+    <title>ข้อผิดพลาด</title>
 </head>
 <body>
     @using (Ajax.BeginForm("AddDefect", "Defect", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
@@ -79,16 +78,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <h1 class="text-center" style="margin-top: 20pt">Defect</h1>
+                    <h1 class="text-center" style="margin-top: 20pt">ข้อผิดพลาด</h1>
                 </div>
             </div>
-            <div class="card shadow" style="margin-top: 50px;margin-bottom: 50px">
+            <div class="card shadow" style="margin-top: 10px;margin-bottom: 50px">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="taskname">ชื่องาน :</label>
-                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" , ReadOnly = ""})
+                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control", ReadOnly = "" })
                             </div>
                         </div>
 
@@ -97,39 +96,40 @@
                             <div class="form-group">
                                 <label for="taskname">ชื่องานรอง :</label>
                                 @Html.HiddenFor(m => m.Sub_ID)
-                                @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control" , Readonly = ""})
+                                @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control", Readonly = "" })
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>
-                                @Html.TextBoxFor(m => m.DevName, new { readOnreadOnly = true, @class = "form-control" , ReadOnly ="" })
+                                @Html.TextBoxFor(m => m.DevName, new { readOnreadOnly = true, @class = "form-control", ReadOnly = "" })
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดข้อผิดพลาด:</label>
-                                @Html.TextAreaFor(m => m.DetailList, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.DetailList,Model.Error_Detail, new { @class = "text-danger" })
+                    <div class="card" style="margin-top:20px">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดข้อผิดพลาด:</label>
+                                        @Html.TextAreaFor(m => m.DetailList, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.DetailList, Model.Error_Detail, new { @class = "text-danger" })
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        
-                        <div class="col-sm-4">
-                            <div class="input-group">
-                                <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
-                                @Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control", @type = "date" })
-                                @Html.ValidationMessageFor(m => m.SendDateList, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
+                                        @Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control", @type = "date" })
+                                        @Html.ValidationMessageFor(m => m.SendDateList, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <input type="file" id="exampleFormControlFile1">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

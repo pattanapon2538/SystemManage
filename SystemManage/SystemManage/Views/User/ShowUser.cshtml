@@ -23,12 +23,12 @@
                         <label for="language" class="col-sm-2 col-form-label">ชื่อ : </label>
                         <div class="col-sm-4">
                             @Html.HiddenFor(m => m.Users_ID)
-                            @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล"})
+                            @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
                             @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">นามสกุล : </label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล"})
+                            @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
                             @Html.ValidationMessageFor(m => m.User_LastName, string.Empty, new { @style = "color:red" })
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">สัญญา : </label>
                         <div class="col-sm-4">
-                            @Html.DropDownListFor(m => m.Contract_ID, new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "ประเภทสัญญา",new {@class = "form-control" })
+                            @Html.DropDownListFor(m => m.Contract_ID, new SelectList(Model.ContractsList, "Contrat_ID", "Contrat_Name"), "ประเภทสัญญา", new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Contract_ID, string.Empty, new { @style = "color:red" })
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">สัญญาจาก : </label>
@@ -131,14 +131,26 @@
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">ตำแหน่งงาน : </label>
                         <div class="col-sm-4">
-                            @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "กำหนดตำแหน่ง",new {@class ="form-control" })
+                            @Html.DropDownListFor(m => m.Position_ID, new SelectList(Model.PositionList, "Position_ID", "Name"), "กำหนดตำแหน่ง", new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Position_ID, string.Empty, new { @style = "color:red" })
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">ทักษะภาษาโปรแกรม : </label>
                         <div class="col-sm-4">
-                            @Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "เลือกภาษา",new { @class ="form-control"})
+                            @*@Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "เลือกภาษา", new { @class = "multiselect" })*@
+                            <script>
+                                $('#example-single').multiselect();
+                            </script>
+                            <!-- Note the missing multiple attribute! -->
+                            <select id="example-single" class="example-single">
+                                <option value="1">Option 1</option>
+                                <option value="2">Option 2</option>
+                                <option value="3">Option 3</option>
+                                <option value="4">Option 4</option>
+                                <option value="5">Option 5</option>
+                                <option value="6">Option 6</option>
+                            </select>
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">กำหนดสิทธิ์ : </label>
                         <div class="col-sm-4">
@@ -159,7 +171,7 @@
                                     <label class="form-check-label">
                                         ลูกค้า
                                     </label>
-                                     @Html.RadioButtonFor(m => m.Permission, "C")
+                                    @Html.RadioButtonFor(m => m.Permission, "C")
                                 </div>
                             </div>
                         </div>
@@ -253,7 +265,7 @@
         </div>
     </div>
 </div>
-    <script>
+<script>
         function DetailUser(Users_ID) {
             $.ajax({
                 type: "POST",
@@ -284,4 +296,4 @@
                 }
             });
         }
-    </script>
+</script>

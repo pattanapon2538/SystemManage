@@ -49,17 +49,21 @@
     </div>
 </div>
 </div>
-<div class="card-body">
-    <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-9"></div>
-        <div class="col-sm-2">
-            <a href="@Url.Action("Index", "UploadFile")"><button type="button" class="btn btn-success btn-block">+ เพิ่มเอกสาร </button></a>
-</div>
-    </div>
-</div>
 <div class="card">
     <div class="card-body">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-4" style="margin: auto">
+                        <h1 style="margin-bottom: 20pt">เอกสาร</h1>
+                    </div>
+                    <div class="col-sm-6">    </div>
+                    <div class="col-sm-1" style="margin: auto">
+                        <a href="@Url.Action("AddInbox", "Inbox")"><button type="button" class="btn btn-outline-success">+ เพิ่มเอกสาร</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm-12 " style="overflow-x:auto">
                 <table class="table table-bordered">
@@ -82,7 +86,7 @@
                                     <td><center>@item.DocumentName</center></td>
                                     <td><center>@item.Type</center></td>
                                     <td><center><a href="@Url.Action("DetailDocument",new {DocumentID = item.DocumentID })"><i class="fas fa-book-open"></i></a></center></td>
-                                     <td><center><a href="@Url.Action("DeleteDocument",new {DocumentID = item.DocumentID })"><i class="fas fa-backspace"></i></a></center></td>
+                                    <td><center><a href="@Url.Action("DeleteDocument",new {DocumentID = item.DocumentID })"><i class="fas fa-backspace"></i></a></center></td>
                                 </tr>
                             }
                         }

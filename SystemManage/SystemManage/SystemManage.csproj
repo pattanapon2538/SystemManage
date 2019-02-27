@@ -3454,6 +3454,7 @@
     <Content Include="Views\UploadFile\ShowDocument.cshtml" />
     <Content Include="Views\UploadFile\DetailDocument.cshtml" />
     <Content Include="Views\Member\Profile.cshtml" />
+    <Content Include="Views\Task\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

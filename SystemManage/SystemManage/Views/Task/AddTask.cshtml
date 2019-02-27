@@ -37,7 +37,6 @@
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
     <script>
-
         //***scritpt datepicker***//
         $(function () {
             $("#datepicker1").datepicker();
@@ -52,7 +51,6 @@
             $("#datepicker10").datepicker();
         });
         //***//
-
         //***script addsubtask***//
         $(document).ready(function () {
             var i = 1;
@@ -60,28 +58,24 @@
             $("#add").click(function () {
                 i++;
                 r++;
-                var domElement = $('<div class="card" id="subtask' + i + '"><div class="card-body shadow"><div class="row"><div class="col-sm-6"><div class="form-group"><label for="taskname">Sub Task Name :</label>@Html.TextBoxFor(m => m.SubTasksName, new {@class = "form-control" })</div></div><div class="col-sm-1"></div><div class="col-sm-4"><div class="input-group"><label class="label" for="step" style="margin-right: 10px">Step :</label><div class="rs-select2 js-select-simple select--no-search " style="width: 100px"><select name="step"><option>1</option><option>2</option><option>3</option></select><div class="select-dropdown"></div></div><label class="label" for="level" style="margin-right: 10px">Level :</label><div class="rs-select2 js-select-simple select--no-search " style="width: 100px"><select name="level"><option>1</option><option>2</option><option>3</option></select><div class="select-dropdown"></div></div></div></div><div class="col-sm-1"><a href="#" id="cancel"><img src = "~/icon/canel.png" ></a></div></div><div class="row"><div class="col-sm-12"><div class="form-group"><label for="comment">Description for Developer :</label>@Html.TextBoxFor(m => m.SubTasksDis,new {@class = "form-control",@type = "TextArea" })</div></div></div><div class="row"><div class="col-sm-8"> <div class="input-group"><label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>@Html.TextBoxFor(m => m.SubTaskDevID,new {@class = "form-control" })</div><div class="form-group" style="margin-top: 20px"><input type="file" class="form-control-file" id="exampleFormControlFile1"></div></div><div class="col-sm-4"><div class="input-group"><label class="label" style="margin-right: 10px">Send Date :</label>@Html.TextBoxFor(m => m.SubTaskSendDate, new {@class = "form-control", @type = "date" })</div></div></div></div></div>');
+                var domElement = $('<div class="card" id="subtask' + i + '"><div class="card-body shadow"><div class="row"><div class="col-sm-6"><div class="form-group"><label for="taskname">Sub Task Name :</label>@Html.TextBoxFor(m => m.SubTasksName, new {@class = "form-control" })</div></div><div class="col-sm-1"></div><div class="col-sm-4"><div class="input-group"><label class="label" for="step" style="margin-right: 10px">Step :</label><div class="rs-select2 js-select-simple select--no-search " style="width: 100px"><select name="step"><option>1</option><option>2</option><option>3</option></select><div class="select-dropdown"></div></div><label class="label" for="level" style="margin-right: 10px">Level :</label><div class="rs-select2 js-select-simple select--no-search " style="width: 100px"><select name="level"><option>1</option><option>2</option><option>3</option></select><div class="select-dropdown"></div></div></div></div><div class="col-sm-1"><a href="#" id="cancel"><img width="32px" height="32px" src = "/icon/cancel.png" ></a></div></div><div class="row"><div class="col-sm-12"><div class="form-group"><label for="comment">Description for Developer :</label>@Html.TextBoxFor(m => m.SubTasksDis,new {@class = "form-control",@type = "TextArea" })</div></div></div><div class="row"><div class="col-sm-8"> <div class="input-group"><label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>@Html.TextBoxFor(m => m.SubTaskDevID,new {@class = "form-control" })</div><div class="form-group" style="margin-top: 20px"><input type="file" class="form-control-file" id="exampleFormControlFile1"></div></div><div class="col-sm-4"><div class="input-group"><label class="label" style="margin-right: 10px">Send Date :</label>@Html.TextBoxFor(m => m.SubTaskSendDate, new {@class = "form-control", @type = "date" })</div></div></div></div></div>');
                 $(this).parent('div').before(domElement);
             });
         });
         //***//
-
         //***script deletesubtask***//
         $(document).on('click', '#cancel', function () {
             var c = confirm("ยืนยันการลบที่จะลบ SubTask นี้");
             if (c == true) {
                 $(this).parent('div').parent('div').parent('div').parent('div').remove();
             }
-
         });
         //***//
-
         //***script confrimrefresh***//
         window.onbeforeunload = function () {
             return "ข้อมูลไม่ได้บันทึก";
         };
                 //***//
-
     </script>
     <!-- end datepicker script -->
 
@@ -115,7 +109,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label for="taskname">@Html.Label("*",new { @style = "color:red" }) ชื่องานรอง :</label>
+                                        <label for="taskname">@Html.Label("*", new { @style = "color:red" }) ชื่องานรอง :</label>
                                         @Html.TextBoxFor(m => m.SubTasksName, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => m.SubTaskNames, string.Empty, new { @style = "color:red" })
                                     </div>

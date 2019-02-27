@@ -34,7 +34,7 @@
             <div class="col-sm-6">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Task</span>
+                        <span class="input-group-text" id="basic-addon1">งานหลัก</span>
                     </div>
                     <input type="text" id="tk" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
                 </div>
@@ -42,7 +42,7 @@
             <div class="col-sm-6">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="SubTask">Sub Task</span>
+                        <span class="input-group-text" id="SubTask">งานย่อย</span>
                     </div>
                     <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
                 </div>
@@ -69,7 +69,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="input-group" style="margin-left: 100px">
-                    <label class="label" for="subject" style="margin-right: 10px">Status :</label>
+                    <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
                     <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
                         <select name="subject">
 
@@ -83,7 +83,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="input-group">
-                    <label class="label" for="subject" style="margin-right: 10px">Percent :</label>
+                    <label class="label" for="subject" style="margin-right: 10px">เปอร์เซ็นต์   :</label>
                     <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
                         <select name="subject">
 
@@ -103,8 +103,8 @@
         </div>
         <div class="row">
             <div style="margin: auto;margin-top: 20px">
-                <button type="submit" class="btn btn-primary">Search</button>
-                <button type="button" class="btn btn-basic">Clear</button>
+                <button type="submit" class="btn btn-primary">ค้นหา</button>
+                <button type="button" class="btn btn-basic">เคลียร์</button>
             </div>
 
         </div>
@@ -117,11 +117,11 @@
             <div class="col-sm-9"></div>
             <div class="col-sm-1">
                 @*@{
-                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
-                    {
-                        <a href="@Url.Action("AddSIT", "SIT")"><button type="button" class="btn btn-success btn-block">ทดสอบ</button></a>
-                    }
-                }*@
+                        if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                        {
+                            <a href="@Url.Action("AddSIT", "SIT")"><button type="button" class="btn btn-success btn-block">ทดสอบ</button></a>
+                        }
+                    }*@
             </div>
             <div class="col-sm-1">
                 @{
@@ -214,5 +214,3 @@
         </div>
     </div>
 </div>
-
-
