@@ -59,8 +59,8 @@
                         <div class="col-sm-8">
                         </div>
                         <div class="col-sm-4">
-                            <a href="@Url.Action("Inbox")"><button type="button" class="btn btn-outline-danger">ยกเลิก</button></a>
-                            <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
+                            <a href="@Url.Action("Inbox")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>ยกเลิก</button></a>
+                            <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่่")'>ยืนยัน</button>
                         </div>
                 </div>
             </div>

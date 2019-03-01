@@ -170,7 +170,7 @@
                                             @if (i.CreateBy == Convert.ToInt32(Session["userID"]))
                                             {
                                                 <td>
-                                                    <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-backspace"></i></center></a>
+                                                    <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></center></a>
                                                 </td>
                                             }
                                         </tr>

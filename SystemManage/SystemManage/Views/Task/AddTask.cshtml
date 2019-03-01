@@ -74,7 +74,7 @@
     <title>Task</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("AddTask", "Task", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
+    @using (Ajax.BeginForm("AddTask", "Task", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() },new {@id = "form"}))
     {
         <div class="container">
             <div class="card shadow" style="margin-top: 50px;margin-bottom: 50px">
@@ -83,7 +83,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="taskname">@Html.Label("*", new { @style = "color:red" }) ชื่องาน :</label>
-                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control" })
+                                @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control"})
                                 @Html.ValidationMessageFor(m => m.TaskName, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">รายละเอียดงาน :</label>
-                                @Html.TextAreaFor(m => m.DescriptionTask, new { @class = "form-control", @type = "TextArea" })
+                                @Html.TextAreaFor(m => m.DescriptionTask, new { @class = "form-control", @type = "TextArea"  , @id = "Dsc_Task"})
                             </div>
                         </div>
                     </div>
@@ -102,8 +102,8 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="taskname">@Html.Label("*", new { @style = "color:red" }) ชื่องานรอง :</label>
-                                        @Html.TextBoxFor(m => m.SubTasksName, new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.SubTaskNames, string.Empty, new { @style = "color:red" })
+                                        @Html.TextBoxFor(m => m.SubTasksName, new { @class = "form-control" , @id = "SubtaskName"})
+                                        <p id="v_subName" style ="color:red"></p>
                                     </div>
                                 </div>
                                 <div class="col-sm-2"></div>
@@ -132,8 +132,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดของผู้พัฒนาระบบ:</label>
-                                        @Html.TextAreaFor(m => m.SubTasksDis, new { @class = "form-control", @type = "TextArea" })
-                                        @Html.ValidationMessageFor(m => m.SubTasksDis, string.Empty, new { @style = "color:red" })
+                                        @Html.TextAreaFor(m => m.SubTasksDis, new { @class = "form-control", @type = "TextArea" ,@id ="D_Subtask"})
                                     </div>
                                 </div>
                             </div>
@@ -142,8 +141,7 @@
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ผู้รับมอบหมาย :</label>
                                         @*@Html.TextBoxFor(m => m.SubTaskDevID, new { @class = "form-control" })*@
-                                        @Html.DropDownListFor(m => m.SubTaskDevID, new SelectList(Model.DevList, "UserID", "Member_name"), "Select", new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(m => m.SubTaskDevID, string.Empty, new { @style = "color:red" })
+                                        @Html.DropDownListFor(m => m.SubTaskDevID, new SelectList(Model.DevList, "UserID", "Member_name"), "Select", new { @class = "form-control" ,@id="SubDevID" })
                                     </div>
                                     <div class="form-group" style="margin-top: 20px">
                                         <input type="file" class="form-control-file" id="exampleFormControlFile1">
@@ -152,8 +150,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
-                                        @Html.TextBoxFor(m => m.SubTaskSendDate, new { @class = "form-control", @type = "date" })
-                                        @Html.ValidationMessageFor(m => m.SubTaskSendDate, string.Empty, new { @style = "color:red" })
+                                        @Html.TextBoxFor(m => m.SubTaskSendDate, new { @class = "form-control", @type = "date" ,@id = "SubTaskSendDate" })
                                     </div>
                                 </div>
                             </div>
@@ -219,8 +216,8 @@
                             </div>
                         </div>
                         <div class="col-sm-2">
-                            <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
-                            <button type="submit" class="btn btn-outline-primary" onclick="return confirm('ยืนยันการทำรายการ')">ยีนยัน</button>
+                            <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่")'>กลับ</button></a>
+                            <button id ="submit" type="submit" class="btn btn-outline-primary" onclick='return confirm("กรุณายืนยันการทำรายการ")'>ยีนยัน</button>
                         </div>
                     </div>
                 </div>

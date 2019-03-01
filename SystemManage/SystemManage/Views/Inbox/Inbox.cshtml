@@ -49,7 +49,7 @@
                                                     }
                                                     <td><center>@item.SendTo</center></td>
                                                     <td><center><a href="@Url.Action("ReadMail", new { MailID = item.MailID })"><i class="fas fa-book-open"></i></a></center></td>
-                                                    <td><center><a href="@Url.Action("DeleteMessage", new { MailID = item.MailID })"><i class="fas fa-backspace"></i></a></center></td>
+                                                    <td><center><a href="@Url.Action("DeleteMessage", new { MailID = item.MailID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center></td>
                                                 </tr>
                                                 ++c;
                                             }

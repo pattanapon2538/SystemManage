@@ -219,12 +219,12 @@
                         <div class="col-sm-10">
                         </div>
                         <div class="col-sm-2">
-                            <a href="@Url.Action("ShowTask", "Task", new { SubTask = Session["SubTask"] })"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
-                            <button type="submit" class="btn btn-outline-primary">บันทึก</button>
+                            <a href="@Url.Action("ShowTask", "Task", new { SubTask = Session["SubTask"] })"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>กลับ</button></a>
+                            <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")'>บันทึก</button>
                             @{
                                 if (Convert.ToInt32(Session["Save_Defect"]) == 1)
                                 {
-                                    <a href="@Url.Action("Send_Defect","Defect")"><button type="button" class="btn btn-outline-success">ส่งงาน</button></a>
+                                    <a href="@Url.Action("Send_Defect","Defect")"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่่")'>ส่งงาน</button></a>
                                 }
                             }
                         </div>

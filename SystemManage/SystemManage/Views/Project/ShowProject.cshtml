@@ -120,7 +120,7 @@
                                                 </td>
                                                 <td>
                                                     <center>
-                                                        <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace"></i></a>
+                                                        <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a>
                                                     </center>
                                                 </td>
                                             }

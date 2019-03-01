@@ -131,7 +131,6 @@
                             <th><center>ลำดับ</center></th>
                             <th><center>ชื่อ</center></th>
                             <th><center>รายละเอียด</center></th>
-                            <th><center></center></th>
                             @{
                                 if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                 {
@@ -145,12 +144,17 @@
                             int n = 1;
                             foreach (var i in (List<SITModel>)ViewBag.DataList)
                             {
-                                <tr>
-                                    <td><center>@n</center></td>
-                                    <td><center>@i.Name</center></td>
-                                    <td><center>@i.Detail</center></td>
-                                    <td><center>@i.CreateDate</center></td>
-                                </tr>
+                        <tr>
+                            <td><center>@n</center></td>
+                            <td><center>@i.Name</center></td>
+                            <td><center>@i.Detail</center></td>
+                            @{
+                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                {
+                                    <td><center><a href="@Url.Action("DeleteTask", new { SubID = i.SIT_ID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center></td>
+                                }
+                            }
+                        </tr>
                                 ++n;
                             }
                         }

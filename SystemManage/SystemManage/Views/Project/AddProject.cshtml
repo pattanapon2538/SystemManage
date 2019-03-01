@@ -70,8 +70,8 @@
                     <div class="col-sm-3 ">
                     </div>
                     <div class="col-sm-3"></div>
-                    <div class="col-sm-3"><a href="@Url.Action("ShowProject")"><button type="button" class="btn btn-outline-danger btn-block shadow">ยกเลิก</button></a></div>
-                    <div class="col-sm-3"><button type="submit" class="btn btn-outline-primary btn-block shadow ">ยืนยัน</button></div>
+                    <div class="col-sm-3"><a href="@Url.Action("ShowProject")"><button type="button" class="btn btn-outline-danger btn-block shadow" onclick='return confirm("คุณต้องการยกเลิกทำรายการใช่หรือไม่่")'>ยกเลิก</button></a></div>
+                    <div class="col-sm-3"><button type="submit" class="btn btn-outline-primary btn-block shadow" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'>ยืนยัน</button></div>
                 </div>
             </div>
         </div>

@@ -140,8 +140,8 @@
                         <div class="col-sm-10">
                         </div>
                         <div class="col-sm-2">
-                            <a href="@Url.Action("ShowTask", "Task", new { SubTask = Session["SubTask"] })"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
-                            <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
+                            <a href="@Url.Action("ShowTask", "Task", new { SubTask = Session["SubTask"] })"><button type="button" class="btn btn-outline-danger" onclick='return("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>ยกเลิก</button></a>
+                            <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการยินยันการทำรายการใช่หรือไม่่")'>ยืนยัน</button>
 
                         </div>
                     </div>
