@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace SystemManage.Controllers
 {
-    
+
     public class SITController : Controller
     {
         Entities db = new Entities();
@@ -55,6 +55,12 @@ namespace SystemManage.Controllers
             }
             ViewBag.DataList = model;
             return View(data);
+        }
+        public ActionResult DetailSIT(int SIT_ID)
+        {
+            var SIT = db.SITs.Where(m => m.SIT_ID == SIT_ID).FirstOrDefault();
+            SITModel model = new SITModel();
+            return View();
         }
     }
 }

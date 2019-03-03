@@ -444,5 +444,20 @@ namespace SystemManage.Controllers
             ViewBag.DataList = TaskList;
             return View(model);
         }
+        public ActionResult CheckMember(string userID)
+        {
+            Boolean c = false;
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+            int user_ID = Convert.ToInt32(userID);
+            var m = db.ProjectMembers.Where(x => x.ProjectID == ProjectID && x.UserID == user_ID).ToList();
+            if (m.Count == 0)
+            {
+                return RedirectToAction("AddMember", "Member", new { userID = userID });
+            }
+            else
+            {
+                return Json(new { c = c = true });
+            }
+        }
     }
 }

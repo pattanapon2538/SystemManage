@@ -190,7 +190,7 @@
                                                     <td><center>@item.Amount_Succ.ToString("P1")</center></td>
                                                     <td><center>@item.TotalCoding</center></td>
                                                     <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                    <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
+                                                    <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
                                                 }
                                             }
 
@@ -213,7 +213,7 @@
                                                 <td><center>@item.Amount_Succ.ToString("P1")</center></td>
                                                 <td><center>@item.TotalCoding</center></td>
                                                 <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
+                                                <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
 
                                             }
                                         </tr>
@@ -238,7 +238,7 @@
                                                     <td><center>@item.Amount_Succ.ToString("P1")</center></td>
                                                     <td><center>@item.TotalCoding</center></td>
                                                     <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                    <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
+                                                    <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
                                                 }
                                             }
 
@@ -266,6 +266,24 @@
 <script>
     function information() {
         alert("0 = ยังไม่เคยทำงาน \n1 - 2.9 = ง่าย\n3 - 4.9 = ปานกลาง\n 5 = ยาก");
+    }
+</script>
+<script>
+    function CheckMember(userID) {
+
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action("CheckMember", "Member"))",
+            data: { userID: userID },
+            dataType: "json",
+            success: function (data)
+            {
+                if (data.c == true)
+                {
+                    alert("มีผู้ใช้อยู่ระบบโครงการแล้ว");
+                }
+            }
+        });
     }
 </script>
 @*<script>

@@ -18,11 +18,10 @@
         var i = 1;
     $("#add").click(function() {
         i++;
-        var domElement = $('<div class="row"> <div class="col-sm-2"></div> <div class="col-sm-8"> <div class="row"> <div class="col-sm-2"></div> <div class="col-sm-4"> <label class="label" >Step '+i+' :</label> </div> <div class="col-sm-4"> <div class="input-group"> @Html.TextBoxFor(m => m.Task_ID, new { @class = "form-control" ,@type ="Dropdown"}) </div> </div> <div class="col-sm-2"> <a href="#" id="cancel"><img src = "~/icon/cancel.png" width="24px" height="24px" ></a> </div> </div> </div> </div> <div class="col-sm-2"></div> </div>');
+        var domElement = $('<div class="row"> <div class="col-sm-2"></div> <div class="col-sm-8"> <div class="row"> <div class="col-sm-2"></div> <div class="col-sm-4"> <label class="label">Step '+i+' :</label> </div> <div class="col-sm-4"> <div class="input-group"> @Html.Raw(Ajax.JavaScriptStringEncode(Html.DropDownListFor(m => m.Task_ID, new SelectList(Model.Task, "TaskID", "TaskName"), "Select", new { @class = "form-control" }).ToHtmlString())) </div> </div> <div class="col-sm-2"> <a href="#" id="cancel"><img src="/icon/cancel.png" width="24px" height="24px"></a> </div> </div> </div> </div> <div class="col-sm-2"></div> </div>');
         $(this).parent('div').before(domElement);
     });
     });
-
     $(document).on('click','#cancel',function() {
         var c = confirm("ยืนยันการลบที่จะลบ Defect นี้");
         if (c == true) {
@@ -30,11 +29,10 @@
         $(this).parent('div').parent('div').parent('div').parent('div').remove();
         }
     });
-
     window.onbeforeunload = function ()
     {
         return "ข้อมูลไม่ได้บันทึก";
-    };
+    };//*
     </script>
     <title>SIT</title>
 </head>
@@ -44,7 +42,7 @@
         <div class="container">
             <div class="card" style="margin-top: 20px">
                 <div class="card-body" style="margin: auto">
-                    <h1 style="text-align: center;margin-bottom: 30px">System Integration Testing</h1>
+                    <h1 style="text-align: center;margin-bottom: 30px">ทดสอบทั้งระบบ</h1>
                     <div class="row">
                         <div class="col-sm-2"></div>
                         <div class="col-sm-8">
@@ -55,7 +53,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="input-group">
-                                        @Html.TextBoxFor(m => m.Name,new {@class = "form-control" })
+                                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +68,7 @@
                                 <div class="col-sm-4">
                                     <label class="label">Step 1 :</label>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <div class="input-group">
                                         @Html.DropDownListFor(m => m.Task_ID, new SelectList(Model.Task, "TaskID", "TaskName"), "Select", new { @class = "form-control" })
                                     </div>
@@ -86,7 +84,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">รายละเอียดในการทดสอบ:</label>
-                                @Html.TextAreaFor(m => m.Detail, new { @class ="form-control"})
+                                @Html.TextAreaFor(m => m.Detail, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -121,11 +119,9 @@
             </div>
         </div>
     }
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </body>
-
-    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>

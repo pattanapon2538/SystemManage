@@ -23,5 +23,6 @@ namespace SystemManage.Models
 
         public List<Task> Task { get; set; }
         public List<ProjectMember> Tester { get; set; }
+        public List<SubTask> SubTask { get; set; }
     }
 }
