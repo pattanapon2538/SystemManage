@@ -742,9 +742,6 @@ namespace SystemManage.Controllers
             }
             return RedirectToAction("ShowTask");
         }
-        public ActionResult test()
-        {
-            return View();
-        }
+       
     }
 }
