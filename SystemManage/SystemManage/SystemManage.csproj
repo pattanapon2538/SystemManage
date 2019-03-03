@@ -247,6 +247,7 @@
     <Compile Include="Models\PositionModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Models\SITModel.cs" />
+    <Compile Include="Models\SITStep.cs" />
     <Compile Include="Models\SkillModel.cs" />
     <Compile Include="Models\SubTaskModel.cs" />
     <Compile Include="Models\SubTaskSubmisstionModel.cs" />

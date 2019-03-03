@@ -14,12 +14,12 @@ namespace SystemManage.Database
     
     public partial class SITStep
     {
-        public int SITStep1 { get; set; }
+        public int Step_ID { get; set; }
         public int SIT_ID { get; set; }
         public int Step { get; set; }
-        public int Sub_ID { get; set; }
+        public int Task_ID { get; set; }
     
         public virtual SIT SIT { get; set; }
-        public virtual SubTask SubTask { get; set; }
+        public virtual Task Task { get; set; }
     }
 }

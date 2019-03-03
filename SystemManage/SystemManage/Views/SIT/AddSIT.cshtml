@@ -18,7 +18,7 @@
         var i = 1;
     $("#add").click(function() {
         i++;
-        var domElement = $('<div class="row"> <div class="col-sm-2"></div> <div class="col-sm-8"> <div class="row"> <div class="col-sm-2"></div> <div class="col-sm-4"> <label class="label">Step '+i+' :</label> </div> <div class="col-sm-4"> <div class="input-group"> @Html.Raw(Ajax.JavaScriptStringEncode(Html.DropDownListFor(m => m.Task_ID, new SelectList(Model.Task, "TaskID", "TaskName"), "Select", new { @class = "form-control" }).ToHtmlString())) </div> </div> <div class="col-sm-2"> <a href="#" id="cancel"><img src="/icon/cancel.png" width="24px" height="24px"></a> </div> </div> </div> </div> <div class="col-sm-2"></div> </div>');
+        var domElement = $('<div class="row"> <div class="col-sm-2"></div> <div class="col-sm-8"> <div class="row"> <div class="col-sm-2"></div> <div class="col-sm-4"> <label class="label">Step '+i+' :</label> </div> <div class="col-sm-4"> <div class="input-group"> @Html.Raw(Ajax.JavaScriptStringEncode(Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName"), "Select", new { @class = "form-control" }).ToHtmlString())) </div> </div> <div class="col-sm-2"> <a href="#" id="cancel"><img src="/icon/cancel.png" width="24px" height="24px"></a> </div> </div> </div> </div> <div class="col-sm-2"></div> </div>');
         $(this).parent('div').before(domElement);
     });
     });
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        @Html.DropDownListFor(m => m.Task_ID, new SelectList(Model.Task, "TaskID", "TaskName"), "Select", new { @class = "form-control" })
+                                        @Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName"), "Select", new { @class = "form-control" })
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
                         <div class="col-sm-5">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>
-                                @Html.DropDownListFor(m => m.Task_ID, new SelectList(Model.Tester, "UserID", "UserID"), "Select", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name"), "Select", new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -103,7 +103,7 @@
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
-                                <input type="text" id="datepicker2">
+                               @Html.TextBoxFor(m => m.Send_Date , new {@class = "form-control" , @type = "date"})
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-sm-3">
                             <a href="@Url.Action("ShowSIT")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>ยกเลิก</button></a>
-                            <button type="button" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการยืนยันการทำรายการใช่หรือไม่่")'>ยืนยันs</button>
+                            <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการยืนยันการทำรายการใช่หรือไม่่")'>ยืนยัน</button>
                         </div>
                     </div>
                 </div>

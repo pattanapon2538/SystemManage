@@ -17,7 +17,6 @@ namespace SystemManage.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SubTask()
         {
-            this.SITSteps = new HashSet<SITStep>();
             this.SubTaskSubmisstions = new HashSet<SubTaskSubmisstion>();
             this.Defects = new HashSet<Defect>();
         }
@@ -42,8 +41,6 @@ namespace SystemManage.Database
         public string Comment_QA { get; set; }
         public string Comment_CM { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SITStep> SITSteps { get; set; }
         public virtual Task Task { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubTaskSubmisstion> SubTaskSubmisstions { get; set; }

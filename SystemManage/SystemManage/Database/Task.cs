@@ -18,6 +18,7 @@ namespace SystemManage.Database
         public Task()
         {
             this.SubTasks = new HashSet<SubTask>();
+            this.SITSteps = new HashSet<SITStep>();
         }
     
         public int TaskID { get; set; }
@@ -44,5 +45,7 @@ namespace SystemManage.Database
         public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubTask> SubTasks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SITStep> SITSteps { get; set; }
     }
 }

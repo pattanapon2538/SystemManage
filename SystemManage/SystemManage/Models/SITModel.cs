@@ -20,9 +20,13 @@ namespace SystemManage.Models
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
         public int Task_ID { get; set; }
+        public int Dev_ID { get; set; }
+        public DateTime Send_Date { get; set; }
+        public List<int> TaskList { get; set; }
 
         public List<Task> Task { get; set; }
         public List<ProjectMember> Tester { get; set; }
         public List<SubTask> SubTask { get; set; }
+
     }
 }

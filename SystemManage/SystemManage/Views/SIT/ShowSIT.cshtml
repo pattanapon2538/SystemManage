@@ -147,11 +147,11 @@
                         <tr>
                             <td><center>@n</center></td>
                             <td><center>@i.Name</center></td>
-                            <td><center>@i.Detail</center></td>
+                            <td><center><a href="@Url.Action("DetailSIT", new { SIT_ID = i.SIT_ID })"><i class="fas fa-book-open"></i></a></center></td>
                             @{
                                 if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                 {
-                                    <td><center><a href="@Url.Action("DeleteTask", new { SubID = i.SIT_ID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center></td>
+                                    <td><center><a href="@Url.Action("DeleteSIT", new { SIT_ID = i.SIT_ID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center></td>
                                 }
                             }
                         </tr>

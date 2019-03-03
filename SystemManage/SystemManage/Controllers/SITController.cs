@@ -26,6 +26,7 @@ namespace SystemManage.Controllers
         public ActionResult AddSIT(SITModel model)
         {
             SIT s = new SIT();
+            Database.SITStep Step = new Database.SITStep();
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             s.Project_ID = ProjectID;
             s.Name = model.Name;
@@ -34,7 +35,16 @@ namespace SystemManage.Controllers
             s.CreateBy = Convert.ToInt32(Session["userID"]);
             db.SITs.Add(s);
             db.SaveChanges();
-            return RedirectToAction("ShowTask", "Task");
+            var c = model.TaskList.Count();
+            for (int item = 0; item < c; item++)
+            {
+                Step.Task_ID = model.TaskList[item];
+                Step.Step = item;
+                Step.SIT_ID = s.SIT_ID;
+                db.SITSteps.Add(Step);
+                db.SaveChanges();
+            }
+                return RedirectToAction("ShowSIT", "SIT");
         }
         public ActionResult ShowSIT()
         {
@@ -61,6 +71,19 @@ namespace SystemManage.Controllers
             var SIT = db.SITs.Where(m => m.SIT_ID == SIT_ID).FirstOrDefault();
             SITModel model = new SITModel();
             return View();
+        }
+        public ActionResult DeleteSIT(int SIT_ID)
+        {
+            var Step = db.SITSteps.Where(m => m.SIT_ID == SIT_ID).ToList();
+            foreach (var item in Step)
+            {
+                db.SITSteps.Remove(item);
+                db.SaveChanges();
+            }
+            var SIT = db.SITs.Where(m => m.SIT_ID == SIT_ID).FirstOrDefault();
+            db.SITs.Remove(SIT);
+            db.SaveChanges();
+            return RedirectToAction("ShowSIT", "SIT");
         }
     }
 }

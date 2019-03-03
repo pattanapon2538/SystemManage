@@ -28,12 +28,12 @@ namespace SystemManage.Controllers
                 Document d = new Document();
                 var data = Process(model.AttachFile);
                 string[] txt = data.Split(",".ToCharArray());
-                string fileName = txt[0];
-                string path = txt[1];
+                //string fileName = txt[0];
+                string path = data;
                 d.DocumentName = model.DocumentName;
                 d.DocumentDetail = model.DocumentDetail;
                 d.AttachFile = path;
-                d.AttachShow = fileName;
+                d.AttachShow = model.AttachFile.FileName;
                 d.CreateDate = DateTime.Now;
                 d.CreateBy = Convert.ToInt32(Session["userID"]);
                 d.Project_ID = projectID;
@@ -55,6 +55,7 @@ namespace SystemManage.Controllers
                     DocumentID = item.DocumentID,
                     DocumentName = item.DocumentName,
                     AttachShow = Type[0],
+                    pathFormView = item.AttachFile,
                     Type = Type[1],
                     CreateDate = item.CreateDate
                 });
@@ -120,8 +121,8 @@ namespace SystemManage.Controllers
                 if (photo.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(photo.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Upload"), fileName);
-                    string i = fileName + "," + path;
+                    var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
+                    string i = "/Upload/" + fileName;
                     photo.SaveAs(path);
                     ViewBag.fileName = photo.FileName;
                     if (photo.ContentType.Equals("application/pdf"))

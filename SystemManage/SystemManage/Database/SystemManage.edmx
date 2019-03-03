@@ -139,7 +139,7 @@
           <Key>
             <PropertyRef Name="SIT_ID" />
           </Key>
-          <Property Name="SIT_ID" Type="int" Nullable="false" />
+          <Property Name="SIT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Project_ID" Type="int" Nullable="false" />
           <Property Name="Tester_ID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -150,15 +150,17 @@
           <Property Name="UpdateDate" Type="date" />
           <Property Name="CreateBy" Type="int" Nullable="false" />
           <Property Name="UpdateBy" Type="int" />
+          <Property Name="Dev_ID" Type="int" Nullable="false" />
+          <Property Name="Send_Date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="SITStep">
           <Key>
-            <PropertyRef Name="SITStep" />
+            <PropertyRef Name="Step_ID" />
           </Key>
-          <Property Name="SITStep" Type="int" Nullable="false" />
+          <Property Name="Step_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SIT_ID" Type="int" Nullable="false" />
           <Property Name="Step" Type="int" Nullable="false" />
-          <Property Name="Sub_ID" Type="int" Nullable="false" />
+          <Property Name="Task_ID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Skills">
           <Key>
@@ -452,14 +454,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sub">
-          <End Role="SubTask" Type="Self.SubTask" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="1" />
           <End Role="SITStep" Type="Self.SITStep" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SubTask">
-              <PropertyRef Name="SubID" />
+            <Principal Role="Task">
+              <PropertyRef Name="TaskID" />
             </Principal>
             <Dependent Role="SITStep">
-              <PropertyRef Name="Sub_ID" />
+              <PropertyRef Name="Task_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -616,7 +618,7 @@
             <End Role="SITStep" EntitySet="SITStep" />
           </AssociationSet>
           <AssociationSet Name="FK_Sub" Association="Self.FK_Sub">
-            <End Role="SubTask" EntitySet="SubTask" />
+            <End Role="Task" EntitySet="Task" />
             <End Role="SITStep" EntitySet="SITStep" />
           </AssociationSet>
           <AssociationSet Name="FK_SubDefect" Association="Self.FK_SubDefect">
@@ -660,8 +662,6 @@
           <EntitySet Name="Positions" EntityType="SystemManageModel.Position" />
           <EntitySet Name="Projects" EntityType="SystemManageModel.Project" />
           <EntitySet Name="ProjectMembers" EntityType="SystemManageModel.ProjectMember" />
-          <EntitySet Name="SITs" EntityType="SystemManageModel.SIT" />
-          <EntitySet Name="SITSteps" EntityType="SystemManageModel.SITStep" />
           <EntitySet Name="SubDefects" EntityType="SystemManageModel.SubDefect" />
           <EntitySet Name="SubTaskSubmisstions" EntityType="SystemManageModel.SubTaskSubmisstion" />
           <EntitySet Name="Type_of_Contract" EntityType="SystemManageModel.Type_of_Contract" />
@@ -673,14 +673,6 @@
             <End Role="Project" EntitySet="Projects" />
             <End Role="ProjectMember" EntitySet="ProjectMembers" />
           </AssociationSet>
-          <AssociationSet Name="FK_SIT" Association="SystemManageModel.FK_SIT">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="SIT" EntitySet="SITs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Step" Association="SystemManageModel.FK_Step">
-            <End Role="SIT" EntitySet="SITs" />
-            <End Role="SITStep" EntitySet="SITSteps" />
-          </AssociationSet>
           <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
           <AssociationSet Name="FK_languaeID" Association="SystemManageModel.FK_languaeID">
             <End Role="Language_of_Type" EntitySet="Language_of_Type" />
@@ -691,10 +683,6 @@
           <AssociationSet Name="FK_Task" Association="SystemManageModel.FK_Task">
             <End Role="Project" EntitySet="Projects" />
             <End Role="Task" EntitySet="Tasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sub" Association="SystemManageModel.FK_Sub">
-            <End Role="SubTask" EntitySet="SubTasks" />
-            <End Role="SITStep" EntitySet="SITSteps" />
           </AssociationSet>
           <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
             <End Role="Task" EntitySet="Tasks" />
@@ -751,6 +739,20 @@
           <AssociationSet Name="FK_SubDefect" Association="SystemManageModel.FK_SubDefect">
             <End Role="Defect" EntitySet="Defects" />
             <End Role="SubDefect" EntitySet="SubDefects" />
+          </AssociationSet>
+          <EntitySet Name="SITs" EntityType="SystemManageModel.SIT" />
+          <AssociationSet Name="FK_SIT" Association="SystemManageModel.FK_SIT">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="SIT" EntitySet="SITs" />
+          </AssociationSet>
+          <EntitySet Name="SITSteps" EntityType="SystemManageModel.SITStep" />
+          <AssociationSet Name="FK_Step" Association="SystemManageModel.FK_Step">
+            <End Role="SIT" EntitySet="SITs" />
+            <End Role="SITStep" EntitySet="SITSteps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sub" Association="SystemManageModel.FK_Sub">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="SITStep" EntitySet="SITSteps" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language_of_Type">
@@ -835,11 +837,11 @@
           <Property Name="CreateBy" Type="Int32" Nullable="false" />
           <Property Name="UpdateBy" Type="Int32" />
           <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_Project" FromRole="Project" ToRole="ProjectMember" />
-          <NavigationProperty Name="SITs" Relationship="SystemManageModel.FK_SIT" FromRole="Project" ToRole="SIT" />
           <Property Name="SIT_Menu" Type="Int32" />
           <NavigationProperty Name="Tasks" Relationship="SystemManageModel.FK_Task" FromRole="Project" ToRole="Task" />
           <NavigationProperty Name="Documents" Relationship="SystemManageModel.FK_ProjectID" FromRole="Project" ToRole="Document" />
           <NavigationProperty Name="Defects" Relationship="SystemManageModel.FK_Defect_Project" FromRole="Project" ToRole="Defect" />
+          <NavigationProperty Name="SITs" Relationship="SystemManageModel.FK_SIT" FromRole="Project" ToRole="SIT" />
         </EntityType>
         <EntityType Name="ProjectMember">
           <Key>
@@ -852,35 +854,6 @@
           <Property Name="Member_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Project" FromRole="ProjectMember" ToRole="Project" />
           <NavigationProperty Name="User" Relationship="SystemManageModel.FK_UserID" FromRole="ProjectMember" ToRole="User" />
-        </EntityType>
-        <EntityType Name="SIT">
-          <Key>
-            <PropertyRef Name="SIT_ID" />
-          </Key>
-          <Property Name="SIT_ID" Type="Int32" Nullable="false" />
-          <Property Name="Project_ID" Type="Int32" Nullable="false" />
-          <Property Name="Tester_ID" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Detail" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="AttachShow" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
-          <Property Name="CreateBy" Type="Int32" Nullable="false" />
-          <Property Name="UpdateBy" Type="Int32" />
-          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_SIT" FromRole="SIT" ToRole="Project" />
-          <NavigationProperty Name="SITSteps" Relationship="SystemManageModel.FK_Step" FromRole="SIT" ToRole="SITStep" />
-        </EntityType>
-        <EntityType Name="SITStep">
-          <Key>
-            <PropertyRef Name="SITStep1" />
-          </Key>
-          <Property Name="SITStep1" Type="Int32" Nullable="false" />
-          <Property Name="SIT_ID" Type="Int32" Nullable="false" />
-          <Property Name="Step" Type="Int32" Nullable="false" />
-          <Property Name="Sub_ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="SIT" Relationship="SystemManageModel.FK_Step" FromRole="SITStep" ToRole="SIT" />
-          <NavigationProperty Name="SubTask" Relationship="SystemManageModel.FK_Sub" FromRole="SITStep" ToRole="SubTask" />
         </EntityType>
         <EntityType Name="SubDefect">
           <Key>
@@ -955,30 +928,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SIT">
-          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
-          <End Type="SystemManageModel.SIT" Role="SIT" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectID" />
-            </Principal>
-            <Dependent Role="SIT">
-              <PropertyRef Name="Project_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Step">
-          <End Type="SystemManageModel.SIT" Role="SIT" Multiplicity="1" />
-          <End Type="SystemManageModel.SITStep" Role="SITStep" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SIT">
-              <PropertyRef Name="SIT_ID" />
-            </Principal>
-            <Dependent Role="SITStep">
-              <PropertyRef Name="SIT_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Skill">
           <Key>
             <PropertyRef Name="SkillsID" />
@@ -1025,7 +974,6 @@
           <Property Name="Comment_Tester" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Comment_QA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Comment_CM" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SITSteps" Relationship="SystemManageModel.FK_Sub" FromRole="SubTask" ToRole="SITStep" />
           <NavigationProperty Name="Task" Relationship="SystemManageModel.FK_SubTask" FromRole="SubTask" ToRole="Task" />
           <NavigationProperty Name="SubTaskSubmisstions" Relationship="SystemManageModel.SubID" FromRole="SubTask" ToRole="SubTaskSubmisstion" />
           <NavigationProperty Name="Defects" Relationship="SystemManageModel.FK_Defect" FromRole="SubTask" ToRole="Defect" />
@@ -1056,6 +1004,7 @@
           <Property Name="UpdateBy" Type="Int32" />
           <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Task" FromRole="Task" ToRole="Project" />
           <NavigationProperty Name="SubTasks" Relationship="SystemManageModel.FK_SubTask" FromRole="Task" ToRole="SubTask" />
+          <NavigationProperty Name="SITSteps" Relationship="SystemManageModel.FK_Sub" FromRole="Task" ToRole="SITStep" />
         </EntityType>
         <Association Name="FK_Task">
           <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
@@ -1066,18 +1015,6 @@
             </Principal>
             <Dependent Role="Task">
               <PropertyRef Name="ProjectID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sub">
-          <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="1" />
-          <End Type="SystemManageModel.SITStep" Role="SITStep" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubTask">
-              <PropertyRef Name="SubID" />
-            </Principal>
-            <Dependent Role="SITStep">
-              <PropertyRef Name="Sub_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1335,6 +1272,73 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SIT">
+          <Key>
+            <PropertyRef Name="SIT_ID" />
+          </Key>
+          <Property Name="SIT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Project_ID" Type="Int32" Nullable="false" />
+          <Property Name="Tester_ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Detail" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="Dev_ID" Type="Int32" Nullable="false" />
+          <Property Name="Send_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_SIT" FromRole="SIT" ToRole="Project" />
+          <NavigationProperty Name="SITSteps" Relationship="SystemManageModel.FK_Step" FromRole="SIT" ToRole="SITStep" />
+        </EntityType>
+        <Association Name="FK_SIT">
+          <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="SystemManageModel.SIT" Role="SIT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="SIT">
+              <PropertyRef Name="Project_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SITStep">
+          <Key>
+            <PropertyRef Name="Step_ID" />
+          </Key>
+          <Property Name="Step_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SIT_ID" Type="Int32" Nullable="false" />
+          <Property Name="Step" Type="Int32" Nullable="false" />
+          <Property Name="Task_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SIT" Relationship="SystemManageModel.FK_Step" FromRole="SITStep" ToRole="SIT" />
+          <NavigationProperty Name="Task" Relationship="SystemManageModel.FK_Sub" FromRole="SITStep" ToRole="Task" />
+        </EntityType>
+        <Association Name="FK_Step">
+          <End Type="SystemManageModel.SIT" Role="SIT" Multiplicity="1" />
+          <End Type="SystemManageModel.SITStep" Role="SITStep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SIT">
+              <PropertyRef Name="SIT_ID" />
+            </Principal>
+            <Dependent Role="SITStep">
+              <PropertyRef Name="SIT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sub">
+          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="SystemManageModel.SITStep" Role="SITStep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="TaskID" />
+            </Principal>
+            <Dependent Role="SITStep">
+              <PropertyRef Name="Task_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1433,33 +1437,6 @@
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SITs">
-            <EntityTypeMapping TypeName="SystemManageModel.SIT">
-              <MappingFragment StoreEntitySet="SIT">
-                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
-                <ScalarProperty Name="AttachShow" ColumnName="AttachShow" />
-                <ScalarProperty Name="Detail" ColumnName="Detail" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Tester_ID" ColumnName="Tester_ID" />
-                <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
-                <ScalarProperty Name="SIT_ID" ColumnName="SIT_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SITSteps">
-            <EntityTypeMapping TypeName="SystemManageModel.SITStep">
-              <MappingFragment StoreEntitySet="SITStep">
-                <ScalarProperty Name="Sub_ID" ColumnName="Sub_ID" />
-                <ScalarProperty Name="Step" ColumnName="Step" />
-                <ScalarProperty Name="SIT_ID" ColumnName="SIT_ID" />
-                <ScalarProperty Name="SITStep1" ColumnName="SITStep" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1659,6 +1636,35 @@
                 <ScalarProperty Name="Detail" ColumnName="Detail" />
                 <ScalarProperty Name="Sub_ID" ColumnName="Sub_ID" />
                 <ScalarProperty Name="Defect_ID" ColumnName="Defect_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SITs">
+            <EntityTypeMapping TypeName="SystemManageModel.SIT">
+              <MappingFragment StoreEntitySet="SIT">
+                <ScalarProperty Name="Send_Date" ColumnName="Send_Date" />
+                <ScalarProperty Name="Dev_ID" ColumnName="Dev_ID" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
+                <ScalarProperty Name="AttachShow" ColumnName="AttachShow" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Tester_ID" ColumnName="Tester_ID" />
+                <ScalarProperty Name="Project_ID" ColumnName="Project_ID" />
+                <ScalarProperty Name="SIT_ID" ColumnName="SIT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SITSteps">
+            <EntityTypeMapping TypeName="SystemManageModel.SITStep">
+              <MappingFragment StoreEntitySet="SITStep">
+                <ScalarProperty Name="Task_ID" ColumnName="Task_ID" />
+                <ScalarProperty Name="Step" ColumnName="Step" />
+                <ScalarProperty Name="SIT_ID" ColumnName="SIT_ID" />
+                <ScalarProperty Name="Step_ID" ColumnName="Step_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
