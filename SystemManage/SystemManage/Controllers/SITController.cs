@@ -19,7 +19,8 @@ namespace SystemManage.Controllers
             SITModel SIT = new SITModel();
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             SIT.Task = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
-            SIT.Tester = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 3).ToList();
+            SIT.Tester = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 3).OrderBy(m => m.UserID).ToList();
+            SIT.Dev = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 2).OrderBy(m => m.UserID).ToList();
             return View(SIT);
         }
         [HttpPost]
@@ -31,6 +32,8 @@ namespace SystemManage.Controllers
             s.Project_ID = ProjectID;
             s.Name = model.Name;
             s.Detail = model.Detail;
+            s.Tester_ID = model.Tester_ID;
+            s.Dev_ID = model.Dev_ID;
             s.CreateDate = DateTime.Now;
             s.CreateBy = Convert.ToInt32(Session["userID"]);
             db.SITs.Add(s);

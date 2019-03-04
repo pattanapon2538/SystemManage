@@ -1,7 +1,4 @@
-﻿<style>
-    input, select, textarea {
-        max-width: 2800px;
-    }
+﻿
 </style>
 @model SystemManage.Models.SITModel
 <!doctype html>
@@ -34,90 +31,114 @@
         return "ข้อมูลไม่ได้บันทึก";
     };//*
     </script>
+    <style>
+    input, select, textarea {
+        max-width: 2800px;
+    }
+
+        textarea {
+            resize:none;
+            height:150px;
+        }
+
+        textarea.form-control{
+            height:150px;
+        }
+    </style>
     <title>SIT</title>
 </head>
 <body>
     @using (Ajax.BeginForm("AddSIT", "SIT", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
     {
-        <div class="container">
-            <div class="card" style="margin-top: 20px">
-                <div class="card-body" style="margin: auto">
-                    <h1 style="text-align: center;margin-bottom: 30px">ทดสอบทั้งระบบ</h1>
-                    <div class="row">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-8">
-                            <div class="row">
-                                <div class="col-sm-2"></div>
-                                <div class="col-sm-4">
-                                    <label class="label">ชื่อระบบในการทดสอบ :</label>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                                    </div>
-                                </div>
+    <div class="container">
+        <h1 style="text-align: center;margin-bottom: 30px">ทดสอบทั้งระบบ</h1>
+        <div class="card" style="margin-top: 20px">
+
+            <div class="card-body" style="margin: auto">
+
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+                                <label class="label">ชื่อระบบในการทดสอบ :</label>
                             </div>
-                        </div>
-                        <div class="col-sm-2"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-8">
-                            <div class="row">
-                                <div class="col-sm-2"></div>
-                                <div class="col-sm-4">
-                                    <label class="label">Step 1 :</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="input-group">
-                                        @Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName"), "Select", new { @class = "form-control" })
-                                    </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-2"></div>
                     </div>
-                    <div style="text-align: center;margin-top: 20px">
-                        <a href="#div" id="add"><cneter><img src="~/icon/plus.png" width="32px" height="32px"></a>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="comment">รายละเอียดในการทดสอบ:</label>
-                                @Html.TextAreaFor(m => m.Detail, new { @class = "form-control" })
+                    <div class="col-sm-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="row">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-4">
+                                <label class="label">Step 1 :</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    @Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName"), "Select", new { @class = "form-control" })
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <div class="input-group">
-                                <label class="label" style="margin-right: 10px">ผู้รับมอบหมาย :</label>
-                                @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name"), "Select", new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="input-group">
-                                <label class="label" style="margin-right: 10px">กำหนดส่ง :</label>
-                               @Html.TextBoxFor(m => m.Send_Date , new {@class = "form-control" , @type = "date"})
-                            </div>
+                    <div class="col-sm-2"></div>
+                </div>
+                <div style="text-align: center;margin-top: 20px">
+                    <a href="#div" id="add"><cneter><img src="~/icon/plus.png" width="32px" height="32px"></a>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="comment">รายละเอียดในการทดสอบ:</label>
+                            @Html.TextAreaFor(m => m.Detail, new { @class = "form-control" })
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 20px;margin-bottom: 20px">
-                        <div class="col-sm-9">
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
+                            @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name"), "Select", new { @class = "form-control" })
                         </div>
-                        <div class="col-sm-3">
-                            <a href="@Url.Action("ShowSIT")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>ยกเลิก</button></a>
-                            <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการยืนยันการทำรายการใช่หรือไม่่")'>ยืนยัน</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <label class="label" style="margin-right: 10px">ผู้พัฒนาระบบ :</label>
+                            @Html.DropDownListFor(m => m.Dev_ID, new SelectList(Model.Dev, "UserID", "Member_Name"), "Select", new { @class = "form-control" })
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
+                            @Html.TextBoxFor(m => m.Send_Date, new { @class = "form-control", @type = "date" })
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 20px;margin-bottom: 20px">
+                    <div class="col-sm-8">
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="@Url.Action("ShowSIT")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>ยกเลิก</button></a>
+                        <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการยืนยันการทำรายการใช่หรือไม่่")'>ยืนยัน</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     }
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
