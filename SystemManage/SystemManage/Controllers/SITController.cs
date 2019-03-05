@@ -35,7 +35,8 @@ namespace SystemManage.Controllers
             s.Detail = model.Detail;
             s.Tester_ID = model.Tester_ID;
             s.Dev_ID = model.Dev_ID;
-            s.Send_Date = model.Send_Date;
+            s.Send_Date_T = model.Send_Date_T;
+            s.Send_Date_Q = model.Send_Date_Q;
             s.Handle = model.Tester_ID;
             s.Status = 0;
             s.CreateDate = DateTime.Now;
@@ -104,7 +105,8 @@ namespace SystemManage.Controllers
             model.Detail = SIT.Detail;
             model.Tester_ID = SIT.Tester_ID;
             model.Dev_ID = SIT.Dev_ID;
-            model.Send_Date = SIT.Send_Date;
+            model.Send_Date_T = SIT.Send_Date_T;
+            model.Send_Date_Q = SIT.Send_Date_Q;
             model.Status = SIT.Status;
             model.Handle = SIT.Handle;
             model.Comment_CM = SIT.Comment_CM;
@@ -145,7 +147,8 @@ namespace SystemManage.Controllers
                 s.Dev_ID = model.Dev_ID;
                 s.Tester_ID = model.Tester_ID;
                 s.QA_ID = model.QA_ID;
-                s.Send_Date = model.Send_Date;
+                s.Send_Date_T = model.Send_Date_T;
+                s.Send_Date_Q = model.Send_Date_Q;
                 s.UpdateBy = Convert.ToInt32(Session["userID"]);
                 s.UpdateDate = DateTime.Now;
                 db.SaveChanges();

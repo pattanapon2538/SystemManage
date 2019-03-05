@@ -21,7 +21,8 @@ namespace SystemManage.Models
         public int UpdateBy { get; set; }
         public int Task_ID { get; set; }
         public int Dev_ID { get; set; }
-        public DateTime Send_Date { get; set; }
+        public DateTime Send_Date_T { get; set; }
+        public DateTime Send_Date_Q { get; set; }
         public List<int> TaskList { get; set; }
         public List<int> StepList { get; set; }
         public int Status { get; set; }

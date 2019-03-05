@@ -171,7 +171,7 @@
                             }
                             <td><center>@i.Tester_Name</center></td>
                             <td><center>@i.QA_Name</center></td>
-                            <td><center>@i.CreateDate.ToString();</center></td>
+                            <td><center>@i.CreateDate.ToShortDateString()</center></td>
                             <td><center><a href="@Url.Action("DetailSIT", new { SIT_ID = i.SIT_ID })"><i class="fas fa-book-open"></i></a></center></td>
                             @{
                                 if (Model.CreateBy == Convert.ToInt32(Session["userID"]))

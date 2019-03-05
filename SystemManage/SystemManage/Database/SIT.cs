@@ -32,7 +32,8 @@ namespace SystemManage.Database
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
         public int Dev_ID { get; set; }
-        public DateTime Send_Date { get; set; }
+        public DateTime Send_Date_T { get; set; }
+        public DateTime Send_Date_Q { get; set; }
         public int Status { get; set; }
         public string Commnet_Test { get; set; }
         public string Comment_Dev { get; set; }
@@ -40,6 +41,7 @@ namespace SystemManage.Database
         public string Comment_CM { get; set; }
         public int QA_ID { get; set; }
         public int Handle { get; set; }
+        public int Defect_SIT { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SITStep> SITSteps { get; set; }

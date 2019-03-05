@@ -151,7 +151,8 @@
           <Property Name="CreateBy" Type="int" Nullable="false" />
           <Property Name="UpdateBy" Type="int" />
           <Property Name="Dev_ID" Type="int" Nullable="false" />
-          <Property Name="Send_Date" Type="date" Nullable="false" />
+          <Property Name="Send_Date_T" Type="date" Nullable="false" />
+          <Property Name="Send_Date_Q" Type="date" Nullable="false" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="Commnet_Test" Type="nvarchar(max)" />
           <Property Name="Comment_Dev" Type="nvarchar(max)" />
@@ -159,6 +160,7 @@
           <Property Name="Comment_CM" Type="nvarchar(max)" />
           <Property Name="QA_ID" Type="int" Nullable="false" />
           <Property Name="Handle" Type="int" Nullable="false" />
+          <Property Name="Defect_SIT" Type="int" />
         </EntityType>
         <EntityType Name="SITStep">
           <Key>
@@ -1297,7 +1299,8 @@
           <Property Name="CreateBy" Type="Int32" Nullable="false" />
           <Property Name="UpdateBy" Type="Int32" />
           <Property Name="Dev_ID" Type="Int32" Nullable="false" />
-          <Property Name="Send_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Send_Date_T" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Send_Date_Q" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="Commnet_Test" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Comment_Dev" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1305,6 +1308,7 @@
           <Property Name="Comment_CM" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="QA_ID" Type="Int32" Nullable="false" />
           <Property Name="Handle" Type="Int32" Nullable="false" />
+          <Property Name="Defect_SIT" Type="Int32" />
           <NavigationProperty Name="SITSteps" Relationship="SystemManageModel.FK_Step" FromRole="SIT" ToRole="SITStep" />
         </EntityType>
         <Association Name="FK_Step">
@@ -1632,6 +1636,7 @@
           <EntitySetMapping Name="SITs">
             <EntityTypeMapping TypeName="SystemManageModel.SIT">
               <MappingFragment StoreEntitySet="SIT">
+                <ScalarProperty Name="Defect_SIT" ColumnName="Defect_SIT" />
                 <ScalarProperty Name="Handle" ColumnName="Handle" />
                 <ScalarProperty Name="QA_ID" ColumnName="QA_ID" />
                 <ScalarProperty Name="Comment_CM" ColumnName="Comment_CM" />
@@ -1639,7 +1644,8 @@
                 <ScalarProperty Name="Comment_Dev" ColumnName="Comment_Dev" />
                 <ScalarProperty Name="Commnet_Test" ColumnName="Commnet_Test" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Send_Date" ColumnName="Send_Date" />
+                <ScalarProperty Name="Send_Date_Q" ColumnName="Send_Date_Q" />
+                <ScalarProperty Name="Send_Date_T" ColumnName="Send_Date_T" />
                 <ScalarProperty Name="Dev_ID" ColumnName="Dev_ID" />
                 <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />

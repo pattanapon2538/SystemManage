@@ -41,7 +41,7 @@
         <AssociationConnector Association="SystemManageModel.FK_SubDefect" />
         <EntityTypeShape EntityType="SystemManageModel.SITStep" Width="1.5" PointX="14.875" PointY="9.25" />
         <AssociationConnector Association="SystemManageModel.FK_Sub" />
-        <EntityTypeShape EntityType="SystemManageModel.SIT" Width="1.5" PointX="7.375" PointY="12.125" />
+        <EntityTypeShape EntityType="SystemManageModel.SIT" Width="1.5" PointX="7.375" PointY="11.875" />
         <AssociationConnector Association="SystemManageModel.FK_Step" />
       </Diagram>
     </edmx:Diagrams>

@@ -20,7 +20,7 @@ namespace SystemManage.Database
         public string AttachShow1 { get; set; }
         public string AttachFile { get; set; }
         public DateTime CreateDate { get; set; }
-        public int CreateBy { get; set; }
+        public int  CreateBy { get; set; }
         public int Recive { get; set; }
         public int Message_ID { get; set; }
     }
