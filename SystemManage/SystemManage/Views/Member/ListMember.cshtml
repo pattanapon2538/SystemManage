@@ -190,7 +190,7 @@
                                                     <td><center>@item.Amount_Succ.ToString("P1")</center></td>
                                                     <td><center>@item.TotalCoding</center></td>
                                                     <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                    <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
+                                                    <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
                                                 }
                                             }
 
@@ -213,7 +213,7 @@
                                                 <td><center>@item.Amount_Succ.ToString("P1")</center></td>
                                                 <td><center>@item.TotalCoding</center></td>
                                                 <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                <td><a href="@Url.Action("AddMember", new {UserID = item.Users_ID })"><center><i class="fas fa-plus-circle"></i></center></a></td>
+                                                <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
 
                                             }
                                         </tr>

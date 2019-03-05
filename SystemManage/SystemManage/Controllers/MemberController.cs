@@ -130,7 +130,7 @@ namespace SystemManage.Controllers
             string mess = Sendto.User_Name + "คุณได้ออกจากโครงการ" + Cb.Name;
             InboxController i = new InboxController();
             i.SendEmail(receiver, subject, mess, sender);
-            return RedirectToAction("ShowMember");
+            return RedirectToAction("ShowMember","Member");
         }
         public ActionResult ShowMember()
         {
@@ -457,6 +457,21 @@ namespace SystemManage.Controllers
             else
             {
                 return Json(new {c = true });
+            }
+        }
+        public ActionResult CheckDelete(string userID)
+        {
+            Boolean c = false;
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+            int user_ID = Convert.ToInt32(userID);
+            var m = db.Projects.Where(x => x.ProjectID == ProjectID).FirstOrDefault();
+            if (m.CreateBy != user_ID)
+            {
+                return RedirectToAction("DeleteMember", "Member", new { userID = userID });
+            }
+            else
+            {
+                return Json(new { c = true });
             }
         }
     }

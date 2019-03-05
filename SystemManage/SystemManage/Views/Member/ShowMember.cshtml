@@ -63,7 +63,7 @@
                                     @{
                                         if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
                                         {
-                                            <td><a href="@Url.Action("DeleteMember", new {UserID = item.Users_ID })"><center><i class="fas fa-backspace"></i></center></a></td>
+                                            <td><center><a href="@Url.Action("CheckDelete","Member", new {userID = item.Users_ID })"><i class="fas fa-backspace" style="cursor:pointer"></i></a></center></td>
                                         }
                                     }
                                 </tr>
@@ -83,3 +83,21 @@
         alert("0 = ยังไม่เคยทำงาน \n1 - 2.9 = ง่าย\n3 - 4.9 = ปานกลาง\n 5 = ยาก");
     }
 </script>
+@*<script>
+    function CheckDelete(userID) {
+
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action("CheckDelete", "Member"))",
+            data: { userID: userID },
+            dataType: "json",
+            success: function (data)
+            {
+                if (data.c == true)
+                {
+                    alert("ไม่สามารถลบผู้จัดการโครงการได้");
+                }
+            }
+        });
+    }
+</script>*@
