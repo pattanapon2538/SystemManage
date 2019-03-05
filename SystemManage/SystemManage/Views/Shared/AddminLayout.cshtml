@@ -8,6 +8,7 @@
     <meta name="description" content="Colorlib Templates">
     <meta name="author" content="Colorlib">
     <meta name="keywords" content="Colorlib Templates">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="~/assets/images/icon/favicon.ico">
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/css/font-awesome.min.css">
@@ -47,6 +48,7 @@
 
     <!-- Main CSS-->
     <link href="~/assets/css/main.css" rel="stylesheet" media="all">
+
 </head>
 
 <body>
@@ -54,7 +56,16 @@
         <div class="loader"></div>
     </div>
     <div class="page-container">
+
         <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="text-center">
+                    <img src="~/icon/profile_m.png" class="dropbtn" width="42.66" height="42.66" style="margin-left:12px" onclick="myFunction()"></a>
+                    <br />
+                    <br />
+                    <h5><span style="color:red">สวัสดี <b>@Session["userName"]</b></span> <a href="@Url.Action("Index","Login")"><span style="color:blue;text-decoration: underline">Logout</span></a></h5>
+                </div>
+            </div>
             <div class="sidebar-header">
                 <div class="logo">
                     <h3 style="color:#8d97ad;">จัดการระบบ</h3>

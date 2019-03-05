@@ -10,10 +10,11 @@
         white-space: nowrap;
     }
 </style>
+<link href="~/assets/css/fSelect.css" rel="stylesheet">
+
 <div class="container">
     <div class="login-box ptb--100">
-        @using (Ajax.BeginForm("AddUser", "User",
-             new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }))
+        @using (Ajax.BeginForm("AddUser", "User", new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }, new { @id = "form_submit" }))
         {
             @Html.AntiForgeryToken()
             <form>
@@ -138,19 +139,18 @@
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">ทักษะภาษาโปรแกรม : </label>
                         <div class="col-sm-4">
-                            @*@Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "เลือกภาษา", new { @class = "multiselect" })*@
-                            <script>
-                                $('#example-single').multiselect();
-                            </script>
-                            <!-- Note the missing multiple attribute! -->
-                            <select id="example-single" class="example-single">
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                                <option value="4">Option 4</option>
-                                <option value="5">Option 5</option>
-                                <option value="6">Option 6</option>
+                            <select class="demo" multiple="multiple">
+
+                                @{
+                                    foreach (var n in (List<LanguageOfTypeModel>)ViewBag.DataSkill)
+                                    {
+                                        <option value="@n.languageID">@n.Name</option>
+                                    }
+                                }
+
+
                             </select>
+                            @*@Html.DropDownListFor(m => m.LanguageID, new SelectList(Model.LanguageList, "languageID", "Name"), "เลือกภาษา", new { @class = "demo" })*@
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">กำหนดสิทธิ์ : </label>
                         <div class="col-sm-4">
@@ -209,53 +209,55 @@
         }
     </div>
 
-    <div class="row" id="tb-data">
-        <div class="col-12 mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <div class="data-tables datatable-primary">
-                        <div id="dataTable2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div style="overflow-x:auto;">
-                                        <table id="dataTable2" class="text-center dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="dataTable2_info" style="width: 1131px;overflow-x:auto">
-                                            <thead class="text-capitalize">
-                                                <tr role="row">
-                                                    <th class="sorting_asc" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 2px;" aria-sort="ascending" aria-label="No.: activate to sort column descending">อันดับ</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 100px;">อีเมล์</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">ชื่อ</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">นามสกุล</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">ตำแหน่ง</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">สัญญา</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 20px;">Edit</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 20px;">Delete</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @{
-                                                    var ia = 1;
-                                                    foreach (var item in (List<UserModel>)ViewBag.DataList)
-                                                    {
-                                                        <tr>
-                                                            <td>@ia</td>
-                                                            <td>@item.User_Email</td>
-                                                            <td>@item.User_Name</td>
-                                                            <td>@item.User_LastName</td>
-                                                            <td>@item.PositionName</td>
-                                                            <td>@item.ContactName</td>
-                                                            <td>
-                                                                <span style="cursor:pointer" onclick="DetailUser('@item.Users_ID')"><i class="glyphicon fa fa-diamond"></i></span>
-                                                            </td>
-                                                            <td>
-                                                                <a href="@Url.Action("DeleteUser", new {userID = item.Users_ID})"><i class="glyphicon fa fa-archive"></i></a>
-                                                            </td>
-                                                        </tr>
-                                                        ia++;
-                                                    }
+
+</div>
+
+<div class="row" id="tb-data">
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="data-tables datatable-primary">
+                    <div id="dataTable2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive" style="overflow-x:auto;">
+                                    <table id="dataTable2" class="text-center dataTable no-footer dtr-inline collapsed" role="grid" aria-describedby="dataTable2_info" style="width: 1131px;overflow-x:auto">
+                                        <thead class="text-capitalize">
+                                            <tr role="row">
+                                                <th class="sorting_asc" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 2px;" aria-sort="ascending" aria-label="No.: activate to sort column descending">อันดับ</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 100px;">อีเมล์</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 119px;">ชื่อ</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">นามสกุล</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">ตำแหน่ง</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 73px;">สัญญา</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 20px;">Edit</th>
+                                                <th class="sorting" tabindex="0" aria-controls="dataTable2" rowspan="1" colspan="1" style="width: 20px;">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                var ia = 1;
+                                                foreach (var item in (List<UserModel>)ViewBag.DataList)
+                                                {
+                                                    <tr>
+                                                        <td>@ia</td>
+                                                        <td>@item.User_Email</td>
+                                                        <td>@item.User_Name</td>
+                                                        <td>@item.User_LastName</td>
+                                                        <td>@item.PositionName</td>
+                                                        <td>@item.ContactName</td>
+                                                        <td>
+                                                            <span style="cursor:pointer" onclick="DetailUser('@item.Users_ID')"><i class="glyphicon fa fa-diamond"></i></span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="@Url.Action("DeleteUser", new {userID = item.Users_ID})"><i class="glyphicon fa fa-archive"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    ia++;
                                                 }
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -264,6 +266,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 <script>
         function DetailUser(Users_ID) {
@@ -296,4 +299,8 @@
                 }
             });
         }
+</script>
+<script src="~/assets/js/fSelect.js"></script>
+<script>
+    $('.demo').fSelect();
 </script>

@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace SystemManage.Controllers
 {
-    
+
     public class ProjectController : Controller
     {
         Entities db = new Entities();
@@ -74,7 +74,7 @@ namespace SystemManage.Controllers
                 foreach (var t in item2)
                 {
                     var item3 = db.SubTasks.Where(st => st.TaskID == t.TaskID).ToList();
-                    foreach(var s in item3)
+                    foreach (var s in item3)
                     {
                         Percent = Percent + s.SubPercent;
                         ++countList;
@@ -92,19 +92,19 @@ namespace SystemManage.Controllers
                     po.TotalPercent = Convert.ToInt32(Percent);
                     db.SaveChanges();
                 }
-                    projectlist.Add(new ProjectModel
-                    {
-                        ProjectID = item.ProjectID,
-                        ProjectName = item.Name,
-                        ProjectRole = m.Role,
-                        TotalPercent = Percent,
-                        ProjectDescription = item.Description,
-                        ProjectStatus = item.Status,
-                        ProjectSendDate = item.SendDate,
-                        CreateBy = pm.User_Name,
-                        CreateDate = item.CreateDate,
-                        UpdateDate = item.UpdateDate,
-                    });
+                projectlist.Add(new ProjectModel
+                {
+                    ProjectID = item.ProjectID,
+                    ProjectName = item.Name,
+                    ProjectRole = m.Role,
+                    TotalPercent = Percent,
+                    ProjectDescription = item.Description,
+                    ProjectStatus = item.Status,
+                    ProjectSendDate = item.SendDate,
+                    CreateBy = pm.User_Name,
+                    CreateDate = item.CreateDate,
+                    UpdateDate = item.UpdateDate,
+                });
                 countList = 0;
                 Percent = 0;
             }
@@ -122,15 +122,15 @@ namespace SystemManage.Controllers
             Model.ProjectSendDate = p.SendDate;
             if (p.Status == 1)
             {
-                Model.status = ProjectModel.Status.Processing;
+                Model.status = ProjectModel.Status.ดำเนินการ;
             }
             else if (p.Status == 2)
             {
-                Model.status = ProjectModel.Status.Pause;
+                Model.status = ProjectModel.Status.พัก;
             }
             else if (p.Status == 3)
             {
-                Model.status = ProjectModel.Status.Terminate;
+                Model.status = ProjectModel.Status.หยุดดำเนินการ;
             }
             return View(Model);
 
@@ -140,15 +140,15 @@ namespace SystemManage.Controllers
             Project p = db.Projects.Where(m => m.ProjectID == Model.ProjectID).FirstOrDefault();
             p.Name = Model.ProjectName;
             p.Description = Model.ProjectDescription;
-            if (Model.status.ToString() == "Terminate")
+            if (Model.status.ToString() == "หยุดดำเนินการ")
             {
                 p.Status = 3;
             }
-            else if (Model.status.ToString() == "Pause")
+            else if (Model.status.ToString() == "พัก")
             {
                 p.Status = 2;
             }
-            else if (Model.status.ToString() == "Processing")
+            else if (Model.status.ToString() == "ดำเนินการ")
             {
                 p.Status = 1;
             }
@@ -240,7 +240,8 @@ namespace SystemManage.Controllers
             {
                 //double TaskPercent = (item.TotalPercent / 100) * total;
                 dataPoints.Add(new Chart(item.TaskName, item.TotalPercent /*TaskPercent*/));
-                TaskList.Add(new ProjectModel {
+                TaskList.Add(new ProjectModel
+                {
                     TaskName = item.TaskName,
                     TaskPercent = item.TotalPercent
                 });

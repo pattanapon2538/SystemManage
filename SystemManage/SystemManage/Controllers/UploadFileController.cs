@@ -27,7 +27,7 @@ namespace SystemManage.Controllers
                 int projectID = Convert.ToInt32(Session["ProjectID"]);
                 Document d = new Document();
                 var data = Process(model.AttachFile);
-                string[] txt = data.Split(",".ToCharArray());
+                //string[] txt = data.Split(",".ToCharArray());
                 //string fileName = txt[0];
                 string path = data;
                 d.DocumentName = model.DocumentName;

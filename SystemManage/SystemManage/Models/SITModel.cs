@@ -23,11 +23,33 @@ namespace SystemManage.Models
         public int Dev_ID { get; set; }
         public DateTime Send_Date { get; set; }
         public List<int> TaskList { get; set; }
+        public List<int> StepList { get; set; }
+        public int Status { get; set; }
+        public string Commnet_T { get; set; }
+        public string Comment_Dev { get; set; }
+        public string Comment_QA { get; set; }
+        public string Comment_CM { get; set; }
+        public int QA_ID { get; set; }
+        public int Handle { get; set; }
 
         public List<Task> Task { get; set; }
         public List<ProjectMember> Tester { get; set; }
-        public List<SubTask> SubTask { get; set; }
         public List<ProjectMember> Dev { get; set; }
+        public List<ProjectMember> QA { get; set; }
 
+        public int _Step_ID { get; set; }
+        public string Task_Name { get; set; }
+        public int ID_Task { get; set; }
+        public int state { get; set; }
+        public Status_SIT Defect { get; set; }
+
+        public enum Status_SIT
+        {
+            ผ่าน,
+            ไม่ผ่าน
+        }
+        public string QA_Name { get; set; }
+        public string Tester_Name { get; set; }
+        public string Dev_Name { get; set; }
     }
 }

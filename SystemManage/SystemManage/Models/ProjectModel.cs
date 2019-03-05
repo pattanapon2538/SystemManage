@@ -8,10 +8,10 @@ using System.Web.Mvc;
 
 namespace SystemManage.Models
 {
-    
+
     public class ProjectModel
     {
-        
+
         public int ProjectID { get; set; }
         [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public string ProjectName { get; set; }
@@ -36,12 +36,12 @@ namespace SystemManage.Models
 
         public enum Status
         {
-            Processing,
-            Pause,
-            Terminate,
+            ดำเนินการ,
+            พัก,
+            หยุดดำเนินการ,
         }
-       
-       
+
+
 
     }
 }

@@ -456,7 +456,7 @@ namespace SystemManage.Controllers
             }
             else
             {
-                return Json(new { c = c = true });
+                return Json(new {c = true });
             }
         }
     }

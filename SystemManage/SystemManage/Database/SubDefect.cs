@@ -28,10 +28,10 @@ namespace SystemManage.Database
         public string AttachFile3 { get; set; }
         public string AttachFile4 { get; set; }
         public string AttachFile5 { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public Nullable<System.DateTime> UpdateDate { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
-        public Nullable<int> UpdateBy { get; set; }
+        public int UpdateBy { get; set; }
     
         public virtual Defect Defect { get; set; }
     }

@@ -19,7 +19,7 @@ namespace SystemManage.Database
         public int Step { get; set; }
         public int Task_ID { get; set; }
     
-        public virtual SIT SIT { get; set; }
         public virtual Task Task { get; set; }
+        public virtual SIT SIT { get; set; }
     }
 }

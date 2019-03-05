@@ -203,11 +203,12 @@ namespace SystemManage.Controllers
             TaskModel model = new TaskModel();
             List<SubTaskModel> SubTaskList = new List<SubTaskModel>();
             List<TaskModel> TaskList = new List<TaskModel>();
+            var ProjectManager = db.Projects.Where(m => m.ProjectID == ProjectID).FirstOrDefault();
             var item = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
             var r = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.UserID == userID).FirstOrDefault();
+            model.CreateBy = ProjectManager.CreateBy;
             foreach (var i in item)
             {
-                model.CreateBy = i.CreateBy;
                 //PM และ CM
                 if (r.Role == 1 || r.Role == 5)
                 {
@@ -742,6 +743,9 @@ namespace SystemManage.Controllers
             }
             return RedirectToAction("ShowTask");
         }
-       
+        public ActionResult test()
+        {
+            return View();
+        }
     }
 }

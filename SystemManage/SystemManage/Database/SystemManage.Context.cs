@@ -42,7 +42,7 @@ namespace SystemManage.Database
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Defect> Defects { get; set; }
-        public virtual DbSet<SIT> SITs { get; set; }
         public virtual DbSet<SITStep> SITSteps { get; set; }
+        public virtual DbSet<SIT> SITs { get; set; }
     }
 }

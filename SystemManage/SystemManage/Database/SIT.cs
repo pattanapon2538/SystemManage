@@ -33,8 +33,14 @@ namespace SystemManage.Database
         public int UpdateBy { get; set; }
         public int Dev_ID { get; set; }
         public DateTime Send_Date { get; set; }
+        public int Status { get; set; }
+        public string Commnet_Test { get; set; }
+        public string Comment_Dev { get; set; }
+        public string Comment_QA { get; set; }
+        public string Comment_CM { get; set; }
+        public int QA_ID { get; set; }
+        public int Handle { get; set; }
     
-        public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SITStep> SITSteps { get; set; }
     }

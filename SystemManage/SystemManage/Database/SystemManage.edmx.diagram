@@ -39,11 +39,10 @@
         <AssociationConnector Association="SystemManageModel.FK_Defect" />
         <AssociationConnector Association="SystemManageModel.FK_Defect_Project" />
         <AssociationConnector Association="SystemManageModel.FK_SubDefect" />
-        <EntityTypeShape EntityType="SystemManageModel.SIT" Width="1.5" PointX="7.375" PointY="11.75" />
-        <AssociationConnector Association="SystemManageModel.FK_SIT" />
-        <EntityTypeShape EntityType="SystemManageModel.SITStep" Width="1.5" PointX="14.625" PointY="7.875" />
-        <AssociationConnector Association="SystemManageModel.FK_Step" />
+        <EntityTypeShape EntityType="SystemManageModel.SITStep" Width="1.5" PointX="14.875" PointY="9.25" />
         <AssociationConnector Association="SystemManageModel.FK_Sub" />
+        <EntityTypeShape EntityType="SystemManageModel.SIT" Width="1.5" PointX="7.375" PointY="12.125" />
+        <AssociationConnector Association="SystemManageModel.FK_Step" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

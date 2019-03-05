@@ -6,6 +6,10 @@
         Response.Redirect("~/Login/Index");
     }
 }
+@{
+    Layout = "~/Views/Shared/_ShowProject.cshtml";
+}
+
 <html lang="en">
 <head>
     <title>My Project</title>
@@ -38,6 +42,41 @@
         }
     </style>
 
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            left: -100px
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                font-size: 12 px
+            }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+
 
     <script>
         $(document).ready(function () {
@@ -51,86 +90,90 @@
     </script>
 </head>
 <body>
-
     <div class="container">
-        <div class="card shadow" style="margin-top: 100px">
+        <h2 class="text-center" style="margin-top:50px">โครงการของฉัน</h2>
+        <div class="card shadow" style="margin-top: 30px">
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h2 class="text-center" style="margin-bottom:-20px">โครงการของฉัน</h2>
-                        <div align="right"><input type="text" id="sr" onkeyup="myFunction()" placeholder="ค้นหา"></div>
-                        <table class="table table-bordered" style="overflow-x:auto">
-                            <thead>
-                                <tr class="table-info">
-                                    <th><center>เข้า</center></th>
-                                    <th><center>ลำดับ</center></th>
-                                    <th><center>โครงการ</center></th>
-                                    <th><center>สถานะ</center></th>
-                                    <th><center>ความคืบหน้า</center></th>
-                                    <th><center>กำหนดส่ง</center></th>
-                                    <th><center>ผู้จัดการโครงการ</center></th>
-                                    <th><center>รายละเอียด</center></th>
-                                    @if (Model.UserRole == 1)
-                                    {
-                                        <th><center>แก้ไข</center></th>
-                                        <th><center>ลบ</center></th>
-                                    }
+                        <div class="row">
+                            <div class="col-sm-8"></div>
+                            <div class="col-sm-4"><input type="text" id="sr" onkeyup="myFunction()" placeholder="ค้นหา"></div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" style="overflow-x:auto">
+                                <thead>
+                                    <tr class="table-info">
+                                        <th><center>เข้า</center></th>
+                                        <th><center>ลำดับ</center></th>
+                                        <th><center>โครงการ</center></th>
+                                        <th><center>สถานะ</center></th>
+                                        <th><center>ความคืบหน้า</center></th>
+                                        <th><center>กำหนดส่ง</center></th>
+                                        <th><center>ผู้จัดการโครงการ</center></th>
+                                        <th><center>รายละเอียด</center></th>
+                                        @if (Model.UserRole == 1)
+                                        {
+                                            <th><center>แก้ไข</center></th>
+                                            <th><center>ลบ</center></th>
+                                        }
 
-                                </tr>
-                            </thead>
-                            <tbody id="tb">
-                                @{
-                                    var role = 0;
-                                    var i = 1;
-                                    foreach (var item in (List<ProjectModel>)ViewBag.DataList)
-                                    {
-                                        <tr>
-                                            <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><center><i class="fas fa-door-open"></i></center></a></td>
-                                            <td><center>@i</center></td>
-                                            <td><center>@item.ProjectName</center></td>
-                                            @if (item.ProjectStatus == 1)
-                                            {
-                                                <td><center>Processing</center></td>
-                                            }
-                                            else if (item.ProjectStatus == 2)
-                                            {
-                                                <td><center>Pause</center></td>
-                                            }
-                                            else if (item.ProjectStatus == 3)
-                                            {
-                                                <td><center>Terminate</center></td>
-                                            }
-                                            @{
-                                                item.TotalPercent = item.TotalPercent / 100;
-                                            }
-                                            <td><center>@item.TotalPercent.ToString("P02")</center></td>
-                                            <td><center>@item.ProjectSendDate.ToString("dd/MM/yyyy")</center></td>
-                                            <td><center>@item.CreateBy</center></td>
-                                            <td>
-                                                <center>
-                                                    <a href="@Url.Action("DetailProject",new { ProjectID = item.ProjectID})"><i class="fas fa-book-open"></i></a>
-                                                </center>
-                                            </td>
-                                            @if (item.ProjectRole == 1)
-                                            {
+                                    </tr>
+                                </thead>
+                                <tbody id="tb">
+                                    @{
+                                        var role = 0;
+                                        var i = 1;
+                                        foreach (var item in (List<ProjectModel>)ViewBag.DataList)
+                                        {
+                                            <tr>
+                                                <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><center><i class="fas fa-door-open"></i></center></a></td>
+                                                <td><center>@i</center></td>
+                                                <td><center>@item.ProjectName</center></td>
+                                                @if (item.ProjectStatus == 1)
+                                                {
+                                                    <td><center>ดำเนินการ</center></td>
+                                                }
+                                                else if (item.ProjectStatus == 2)
+                                                {
+                                                    <td><center>พัก</center></td>
+                                                }
+                                                else if (item.ProjectStatus == 3)
+                                                {
+                                                    <td><center>หยุดดำเนินการ</center></td>
+                                                }
+                                                @{
+                                                    item.TotalPercent = item.TotalPercent / 100;
+                                                }
+                                                <td><center>@item.TotalPercent.ToString("P02")</center></td>
+                                                <td><center>@item.ProjectSendDate.ToString("dd/MM/yyyy")</center></td>
+                                                <td><center>@item.CreateBy</center></td>
                                                 <td>
                                                     <center>
-                                                        <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="fas fa-wrench"></i></a>
+                                                        <a href="@Url.Action("DetailProject",new { ProjectID = item.ProjectID})"><i class="fas fa-book-open"></i></a>
                                                     </center>
                                                 </td>
-                                                <td>
-                                                    <center>
-                                                        <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a>
-                                                    </center>
-                                                </td>
-                                            }
-                                        </tr>
-                                        role = @item.ProjectRole;
-                                        i++;
+                                                @if (item.ProjectRole == 1)
+                                                {
+                                                    <td>
+                                                        <center>
+                                                            <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="fas fa-wrench"></i></a>
+                                                        </center>
+                                                    </td>
+                                                    <td>
+                                                        <center>
+                                                            <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a>
+                                                        </center>
+                                                    </td>
+                                                }
+                                            </tr>
+                                            role = @item.ProjectRole;
+                                            i++;
+                                        }
                                     }
-                                }
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -173,3 +216,21 @@
 <script src="~/assets/js/plugins.js"></script>
 <script src="~/assets/js/scripts.js"></script>
 <script src="~/Scripts/jquery-3.3.1.js"></script>
+
+<script>
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
