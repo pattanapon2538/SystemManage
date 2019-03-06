@@ -224,20 +224,24 @@ namespace SystemManage.Controllers
                                 var subtask = db.SubTasks.Where(m => m.SubID == c.Sub_ID).FirstOrDefault();
                                 subtask.HaveDefect = 0;
                                 var Handle = db.ProjectMembers.Where(m => m.UserID == subtask.Handle).FirstOrDefault();
-                                if (Handle.Role == 3)
+                                if (Handle == null)
                                 {
-                                    subtask.SubStatus = 2;
+                                    if (Handle.Role == 3)
+                                    {
+                                        subtask.SubStatus = 2;
+                                    }
+                                    else if (Handle.Role == 4)
+                                    {
+                                        subtask.SubStatus = 3;
+                                    }
+                                    db.SaveChanges();
+                                    number = 0;
                                 }
-                                else if (Handle.Role == 4)
-                                {
-                                    subtask.SubStatus = 3;
-                                }
-                                else if (Handle.Role == 5)
+                                else
                                 {
                                     subtask.SubStatus = 4;
                                 }
-                                db.SaveChanges();
-                                number = 0;
+                                
                             }
                         }
 
@@ -270,20 +274,27 @@ namespace SystemManage.Controllers
                                 var SI = db.SITs.Where(m => m.SIT_ID == c.Sub_ID).FirstOrDefault();
                                 SI.Defect_SIT = 0;
                                 var Handle = db.ProjectMembers.Where(m => m.UserID == SI.Handle).FirstOrDefault();
-                                if (Handle.Role == 3)
+                                if (Handle == null)
                                 {
-                                    SI.Status = 0;
+                                    if (Handle.Role == 3)
+                                    {
+                                        SI.Status = 0;
+                                    }
+                                    else if (Handle.Role == 4)
+                                    {
+                                        SI.Status = 1;
+                                    }
+                                    else if (Handle.Role == 5)
+                                    {
+                                        SI.Status = 2;
+                                    }
+                                    db.SaveChanges();
+                                    number = 0;
                                 }
-                                else if (Handle.Role == 4)
+                                else
                                 {
-                                    SI.Status = 1;
+                                    SI.Status = 3;
                                 }
-                                else if (Handle.Role == 5)
-                                {
-                                    SI.Status = 2;
-                                }
-                                db.SaveChanges();
-                                number = 0;
                             }
                         }
                     }

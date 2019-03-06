@@ -236,29 +236,29 @@
                         }
                         else if (Model.Status == 3)
                         {
-                        if (Model.Handle == Convert.ToInt32(Session["userID"]))
-                        {
-                        <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
-                        @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
-                        <label for="comment">หมายเหตุผู้ทดสอบ:</label>
-                        @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
-                        <label for="comment">หมายเหตุผู้ตรวจสอบ:</label>
-                        @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
-                        <label for="comment">หมายเหตุลูกค้า:</label>
-                        @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", })
+                            if (Model.Handle == 0 && Model.TestID != Convert.ToInt32(Session["userID"]) && Model.QAID != Convert.ToInt32(Session["userID"]))
+                            {
+                                <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                <label for="comment">หมายเหตุผู้ทดสอบ:</label>
+                                @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
+                                <label for="comment">หมายเหตุผู้ตรวจสอบ:</label>
+                                @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
+                                <label for="comment">หมายเหตุลูกค้า:</label>
+                                @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", })
 
-                        }
-                        else
-                        {
-                        <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
-                        @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
-                        <label for="comment">หมายเหตุผู้ทดสอบ:</label>
-                        @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
-                        <label for="comment">หมายเหตุผู้ตรวจสอบ:</label>
-                        @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
-                        <label for="comment">หมายเหตุลูกค้า:</label>
-                        @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", Readonly = "" })
-                        }
+                            }
+                            else
+                            {
+                                <label for="comment">หมายเหตุผู้พัฒนาซอฟแวร์:</label>
+                                @Html.TextAreaFor(m => m.Comment_Dev, new { @Class = "form-control", Readonly = "" })
+                                <label for="comment">หมายเหตุผู้ทดสอบ:</label>
+                                @Html.TextAreaFor(m => m.Comment_Tester, new { @Class = "form-control", Readonly = "" })
+                                <label for="comment">หมายเหตุผู้ตรวจสอบ:</label>
+                                @Html.TextAreaFor(m => m.Comment_QA, new { @Class = "form-control", Readonly = "" })
+                                <label for="comment">หมายเหตุลูกค้า:</label>
+                                @Html.TextAreaFor(m => m.Comment_CM, new { @Class = "form-control", Readonly = "" })
+                            }
                         }
                         else
                         {
@@ -392,20 +392,24 @@
                 <div class="col-sm-2">
                     @if (Model.Status != 4)
                     {
-                    if (Model.CreateBy != Convert.ToInt32(Session["userID"]) && Model.SubDevID != Convert.ToInt32(Session["userID"]))
-                    {
-                    if (Model.Handle == Convert.ToInt32(Session["userID"]) || Model.Handle == 0)
-                    {
-                    <a href="@Url.Action("AddDefect", "Defect" )"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
-                    }
-                    }
-                    else if (Model.Status == 5)
-                    {
-                    if (Model.SubDevID == Convert.ToInt32(Session["userId"]))
-                    {
-                    <a href="@Url.Action("Defect_Dev", "Defect" ,new { SubID=Model.SubTaskID})"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
-                    }
-                    }
+                        if (Model.CreateBy != Convert.ToInt32(Session["userID"]) && Model.SubDevID != Convert.ToInt32(Session["userID"]))
+                        {
+                            if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                            {
+                                <a href="@Url.Action("AddDefect", "Defect")"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                            }
+                            else if (Model.Handle == 0 && Model.TestID != Convert.ToInt32(Session["userID"]) && Model.QAID != Convert.ToInt32(Session["userID"]))
+                            {
+                                <a href="@Url.Action("AddDefect", "Defect")"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                            }
+                        }
+                        else if (Model.Status == 5)
+                        {
+                            if (Model.SubDevID == Convert.ToInt32(Session["userId"]))
+                            {
+                                <a href="@Url.Action("Defect_Dev", "Defect" ,new { SubID=Model.SubTaskID})"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                            }
+                        }
                     }
                 </div>
             </div>
@@ -418,27 +422,37 @@
                 <div class="col-sm-2">
                     <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่")'>กลับ</button></a>
 
-                    @if (Model.Handle == Convert.ToInt32(Session["userID"]) || Model.Handle == 0 || Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                    @if (Model.Handle == Convert.ToInt32(Session["userID"]) @*|| Model.CreateBy == Convert.ToInt32(Session["userID"])*@)
                     {
-                    if (Model.Status != 4 && Model.HaveDefect != 1)
-                    {
-                    if (Convert.ToInt32(Session["Save"]) == 0)
-                    {
-                    <button type="submit" class="btn btn-outline-success" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
-                    }
-                    else
-                    {
-                    <button type="submit" class="btn btn-outline-success">บันทึก</button>
-                    <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
-                    }
-
+                        if (Model.Status != 4 && Model.HaveDefect != 1)
+                        {
+                            if (Convert.ToInt32(Session["Save"]) == 0)
+                            {
+                             <button type="submit" class="btn btn-outline-success" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-outline-success">บันทึก</button>
+                                <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                            }
+                        }   
                     }
                     else if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                     {
-                    <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
+                            <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
                     }
+                    else if (Model.Handle == 0 && Model.TestID != Convert.ToInt32(Session["userID"]) && Model.QAID != Convert.ToInt32(Session["userID"]))
+                    {
+                         if (Convert.ToInt32(Session["Save"]) == 0)
+                            {
+                             <button type="submit" class="btn btn-outline-success" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-outline-success">บันทึก</button>
+                                <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                            }
                     }
-
                 </div>
             </div>
 
