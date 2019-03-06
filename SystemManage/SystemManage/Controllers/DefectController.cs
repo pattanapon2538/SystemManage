@@ -347,7 +347,7 @@ namespace SystemManage.Controllers
                 }
                 else if (item.Status == 4)
                 {
-                    model.StatusTest = DefectModel.StatusDefectTest.แก้ไชใหม่;
+                    model.StatusTest = DefectModel.StatusDefectTest.แก้ไขใหม่;
                 }
                 return View(model);
             }
