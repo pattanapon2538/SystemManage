@@ -90,15 +90,19 @@
                                 @Html.TextBoxFor(m => m.TaskName, new { @class = "form-control", ReadOnly = "" })
                             </div>
                         </div>
+                        @{
+                            if (Convert.ToInt32(Session["Defect_SIT"]) != 1)
+                            {
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="taskname">ชื่องานรอง :</label>
+                                        @Html.HiddenFor(m => m.Sub_ID)
+                                        @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control", Readonly = "" })
 
-
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="taskname">ชื่องานรอง :</label>
-                                @Html.HiddenFor(m => m.Sub_ID)
-                                @Html.TextBoxFor(m => m.SubTaskName, new { @class = "form-control", Readonly = "" })
-                            </div>
-                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>

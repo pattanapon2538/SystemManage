@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace SystemManage.Controllers
 {
-    
+
     public class SITController : Controller
     {
         Entities db = new Entities();
@@ -35,6 +35,7 @@ namespace SystemManage.Controllers
             s.Detail = model.Detail;
             s.Tester_ID = model.Tester_ID;
             s.Dev_ID = model.Dev_ID;
+            s.QA_ID = model.QA_ID;
             s.Send_Date_T = model.Send_Date_T;
             s.Send_Date_Q = model.Send_Date_Q;
             s.Handle = model.Tester_ID;
@@ -56,6 +57,7 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowSIT()
         {
+            Session["Defect_SIT"] = 0;
             SITModel data = new SITModel();
             List<SITModel> model = new List<SITModel>();
             int projectID = Convert.ToInt32(Session["ProjectID"]);
@@ -195,8 +197,6 @@ namespace SystemManage.Controllers
             {
                 s.Comment_QA = model.Comment_QA;
                 s.UpdateBy = Convert.ToInt32(Session["userID"]);
-                s.Status = 2;
-                s.Handle = 0;
                 s.UpdateDate = DateTime.Now;
                 db.SaveChanges();
                 Session["Show"] = 1;
@@ -206,8 +206,6 @@ namespace SystemManage.Controllers
             {
                 s.Comment_CM = model.Comment_CM;
                 s.UpdateBy = Convert.ToInt32(Session["userID"]);
-                s.Status = 2;
-                s.Handle = 9;
                 s.UpdateDate = DateTime.Now;
                 Session["Show"] = 1;
                 return RedirectToAction("DetailSIT", new { SIT_ID = model.SIT_ID });
@@ -240,7 +238,13 @@ namespace SystemManage.Controllers
                 SIT.UpdateDate = DateTime.Now;
                 db.SaveChanges();
             }
-            return RedirectToAction("ShowSIT","SIT");
+            return RedirectToAction("ShowSIT", "SIT");
+        }
+        public ActionResult Defect_SIT(int SIT_ID)
+        {
+            Session["SIT_ID"] = SIT_ID;
+            Session["Defect_SIT"] = 1;
+            return RedirectToAction("AddDefect", "Defect");
         }
     }
 }

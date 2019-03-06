@@ -14,16 +14,29 @@ namespace SystemManage.Controllers
         // GET: Defect
         public ActionResult AddDefect()
         {
-            int SubID = Convert.ToInt32(Session["SubID"]);
-            DefectModel model = new DefectModel();
-            var item = db.SubTasks.Where(m => m.SubID == SubID).FirstOrDefault();
-            var item2 = db.Tasks.Where(m => m.TaskID == item.TaskID).FirstOrDefault();
-            var item3 = db.Users.Where(m => m.User_ID == item.SubDevID).FirstOrDefault();
-            model.Sub_ID = SubID;
-            model.SubTaskName = item.SubName;
-            model.TaskName = item2.TaskName;
-            model.DevName = item3.User_Email;
-            return View(model);
+            if (Convert.ToInt32(Session["Defect_SIT"]) == 1)
+            {
+                DefectModel model = new DefectModel();
+                int SIT_ID = Convert.ToInt32(Session["SIT_ID"]);
+                var SIT = db.SITs.Where(m => m.SIT_ID == SIT_ID).FirstOrDefault();
+                var user = db.Users.Where(m => m.User_ID == SIT.Dev_ID).FirstOrDefault();
+                model.TaskName = SIT.Name;
+                model.DevName = user.User_Name;
+                return View(model);
+            }
+            else
+            {
+                int SubID = Convert.ToInt32(Session["SubID"]);
+                DefectModel model = new DefectModel();
+                var item = db.SubTasks.Where(m => m.SubID == SubID).FirstOrDefault();
+                var item2 = db.Tasks.Where(m => m.TaskID == item.TaskID).FirstOrDefault();
+                var item3 = db.Users.Where(m => m.User_ID == item.SubDevID).FirstOrDefault();
+                model.Sub_ID = SubID;
+                model.SubTaskName = item.SubName;
+                model.TaskName = item2.TaskName;
+                model.DevName = item3.User_Email;
+                return View(model);
+            }
         }
         [HttpPost]
         public ActionResult AddDefect(DefectModel model)
@@ -102,6 +115,7 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowDefect()
         {
+            Session["SIT_Defect"] = 0;
             List<DefectModel> DefectList = new List<DefectModel>();
             DefectModel model = new DefectModel();
             int projectID = Convert.ToInt32(Session["ProjectID"]);

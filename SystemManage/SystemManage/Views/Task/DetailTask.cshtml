@@ -396,14 +396,14 @@
                     {
                     if (Model.Handle == Convert.ToInt32(Session["userID"]) || Model.Handle == 0)
                     {
-                    <a href="@Url.Action(" AddDefect", "Defect" )"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                    <a href="@Url.Action("AddDefect", "Defect" )"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
                     }
                     }
                     else if (Model.Status == 5)
                     {
                     if (Model.SubDevID == Convert.ToInt32(Session["userId"]))
                     {
-                    <a href="@Url.Action(" Defect_Dev", "Defect" ,new { SubID=Model.SubTaskID})"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                    <a href="@Url.Action("Defect_Dev", "Defect" ,new { SubID=Model.SubTaskID})"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
                     }
                     }
                     }
@@ -416,7 +416,7 @@
                     </div>*@
                 </div>
                 <div class="col-sm-2">
-                    <a href="@Url.Action(" ShowTask")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่")'>กลับ</button></a>
+                    <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่")'>กลับ</button></a>
 
                     @if (Model.Handle == Convert.ToInt32(Session["userID"]) || Model.Handle == 0 || Model.CreateBy == Convert.ToInt32(Session["userID"]))
                     {
@@ -429,7 +429,7 @@
                     else
                     {
                     <button type="submit" class="btn btn-outline-success">บันทึก</button>
-                    <a href="@Url.Action(" SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                    <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
                     }
 
                     }

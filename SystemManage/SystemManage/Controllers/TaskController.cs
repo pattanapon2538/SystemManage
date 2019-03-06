@@ -107,7 +107,6 @@ namespace SystemManage.Controllers
                         st.SubName = model.SubTasksName[item].ToString();
                         st.SubDescriptionDev = model.SubTasksDis[item].ToString();
                         st.SubDevID = model.SubTaskDevID[item];//เลือกการค้นหาจาก Table Member ที่ Role เป็น Dev = 2
-                        db.SaveChanges();
                         st.SubPercent = 0;
                         st.Handle = model.SubTaskDevID[item];
                         st.SubStatus = 0;
@@ -195,6 +194,7 @@ namespace SystemManage.Controllers
         public ActionResult ShowTask()
         {
             Session["Save"] = 0;
+            Session["SIT_Defect"] = 0;
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             int userID = Convert.ToInt32(Session["userID"]);
             string Taskname = null;

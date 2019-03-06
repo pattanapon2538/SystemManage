@@ -140,15 +140,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            @{
-                                if (Model.CreateBy != Convert.ToInt32(Session["userID"]))
-                                {
-                                    <a href="@Url.Action("ShowSIT")"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'>ข้อผิดพลาด</button></a>
-                                }
-                            }
-                        </div>
                         <div class="row" style="margin-top: 20px;margin-bottom: 20px">
                             <div class="col-sm-8">
                             </div>
@@ -159,7 +150,6 @@
                         </div>
                     </div>
             </div>
-        </div>
         </div>
     }
     <!-- Optional JavaScript -->

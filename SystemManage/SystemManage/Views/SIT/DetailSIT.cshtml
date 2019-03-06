@@ -178,19 +178,13 @@
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
-                                        @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name"), "Select", new { @class = "form-control" })
+                                        @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name", selectedValue: Model.Tester_ID), "เลือก", new { @class = "form-control" })
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <div class="input-group">
-                                        <label class="label" style="margin-right: 10px">ผู้พัฒนาระบบ :</label>
-                                        @Html.DropDownListFor(m => m.Dev_ID, new SelectList(Model.Dev, "UserID", "Member_Name"), "Select", new { @class = "form-control" })
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="input-group">
-                                        <label class="label" style="margin-right: 10px">ผู้ตรวจสอบ :</label>
-                                        @Html.DropDownListFor(m => m.QA_ID, new SelectList(Model.QA, "UserID", "Member_Name"), "Select", new { @class = "form-control" })
+                                        <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
+                                        @Html.TextBoxFor(m => m.Send_Date_T, new { @class = "form-control", @type = "date" })
                                     </div>
                                 </div>
                             }
@@ -199,19 +193,13 @@
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
-                                        @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name"), "Select", new { @class = "form-control", Readonly = "" })
+                                        @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name", selectedValue: Model.Tester_ID), "เลือก", new { @class = "form-control", disabled = "ture" })
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <div class="input-group">
-                                        <label class="label" style="margin-right: 10px">ผู้พัฒนาระบบ :</label>
-                                        @Html.DropDownListFor(m => m.Dev_ID, new SelectList(Model.Dev, "UserID", "Member_Name"), "Select", new { @class = "form-control", Readonly = "" })
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="input-group">
-                                        <label class="label" style="margin-right: 10px">ผู้ตรวจสอบ :</label>
-                                        @Html.DropDownListFor(m => m.QA_ID, new SelectList(Model.QA, "UserID", "Member_Name"), "Select", new { @class = "form-control", Readonly = "" })
+                                        <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
+                                        @Html.TextBoxFor(m => m.Send_Date_T, new { @class = "form-control", @type = "date", Readonly = "" })
                                     </div>
                                 </div>
                             }
@@ -221,23 +209,51 @@
                         @{
                             if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                             {
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <label class="label" style="margin-right: 10px">ผู้ตรวจสอบคุณภาพ :</label>
+                                        @Html.DropDownListFor(m => m.QA_ID, new SelectList(Model.QA, "UserID", "Member_Name", selectedValue: Model.QA_ID), "เลือก", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
-                                        @Html.TextBoxFor(m => m.Send_Date, new { @class = "form-control", @type = "date" })
+                                        @Html.TextBoxFor(m => m.Send_Date_Q, new { @class = "form-control", @type = "date" })
                                     </div>
                                 </div>
                             }
                             else
                             {
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <label class="label" style="margin-right: 10px">ผู้ตรวจสอบคุณภาพ :</label>
+                                        @Html.DropDownListFor(m => m.QA_ID, new SelectList(Model.QA, "UserID", "Member_Name", selectedValue: Model.QA_ID), "เลือก", new { @class = "form-control", disabled = "ture" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
-                                        @Html.TextBoxFor(m => m.Send_Date, new { @class = "form-control", @type = "date", Readonly = "" })
+                                        @Html.TextBoxFor(m => m.Send_Date_Q, new { @class = "form-control", @type = "date", Readonly = "" })
                                     </div>
                                 </div>
                             }
                         }
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="input-group">
+                                <label class="label" style="margin-right: 6px">ในกรณีที่มีข้อผิดพลาดผู้แก้ไขระบบ :</label>
+                                @{
+                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        @Html.DropDownListFor(m => m.Dev_ID, new SelectList(Model.Dev, "UserID", "Member_Name", selectedValue: Model.Dev_ID), "เลือก", new { @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownListFor(m => m.Dev_ID, new SelectList(Model.Dev, "UserID", "Member_Name", selectedValue: Model.Dev_ID), "เลือก", new { @class = "form-control", disabled = "ture" })
+                                    }
+                                }
+                            </div>
+                        </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <input type="file" class="form-control-file" id="exampleFormControlFile1">
@@ -249,25 +265,23 @@
                             <div class="form-group">
                                 <label for="comment">หมายเหตุของผู้ทดสอบ :</label>
                                 @{
-                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    if (Model.Tester_ID == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                        {
+                                            @Html.TextAreaFor(m => m.Commnet_T, new { @class = "form-control" })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextAreaFor(m => m.Commnet_T, new { @class = "form-control", Readonly = "" })
+                                        }
+                                    }
+                                    else
                                     {
                                         @Html.TextAreaFor(m => m.Commnet_T, new { @class = "form-control", Readonly = "" })
                                     }
-                                    else if (Model.Tester_ID == Convert.ToInt32(Session["userID"]))
-                                    {
-                                        @Html.TextAreaFor(m => m.Commnet_T, new { @class = "form-control" })
-                                    }
-                                    else if (Model.QA_ID == Convert.ToInt32(Session["userID"]))
-                                    {
-                                        @Html.TextAreaFor(m => m.Commnet_T, new { @class = "form-control", Readonly = "" })
-                                    }
-                                    else if (Model.Handle == 0)
-                                    {
-                                        @Html.TextAreaFor(m => m.Commnet_T, new { @class = "form-control", Readonly = "" })
-                                    }
-                                }
-
-                            </div>
+                                 }
+                                </div>
                         </div>
                     </div>
                     <div class="row">
@@ -275,19 +289,18 @@
                             <div class="form-group">
                                 <label for="comment">หมายเหตุของผู้ตรวจคุณภาพ :</label>
                                 @{
-                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    if (Model.QA_ID == Convert.ToInt32(Session["userID"]))
                                     {
-                                        @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control", Readonly = "" })
+                                        if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                        {
+                                            @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control" })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control", Readonly = "" })
+                                        }
                                     }
-                                    else if (Model.Tester_ID == Convert.ToInt32(Session["userID"]))
-                                    {
-                                        @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control", Readonly = "" })
-                                    }
-                                    else if (Model.QA_ID == Convert.ToInt32(Session["userID"]))
-                                    {
-                                        @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control" })
-                                    }
-                                    else if (Model.Handle == 0)
+                                    else
                                     {
                                         @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control", Readonly = "" })
                                     }
@@ -301,52 +314,57 @@
                             <div class="form-group">
                                 <label for="comment">หมายเหตุของลูกค้า :</label>
                                 @{
-                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
-                                    {
-                                        @Html.TextAreaFor(m => m.Comment_CM, new { @class = "form-control", Readonly = "" })
-                                    }
-                                    else if (Model.Tester_ID == Convert.ToInt32(Session["userID"]))
-                                    {
-                                        @Html.TextAreaFor(m => m.Comment_CM, new { @class = "form-control", Readonly = "" })
-                                    }
-                                    else if (Model.QA_ID == Convert.ToInt32(Session["userID"]))
-                                    {
-                                        @Html.TextAreaFor(m => m.Comment_CM, new { @class = "form-control", Readonly = "" })
-                                    }
-                                    else if (Model.Handle == 0)
-                                    {
-                                        @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control" })
-                                    }
-                                }
-
+                                        if (Model.Handle == 0)
+                                        {
+                                            @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control" })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control", Readonly = "" })
+                                        }
+                                 }
                             </div>
                         </div>
                     </div>
-                    <div class="row" style="margin-top: 20px;margin-bottom: 20px">
-                        <div class="col-sm-8">
-                        </div>
+                    <div class="row">
                         <div class="col-sm-4">
-                            <a href="@Url.Action("ShowSIT")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>ยกเลิก</button></a>
                             @{
-                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                               if (Model.Handle == Convert.ToInt32(Session["userID"]))
                                 {
-                                    <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")'>บันทึก</button>
-                                }
-                                else if (Model.Handle == Convert.ToInt32(Session["userID"]))
-                                {
-                                    <button type="button" class="btn btn-outline-success" onclick='Check()'>บันทึก</button>
-                                }
-                                if (Convert.ToInt32(Session["Show"]) == 1)
-                                {
-                                    <a href="@Url.Action("SendSIT","SIT", new {SIT_ID = Model.SIT_ID})"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                                    <a href="@Url.Action("Defect_SIT","SIT",new {SIT_ID = Model.SIT_ID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'>ข้อผิดพลาด</button></a>
                                 }
                             }
-                            @Html.HiddenFor(m => m.CreateBy)
+                        </div>
+                        <div class="row" style="margin-top: 20px;margin-bottom: 20px">
+                            <div class="col-sm-8">
+                            </div>
+                            <div class="col-sm-4">
+                                <a href="@Url.Action("ShowSIT")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>ยกเลิก</button></a>
+                                @{
+                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")'>บันทึก</button>
+                                    }
+                                    else if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        <button type="button" class="btn btn-outline-success" onclick='Check()'>บันทึก</button>
+                                    }
+                                    if (Convert.ToInt32(Session["Show"]) == 1)
+                                    {
+                                        <a href="@Url.Action("SendSIT","SIT", new {SIT_ID = Model.SIT_ID})"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                                    }
+                                }
+                                @Html.HiddenFor(m => m.CreateBy)
+                                @Html.HiddenFor(m => m.Tester_ID)
+                                @Html.HiddenFor(m => m.QA_ID)
+                                @Html.HiddenFor(m => m.Dev_ID)
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
+        </div>
+            </div>
     }
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
