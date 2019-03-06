@@ -467,6 +467,11 @@ namespace SystemManage.Controllers
                 st.SubDevID = model.SubDevID;
                 st.SubDescriptionDev = model.SubTasksDes;
                 st.SubDevSend = model.SubTaskDateSend;
+                st.Handle = model.SubDevID;
+                st.SubStatus = 0;
+                st.SubPercent = 0;
+                st.UpdateBy = Convert.ToInt32(Session["userID"]);
+                st.UpdateDate = DateTime.Now;
                 db.SaveChanges();
                 t.TaskName = model.TaskName;
                 if (model.level.ToString() == "ง่าย")
@@ -510,7 +515,7 @@ namespace SystemManage.Controllers
                 string mess = "งานของคุณได้มีการแก้ไข" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
-                return RedirectToAction("ShowTask");
+                return RedirectToAction("ShowTask","Task");
             }
             //Dev
             else if (r.Role == 2)
@@ -526,7 +531,7 @@ namespace SystemManage.Controllers
                 st.Comment_Tester = model.Comment_Tester;
                 db.SaveChanges();
                 Session["Save"] = 1;
-                return View("DetailTask", "Task", new { SubID = model.SubTaskID });
+                return RedirectToAction("DetailTask", "Task", new { SubID = model.SubTaskID });
             }
             //QA
             else if (r.Role == 4)
@@ -534,7 +539,7 @@ namespace SystemManage.Controllers
                 st.Comment_QA = model.Comment_QA;
                 db.SaveChanges();
                 Session["Save"] = 1;
-                return View("DetailTask", "Task", new { SubID = model.SubTaskID });
+                return RedirectToAction("DetailTask", "Task", new { SubID = model.SubTaskID });
 
             }
             //CM
@@ -543,7 +548,7 @@ namespace SystemManage.Controllers
                 st.Comment_CM = model.Comment_CM;
                 db.SaveChanges();
                 Session["Save"] = 1;
-                return View("DetailTask", "Task", new { SubID = model.SubTaskID });
+                return RedirectToAction("DetailTask", "Task", new { SubID = model.SubTaskID });
             }
             return RedirectToAction("ShowTask");
         }
