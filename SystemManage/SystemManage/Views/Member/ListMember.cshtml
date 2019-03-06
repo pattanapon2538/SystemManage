@@ -270,22 +270,26 @@
 </script>
 <script>
     function CheckMember(userID) {
-
-        $.ajax({
-            type: "POST",
-            url: "@(Url.Action("CheckMember", "Member"))",
-            data: { userID: userID },
-            dataType: "json",
-            success: function (data)
-            {
-                if (data.c == true)
-                {
-                    alert("มีผู้ใช้อยู่ระบบโครงการแล้ว");
+        if (confirm("เพิ่มสมาชิกเข้าสู้โครงการใช่หรือไม่")) {
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action("CheckMember", "Member"))",
+                data: { userID: userID },
+                dataType: "json",
+                success: function (data) {
+                    if (data.c == true) {
+                        alert("มีผู้ใช้อยู่ระบบโครงการแล้ว");
+                    } else if (Session["Succ"] == true) {
+                        alert("สำเร็จ");
+                    }
                 }
-            }
-        });
+            });
+        }
+        else { }
     }
 </script>
+
+
 @*<script>
     //var click = '/icon/star.png';
     //var clicked = '/icon/star_yellow.png';

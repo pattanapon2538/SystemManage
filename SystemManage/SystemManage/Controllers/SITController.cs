@@ -61,7 +61,8 @@ namespace SystemManage.Controllers
             SITModel data = new SITModel();
             List<SITModel> model = new List<SITModel>();
             int projectID = Convert.ToInt32(Session["ProjectID"]);
-            data.CreateBy = Convert.ToInt32(Session["userID"]);
+            var project = db.Projects.Where(m => m.ProjectID == projectID).FirstOrDefault();
+            data.CreateBy = project.CreateBy;
             var sit = db.SITs.Where(m => m.Project_ID == projectID).ToList();
             Session["Show"] = 0;
             foreach (var n in sit)
