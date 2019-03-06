@@ -1,5 +1,4 @@
-﻿
-@model SystemManage.Models.SITModel
+﻿@model SystemManage.Models.SITModel
 @using SystemManage.Models
 <!doctype html>
 <head>
@@ -14,7 +13,7 @@
     $(document).ready(function() {
           @{
               int t = Model.state;
-          } 
+          }
     $("#add").click(function() {
        @{
            t++;
@@ -175,71 +174,82 @@
                         @{
                             if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                             {
+                                <div class="col-sm-2"></div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
                                         @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name", selectedValue: Model.Tester_ID), "เลือก", new { @class = "form-control" })
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
                                         @Html.TextBoxFor(m => m.Send_Date_T, new { @class = "form-control", @type = "date" })
                                     </div>
                                 </div>
+                                <div class="col-sm-2"></div>
                             }
                             else
                             {
+                                <div class="col-sm-2"></div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
                                         @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name", selectedValue: Model.Tester_ID), "เลือก", new { @class = "form-control", disabled = "ture" })
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
                                         @Html.TextBoxFor(m => m.Send_Date_T, new { @class = "form-control", @type = "date", Readonly = "" })
                                     </div>
                                 </div>
+                                <div class="col-sm-2"></div>
                             }
                         }
                     </div>
+                    <br />
                     <div class="row">
                         @{
                             if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                             {
+                                <div class="col-sm-2"></div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">ผู้ตรวจสอบคุณภาพ :</label>
                                         @Html.DropDownListFor(m => m.QA_ID, new SelectList(Model.QA, "UserID", "Member_Name", selectedValue: Model.QA_ID), "เลือก", new { @class = "form-control" })
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
                                         @Html.TextBoxFor(m => m.Send_Date_Q, new { @class = "form-control", @type = "date" })
                                     </div>
                                 </div>
+                                <div class="col-sm-2"></div>
                             }
                             else
                             {
+                                <div class="col-sm-2"></div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">ผู้ตรวจสอบคุณภาพ :</label>
                                         @Html.DropDownListFor(m => m.QA_ID, new SelectList(Model.QA, "UserID", "Member_Name", selectedValue: Model.QA_ID), "เลือก", new { @class = "form-control", disabled = "ture" })
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
                                         @Html.TextBoxFor(m => m.Send_Date_Q, new { @class = "form-control", @type = "date", Readonly = "" })
                                     </div>
                                 </div>
+                                <div class="col-sm-2"></div>
                             }
                         }
-                    <div class="row">
-                        <div class="col-sm-5">
+                        <br />
+                        <br />
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 6px">ในกรณีที่มีข้อผิดพลาดผู้แก้ไขระบบ :</label>
                                 @{
@@ -254,13 +264,14 @@
                                 }
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <input type="file" class="form-control-file" id="exampleFormControlFile1">
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+                        <div class="col-sm-2"></div>
+                        <br />
+                        <br />
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">หมายเหตุของผู้ทดสอบ :</label>
@@ -290,8 +301,6 @@
                                 }
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">หมายเหตุของผู้ตรวจคุณภาพ :</label>
@@ -315,69 +324,67 @@
 
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">หมายเหตุของลูกค้า :</label>
                                 @{
-                                        if (Model.Handle == 0)
-                                        {
-                                            @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control" })
-                                        }
-                                        else
-                                        {
-                                            @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control", Readonly = "" })
-                                        }
-                                 }
+                                    if (Model.Handle == 0)
+                                    {
+                                        @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control", Readonly = "" })
+                                    }
+                                }
                             </div>
                         </div>
+
                     </div>
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-10"></div>
+                        <div class="col-sm-2">
                             @{
-                               if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                if (Model.Handle == Convert.ToInt32(Session["userID"]))
                                 {
-                                    <a href="@Url.Action("Defect_SIT","SIT",new {SIT_ID = Model.SIT_ID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'>ข้อผิดพลาด</button></a>
+                                    <a href="@Url.Action("Defect_SIT","SIT",new {SIT_ID = Model.SIT_ID })"><button type="button" class="btn btn-outline-success btn-block" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'>ข้อผิดพลาด</button></a>
                                 }
                             }
                         </div>
-                        <div class="row" style="margin-top: 20px;margin-bottom: 20px">
-                            <div class="col-sm-8">
-                            </div>
-                            <div class="col-sm-4">
-                                <a href="@Url.Action("ShowSIT")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>ยกเลิก</button></a>
-                                @{
-                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                    </div>
+                    <div class="row" style="margin-top:10px">
+                        <div class="col-sm-10"></div>
+                        <div class="col-sm-2">
+                            <a href="@Url.Action("ShowSIT")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>ยกเลิก</button></a>
+                            @{
+                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                {
+                                    <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")'>บันทึก</button>
+                                }
+                                else if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                {
+                                    if (Model.Status != 4)
                                     {
-                                        <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")'>บันทึก</button>
-                                    }
-                                    else if (Model.Handle == Convert.ToInt32(Session["userID"]))
-                                    {
-                                        if (Model.Status != 4)
-                                        {
-                                            <button type="button" class="btn btn-outline-success" onclick='Check()'>บันทึก</button>
-                                        }
-                                    }
-                                    if (Convert.ToInt32(Session["Show"]) == 1)
-                                    {
-                                        if (Model.Status != 4)
-                                        {
-                                            <a href="@Url.Action("SendSIT","SIT", new {SIT_ID = Model.SIT_ID})"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
-                                        }
+                                        <button type="button" class="btn btn-outline-success" onclick='Check()'>บันทึก</button>
                                     }
                                 }
-                                @Html.HiddenFor(m => m.CreateBy)
-                                @Html.HiddenFor(m => m.Tester_ID)
-                                @Html.HiddenFor(m => m.QA_ID)
-                                @Html.HiddenFor(m => m.Dev_ID)
-                            </div>
+                                if (Convert.ToInt32(Session["Show"]) == 1)
+                                {
+                                    if (Model.Status != 4)
+                                    {
+                                        <a href="@Url.Action("SendSIT","SIT", new {SIT_ID = Model.SIT_ID})"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                                    }
+                                }
+                            }
+                            @Html.HiddenFor(m => m.CreateBy)
+                            @Html.HiddenFor(m => m.Tester_ID)
+                            @Html.HiddenFor(m => m.QA_ID)
+                            @Html.HiddenFor(m => m.Dev_ID)
                         </div>
                     </div>
                 </div>
-        </div>
-        </div>
             </div>
+        </div>
     }
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -390,7 +397,7 @@
         if (confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")) {
             document.getElementById("form_Check").submit();
         } else {
-           
+
         }
     }
 </script>
