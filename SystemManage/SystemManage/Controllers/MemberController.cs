@@ -71,7 +71,6 @@ namespace SystemManage.Controllers
                 pm.Member_name = PoList.User_Name;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
-                Session["Succ"] = true;
                 return RedirectToAction("ListMember");
             }
             else if (PoList.Position_ID == 110)//PositionID = 110 Tester
@@ -80,7 +79,6 @@ namespace SystemManage.Controllers
                 pm.Member_name = PoList.User_Name;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
-                Session["Succ"] = true;
                 return RedirectToAction("ListMember");
             }
             else if (PoList.Position_ID == 142)//PositionID = 142 QA 
@@ -89,7 +87,6 @@ namespace SystemManage.Controllers
                 pm.Member_name = PoList.User_Name;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
-                Session["Succ"] = true;
                 return RedirectToAction("ListMember");
             }
             else if (PoList.Position_ID == 143)//PositionID = 143 ลูกค้า 
@@ -98,7 +95,6 @@ namespace SystemManage.Controllers
                 pm.Member_name = PoList.User_Name;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
-                Session["Succ"] = true;
                 return RedirectToAction("ListMember");
             }else //ถ้าไม่เข้าเงื่อไขให้เป็น Dev ทั้งหมด
             pm.Role = 2; 

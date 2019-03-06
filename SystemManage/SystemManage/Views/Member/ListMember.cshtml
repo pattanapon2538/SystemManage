@@ -271,6 +271,7 @@
 <script>
     function CheckMember(userID) {
         if (confirm("เพิ่มสมาชิกเข้าสู้โครงการใช่หรือไม่")) {
+            alert("ดำเนินการเสร็จสิน");
             $.ajax({
                 type: "POST",
                 url: "@(Url.Action("CheckMember", "Member"))",
@@ -279,14 +280,11 @@
                 success: function (data) {
                     if (data.c == true) {
                         alert("มีผู้ใช้อยู่ระบบโครงการแล้ว");
-                    } else if (Session["Succ"] == true) {
-                        alert("สำเร็จ");
+                    } 
                     }
-                }
-            });
-        }
-        else { }
-    }
+                })
+            };
+    };
 </script>
 
 
