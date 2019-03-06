@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="SystemManageModel.Project" Width="1.5" PointX="7.375" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.ProjectMember" Width="1.5" PointX="5.25" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.SubDefect" Width="1.5" PointX="9.5" PointY="8.25" />
-        <EntityTypeShape EntityType="SystemManageModel.SubTaskSubmisstion" Width="1.5" PointX="13.875" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.Type_of_Contract" Width="1.5" PointX="0.625" PointY="10.5" />
         <AssociationConnector Association="SystemManageModel.FK_Mail" />
         <AssociationConnector Association="SystemManageModel.FK_Project" />
@@ -23,7 +22,6 @@
         <EntityTypeShape EntityType="SystemManageModel.Task" Width="1.5" PointX="9.375" PointY="2.375" />
         <AssociationConnector Association="SystemManageModel.FK_Task" />
         <AssociationConnector Association="SystemManageModel.FK_SubTask" />
-        <AssociationConnector Association="SystemManageModel.SubID" />
         <EntityTypeShape EntityType="SystemManageModel.Follow" Width="1.5" PointX="0.5" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.Document" Width="1.5" PointX="11.75" PointY="8.875" />
         <AssociationConnector Association="SystemManageModel.FK_ProjectID" />
@@ -35,14 +33,14 @@
         <AssociationConnector Association="SystemManageModel.FK_UserID" />
         <AssociationConnector Association="SystemManageModel.FK_User" />
         <AssociationConnector Association="SystemManageModel.FK_Contact" />
-        <EntityTypeShape EntityType="SystemManageModel.Defect" Width="1.5" PointX="7.375" PointY="7.125" />
-        <AssociationConnector Association="SystemManageModel.FK_Defect" />
-        <AssociationConnector Association="SystemManageModel.FK_Defect_Project" />
-        <AssociationConnector Association="SystemManageModel.FK_SubDefect" />
         <EntityTypeShape EntityType="SystemManageModel.SITStep" Width="1.5" PointX="14.875" PointY="9.25" />
         <AssociationConnector Association="SystemManageModel.FK_Sub" />
         <EntityTypeShape EntityType="SystemManageModel.SIT" Width="1.5" PointX="7.375" PointY="11.875" />
         <AssociationConnector Association="SystemManageModel.FK_Step" />
+        <EntityTypeShape EntityType="SystemManageModel.Defect" Width="1.5" PointX="7.125" PointY="6.875" />
+        <EntityTypeShape EntityType="SystemManageModel.SubTaskSubmisstion" Width="1.5" PointX="13.625" PointY="2.375" />
+        <AssociationConnector Association="SystemManageModel.FK_Defect_Project" />
+        <AssociationConnector Association="SystemManageModel.FK_SubDefect" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -20,7 +20,5 @@ namespace SystemManage.Database
         public DateTime SubmitDate { get; set; }
         public int HandleBy { get; set; }
         public int SubID { get; set; }
-    
-        public virtual SubTask SubTask { get; set; }
     }
 }

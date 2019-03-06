@@ -269,7 +269,14 @@
                                     {
                                         if (Model.Handle == Convert.ToInt32(Session["userID"]))
                                         {
-                                            @Html.TextAreaFor(m => m.Commnet_T, new { @class = "form-control" })
+                                            if (Model.Status != 4)
+                                            {
+                                                @Html.TextAreaFor(m => m.Commnet_T, new { @class = "form-control" })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextAreaFor(m => m.Commnet_T, new { @class = "form-control", Readonly = "" })
+                                            }
                                         }
                                         else
                                         {
@@ -280,8 +287,8 @@
                                     {
                                         @Html.TextAreaFor(m => m.Commnet_T, new { @class = "form-control", Readonly = "" })
                                     }
-                                 }
-                                </div>
+                                }
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -347,11 +354,17 @@
                                     }
                                     else if (Model.Handle == Convert.ToInt32(Session["userID"]))
                                     {
-                                        <button type="button" class="btn btn-outline-success" onclick='Check()'>บันทึก</button>
+                                        if (Model.Status != 4)
+                                        {
+                                            <button type="button" class="btn btn-outline-success" onclick='Check()'>บันทึก</button>
+                                        }
                                     }
                                     if (Convert.ToInt32(Session["Show"]) == 1)
                                     {
-                                        <a href="@Url.Action("SendSIT","SIT", new {SIT_ID = Model.SIT_ID})"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                                        if (Model.Status != 4)
+                                        {
+                                            <a href="@Url.Action("SendSIT","SIT", new {SIT_ID = Model.SIT_ID})"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                                        }
                                     }
                                 }
                                 @Html.HiddenFor(m => m.CreateBy)

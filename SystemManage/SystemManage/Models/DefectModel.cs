@@ -50,7 +50,7 @@ namespace SystemManage.Models
         public enum StatusDefectTest
         {
             ปิด,
-            แก้ไชใหม่
+            แก้ไขใหม่
         }
         public string Error_Detail { get; set; }
     }

@@ -14,13 +14,6 @@ namespace SystemManage.Database
     
     public partial class SubTask
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SubTask()
-        {
-            this.SubTaskSubmisstions = new HashSet<SubTaskSubmisstion>();
-            this.Defects = new HashSet<Defect>();
-        }
-    
         public int SubID { get; set; }
         public string SubName { get; set; }
         public int SubStatus { get; set; }
@@ -42,9 +35,5 @@ namespace SystemManage.Database
         public string Comment_CM { get; set; }
     
         public virtual Task Task { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SubTaskSubmisstion> SubTaskSubmisstions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Defect> Defects { get; set; }
     }
 }
