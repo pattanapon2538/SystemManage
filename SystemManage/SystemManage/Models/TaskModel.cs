@@ -44,7 +44,7 @@ namespace SystemManage.Models
         public List<string> SubTasksDis { get; set; }
         [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public List<int> SubTaskDevID { get; set; }
-        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public List<DateTime> SubTaskSendDate { get; set; }
         [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public List<DateTime> SubTaskCreateDate { get; set; }

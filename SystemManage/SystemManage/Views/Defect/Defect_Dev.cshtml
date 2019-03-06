@@ -59,7 +59,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 10px">กำหนดส่ง:</label>
-                                        @Html.TextBoxFor(m => item.SendDate, new { @class = "form-control", @type = "date", @readonly = "" })
+                                        @Html.TextBoxFor(m => item.SendDate, "{0:MM/dd/yyyy}", new { @class = "form-control", @readonly = "" })
                                     </div>
                                 </div>
                                 @{
@@ -145,10 +145,10 @@
                         </div>
                         <div class="col-sm-2">
                             <a href="@Url.Action("ShowDefect","Defect")"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
-                            @if (Model.CreateBy == Convert.ToInt32(Session["userID"]) || Model.DevID == Convert.ToInt32(Session["userID"]))
+                            @*@if (Model.CreateBy == Convert.ToInt32(Session["userID"]) || Model.DevID == Convert.ToInt32(Session["userID"]))
                             {
                                 <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
-                            }
+                            }*@
                         </div>
                     </div>
                 </div>

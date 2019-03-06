@@ -144,9 +144,6 @@ namespace SystemManage.Controllers
                 st.SubName = model.SubTasksName[0].ToString();
                 st.SubDescriptionDev = model.SubTasksDis[0].ToString();
                 st.SubDevID = model.SubTaskDevID[0];////เลือกการค้นหาจาก Table Member ที่ Role เป็น Dev = 2
-                var PoinCode2 = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
-                PoinCode2.TotalCoding = PoinCode2.TotalCoding + 1;
-                db.SaveChanges();
                 st.SubPercent = 0;
                 st.SubStatus = 0;
                 st.Handle = model.SubTaskDevID[0];
@@ -154,6 +151,9 @@ namespace SystemManage.Controllers
                 st.CreateDate = DateTime.Now;
                 st.CreateBy = Convert.ToInt32(Session["userID"]);
                 db.SubTasks.Add(st);
+                db.SaveChanges();
+                var PoinCode2 = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
+                PoinCode2.TotalCoding = PoinCode2.TotalCoding + 1;
                 db.SaveChanges();
                 var Email = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
                 var Sendto = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();

@@ -157,7 +157,7 @@
                                 }
                                 else
                                 {
-                                @Html.TextBoxFor(m => m.SubTaskDateSend, new { @class = "form-control", @type = "date", Readonly = "" })
+                                @Html.TextBoxFor(m => m.SubTaskDateSend, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
                                 }
                                 }
                             </div>
@@ -323,7 +323,7 @@
                             }
                             else
                             {
-                            @Html.TextBoxFor(m => m.TestSentDate, new { @class = "form-control", @type = "date", Readonly = "" })
+                            @Html.TextBoxFor(m => m.TestSentDate, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
                             }
                             }
                         </div>
@@ -379,7 +379,7 @@
                             }
                             else
                             {
-                            @Html.TextBoxFor(m => m.QASentDate, new { @class = "form-control", @type = "date", Readonly = "" })
+                            @Html.TextBoxFor(m => m.QASentDate, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
                             }
                             }
                         </div>
