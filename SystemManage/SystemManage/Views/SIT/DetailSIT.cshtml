@@ -201,7 +201,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
-                                        @Html.TextBoxFor(m => m.Send_Date_T, new { @class = "form-control", @type = "date", Readonly = "" })
+                                        @Html.TextBoxFor(m => m.Send_Date_T, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
                                     </div>
                                 </div>
                                 <div class="col-sm-2"></div>
@@ -240,7 +240,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
-                                        @Html.TextBoxFor(m => m.Send_Date_Q, new { @class = "form-control", @type = "date", Readonly = "" })
+                                        @Html.TextBoxFor(m => m.Send_Date_Q, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
                                     </div>
                                 </div>
                                 <div class="col-sm-2"></div>
@@ -328,7 +328,7 @@
                             <div class="form-group">
                                 <label for="comment">หมายเหตุของลูกค้า :</label>
                                 @{
-                                    if (Model.Handle == 0)
+                                    if (Model.Handle == 0 && Model.QA_ID != Convert.ToInt32(Session["userID"]) && Model.Tester_ID != Convert.ToInt32(Session["userID"]))
                                     {
                                         @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control" })
                                     }
@@ -362,6 +362,13 @@
                                     <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")'>บันทึก</button>
                                 }
                                 else if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                {
+                                    if (Model.Status != 4)
+                                    {
+                                        <button type="button" class="btn btn-outline-success" onclick='Check()'>บันทึก</button>
+                                    }
+                                }
+                                else if (Model.Handle == 0 && Model.QA_ID != Convert.ToInt32(Session["userID"]) && Model.Tester_ID != Convert.ToInt32(Session["userID"]))
                                 {
                                     if (Model.Status != 4)
                                     {

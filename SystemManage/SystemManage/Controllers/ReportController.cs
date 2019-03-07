@@ -95,5 +95,22 @@ namespace SystemManage.Controllers
             ViewBag.DataList = subTasksReport;
             return View(model);
         }
+        public ActionResult Summary(int projectID)
+        {
+            var t = db.Tasks.Where(m => m.ProjectID == projectID).ToList();
+            foreach (var c in t)
+            {
+                double Total = 0;
+                var s = db.SubTasks.Where(m => m.TaskID == c.TaskID).ToList();
+                foreach (var d in s)
+                {
+                    Total = Total + d.SubPercent;
+                }
+                Total = Total / s.Count;
+                c.TotalPercent = Total;
+                db.SaveChanges();
+            }
+            return View();
+        }
     }
 }

@@ -13,7 +13,7 @@
         var i = 1;
     $("#add").click(function() {
         i++;
-        var domElement = $('<div class="row"> <div class="col-sm-2"></div> <div class="col-sm-8"> <div class="row"> <div class="col-sm-2"></div> <div class="col-sm-4"> <label class="label">Step '+i+' :</label> </div> <div class="col-sm-4"> <div class="input-group"> @Html.Raw(Ajax.JavaScriptStringEncode(Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName"), "Select", new { @class = "form-control" }).ToHtmlString())) </div> </div> <div class="col-sm-2"> <a href="#" id="cancel"><img src="/icon/cancel.png" width="24px" height="24px"></a> </div> </div> </div> </div> <div class="col-sm-2"></div> </div>');
+        var domElement = $('<div class="row"> <div class="col-sm-2"></div> <div class="col-sm-8"> <div class="row"> <div class="col-sm-2"></div> <div class="col-sm-4"> <label class="label">ลำดับ '+i+' :</label> </div> <div class="col-sm-4"> <div class="input-group"> @Html.Raw(Ajax.JavaScriptStringEncode(Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName"), "เลือก", new { @class = "form-control" }).ToHtmlString())) </div> </div> <div class="col-sm-2"> <a href="#" id="cancel"><img src="/icon/cancel.png" width="24px" height="24px"></a> </div> </div> </div> </div> <div class="col-sm-2"></div> </div>');
         $(this).parent('div').before(domElement);
     });
     });
@@ -65,6 +65,7 @@
                                 <div class="col-sm-6">
                                     <div class="input-group">
                                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Name, string.Empty, new { @style = "color:red" })
                                     </div>
                                 </div>
                             </div>
@@ -77,11 +78,12 @@
                             <div class="row">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-4">
-                                    <label class="label">Step 1 :</label>
+                                    <label class="label">ลำดับ 1 :</label>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        @Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName"), "Select", new { @class = "form-control" })
+                                        @Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName"), "เลิอก", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.TaskList, string.Empty, new { @style = "color:red" })
                                     </div>
                                 </div>
                             </div>
@@ -103,13 +105,15 @@
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้ทดสอบ :</label>
-                                @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name"), "Select", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.Tester_ID, new SelectList(Model.Tester, "UserID", "Member_Name"), "เลือก", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Tester_ID, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                         <div class="col-sm-5">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
                                 @Html.TextBoxFor(m => m.Send_Date_T, new { @class = "form-control", @type = "date" })
+                                @Html.ValidationMessageFor(m => m.Send_Date_T, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                     </div>
@@ -117,13 +121,15 @@
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">ผู้ตรวจสอบคุณภาพ :</label>
-                                @Html.DropDownListFor(m => m.QA_ID, new SelectList(Model.QA, "UserID", "Member_Name"), "Select", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.QA_ID, new SelectList(Model.QA, "UserID", "Member_Name"), "เลือก", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.QA_ID, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                         <div class="col-sm-5">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
                                 @Html.TextBoxFor(m => m.Send_Date_Q, new { @class = "form-control", @type = "date" })
+                                @Html.ValidationMessageFor(m => m.Send_Date_Q, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                     </div>
@@ -131,7 +137,8 @@
                         <div class="col-sm-5">
                             <div class="input-group">
                                 <label class="label" style="margin-right: 6px">ในกรณีที่มีข้อผิดพลาดผู้แก้ไขระบบ :</label>
-                                @Html.DropDownListFor(m => m.Dev_ID, new SelectList(Model.Dev, "UserID", "Member_Name"), "Select", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.Dev_ID, new SelectList(Model.Dev, "UserID", "Member_Name"), "เลือก", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Dev_ID, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                         <div class="col-sm-6">

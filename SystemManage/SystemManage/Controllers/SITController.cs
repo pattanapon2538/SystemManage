@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SystemManage.Database;
 using SystemManage.Models;
 using System.Threading;
+using SystemManage.Controllers;
 
 namespace SystemManage.Controllers
 {
@@ -18,7 +19,7 @@ namespace SystemManage.Controllers
         {
             SITModel SIT = new SITModel();
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
-            SIT.Task = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
+            SIT.Task = db.Tasks.Where(m => m.ProjectID == ProjectID && m.TotalPercent == 100).ToList();
             SIT.Tester = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 3).OrderBy(m => m.UserID).ToList();
             SIT.Dev = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 2).OrderBy(m => m.UserID).ToList();
             SIT.QA = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 4).OrderBy(m => m.UserID).ToList();
@@ -27,40 +28,54 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddSIT(SITModel model)
         {
-            SIT s = new SIT();
-            Database.SITStep Step = new Database.SITStep();
-            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
-            s.Project_ID = ProjectID;
-            s.Name = model.Name;
-            s.Detail = model.Detail;
-            s.Tester_ID = model.Tester_ID;
-            s.Dev_ID = model.Dev_ID;
-            s.QA_ID = model.QA_ID;
-            s.Send_Date_T = model.Send_Date_T;
-            s.Send_Date_Q = model.Send_Date_Q;
-            s.Handle = model.Tester_ID;
-            s.Status = 0;
-            s.CreateDate = DateTime.Now;
-            s.CreateBy = Convert.ToInt32(Session["userID"]);
-            db.SITs.Add(s);
-            db.SaveChanges();
-            var c = model.TaskList.Count();
-            for (int item = 0; item < c; item++)
+            try
             {
-                Step.Task_ID = model.TaskList[item];
-                Step.Step = item;
-                Step.SIT_ID = s.SIT_ID;
-                db.SITSteps.Add(Step);
+                SIT s = new SIT();
+                Database.SITStep Step = new Database.SITStep();
+                int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+                s.Project_ID = ProjectID;
+                s.Name = model.Name;
+                s.Detail = model.Detail;
+                s.Tester_ID = model.Tester_ID;
+                s.Dev_ID = model.Dev_ID;
+                s.QA_ID = model.QA_ID;
+                s.Send_Date_T = model.Send_Date_T;
+                s.Send_Date_Q = model.Send_Date_Q;
+                s.Handle = model.Tester_ID;
+                s.Status = 0;
+                s.CreateDate = DateTime.Now;
+                s.CreateBy = Convert.ToInt32(Session["userID"]);
+                db.SITs.Add(s);
                 db.SaveChanges();
+                var c = model.TaskList.Count();
+                for (int item = 0; item < c; item++)
+                {
+                    Step.Task_ID = model.TaskList[item];
+                    Step.Step = item;
+                    Step.SIT_ID = s.SIT_ID;
+                    db.SITSteps.Add(Step);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("ShowSIT", "SIT");
             }
-            return RedirectToAction("ShowSIT", "SIT");
+            catch {
+                SITModel SIT = new SITModel();
+                int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+                SIT.Task = db.Tasks.Where(m => m.ProjectID == ProjectID && m.TotalPercent == 100).ToList();
+                SIT.Tester = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 3).OrderBy(m => m.UserID).ToList();
+                SIT.Dev = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 2).OrderBy(m => m.UserID).ToList();
+                SIT.QA = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 4).OrderBy(m => m.UserID).ToList();
+                return View(SIT);
+            }
         }
         public ActionResult ShowSIT()
         {
             Session["Defect_SIT"] = 0;
             SITModel data = new SITModel();
             List<SITModel> model = new List<SITModel>();
+            ReportController R = new ReportController();
             int projectID = Convert.ToInt32(Session["ProjectID"]);
+            R.Summary(projectID);
             var project = db.Projects.Where(m => m.ProjectID == projectID).FirstOrDefault();
             data.CreateBy = project.CreateBy;
             var sit = db.SITs.Where(m => m.Project_ID == projectID).ToList();

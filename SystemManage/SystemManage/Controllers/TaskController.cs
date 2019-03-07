@@ -195,8 +195,10 @@ namespace SystemManage.Controllers
         {
             Session["Save"] = 0;
             Session["SIT_Defect"] = 0;
+            ReportController R = new ReportController();
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             int userID = Convert.ToInt32(Session["userID"]);
+            R.Summary(ProjectID);
             string Taskname = null;
             string Handle = null;
             string DevName = null;

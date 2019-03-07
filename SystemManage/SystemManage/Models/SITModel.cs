@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using SystemManage.Database;
@@ -10,7 +11,9 @@ namespace SystemManage.Models
     {
         public int SIT_ID { get; set; }
         public int Project_ID { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public int Tester_ID { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public string Name { get; set; }
         public string Detail { get; set; }
         public string AttachShow { get; set; }
@@ -19,9 +22,13 @@ namespace SystemManage.Models
         public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public int Task_ID { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public int Dev_ID { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public DateTime Send_Date_T { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public DateTime Send_Date_Q { get; set; }
         public List<int> TaskList { get; set; }
         public List<int> StepList { get; set; }
@@ -30,6 +37,7 @@ namespace SystemManage.Models
         public string Comment_Dev { get; set; }
         public string Comment_QA { get; set; }
         public string Comment_CM { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public int QA_ID { get; set; }
         public int Handle { get; set; }
 
