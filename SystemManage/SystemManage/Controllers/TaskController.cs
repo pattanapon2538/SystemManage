@@ -110,7 +110,7 @@ namespace SystemManage.Controllers
                         st.SubPercent = 0;
                         st.Handle = model.SubTaskDevID[item];
                         st.SubStatus = 0;
-                        st.SubDevSend = DateTime.Now;
+                        st.SubDevSend = model.SubTaskSendDate[item];
                         st.CreateDate = DateTime.Now;
                         st.CreateBy = Convert.ToInt32(Session["userID"]);
                         db.SubTasks.Add(st);
@@ -147,7 +147,7 @@ namespace SystemManage.Controllers
                 st.SubPercent = 0;
                 st.SubStatus = 0;
                 st.Handle = model.SubTaskDevID[0];
-                st.SubDevSend = DateTime.Now;
+                st.SubDevSend = model.SubTaskSendDate[0];
                 st.CreateDate = DateTime.Now;
                 st.CreateBy = Convert.ToInt32(Session["userID"]);
                 db.SubTasks.Add(st);

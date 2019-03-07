@@ -224,22 +224,24 @@ namespace SystemManage.Controllers
                                 var subtask = db.SubTasks.Where(m => m.SubID == c.Sub_ID).FirstOrDefault();
                                 subtask.HaveDefect = 0;
                                 var Handle = db.ProjectMembers.Where(m => m.UserID == subtask.Handle).FirstOrDefault();
-                                if (Handle == null)
+                                if (Handle != null)
                                 {
                                     if (Handle.Role == 3)
                                     {
-                                        subtask.SubStatus = 2;
+                                        subtask.SubStatus = 1;
                                     }
                                     else if (Handle.Role == 4)
                                     {
-                                        subtask.SubStatus = 3;
+                                        subtask.SubStatus = 2;
                                     }
                                     db.SaveChanges();
                                     number = 0;
                                 }
                                 else
                                 {
-                                    subtask.SubStatus = 4;
+                                    subtask.SubStatus = 3;
+                                    db.SaveChanges();
+                                    number = 0;
                                 }
                                 
                             }
@@ -257,7 +259,8 @@ namespace SystemManage.Controllers
                         DevName = Dev.User_Name,
                         TestName = Tester.User_Name,
                         QAName = QA.User_Name,
-                        CreateBy = i.CreateBy
+                        CreateBy = i.CreateBy,
+                        SendDate = i.SendDate
                     });
                 }
                 else
@@ -312,7 +315,8 @@ namespace SystemManage.Controllers
                         DevName = User.User_Name,
                         TestName = Tester.User_Name,
                         QAName = QA.User_Name,
-                        CreateBy = i.CreateBy
+                        CreateBy = i.CreateBy,
+                        SendDate = i.SendDate
                     });
                 }
             }
@@ -334,17 +338,13 @@ namespace SystemManage.Controllers
                 model.SubTaskName = SubTask.SubName;
                 model.Detail = item.Detail;
                 model.DevID = SubTask.SubDevID;
-                model.DevName = Dev.User_Email;
+                model.DevName = Dev.User_Name;
                 model.Status = item.Status;
                 model.SendDate = item.SendDate;
                 model.CreateBy = item.CreateBy;
                 model.Comment_Dev = item.Comment_Dev;
                 model.Comment_Test = item.Comment_Test;
-                if (item.Status == 0)
-                {
-                    model.StatusDev = DefectModel.StatusDefectDev.อยู่ระหว่างการตอบรับ;
-                }
-                else if (item.Status == 1)
+                if (item.Status == 1)
                 {
                     model.StatusDev = DefectModel.StatusDefectDev.กำลังแก้ไข;
                 }
@@ -377,11 +377,7 @@ namespace SystemManage.Controllers
                 model.CreateBy = item.CreateBy;
                 model.Comment_Dev = item.Comment_Dev;
                 model.Comment_Test = item.Comment_Test;
-                if (item.Status == 0)
-                {
-                    model.StatusDev = DefectModel.StatusDefectDev.อยู่ระหว่างการตอบรับ;
-                }
-                else if (item.Status == 1)
+               if (item.Status == 1)
                 {
                     model.StatusDev = DefectModel.StatusDefectDev.กำลังแก้ไข;
                 }
@@ -409,32 +405,34 @@ namespace SystemManage.Controllers
             i.UpdateDate = DateTime.Now;
             i.Comment_Dev = model.Comment_Dev;
             i.Comment_Test = model.Comment_Test;
-            if (model.StatusDev.ToString() == "อยู่ระหว่างการตอบรับ" && model.CreateBy != Convert.ToInt32(Session["userID"]))
+            if (i.Status != 0 || Convert.ToInt32(Session["userID"]) != model.CreateBy)
             {
-                i.Status = 0;
+                if (model.StatusDev.ToString() == "กำลังแก้ไข" && model.CreateBy != Convert.ToInt32(Session["userID"]))
+                {
+                    i.Status = 1;
+                }
+                else if (model.StatusDev.ToString() == "แก้ไขแล้ว" && model.CreateBy != Convert.ToInt32(Session["userID"]))
+                {
+                    i.Status = 2;
+                }
+                else if (model.StatusTest.ToString() == "ปิด" && model.CreateBy == Convert.ToInt32(Session["userID"]))
+                {
+                    i.Status = 3;
+                }
+                else if (model.StatusTest.ToString() == "แก้ไขใหม่" && model.CreateBy == Convert.ToInt32(Session["userID"]))
+                {
+                    i.Status = 4;
+                }
+                //i.AttachFile =
+                //i.AttachShow
+                i.UpdateBy = Convert.ToInt32(Session["userID"]);
+                db.SaveChanges();
+                Session["Save_Defect"] = 1;
+                return RedirectToAction("DetailDefect", "Defect", new { DefectID = i.Defect_ID });
             }
-            else if (model.StatusDev.ToString() == "กำลังแก้ไข" && model.CreateBy != Convert.ToInt32(Session["userID"]))
-            {
-                i.Status = 1;
-            }
-            else if (model.StatusDev.ToString() == "แก้ไขแล้ว" && model.CreateBy != Convert.ToInt32(Session["userID"]))
-            {
-                i.Status = 2;
-            }
-            else if (model.StatusTest.ToString() == "ปิด" && model.CreateBy == Convert.ToInt32(Session["userID"]))
-            {
-                i.Status = 3;
-            }
-            else if (model.StatusTest.ToString() == "แก้ไชใหม่" && model.CreateBy == Convert.ToInt32(Session["userID"]))
-            {
-                i.Status = 4;
-            }
-            //i.AttachFile =
-            //i.AttachShow
             i.UpdateBy = Convert.ToInt32(Session["userID"]);
             db.SaveChanges();
-            Session["Save_Defect"] = 1;
-            return RedirectToAction("DetailDefect", "Defect", new { DefectID  = i.Defect_ID});
+            return RedirectToAction("DetailDefect", "Defect", new { DefectID = i.Defect_ID });
         }
         public ActionResult DeleteDefect(int DefectID)
         {

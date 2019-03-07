@@ -18,7 +18,7 @@ namespace SystemManage.Controllers
             var projectID = Convert.ToInt32(Session["ProjectID"]);
             List<UserModel> UserList = new List<UserModel>();
             List<FollowModel> F_List = new List<FollowModel>();
-            var user = db.Users.OrderBy(m => m.User_ID).ToList();
+            var user = db.Users.Where(m => m.Permisstion != "A").OrderBy(m => m.User_ID).ToList();
             UserModel model = new UserModel();
             var f = db.Follows.Where(m => m.PM_ID == userID).OrderBy(m => m.Follow_ID).ToList();
             model.Follow_C = f.Count();

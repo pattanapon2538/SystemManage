@@ -11,7 +11,6 @@ namespace SystemManage.Models
         public int Defect_ID { get; set; }
         public int Sub_ID { get; set; }
         public string Detail { get; set; }
-        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public DateTime SendDate { get; set; }
@@ -43,7 +42,6 @@ namespace SystemManage.Models
 
         public enum StatusDefectDev
         {
-            อยู่ระหว่างการตอบรับ,
             แก้ไขแล้ว,
             กำลังแก้ไข
         }
