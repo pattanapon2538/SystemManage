@@ -143,15 +143,14 @@ namespace SystemManage.Controllers
             {
                 double SuccPercent = 0;
                 var item2 = db.Users.Where(m => m.User_ID == i.UserID).FirstOrDefault();
-                if (item2.Amount_Succ != 0)
-                {
+              
                     var totalProject = db.Projects.Where(m => m.CreateBy == i.UserID).ToList();
                     var totalSubDev = db.SubTasks.Where(m => m.SubDevID == i.UserID).ToList();
                     var totalSubTester = db.Tasks.Where(m => m.TestID == i.UserID).ToList();
                     var totalSubQA = db.Tasks.Where(m => m.QAID == i.UserID).ToList();
                     int totalWork = totalSubDev.Count + totalSubTester.Count + totalSubQA.Count + totalProject.Count;
                     SuccPercent = Convert.ToDouble(item2.Amount_Succ) / totalWork;
-                }
+                
                 var dbPosition = db.Positions.Where(m => m.Position_ID == item2.Position_ID).FirstOrDefault();
                 UserList.Add(new UserModel
                 {

@@ -91,12 +91,12 @@ namespace SystemManage.Controllers
                 string subjects = t.TaskName + "" + st.SubName;
                 string receivers_Tester = recevier.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string messs_Tester = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubPercent;
+                string messs_Tester = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
                 e.SendEmail(receivers_Tester, subjects, messs_Tester, senders);
                 ///////////////////////////////////////
                 string receivers_QA = recevier.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string messs_QA = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubPercent;
+                string messs_QA = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
                 e.SendEmail(receivers_Tester, subjects, messs_QA, senders);
                 var count = model.SubTasksName.Count;
                 if (count > 1)
@@ -119,7 +119,7 @@ namespace SystemManage.Controllers
                         //string sender = "systemmanage59346@gmail.com";
                         string receiversDev = Sendtos.User_Email.ToString();
                         //string receiver = "pattanapon2538@outlook.com";
-                        string messs_Dev = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubPercent;
+                        string messs_Dev = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
                         e.SendEmail(receiversDev, subjects, messs_Dev, senders);
                         int total = 0;
                         float AVG = 0;
@@ -162,7 +162,7 @@ namespace SystemManage.Controllers
                 string subject = t.TaskName + "" + st.SubName;
                 string receiver = Sendto.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string mess = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubPercent;
+                string mess = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
                 int totals = 0;

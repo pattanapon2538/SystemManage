@@ -126,47 +126,51 @@
                                         var i = 1;
                                         foreach (var item in (List<ProjectModel>)ViewBag.DataList)
                                         {
-                                            <tr>
-                                                <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><center><i class="fas fa-door-open"></i></center></a></td>
-                                                <td><center>@i</center></td>
-                                                <td><center>@item.ProjectName</center></td>
-                                                @if (item.ProjectStatus == 1)
-                                                {
-                                                    <td><center>ดำเนินการ</center></td>
-                                                }
-                                                else if (item.ProjectStatus == 2)
-                                                {
-                                                    <td><center>พัก</center></td>
-                                                }
-                                                else if (item.ProjectStatus == 3)
-                                                {
-                                                    <td><center>หยุดดำเนินการ</center></td>
-                                                }
-                                                @{
-                                                    item.TotalPercent = item.TotalPercent / 100;
-                                                }
-                                                <td><center>@item.TotalPercent.ToString("P02")</center></td>
-                                                <td><center>@item.ProjectSendDate.ToString("dd/MM/yyyy")</center></td>
-                                                <td><center>@item.CreateBy</center></td>
-                                                <td>
-                                                    <center>
-                                                        <a href="@Url.Action("DetailProject",new { ProjectID = item.ProjectID})"><i class="fas fa-book-open"></i></a>
-                                                    </center>
-                                                </td>
-                                                @if (item.ProjectRole == 1)
-                                                {
-                                                    <td>
-                                                        <center>
-                                                            <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="fas fa-wrench"></i></a>
-                                                        </center>
-                                                    </td>
-                                                    <td>
-                                                        <center>
-                                                            <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a>
-                                                        </center>
-                                                    </td>
-                                                }
-                                            </tr>
+                                    <tr>
+                                        <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><center><i class="fas fa-door-open"></i></center></a></td>
+                                        <td><center>@i</center></td>
+                                        <td><center>@item.ProjectName</center></td>
+                                        @if (item.ProjectStatus == 1)
+                                        {
+                                            <td><center>ดำเนินการ</center></td>
+                                        }
+                                        else if (item.ProjectStatus == 2)
+                                        {
+                                            <td><center>พัก</center></td>
+                                        }
+                                        else if (item.ProjectStatus == 3)
+                                        {
+                                            <td><center>หยุดดำเนินการ</center></td>
+                                        }
+                                        else if (item.ProjectStatus == 4)
+                                        {
+                                            <td><center>เสร็จสิน</center></td>
+                                        }
+                                        @{
+                                            item.TotalPercent = item.TotalPercent / 100;
+                                        }
+                                        <td><center>@item.TotalPercent.ToString("P02")</center></td>
+                                        <td><center>@item.ProjectSendDate.ToString("dd/MM/yyyy")</center></td>
+                                        <td><center>@item.CreateBy</center></td>
+                                        <td>
+                                            <center>
+                                                <a href="@Url.Action("DetailProject",new { ProjectID = item.ProjectID})"><i class="fas fa-book-open"></i></a>
+                                            </center>
+                                        </td>
+                                        @if (item.ProjectRole == 1)
+                                        {
+                                            <td>
+                                                <center>
+                                                    <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="fas fa-wrench"></i></a>
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <center>
+                                                    <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a>
+                                                </center>
+                                            </td>
+                                        }
+                                    </tr>
                                             role = @item.ProjectRole;
                                             i++;
                                         }

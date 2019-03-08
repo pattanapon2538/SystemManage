@@ -33,12 +33,18 @@ namespace SystemManage.Models
         public string TaskName { get; set; }
         public double TaskPercent { get; set; }
         public int SIT_Menu { get; set; }
+        public SIT_State SIT { get; set; }
 
         public enum Status
         {
             ดำเนินการ,
             พัก,
             หยุดดำเนินการ,
+        }
+        public enum SIT_State
+        {
+           ใช่,
+           ไม่ใช่
         }
 
 

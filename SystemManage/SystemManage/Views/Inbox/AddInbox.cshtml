@@ -13,10 +13,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <title>AddInbox</title>
+    <title>เพิ่มข้อความ</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("AddInbox", "Inbox", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }, new { enctype = "multipart/form-data" }))
+    @using (Ajax.BeginForm("AddInbox", "Inbox", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() , OnSuccess = "data" }, new { enctype = "multipart/form-data" }))
     {
         <div class="container">
             <div class="card" style="margin-top: 50px">
@@ -50,8 +50,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <input type="file" class="form-control-file" name="file">
-                                @*@Html.TextBoxFor(m => m.AttachFile1,new {@class = "form-control-file" ,@type ="file"})*@
+                                @*<input type="file" class="form-control-file" name="file">*@
+                                @Html.TextBoxFor(m => m.AttachFile1,new {@class = "form-control-file" ,@type ="file"})
                             </div>
                         </div>
                     </div>
@@ -71,3 +71,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
+<script>
+    function post(data)
+    function post2(data2)
+</script>

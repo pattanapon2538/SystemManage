@@ -18,7 +18,7 @@ namespace SystemManage.Models
         [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public string SendTo { get; set; }
         public string AttachShow1 { get; set; }
-        public string AttachFile1 { get; set; }
+        public HttpPostedFileBase AttachFile1 { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string CreateBy { get; set; }

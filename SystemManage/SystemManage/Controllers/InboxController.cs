@@ -44,11 +44,8 @@ namespace SystemManage.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddInbox(InboxModel model, HttpPostedFileBase file)
+        public ActionResult AddInbox(InboxModel model)
         {
-            if (ModelState.IsValid)
-            {
-                UploadFileController up = new UploadFileController();
                 Mail m = new Mail();
                 Message ms = new Message();
                 LogMessage lm = new LogMessage();
@@ -65,7 +62,9 @@ namespace SystemManage.Controllers
                 ms.SendTo = Convert.ToInt32(model.SendTo);
                 ms.CreateDate = DateTime.Now;
                 ms.CreateBy = Convert.ToInt32(Session["userID"]);
-                up.Process(file);
+                string path = s.Process(model.AttachFile1);
+                ms.AttachFile = path;
+                ms.AttachShow1 = model.AttachFile1.FileName;
                 db.Messages.Add(ms);
                 db.SaveChanges();
                 lm.Log_Name = model.MailName;
@@ -84,8 +83,7 @@ namespace SystemManage.Controllers
                 string sender = u2.User_Email;
                 s.SendEmail(receiver, subject, message, sender);
                 return RedirectToAction("Inbox", "Inbox");
-            }
-            return View();
+            
             
         }
         public ActionResult SendEmail(string receiver, string subject, string message,string sender)
@@ -178,6 +176,47 @@ namespace SystemManage.Controllers
             model.SendTo = u.User_Name;
             model.CreateBy = i.CreateBy.ToString();
             return View(model);
+        }
+        private bool isValidContentType(string contentType)
+        {
+            return contentType.Equals("image/png") || contentType.Equals("image/jpg") || contentType.Equals("application/pdf") || contentType.Equals("image/jpeg");
+        }
+
+        private bool isValidContentLength(int contentLength)
+        {
+            return ((contentLength / 1024) / 1024) < 1; // 1MB
+        }
+        public string Process(HttpPostedFileBase photo)
+        {
+            if (!isValidContentType(photo.ContentType))
+            {
+                ViewBag.Error = "เฉพาะไฟล์ jpg png pdf";
+                return ("Error");
+            }
+            else if (!isValidContentLength(photo.ContentLength))
+            {
+                ViewBag.Error = "ไฟล์มีขนาดใหญ่เกินไป (1MB)";
+                return ("Error");
+            }
+            else
+            {
+                if (photo.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(photo.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
+                    string i = "/Upload/" + fileName;
+                    photo.SaveAs(path);
+                    ViewBag.fileName = photo.FileName;
+                    if (photo.ContentType.Equals("application/pdf"))
+                    {
+                        return i;
+                    }
+                    else
+
+                        return i;
+                }
+                return ("Error");
+            }
         }
     }
 }
