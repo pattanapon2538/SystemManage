@@ -3465,6 +3465,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Upload\" />
     <Folder Include="Views\Chart\" />
+    <Folder Include="Views\Seach\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -11,8 +11,30 @@
 }
 @using SystemManage.Models;
 @model SystemManage.Models.DefectModel
-<div id="flip">
-    <center><i class="fas fa-arrow-down"></i></center><div>
+<style>
+    #sr {
+        background-image: url('https://www.w3schools.com/css/searchicon.png');
+        background-position: 10px 12px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+        border-radius: 18px;
+        outline: none;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("#sr").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tb tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
         <div class="card">
             <div class="card-body" style="margin: auto" id="panel">
                 <div class="row">
@@ -109,6 +131,10 @@
 
         <div class="card">
             <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9"></div>
+                    <div class="col-sm-3"><input type="text" id="sr" onkeyup="myFunction1()" placeholder="ค้นหา"></div>
+                </div>
                 <div class="row">
                     <div class="col-sm-12 " style="overflow-x:auto">
                         <table class="table table-bordered">
