@@ -214,7 +214,6 @@ namespace SystemManage.Controllers
             {
                 model.Roles = UserModel._Role.ลูกค้า;
             }
-            model.LanguageID = u.LanguageID;
             model.Position_ID = u.Position_ID;
             model.Contract_ID = u.Contract_ID;
             model.Users_ID = u.User_ID;
@@ -362,7 +361,6 @@ namespace SystemManage.Controllers
             {
                 model.Roles = UserModel._Role.ลูกค้า;
             }
-            model.LanguageID = u.LanguageID;
             model.Position_ID = u.Position_ID;
             model.Contract_ID = u.Contract_ID;
             model.Users_ID = u.User_ID;

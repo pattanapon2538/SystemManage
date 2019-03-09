@@ -3442,13 +3442,11 @@
     <Content Include="Views\Defect\ShowDefect.cshtml" />
     <Content Include="Views\Defect\DetailDefect.cshtml" />
     <Content Include="Views\Inbox\Inbox.cshtml" />
-    <Content Include="Views\Inbox\AddInbox.cshtml" />
+    <Content Include="Views\Inbox\Index.cshtml" />
     <Content Include="Views\Inbox\ReadMail.cshtml" />
     <Content Include="Views\SIT\AddSIT.cshtml" />
     <Content Include="Views\Report\Report.cshtml" />
     <Content Include="Views\UploadFile\Index.cshtml" />
-    <Content Include="Views\UploadFile\Success.cshtml" />
-    <Content Include="Views\UploadFile\Success2.cshtml" />
     <Content Include="Views\Project\DetailProject.cshtml" />
     <Content Include="Views\Member\HistoryUser.cshtml" />
     <Content Include="Views\Shared\_History.cshtml" />
@@ -3463,7 +3461,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Upload\" />
+    <Folder Include="Uploads\" />
     <Folder Include="Views\Chart\" />
     <Folder Include="Views\Seach\" />
   </ItemGroup>

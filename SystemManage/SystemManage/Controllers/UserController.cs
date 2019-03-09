@@ -65,7 +65,6 @@ namespace SystemManage.Controllers
                 u.Permisstion = model.Permission;
                 u.Position_ID = model.Position_ID;
                 u.comment = model.Comment;
-                u.LanguageID = model.LanguageID; //Ref ??? Table Skills
                 u.AVG = 0;
                 u.Amount_Succ =0;
                 u.Amount_Non = 0;
@@ -125,17 +124,25 @@ namespace SystemManage.Controllers
                 u.CreateBy = Convert.ToInt32(Session["userID"]);
                 db.Users.Add(u);
                 db.SaveChanges();
-                s.User_ID = u.User_ID;
-                s.languageID = model.LanguageID;
-                db.Skills.Add(s);
-                db.SaveChanges();
-                ModelState.Clear();
+                string[] txt = model.Select_Laguages.Split(",".ToCharArray());
+                for (int c = 0; c < txt.Count(); c++)
+                {
+                    if (txt[c] != "")
+                    {
+                        s.User_ID = u.User_ID;
+                        s.languageID = Convert.ToInt32(txt[c]);
+                        db.Skills.Add(s);
+                        db.SaveChanges();
+                    }
+                }
             }
             UserModel ModelList = new UserModel();
             ModelList.PositionList = db.Positions.OrderByDescending(m => m.Position_ID).ToList();
             ModelList.ContractsList = db.Type_of_Contract.OrderByDescending(m => m.Contrat_ID).ToList();
             ModelList.LanguageList = db.Language_of_Type.OrderByDescending(m => m.languageID).ToList();
             List<UserModel> UserList = new List<UserModel>();
+            List<LanguageOfTypeModel> ListData = new List<LanguageOfTypeModel>();
+            var item2 = db.Language_of_Type.ToList();
             var item = db.Users.OrderByDescending(m => m.User_ID).ToList();
             foreach (var i in item)
             {
@@ -151,7 +158,16 @@ namespace SystemManage.Controllers
                     ContactName = C_Name.Contrat_Name
                 });
             }
+            foreach (var c in item2)
+            {
+                ListData.Add(new LanguageOfTypeModel
+                {
+                    languageID = c.languageID,
+                    Name = c.Name
+                });
+            }
             ViewBag.DataList = UserList;
+            ViewBag.DataSkill = ListData;
             return PartialView("ShowUser",ModelList);
         }
         public ActionResult ShowUser()
@@ -161,7 +177,9 @@ namespace SystemManage.Controllers
             ModelList.ContractsList = db.Type_of_Contract.ToList<Type_of_Contract>();
             ModelList.LanguageList = db.Language_of_Type.ToList<Language_of_Type>();
             List<UserModel> model = new List<UserModel>();
+            List<LanguageOfTypeModel> ListData = new List<LanguageOfTypeModel>();
             var item = db.Users.ToList();
+            var item2 = db.Language_of_Type.ToList();
             foreach (var i in item)
             {
                 var P_Name = db.Positions.Where(m => m.Position_ID == i.Position_ID).FirstOrDefault();
@@ -178,7 +196,15 @@ namespace SystemManage.Controllers
                     ContactName = C_Name.Contrat_Name
                 });
             }
+            foreach (var c in item2)
+            {
+                ListData.Add(new LanguageOfTypeModel {
+                    languageID = c.languageID,
+                    Name = c.Name
+                });
+            }
             ViewBag.DataList = model;
+            ViewBag.DataSkill = ListData;
             return View(ModelList);
         }
         [HttpPost]
@@ -202,7 +228,6 @@ namespace SystemManage.Controllers
             model.Date_of_Started = u.Date_of_Started;
             model.Date_of_Ended = u.Date_of_Ended;
             model.User_Password = u.User_Password;
-            model.LanguageID = u.LanguageID;
             if (u.Gender == "M")
             {
                 model.Genders = UserModel.Sex.ชาย;

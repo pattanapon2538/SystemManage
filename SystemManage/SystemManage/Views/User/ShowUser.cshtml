@@ -136,15 +136,15 @@
                             @Html.ValidationMessageFor(m => m.Position_ID, string.Empty, new { @style = "color:red" })
                         </div>
                     </div>
+                    @Html.HiddenFor(m => m.Select_Laguages)
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">ทักษะภาษาโปรแกรม : </label>
                         <div class="col-sm-4">
-                            <select class="demo" multiple="multiple">
-
+                            <select class="demo" multiple="multiple" id="Select_Lag">
                                 @{
                                     foreach (var n in (List<LanguageOfTypeModel>)ViewBag.DataSkill)
                                     {
-                                        <option value="@n.languageID">@n.Name</option>
+                                        <option name="Select_Lag" value="@n.languageID">@n.Name</option>
                                     }
                                 }
 
@@ -303,4 +303,7 @@
 <script src="~/assets/js/fSelect.js"></script>
 <script>
     $('.demo').fSelect();
+    $('#Select_Lag').change(function () {
+        $("#Select_Laguages").val($(this).val()+",");
+    });
 </script>

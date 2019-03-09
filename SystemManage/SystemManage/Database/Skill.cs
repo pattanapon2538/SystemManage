@@ -20,6 +20,5 @@ namespace SystemManage.Database
         public int level_of_lg { get; set; }
     
         public virtual Language_of_Type Language_of_Type { get; set; }
-        public virtual User User { get; set; }
     }
 }

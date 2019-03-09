@@ -16,7 +16,7 @@
     <title>เพิ่มข้อความ</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("AddInbox", "Inbox", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() , OnSuccess = "data" }, new { enctype = "multipart/form-data" }))
+    @using (Ajax.BeginForm("Index", "Inbox", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() , OnSuccess = "data" }, new { enctype = "multipart/form-data" }))
     {
         <div class="container">
             <div class="card" style="margin-top: 50px">

@@ -25,68 +25,71 @@ namespace SystemManage.Controllers
             var u = db.Messages.Where(m => m.CreateBy == userId || m.SendTo == userId).OrderByDescending(m => m.CreateDate).ToList();
             foreach (var c in u)
             {
-                    var i = db.Mails.Where(m => m.Mail_ID == c.Mail_ID).FirstOrDefault();
-                    var l = db.LogMessages.Where(m => m.Message_ID == c.Message_ID).FirstOrDefault();
-                    var k = db.Users.Where(m => m.User_ID == l.Recive).FirstOrDefault();
-                    InboxList.Add(new InboxModel
-                    {
-                        MailID = c.Message_ID.ToString(),
-                        MailName = c.Name,
-                        Status = i.Status,
-                        SendTo = k.User_Name
-                    });
+                var i = db.Mails.Where(m => m.Mail_ID == c.Mail_ID).FirstOrDefault();
+                var l = db.LogMessages.Where(m => m.Message_ID == c.Message_ID).FirstOrDefault();
+                var k = db.Users.Where(m => m.User_ID == l.Recive).FirstOrDefault();
+                InboxList.Add(new InboxModel
+                {
+                    MailID = c.Message_ID.ToString(),
+                    MailName = c.Name,
+                    Status = i.Status,
+                    SendTo = k.User_Name
+                });
             }
             ViewBag.DataList = InboxList;
             return View();
         }
-        public ActionResult AddInbox()
+        public ActionResult Index()
         {
-            return View();
+            InboxModel i = new InboxModel();
+            i.List = db.Users.ToList();
+            return View(i);
         }
         [HttpPost]
-        public ActionResult AddInbox(InboxModel model)
+        public ActionResult Index(InboxModel model)
         {
-                Mail m = new Mail();
-                Message ms = new Message();
-                LogMessage lm = new LogMessage();
-                InboxController s = new InboxController();
-                m.Name = model.MailName;
-                m.Status = 1;
-                m.CreateDate = DateTime.Now;
-                m.CreateBy = Convert.ToInt32(Session["userID"]);
-                db.Mails.Add(m);
-                db.SaveChanges();
-                ms.Mail_ID = m.Mail_ID;
-                ms.Name = model.MailName;
-                ms.Detail = model.MailDetail;
-                ms.SendTo = Convert.ToInt32(model.SendTo);
-                ms.CreateDate = DateTime.Now;
-                ms.CreateBy = Convert.ToInt32(Session["userID"]);
-                string path = s.Process(model.AttachFile1);
-                ms.AttachFile = path;
-                ms.AttachShow1 = model.AttachFile1.FileName;
-                db.Messages.Add(ms);
-                db.SaveChanges();
-                lm.Log_Name = model.MailName;
-                lm.Log_Message = model.MailDetail;
-                lm.Recive = Convert.ToInt32(model.SendTo);
-                lm.CreateDate = DateTime.Now;
-                lm.CreateBy = ms.CreateBy;
-                lm.Message_ID = ms.Message_ID;
-                db.LogMessages.Add(lm);
-                db.SaveChanges();
-                var u = db.Users.Where(d => d.User_ID == ms.SendTo).FirstOrDefault();
-                string receiver = u.User_Email;
-                string subject = model.MailName;
-                string message = model.MailDetail;
-                var u2 = db.Users.Where(g => g.User_ID == m.CreateBy).FirstOrDefault();
-                string sender = u2.User_Email;
-                s.SendEmail(receiver, subject, message, sender);
-                return RedirectToAction("Inbox", "Inbox");
-            
-            
+            Mail m = new Mail();
+            Message ms = new Message();
+            LogMessage lm = new LogMessage();
+            InboxController s = new InboxController();
+            UploadFileController up = new UploadFileController();
+            m.Name = model.MailName;
+            m.Status = 1;
+            m.CreateDate = DateTime.Now;
+            m.CreateBy = Convert.ToInt32(Session["userID"]);
+            db.Mails.Add(m);
+            db.SaveChanges();
+            ms.Mail_ID = m.Mail_ID;
+            ms.Name = model.MailName;
+            ms.Detail = model.MailDetail;
+            ms.SendTo = Convert.ToInt32(model.SendTo);
+            ms.CreateDate = DateTime.Now;
+            ms.CreateBy = Convert.ToInt32(Session["userID"]);
+            string path = s.Process(model);
+            ms.AttachFile = path;
+            //ms.AttachShow1 = model.AttachFile1.FileName;
+            db.Messages.Add(ms);
+            db.SaveChanges();
+            lm.Log_Name = model.MailName;
+            lm.Log_Message = model.MailDetail;
+            lm.Recive = Convert.ToInt32(model.SendTo);
+            lm.CreateDate = DateTime.Now;
+            lm.CreateBy = ms.CreateBy;
+            lm.Message_ID = ms.Message_ID;
+            db.LogMessages.Add(lm);
+            db.SaveChanges();
+            var u = db.Users.Where(d => d.User_ID == ms.SendTo).FirstOrDefault();
+            string receiver = u.User_Email;
+            string subject = model.MailName;
+            string message = model.MailDetail;
+            var u2 = db.Users.Where(g => g.User_ID == m.CreateBy).FirstOrDefault();
+            string sender = u2.User_Email;
+            s.SendEmail(receiver, subject, message, sender);
+            return RedirectToAction("Inbox", "Inbox");
+
+
         }
-        public ActionResult SendEmail(string receiver, string subject, string message,string sender)
+        public ActionResult SendEmail(string receiver, string subject, string message, string sender)
         {
             try
             {
@@ -186,37 +189,39 @@ namespace SystemManage.Controllers
         {
             return ((contentLength / 1024) / 1024) < 1; // 1MB
         }
-        public string Process(HttpPostedFileBase photo)
+        [HttpPost]
+        public string Process(InboxModel photo)
         {
-            if (!isValidContentType(photo.ContentType))
+            foreach (var i in photo.AttachFile1)
             {
-                ViewBag.Error = "เฉพาะไฟล์ jpg png pdf";
-                return ("Error");
-            }
-            else if (!isValidContentLength(photo.ContentLength))
-            {
-                ViewBag.Error = "ไฟล์มีขนาดใหญ่เกินไป (1MB)";
-                return ("Error");
-            }
-            else
-            {
-                if (photo.ContentLength > 0)
+                if (i.ContentLength > 0)
                 {
-                    var fileName = Path.GetFileName(photo.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
-                    string i = "/Upload/" + fileName;
-                    photo.SaveAs(path);
-                    ViewBag.fileName = photo.FileName;
-                    if (photo.ContentType.Equals("application/pdf"))
-                    {
-                        return i;
-                    }
-                    else
-
-                        return i;
+                    var fileName = Path.GetFileName(i.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Upload_Inbox"), fileName);
+                    i.SaveAs(path);
                 }
-                return ("Error");
+                //}
+                //    if (photo.ContentLength > 0)
+                //    {
+                //        var fileName = Path.GetFileName(photo.FileName);
+                //        var pa = Server.MapPath("~" + "/Upload/");
+                //        var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
+                //        string i = "/Upload/" + fileName;
+                //        photo.SaveAs(path);
+                //        ViewBag.fileName = photo.FileName;
+                //        if (photo.ContentType.Equals("application/pdf"))
+                //        {
+                //            return i;
+                //        }
+                //        else
+
+                //            return i;
+                //    }
+                //    return ("Error");
+                //}
             }
+            ViewBag.Message = "Image(s) uploaded successfully";
+            return "";
         }
     }
 }

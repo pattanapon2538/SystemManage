@@ -35,177 +35,177 @@
         });
     });
 </script>
-        <div class="card">
-            <div class="card-body" style="margin: auto" id="panel">
-                <div class="row">
-                    <div class="col-sm-12 text-center">
-                        <h1 class="text-center" style="margin-bottom: 20pt">ข้อผิดพลาด</h1>
+<div class="card">
+    <div class="card-body" style="margin: auto" id="panel">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h1 class="text-center" style="margin-bottom: 20pt">ข้อผิดพลาด</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <label class="label" for="subject" style="margin-right: 10px">Task :</label>
+                    <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                        <select name="subject">
+                            <option>All</option>
+                            <option>Pause</option>
+                            <option>Terminate</option>
+                        </select>
+                        <div class="select-dropdown"></div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-3"></div>
-                    <div class="col-sm-4">
-                        <div class="input-group">
-                            <label class="label" for="subject" style="margin-right: 10px">Task :</label>
-                            <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                                <select name="subject">
-                                    <option>All</option>
-                                    <option>Pause</option>
-                                    <option>Terminate</option>
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <label class="label" for="subject" style="margin-right: 10px">Sub Task :</label>
+                    <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                        <select name="subject">
+                            <option>0</option>
+                        </select>
+                        <div class="select-dropdown"></div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="input-group">
-                            <label class="label" for="subject" style="margin-right: 10px">Sub Task :</label>
-                            <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                                <select name="subject">
-                                    <option>0</option>
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="input-group">
-                            <label class="label" for="subject" style="margin-right: 10px">Dev :</label>
-                            <div class="rs-select2 js-select-simple select--no-search ">
-                                <select name="subject">
-                                    <option>All</option>
-                                    <option>Pause</option>
-                                    <option>Terminate</option>
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="input-group">
-                            <label class="label" for="subject" style="margin-right: 10px">Tester :</label>
-                            <div class="rs-select2 js-select-simple select--no-search ">
-                                <select name="subject">
-                                    <option>0</option>
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="input-group">
-                            <label class="label" for="subject" style="margin-right: 10px">QA :</label>
-                            <div class="rs-select2 js-select-simple select--no-search ">
-                                <select name="subject">
-                                    <option>All</option>
-                                    <option>Pause</option>
-                                    <option>Terminate</option>
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="input-group">
-                            <label class="label" for="subject" style="margin-right: 10px">Status :</label>
-                            <div class="rs-select2 js-select-simple select--no-search ">
-                                <select name="subject">
-                                    <option>0</option>
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div style="margin: auto;margin-top: 20px">
-                        <button type="button" class="btn btn-primary">Search</button>
-                        <button type="button" class="btn btn-basic">Clear</button>
-                    </div>
-
                 </div>
             </div>
         </div>
-
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-9"></div>
-                    <div class="col-sm-3"><input type="text" id="sr" onkeyup="myFunction1()" placeholder="ค้นหา"></div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <label class="label" for="subject" style="margin-right: 10px">Dev :</label>
+                    <div class="rs-select2 js-select-simple select--no-search ">
+                        <select name="subject">
+                            <option>All</option>
+                            <option>Pause</option>
+                            <option>Terminate</option>
+                        </select>
+                        <div class="select-dropdown"></div>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12 " style="overflow-x:auto">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr class="table-info">
-                                    <th><center>ลำดับ</center></th>
-                                    <th><center>งาน</center></th>
-                                    <th><center>งานรอง</center></th>
-                                    <th><center>สถานะ</center></th>
-                                    <th><center>ผู้พัฒนา</center></th>
-                                    <th><center>ผู้ทดสอบ</center></th>
-                                    <th><center>ผู้ตรวจคุณภาพ</center></th>
-                                    <th><center>กำหนดส่ง</center></th>
-                                    <th><center>รายละเอียด</center></th>
-                                    @{
-                                        if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
-                                        {
-                                            <th><center>ลบ</center></th>
-                                        }
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <label class="label" for="subject" style="margin-right: 10px">Tester :</label>
+                    <div class="rs-select2 js-select-simple select--no-search ">
+                        <select name="subject">
+                            <option>0</option>
+                        </select>
+                        <div class="select-dropdown"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <label class="label" for="subject" style="margin-right: 10px">QA :</label>
+                    <div class="rs-select2 js-select-simple select--no-search ">
+                        <select name="subject">
+                            <option>All</option>
+                            <option>Pause</option>
+                            <option>Terminate</option>
+                        </select>
+                        <div class="select-dropdown"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <label class="label" for="subject" style="margin-right: 10px">Status :</label>
+                    <div class="rs-select2 js-select-simple select--no-search ">
+                        <select name="subject">
+                            <option>0</option>
+                        </select>
+                        <div class="select-dropdown"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div style="margin: auto;margin-top: 20px">
+                <button type="button" class="btn btn-primary">Search</button>
+                <button type="button" class="btn btn-basic">Clear</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-9"></div>
+            <div class="col-sm-3"><input type="text" id="sr" onkeyup="myFunction1()" placeholder="ค้นหา"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 " style="overflow-x:auto">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="table-info">
+                            <th><center>ลำดับ</center></th>
+                            <th><center>งาน</center></th>
+                            <th><center>งานรอง</center></th>
+                            <th><center>สถานะ</center></th>
+                            <th><center>ผู้พัฒนา</center></th>
+                            <th><center>ผู้ทดสอบ</center></th>
+                            <th><center>ผู้ตรวจคุณภาพ</center></th>
+                            <th><center>กำหนดส่ง</center></th>
+                            <th><center>รายละเอียด</center></th>
+                            @{
+                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                {
+                                    <th><center>ลบ</center></th>
+                                }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody id="tb">
+                        @{
+                            int n = 1;
+                            foreach (var i in (List<DefectModel>)ViewBag.DataList)
+                            {
+                                <tr>
+                                    <td><center>@n</center></td>
+                                    <td><center>@i.TaskName</center></td>
+                                    <td><center>@i.SubTaskName</center></td>
+                                    @if (i.Status == 0)
+                                    {
+                                        <td><center>อยู่ระหว่างการตอบรับ</center></td>
+                                    }
+                                    else if (i.Status == 1)
+                                    {
+                                        <td><center>กำลังแก้ไข</center></td>
+                                    }
+                                    else if (i.Status == 2)
+                                    {
+                                        <td><center>แก้ไขแล้ว</center></td>
+                                    }
+                                    else if (i.Status == 3)
+                                    {
+                                        <td><center>ปิด</center></td>
+                                    }
+                                    else if (i.Status == 4)
+                                    {
+                                        <td><center>แก้ไขใหม่</center></td>
+                                    }
+                                    <td><center>@i.DevName</center></td>
+                                    <td><center>@i.TestName</center></td>
+                                    <td><center>@i.QAName</center></td>
+                                    <td><center>@i.SendDate.ToShortDateString()</center></td>
+                                    <td>
+                                        <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-book-open"></i></center></a>
+                                    </td>
+                                    @if (i.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        <td>
+                                            <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></center></a>
+                                        </td>
                                     }
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    int n = 1;
-                                    foreach (var i in (List<DefectModel>)ViewBag.DataList)
-                                    {
-                                        <tr>
-                                            <td><center>@n</center></td>
-                                            <td><center>@i.TaskName</center></td>
-                                            <td><center>@i.SubTaskName</center></td>
-                                            @if (i.Status == 0)
-                                            {
-                                                <td><center>อยู่ระหว่างการตอบรับ</center></td>
-                                            }
-                                            else if (i.Status == 1)
-                                            {
-                                                <td><center>กำลังแก้ไข</center></td>
-                                            }
-                                            else if (i.Status == 2)
-                                            {
-                                                <td><center>แก้ไขแล้ว</center></td>
-                                            }
-                                            else if (i.Status == 3)
-                                            {
-                                                <td><center>ปิด</center></td>
-                                            }
-                                            else if (i.Status == 4)
-                                            {
-                                                <td><center>แก้ไขใหม่</center></td>
-                                            }
-                                            <td><center>@i.DevName</center></td>
-                                            <td><center>@i.TestName</center></td>
-                                            <td><center>@i.QAName</center></td>
-                                            <td><center>@i.SendDate.ToShortDateString()</center></td>
-                                            <td>
-                                                <a href="@Url.Action("DetailDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-book-open"></i></center></a>
-                                            </td>
-                                            @if (i.CreateBy == Convert.ToInt32(Session["userID"]))
-                                            {
-                                                <td>
-                                                    <a href="@Url.Action("DeleteDefect", new { DefectID = i.Defect_ID })"><center><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></center></a>
-                                                </td>
-                                            }
-                                        </tr>
-                                        ++n;
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                                ++n;
+                            }
+                        }
+                        </tbody id="tb">
+                </table>
             </div>
         </div>
+    </div>
+</div>

@@ -79,7 +79,7 @@ namespace SystemManage.Models
         public Levels _Listening { get; set; }
         public Sex Genders { get; set; }
         public _Role Roles { get; set; }
-
+        public string Select_Laguages { get; set; }
         public enum Levels
         {
             ต่ำ,
@@ -101,5 +101,6 @@ namespace SystemManage.Models
         }
         public int Follow_C { get; set; }
     }
+    
    
 }
