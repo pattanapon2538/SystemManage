@@ -26,5 +26,6 @@ namespace SystemManage.Models
         public string UserList { get; set; }
 
         public List<User> List { get; set; }
+        public string Image { get; set; }
     }
 }

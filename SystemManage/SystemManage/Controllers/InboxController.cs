@@ -41,9 +41,7 @@ namespace SystemManage.Controllers
         }
         public ActionResult Index()
         {
-            InboxModel i = new InboxModel();
-            i.List = db.Users.ToList();
-            return View(i);
+            return View();
         }
         [HttpPost]
         public ActionResult Index(InboxModel model)
@@ -51,7 +49,6 @@ namespace SystemManage.Controllers
             Mail m = new Mail();
             Message ms = new Message();
             LogMessage lm = new LogMessage();
-            InboxController s = new InboxController();
             UploadFileController up = new UploadFileController();
             m.Name = model.MailName;
             m.Status = 1;
@@ -65,7 +62,7 @@ namespace SystemManage.Controllers
             ms.SendTo = Convert.ToInt32(model.SendTo);
             ms.CreateDate = DateTime.Now;
             ms.CreateBy = Convert.ToInt32(Session["userID"]);
-            string path = s.Process(model);
+            string path = Process(model);
             ms.AttachFile = path;
             //ms.AttachShow1 = model.AttachFile1.FileName;
             db.Messages.Add(ms);
@@ -84,7 +81,7 @@ namespace SystemManage.Controllers
             string message = model.MailDetail;
             var u2 = db.Users.Where(g => g.User_ID == m.CreateBy).FirstOrDefault();
             string sender = u2.User_Email;
-            s.SendEmail(receiver, subject, message, sender);
+            SendEmail(receiver, subject, message, sender);
             return RedirectToAction("Inbox", "Inbox");
 
 
@@ -175,6 +172,7 @@ namespace SystemManage.Controllers
             model.MailID = i.Message_ID.ToString();
             model.MailName = i.Name;
             model.MailDetail = i.Detail;
+            model.Image = i.AttachFile;
             var u = db.Users.Where(m => m.User_ID == i.SendTo).FirstOrDefault();
             model.SendTo = u.User_Name;
             model.CreateBy = i.CreateBy.ToString();
@@ -189,7 +187,7 @@ namespace SystemManage.Controllers
         {
             return ((contentLength / 1024) / 1024) < 1; // 1MB
         }
-        [HttpPost]
+
         public string Process(InboxModel photo)
         {
             foreach (var i in photo.AttachFile1)
@@ -197,28 +195,12 @@ namespace SystemManage.Controllers
                 if (i.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(i.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Upload_Inbox"), fileName);
+                    //var test = Server.MapPath();
+                    var path = Path.Combine(Server.MapPath("~/Upload"), fileName);
+                    string item = "/Upload/" + fileName;
                     i.SaveAs(path);
+                    return item;
                 }
-                //}
-                //    if (photo.ContentLength > 0)
-                //    {
-                //        var fileName = Path.GetFileName(photo.FileName);
-                //        var pa = Server.MapPath("~" + "/Upload/");
-                //        var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
-                //        string i = "/Upload/" + fileName;
-                //        photo.SaveAs(path);
-                //        ViewBag.fileName = photo.FileName;
-                //        if (photo.ContentType.Equals("application/pdf"))
-                //        {
-                //            return i;
-                //        }
-                //        else
-
-                //            return i;
-                //    }
-                //    return ("Error");
-                //}
             }
             ViewBag.Message = "Image(s) uploaded successfully";
             return "";

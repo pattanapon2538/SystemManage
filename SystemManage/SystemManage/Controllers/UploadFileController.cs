@@ -121,7 +121,6 @@ namespace SystemManage.Controllers
                 if (photo.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(photo.FileName);
-                    var pa = Server.MapPath("~"+"/Upload/");
                     var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
                     string i = "/Upload/" + fileName;
                     photo.SaveAs(path);
