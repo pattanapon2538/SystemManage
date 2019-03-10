@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SystemManage.Database;
 using SystemManage.Models;
 using SystemManage.Controllers;
+using System.IO;
 
 namespace SystemManage.Controllers
 {
@@ -50,15 +51,20 @@ namespace SystemManage.Controllers
                 }
                 t.DescriptionTest = model.DescriptionTest;
                 t.TestID = model.TestID; //เลือกการค้นหาจาก Table Member ที่ Role เป็น Tester = 4 
-               
                 t.TestSentDate = model.TestSentDate;
                 t.TestStatus = model.TestStatus;
                 t.DescriptionQA = model.DescriptionQA;
                 t.QAID = model.QAID; //เลือกการค้นหาจาก Table Member ที่ Role เป็น QA = 3
                 t.QASentDate = model.QASentDate;
                 t.QAStatus = model.QAStatus;
-                t.AttachFile = model.AttachFile;
-                t.AttachShow = model.AttachShow;
+                if (model.AttachFile != null)
+                {
+                    var Upload = Upload_FileTask(model.AttachFile);
+                    string[] txt = Upload.Split(",".ToCharArray());
+                    string fileName = txt[1];
+                    t.AttachFile = txt[0];
+                    t.AttachShow = fileName;
+                }
                 t.CreateDate = DateTime.Now;
                 t.CreateBy = Convert.ToInt32(Session["userID"]);
                 db.Tasks.Add(t);
@@ -113,6 +119,14 @@ namespace SystemManage.Controllers
                         st.SubDevSend = model.SubTaskSendDate[item];
                         st.CreateDate = DateTime.Now;
                         st.CreateBy = Convert.ToInt32(Session["userID"]);
+                        if (model.AttachFile_List != null)
+                        {
+                            var Upload_Sub = Upload_FileTask(model.AttachFile_List[item]);
+                            string[] txt = Upload_Sub.Split(",".ToCharArray());
+                            string fileName = txt[1];
+                            st.AttachFile = txt[0];
+                            st.AttachShow = fileName;
+                        }
                         db.SubTasks.Add(st);
                         db.SaveChanges();
                         var Sendtos = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
@@ -150,6 +164,14 @@ namespace SystemManage.Controllers
                 st.SubDevSend = model.SubTaskSendDate[0];
                 st.CreateDate = DateTime.Now;
                 st.CreateBy = Convert.ToInt32(Session["userID"]);
+                if (model.AttachFile_List != null)
+                {
+                    var Upload_Sub = Upload_FileTask(model.AttachFile_List[0]);
+                    string[] txt = Upload_Sub.Split(",".ToCharArray());
+                    string fileName = txt[1];
+                    st.AttachFile = txt[0];
+                    st.AttachShow = fileName;
+                }
                 db.SubTasks.Add(st);
                 db.SaveChanges();
                 var PoinCode2 = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
@@ -426,6 +448,10 @@ namespace SystemManage.Controllers
             model.QAList = db.ProjectMembers.Where(m => m.ProjectID == t.ProjectID && m.Role == 4).ToList();
             model.TaskID = t.TaskID;
             model.TaskName = t.TaskName;
+            model.Show_Path = t.AttachFile;
+            model.Show_FileName = t.AttachShow;
+            model.Show_FileName_Sub = st.AttachShow;
+            model.Show_Path_Sub = st.AttachFile;
             if (t.Task_level == 1)
             {
                 model.level = TaskModel.LevelTask.ง่าย;
@@ -750,9 +776,47 @@ namespace SystemManage.Controllers
             }
             return RedirectToAction("ShowTask");
         }
-        public ActionResult test()
+        /// //////////////////
+        private bool isValidContentType(string contentType)
         {
-            return View();
+            return contentType.Equals("image/png") || contentType.Equals("image/jpg") || contentType.Equals("application/pdf") || contentType.Equals("image/jpeg");
+        }
+
+        private bool isValidContentLength(int contentLength)
+        {
+            return ((contentLength / 1024) / 1024) < 1; // 1MB
+        }
+        public string Upload_FileTask(HttpPostedFileBase File)
+        {
+            if (!isValidContentType(File.ContentType))
+            {
+                ViewBag.Error = "เฉพาะไฟล์ jpg png pdf";
+                return ("Error");
+            }
+            else if (!isValidContentLength(File.ContentLength))
+            {
+                ViewBag.Error = "ไฟล์มีขนาดใหญ่เกินไป (1MB)";
+                return ("Error");
+            }
+            else
+            {
+                if (File.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(File.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
+                    string i = "/Upload/" + fileName +","+ fileName;
+                    File.SaveAs(path);
+                    ViewBag.fileName = File.FileName;
+                    if (File.ContentType.Equals("application/pdf"))
+                    {
+                        return i;
+                    }
+                    else
+
+                        return i;
+                }
+                return ("Error");
+            }
         }
     }
 }

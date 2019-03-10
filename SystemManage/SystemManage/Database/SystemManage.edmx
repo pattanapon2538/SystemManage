@@ -226,6 +226,8 @@
           <Property Name="Comment_Tester" Type="nvarchar(max)" />
           <Property Name="Comment_QA" Type="nvarchar(max)" />
           <Property Name="Comment_CM" Type="nvarchar(max)" />
+          <Property Name="AttachShow" Type="nvarchar" MaxLength="300" />
+          <Property Name="AttachFile" Type="nvarchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="SubTaskSubmisstion">
           <Key>
@@ -569,15 +571,10 @@
             <End Role="Project" EntitySet="Projects" />
             <End Role="ProjectMember" EntitySet="ProjectMembers" />
           </AssociationSet>
-          <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
           <EntitySet Name="Tasks" EntityType="SystemManageModel.Task" />
           <AssociationSet Name="FK_Task" Association="SystemManageModel.FK_Task">
             <End Role="Project" EntitySet="Projects" />
             <End Role="Task" EntitySet="Tasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
-            <End Role="Task" EntitySet="Tasks" />
-            <End Role="SubTask" EntitySet="SubTasks" />
           </AssociationSet>
           <EntitySet Name="Follows" EntityType="SystemManageModel.Follow" />
           <EntitySet Name="Documents" EntityType="SystemManageModel.Document" />
@@ -622,6 +619,11 @@
           <AssociationSet Name="FK_Contact" Association="SystemManageModel.FK_Contact">
             <End Role="Type_of_Contract" EntitySet="Type_of_Contract" />
             <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
+          <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="SubTask" EntitySet="SubTasks" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language_of_Type">
@@ -783,31 +785,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="SubTask">
-          <Key>
-            <PropertyRef Name="SubID" />
-          </Key>
-          <Property Name="SubID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SubName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SubStatus" Type="Int32" Nullable="false" />
-          <Property Name="SubPercent" Type="Double" Nullable="false" />
-          <Property Name="SubDescriptionDev" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SubDevID" Type="Int32" Nullable="false" />
-          <Property Name="SubDevSend" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
-          <Property Name="TaskID" Type="Int32" Nullable="false" />
-          <Property Name="CreateBy" Type="Int32" />
-          <Property Name="UpdateBy" Type="Int32" />
-          <Property Name="Handle" Type="Int32" />
-          <Property Name="HaveDefect" Type="Int32" />
-          <Property Name="RoundCoding" Type="Int32" />
-          <Property Name="Comment_Dev" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Comment_Tester" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Comment_QA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Comment_CM" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Task" Relationship="SystemManageModel.FK_SubTask" FromRole="SubTask" ToRole="Task" />
-        </EntityType>
         <EntityType Name="Task">
           <Key>
             <PropertyRef Name="TaskID" />
@@ -833,8 +810,8 @@
           <Property Name="CreateBy" Type="Int32" Nullable="false" />
           <Property Name="UpdateBy" Type="Int32" />
           <NavigationProperty Name="Project" Relationship="SystemManageModel.FK_Task" FromRole="Task" ToRole="Project" />
-          <NavigationProperty Name="SubTasks" Relationship="SystemManageModel.FK_SubTask" FromRole="Task" ToRole="SubTask" />
           <NavigationProperty Name="SITSteps" Relationship="SystemManageModel.FK_Sub" FromRole="Task" ToRole="SITStep" />
+          <NavigationProperty Name="SubTasks" Relationship="SystemManageModel.FK_SubTask" FromRole="Task" ToRole="SubTask" />
         </EntityType>
         <Association Name="FK_Task">
           <End Type="SystemManageModel.Project" Role="Project" Multiplicity="1" />
@@ -845,18 +822,6 @@
             </Principal>
             <Dependent Role="Task">
               <PropertyRef Name="ProjectID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubTask">
-          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="1" />
-          <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Task">
-              <PropertyRef Name="TaskID" />
-            </Principal>
-            <Dependent Role="SubTask">
-              <PropertyRef Name="TaskID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1119,6 +1084,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SubTask">
+          <Key>
+            <PropertyRef Name="SubID" />
+          </Key>
+          <Property Name="SubID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubStatus" Type="Int32" Nullable="false" />
+          <Property Name="SubPercent" Type="Double" Nullable="false" />
+          <Property Name="SubDescriptionDev" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SubDevID" Type="Int32" Nullable="false" />
+          <Property Name="SubDevSend" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="TaskID" Type="Int32" Nullable="false" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="Handle" Type="Int32" />
+          <Property Name="HaveDefect" Type="Int32" />
+          <Property Name="RoundCoding" Type="Int32" />
+          <Property Name="Comment_Dev" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comment_Tester" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comment_QA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comment_CM" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Task" Relationship="SystemManageModel.FK_SubTask" FromRole="SubTask" ToRole="Task" />
+        </EntityType>
+        <Association Name="FK_SubTask">
+          <End Type="SystemManageModel.Task" Role="Task" Multiplicity="1" />
+          <End Type="SystemManageModel.SubTask" Role="SubTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Task">
+              <PropertyRef Name="TaskID" />
+            </Principal>
+            <Dependent Role="SubTask">
+              <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1254,31 +1258,6 @@
                 <ScalarProperty Name="Contrat_Detail" ColumnName="Contrat_Detail" />
                 <ScalarProperty Name="Contrat_Name" ColumnName="Contrat_Name" />
                 <ScalarProperty Name="Contrat_ID" ColumnName="Contrat_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SubTasks">
-            <EntityTypeMapping TypeName="SystemManageModel.SubTask">
-              <MappingFragment StoreEntitySet="SubTask">
-                <ScalarProperty Name="Comment_CM" ColumnName="Comment_CM" />
-                <ScalarProperty Name="Comment_QA" ColumnName="Comment_QA" />
-                <ScalarProperty Name="Comment_Tester" ColumnName="Comment_Tester" />
-                <ScalarProperty Name="Comment_Dev" ColumnName="Comment_Dev" />
-                <ScalarProperty Name="RoundCoding" ColumnName="RoundCoding" />
-                <ScalarProperty Name="HaveDefect" ColumnName="HaveDefect" />
-                <ScalarProperty Name="Handle" ColumnName="Handle" />
-                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="SubDevSend" ColumnName="SubDevSend" />
-                <ScalarProperty Name="SubDevID" ColumnName="SubDevID" />
-                <ScalarProperty Name="SubDescriptionDev" ColumnName="SubDescriptionDev" />
-                <ScalarProperty Name="SubPercent" ColumnName="SubPercent" />
-                <ScalarProperty Name="SubStatus" ColumnName="SubStatus" />
-                <ScalarProperty Name="SubName" ColumnName="SubName" />
-                <ScalarProperty Name="SubID" ColumnName="SubID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1454,6 +1433,33 @@
                 <ScalarProperty Name="User_Password" ColumnName="User_Password" />
                 <ScalarProperty Name="User_Email" ColumnName="User_Email" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubTasks">
+            <EntityTypeMapping TypeName="SystemManageModel.SubTask">
+              <MappingFragment StoreEntitySet="SubTask">
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
+                <ScalarProperty Name="AttachShow" ColumnName="AttachShow" />
+                <ScalarProperty Name="Comment_CM" ColumnName="Comment_CM" />
+                <ScalarProperty Name="Comment_QA" ColumnName="Comment_QA" />
+                <ScalarProperty Name="Comment_Tester" ColumnName="Comment_Tester" />
+                <ScalarProperty Name="Comment_Dev" ColumnName="Comment_Dev" />
+                <ScalarProperty Name="RoundCoding" ColumnName="RoundCoding" />
+                <ScalarProperty Name="HaveDefect" ColumnName="HaveDefect" />
+                <ScalarProperty Name="Handle" ColumnName="Handle" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="SubDevSend" ColumnName="SubDevSend" />
+                <ScalarProperty Name="SubDevID" ColumnName="SubDevID" />
+                <ScalarProperty Name="SubDescriptionDev" ColumnName="SubDescriptionDev" />
+                <ScalarProperty Name="SubPercent" ColumnName="SubPercent" />
+                <ScalarProperty Name="SubStatus" ColumnName="SubStatus" />
+                <ScalarProperty Name="SubName" ColumnName="SubName" />
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

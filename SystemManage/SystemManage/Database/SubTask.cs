@@ -33,6 +33,8 @@ namespace SystemManage.Database
         public string Comment_Tester { get; set; }
         public string Comment_QA { get; set; }
         public string Comment_CM { get; set; }
+        public string AttachShow { get; set; }
+        public string AttachFile { get; set; }
     
         public virtual Task Task { get; set; }
     }

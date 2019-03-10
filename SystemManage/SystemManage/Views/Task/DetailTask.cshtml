@@ -144,9 +144,17 @@
                                         }
                                     }
                                 </div>
-                                <div class="form-group" style="margin-top: 20px">
-                                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                                </div>
+                                @{
+                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        <div class="form-group" style="margin-top: 20px">
+                                            <label class="label">แนบไฟล์ :</label>
+                                            @Html.TextBoxFor(m => m.AttachFile_List, new { type = "file", @class = "form-control-file" })
+                                            <a href='@Model.Show_Path_Sub' target="_blank">@Model.Show_FileName_Sub</a>
+                                        </div>
+                                    }
+                                }
+
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group">
@@ -422,9 +430,10 @@
                 </div>
                 <div class="row" style="margin-top: 20px">
                     <div class="col-sm-10">
-                        @*<div class="form-group">
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                            </div>*@
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.Show_Path, new { type = "file", @class = "form-control-file" })
+                            <a href='@Model.Show_Path' target="_blank">@Model.Show_FileName</a>
+                        </div>
                     </div>
                     <div class="col-sm-2">
                         <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่")'>กลับ</button></a>

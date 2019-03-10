@@ -41,6 +41,16 @@ namespace SystemManage.Controllers
         }
         public ActionResult Index()
         {
+            var User = db.Users.Where(m => m.Permisstion != "A").OrderBy(m=>m.User_ID).ToList();
+            List<UserModel> UserList = new List<UserModel>();
+            foreach (var item in User)
+            {
+                UserList.Add(new UserModel {
+                    Users_ID = item.User_ID,
+                    User_Name = item.User_Name
+                });
+            }
+            ViewBag.DataList = UserList;
             return View();
         }
         [HttpPost]

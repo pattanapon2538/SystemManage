@@ -32,7 +32,7 @@ namespace SystemManage.Models
         public DateTime QASentDate { get; set; }
         public int QAStatus { get; set; }
         public string AttachShow { get; set; }
-        public string AttachFile { get; set; }
+        public HttpPostedFileBase AttachFile { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
@@ -50,6 +50,7 @@ namespace SystemManage.Models
         public List<DateTime> SubTaskCreateDate { get; set; }
         [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public List<DateTime> SubTaskUpdate { get; set; }
+        public List<HttpPostedFileBase> AttachFile_List { get; set; }
         public int Status { get; set; }
         public int SubDevID { get; set; }
         public DateTime SubTaskDateSend { get; set; }
@@ -80,5 +81,10 @@ namespace SystemManage.Models
         }
         ///////////////////////////
         public int Send { get; set; }
+        public string Show_Path { get; set; }
+        public string Show_FileName { get; set; }
+        public string Show_FileName_Sub { get; set; }
+        public string Show_Path_Sub { get; set; }
+
     }
 }

@@ -41,7 +41,7 @@
             $("#add").click(function () {
                 i++;
                 r++;
-                var domElement = $('<div class="card" id="subtask"> <div class="card-body shadow"> <div class="row"> <div class="col-sm-6"> <div class="form-group"> <label for="taskname">@Html.Label("*", new { @style = "color:red" }) ชื่องานรอง :</label> @Html.TextBoxFor(m =>m.SubTasksName, new {@class = "form-control" }) </div> </div> <div class="col-sm-2"></div> <div class="col-sm-3"> <div class="input-group"> <label class="label" for="level" style="margin-right: 10px">ระดับ :</label> <div class="rs-select2 js-select-simple select--no-search " style="width: 100px"> @Html.Raw(Ajax.JavaScriptStringEncode(Html.DropDownListFor(m => m.level, new SelectList(Enum.GetValues(typeof(TaskModel.LevelTask))), new { @class = "form-control" }).ToHtmlString())) @Html.ValidationMessageFor(m => m.level, string.Empty, new { @style = "color:red" }) <div class="select-dropdown"></div> </div> </div> </div> <div class="col-sm-1"><a href="#" id="cancel"><img width="32px" height="32px" src="/icon/cancel.png"></a> </div> </div> <div class="row"> <div class="col-sm-12"> <div class="form-group"><label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดของผู้พัฒนาระบบ :</label> @Html.Raw(Ajax.JavaScriptStringEncode(Html.TextAreaFor(m => m.SubTasksDis,new {@class ="form-control",@type = "TextArea" ,style ="height:100px"}).ToHtmlString())) </div> </div> </div> <div class="row"> <div class="col-sm-8"> <div class="input-group"><label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ผู้รับมอบหมาย :</label> @Html.Raw(Ajax.JavaScriptStringEncode(Html.DropDownListFor(m => m.SubTaskDevID, new SelectList(Model.DevList, "UserID", "Member_name"), "Select", new { @class = "form-control" }).ToHtmlString()))</div> <div class="form-group" style="margin-top: 20px"><input type="file" class="form-control-file" id="exampleFormControlFile1"></div> </div> <div class="col-sm-4"> <div class="input-group"><label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>@Html.TextBoxFor(m => m.SubTaskSendDate, new {@class = "form-control", @type = "date" })</div> </div> </div> </div> </div>');
+                var domElement = $('<div class="card" id="subtask"> <div class="card-body shadow"> <div class="row"> <div class="col-sm-6"> <div class="form-group"> <label for="taskname">@Html.Label("*", new { @style = "color:red" }) ชื่องานรอง :</label> @Html.TextBoxFor(m =>m.SubTasksName, new {@class = "form-control" }) </div> </div> <div class="col-sm-2"></div> <div class="col-sm-3"> <div class="input-group"> <label class="label" for="level" style="margin-right: 10px">ระดับ :</label> <div class="rs-select2 js-select-simple select--no-search " style="width: 100px"> @Html.Raw(Ajax.JavaScriptStringEncode(Html.DropDownListFor(m => m.level, new SelectList(Enum.GetValues(typeof(TaskModel.LevelTask))), new { @class = "form-control" }).ToHtmlString())) @Html.ValidationMessageFor(m => m.level, string.Empty, new { @style = "color:red" }) <div class="select-dropdown"></div> </div> </div> </div> <div class="col-sm-1"><a href="#" id="cancel"><img width="32px" height="32px" src="/icon/cancel.png"></a> </div> </div> <div class="row"> <div class="col-sm-12"> <div class="form-group"><label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดของผู้พัฒนาระบบ :</label> @Html.Raw(Ajax.JavaScriptStringEncode(Html.TextAreaFor(m => m.SubTasksDis,new {@class ="form-control",@type = "TextArea" ,style ="height:100px"}).ToHtmlString())) </div> </div> </div> <div class="row"> <div class="col-sm-8"> <div class="input-group"><label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ผู้รับมอบหมาย :</label> @Html.Raw(Ajax.JavaScriptStringEncode(Html.DropDownListFor(m => m.SubTaskDevID, new SelectList(Model.DevList, "UserID", "Member_name"), "Select", new { @class = "form-control" }).ToHtmlString()))</div> <div class="form-group" style="margin-top: 20px"><label class="label">แนบไฟล์ :</label>@Html.TextBoxFor(m => m.AttachFile_List, new { type = "file", @class = "form-control-file" })</div> </div> <div class="col-sm-4"> <div class="input-group"><label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>@Html.TextBoxFor(m => m.SubTaskSendDate, new {@class = "form-control", @type = "date" })</div> </div> </div> </div> </div>');
                 $(this).parent('div').before(domElement);
             });
         });
@@ -74,7 +74,7 @@
     <title>Task</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("AddTask", "Task", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }, new { @id = "form" }))
+    @using (Ajax.BeginForm("AddTask", "Task", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }, new { @id = "form" , enctype = "multipart/form-data" }))
     {
         <div class="container">
             <div class="card shadow" style="margin-top: 50px;margin-bottom: 50px">
@@ -144,7 +144,8 @@
                                         @Html.DropDownListFor(m => m.SubTaskDevID, new SelectList(Model.DevList, "UserID", "Member_name"), "Select", new { @class = "form-control", @id = "SubDevID" })
                                     </div>
                                     <div class="form-group" style="margin-top: 20px">
-                                        <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                        <label class="label">แนบไฟล์ :</label>
+                                        @Html.TextBoxFor(m => m.AttachFile_List, new { type = "file", @class = "form-control-file" })
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -212,7 +213,8 @@
                     <div class="row" style="margin-top: 20px">
                         <div class="col-sm-9">
                             <div class="form-group">
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                <label class="label">แนบไฟล์ :</label>
+                                @Html.TextBoxFor(m => m.AttachFile, new { type = "file", @class = "form-control-file" })
                             </div>
                         </div>
                         <div class="col-sm-2">

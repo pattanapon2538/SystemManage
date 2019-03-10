@@ -16,10 +16,8 @@
         <EntityTypeShape EntityType="SystemManageModel.Type_of_Contract" Width="1.5" PointX="0.625" PointY="10.5" />
         <AssociationConnector Association="SystemManageModel.FK_Mail" />
         <AssociationConnector Association="SystemManageModel.FK_Project" />
-        <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="11.5" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.Task" Width="1.5" PointX="9.375" PointY="2.375" />
         <AssociationConnector Association="SystemManageModel.FK_Task" />
-        <AssociationConnector Association="SystemManageModel.FK_SubTask" />
         <EntityTypeShape EntityType="SystemManageModel.Follow" Width="1.5" PointX="0.5" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.Document" Width="1.5" PointX="11.75" PointY="8.875" />
         <AssociationConnector Association="SystemManageModel.FK_ProjectID" />
@@ -37,6 +35,8 @@
         <AssociationConnector Association="SystemManageModel.FK_Position" />
         <AssociationConnector Association="SystemManageModel.FK_UserID" />
         <AssociationConnector Association="SystemManageModel.FK_Contact" />
+        <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="11.625" PointY="2.5" />
+        <AssociationConnector Association="SystemManageModel.FK_SubTask" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
