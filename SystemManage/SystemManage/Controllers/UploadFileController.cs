@@ -47,7 +47,10 @@ namespace SystemManage.Controllers
         {
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             List<DocumentModel> DocumentList = new List<DocumentModel>();
+            DocumentModel model = new DocumentModel();
             var d = db.Documents.Where(m => m.Project_ID == ProjectID).ToList();
+            var pm = db.Projects.Where(m => m.ProjectID == ProjectID).FirstOrDefault();
+            model.CreateBy = pm.CreateBy;
             foreach (var item in d)
             {
                 string[] Type = item.AttachShow.Split(".".ToCharArray());
@@ -61,7 +64,7 @@ namespace SystemManage.Controllers
                 });
             }
             ViewBag.DataList = DocumentList;
-            return View();
+            return View(model);
         }
         public ActionResult EditDocument(DocumentModel model)
         {
@@ -85,6 +88,8 @@ namespace SystemManage.Controllers
             model.DocumentName = d.DocumentName;
             model.DocumentDetail = d.DocumentDetail;
             model.AttachShow = d.AttachShow;
+            model.ShowPath = d.AttachFile;
+            model.CreateBy = d.CreateBy;
             return View(model);
         }
         public ActionResult DeleteDocument(int DocumentID)

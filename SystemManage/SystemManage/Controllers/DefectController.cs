@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -63,6 +64,10 @@ namespace SystemManage.Controllers
                             d.CreateDate = DateTime.Now;
                             d.CreateBy = Convert.ToInt32(Session["userID"]);
                             d.Project_ID = projectID;
+                            var Upload = Upload_Defect(model.AttachFileList[i]);
+                            string[] txt = Upload.Split(",".ToCharArray());
+                            d.AttachFile = txt[0];
+                            d.AttachShow = txt[1];
                             db.Defects.Add(d);
                             db.SaveChanges();
                             var SIT = db.SITs.Where(m => m.SIT_ID == SIT_ID).FirstOrDefault();
@@ -92,6 +97,10 @@ namespace SystemManage.Controllers
                         d.CreateDate = DateTime.Now;
                         d.CreateBy = Convert.ToInt32(Session["userID"]);
                         d.Project_ID = projectID;
+                        var Upload = Upload_Defect(model.AttachFileList[0]);
+                        string[] txt = Upload.Split(",".ToCharArray());
+                        d.AttachFile = txt[0];
+                        d.AttachShow = txt[1];
                         db.Defects.Add(d);
                         db.SaveChanges();
                         var SIT = db.SITs.Where(m => m.SIT_ID == SIT_ID).FirstOrDefault();
@@ -138,6 +147,10 @@ namespace SystemManage.Controllers
                             d.CreateDate = DateTime.Now;
                             d.CreateBy = Convert.ToInt32(Session["userID"]);
                             d.Project_ID = projectID;
+                            var Upload = Upload_Defect(model.AttachFileList[i]);
+                            string[] txt = Upload.Split(",".ToCharArray());
+                            d.AttachFile = txt[0];
+                            d.AttachShow = txt[1];
                             db.Defects.Add(d);
                             db.SaveChanges();
                             var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();
@@ -168,6 +181,10 @@ namespace SystemManage.Controllers
                         d.CreateDate = DateTime.Now;
                         d.CreateBy = Convert.ToInt32(Session["userID"]);
                         d.Project_ID = projectID;
+                        var Upload = Upload_Defect(model.AttachFileList[0]);
+                        string[] txt = Upload.Split(",".ToCharArray());
+                        d.AttachFile = txt[0];
+                        d.AttachShow = txt[1];
                         db.Defects.Add(d);
                         db.SaveChanges();
                         var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();
@@ -344,6 +361,8 @@ namespace SystemManage.Controllers
                 model.CreateBy = item.CreateBy;
                 model.Comment_Dev = item.Comment_Dev;
                 model.Comment_Test = item.Comment_Test;
+                model.AttachShow = item.AttachShow;
+                model.Path_Defect = item.AttachFile;
                 if (item.Status == 1)
                 {
                     model.StatusDev = DefectModel.StatusDefectDev.กำลังแก้ไข;
@@ -377,6 +396,8 @@ namespace SystemManage.Controllers
                 model.CreateBy = item.CreateBy;
                 model.Comment_Dev = item.Comment_Dev;
                 model.Comment_Test = item.Comment_Test;
+                model.Path_Defect = item.AttachFile;
+                model.AttachShow = item.AttachShow;
                if (item.Status == 1)
                 {
                     model.StatusDev = DefectModel.StatusDefectDev.กำลังแก้ไข;
@@ -423,20 +444,30 @@ namespace SystemManage.Controllers
                 {
                     i.Status = 4;
                 }
-                //i.AttachFile =
-                //i.AttachShow
                 i.UpdateBy = Convert.ToInt32(Session["userID"]);
                 db.SaveChanges();
                 Session["Save_Defect"] = 1;
                 return RedirectToAction("DetailDefect", "Defect", new { DefectID = i.Defect_ID });
             }
-            i.UpdateBy = Convert.ToInt32(Session["userID"]);
-            db.SaveChanges();
-            return RedirectToAction("DetailDefect", "Defect", new { DefectID = i.Defect_ID });
+            else if (Convert.ToInt32(Session["userID"]) == model.CreateBy)
+            {
+                if (model.AttachFile != null)
+                {
+                    var Upload = Upload_Defect(model.AttachFile);
+                    string[] txt = Upload.Split(",".ToCharArray());
+                    i.AttachFile = txt[0];
+                    i.AttachShow = txt[1];
+                }
+                i.UpdateBy = Convert.ToInt32(Session["userID"]);
+                db.SaveChanges();
+                return RedirectToAction("ShowDefect", "Defect");
+            }
+            return RedirectToAction("ShowDefect", "Defect");
         }
         public ActionResult DeleteDefect(int DefectID)
         {
             var i = db.Defects.Where(m => m.Defect_ID == DefectID).FirstOrDefault();
+            System.IO.File.Delete("C:/Users/SWNGMN/source/repos/SystemManage/SystemManage/SystemManage" + i.AttachFile);
             db.Defects.Remove(i);
             db.SaveChanges();
             var Email = db.Users.Where(m => m.User_ID == i.CreateBy).FirstOrDefault();
@@ -509,6 +540,47 @@ namespace SystemManage.Controllers
         public ActionResult Send_Defect()
         {
             return RedirectToAction("ShowDefect");
+        }
+        private bool isValidContentType(string contentType)
+        {
+            return contentType.Equals("image/png") || contentType.Equals("image/jpg") || contentType.Equals("application/pdf") || contentType.Equals("image/jpeg");
+        }
+
+        private bool isValidContentLength(int contentLength)
+        {
+            return ((contentLength / 1024) / 1024) < 1; // 1MB
+        }
+        public string Upload_Defect(HttpPostedFileBase File)
+        {
+            if (!isValidContentType(File.ContentType))
+            {
+                ViewBag.Error = "เฉพาะไฟล์ jpg png pdf";
+                return ("Error");
+            }
+            else if (!isValidContentLength(File.ContentLength))
+            {
+                ViewBag.Error = "ไฟล์มีขนาดใหญ่เกินไป (1MB)";
+                return ("Error");
+            }
+            else
+            {
+                if (File.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(File.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
+                    string i = "/Upload/" + fileName + "," + fileName;
+                    File.SaveAs(path);
+                    ViewBag.fileName = File.FileName;
+                    if (File.ContentType.Equals("application/pdf"))
+                    {
+                        return i;
+                    }
+                    else
+
+                        return i;
+                }
+                return ("Error");
+            }
         }
     }
 }

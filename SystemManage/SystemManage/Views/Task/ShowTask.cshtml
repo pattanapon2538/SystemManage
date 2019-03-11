@@ -218,9 +218,12 @@
                                     </td>
                                     @if (item.CreateBy == Convert.ToInt32(Session["userID"]))
                                     {
-                                        <td>
-                                            <center><a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center>
-                                        </td>
+                                        if (item.SubStatus != 4)
+                                        {
+                                            <td>
+                                                <center><a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center>
+                                            </td>
+                                        }
                                     }
                                 </tr>
                                 ++i;

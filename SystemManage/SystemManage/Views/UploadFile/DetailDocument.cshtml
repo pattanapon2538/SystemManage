@@ -13,7 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <title>AddInbox</title>
+    <title>รายละเอียดเอกสาร</title>
 </head>
 <body>
     @using (Ajax.BeginForm("EditDocument", "UploadFileController", new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), OnSuccess = "data" }, new { enctype = "multipart/form-data" }))
@@ -24,22 +24,51 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <label class="label">ชื่อเอกสาร :</label>
-                            @Html.TextBoxFor(m => m.DocumentName, new { @class = "form-control" })
+                            @{
+                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                {
+                                    @Html.TextBoxFor(m => m.DocumentName, new { @class = "form-control" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.DocumentName, new { @class = "form-control" , Readonly =""})
+                                }
+                            }
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="comment">รายละเอียด:</label>
-                                @Html.TextAreaFor(m => m.DocumentDetail, new { @class = "form-control" })
+                                @{
+                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        @Html.TextAreaFor(m => m.DocumentDetail, new { @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextAreaFor(m => m.DocumentDetail, new { @class = "form-control" , Readonly = ""})
+                                    }
+                                }
+
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                @Html.TextBoxFor(m => m.AttachFile, new { type = "file", @class = "form-control-file" })
-                                @*@Html.TextBoxFor(m => m.AttachFile1,new {@class = "form-control-file" ,@type ="file"})*@
+                                <label class="label">ไฟล์แนบ :</label>
+                                @{
+                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    {
+                                        @Html.TextBoxFor(m => m.AttachFile, new { type = "file", @class = "form-control-file" })
+                                        <a href='@Model.ShowPath' target="_blank">@Model.AttachShow</a>
+                                    }
+                                    else
+                                    {
+                                        <a href='@Model.ShowPath' target="_blank">@Model.AttachShow</a>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>
@@ -47,7 +76,7 @@
                         <div class="col-sm-8">
                         </div>
                         <div class="col-sm-4">
-                            <button type="button" class="btn btn-outline-danger">ยกเลิก</button>
+                            <a href="@Url.Action("ShowDocument","UploadFile")"><button type="button" class="btn btn-outline-danger">ยกเลิก</button></a>
                             <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
                         </div>
                 </div>
@@ -59,8 +88,3 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
-@*@using (Html.BeginForm("Process", "UploadFile", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
-<script>
-    function post(data)
-    function post2(data2)
-</script>

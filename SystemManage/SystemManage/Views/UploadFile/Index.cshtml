@@ -39,7 +39,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label class="label">@Html.Label("*", new { @style = "color:red" }) แนบไฟล์ :</label>
+                                <label class="label">@Html.Label("*", new { @style = "color:red" }) ไฟล์แนบ :</label>
                                 @Html.TextBoxFor(m => m.AttachFile, new { type = "file", @class = "form-control-file" })
                                 @Html.ValidationMessageFor(m => m.AttachFile, "", new { @class = "text-danger" })
                             </div>

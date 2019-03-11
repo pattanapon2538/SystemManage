@@ -16,7 +16,7 @@ namespace SystemManage.Models
         public DateTime SendDate { get; set; }
         public int Status { get; set; }
         public string AttachShow { get; set; }
-        public string AttachFile { get; set; }
+        public HttpPostedFileBase AttachFile { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
@@ -37,7 +37,7 @@ namespace SystemManage.Models
         public List<string> DetailList { get; set; }
         public List<int> StausList { get; set; }
         public List<string> AttachShowList { get; set; }
-        public List<string> AttachFileList { get; set; }
+        public List<HttpPostedFileBase> AttachFileList { get; set; }
         public List<DateTime> SendDateList { get; set; }
 
         public enum StatusDefectDev
@@ -51,5 +51,6 @@ namespace SystemManage.Models
             แก้ไขใหม่
         }
         public string Error_Detail { get; set; }
+        public string Path_Defect { get; set; }
     }
 }

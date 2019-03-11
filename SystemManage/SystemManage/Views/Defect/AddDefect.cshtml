@@ -39,7 +39,7 @@
             var i = 1;
             $("#add").click(function () {
                 i++;
-                var domElement = $('<div class ="card" id="new"><dic class ="card-body"><div class="row"> <div class="col-sm-12"><div class="form-group"> <label for="comment">รายละเอียดข้อผิดพลาด: </label> <label style="float:right"><a href="#div" id="cancel"><img src="/icon/cancel.png" width="24px" height="24px"></a></label> <textarea class="form-control" cols="20" id="DetailList" name="DetailList" rows="2" style="margin-top: 0px; margin-bottom: 0px; height: 118px;"></textarea> </div> </div></div> <div class="row"> <div class="col-sm-6"> <div class="input-group"> <label class="label" style="margin-right: 10px">กำหนดส่ง :</label> <input class="form-control" id="SendDateList" name="SendDateList" type="date" value=""> </div> </div>  <div class="col-sm-6"> <div class="form-group"> <input type="file" class="form-control-file" id="exampleFormControlFile1"> </div> </div> </div></div> </div>');
+                var domElement = $('<div class ="card" id="new"><dic class ="card-body"><div class="row"> <div class="col-sm-12"><div class="form-group"> <label for="comment">@Html.Label("*", new { @style = "color:red" }) รายละเอียดข้อผิดพลาด:</label> <label style="float:right"><a href="#div" id="cancel"><img src="/icon/cancel.png" width="24px" height="24px"></a></label> @Html.Raw(Ajax.JavaScriptStringEncode(Html.TextAreaFor(m => m.DetailList, new { @class = "form-control", @type = "TextArea", style = "height:100px" }).ToHtmlString())) </div> </div></div> <div class="row"> <div class="col-sm-6"> <div class="input-group">  <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>@Html.TextBoxFor(m => m.SendDateList, new { @class = "form-control", @type = "date" })@Html.ValidationMessageFor(m => m.SendDateList, "", new { @class = "text-danger" }) </div> </div>  <div class="col-sm-6"> <div class="input-group"> <label class="label">ไฟล์แนบ :</label>@Html.TextBoxFor(m => m.AttachFileList, new { type = "file", @class = "form-control-file" }) </div> </div> </div></div> </div>');
                 $(this).parent('div').before(domElement);
             });
         });
@@ -73,7 +73,7 @@
     <title>ข้อผิดพลาด</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("AddDefect", "Defect", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
+    @using (Ajax.BeginForm("AddDefect", "Defect", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() } ,new { enctype = "multipart/form-data" }))
     {
         <div class="container">
             <div class="row">
@@ -131,7 +131,8 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="input-group">
-                                        <input type="file" id="exampleFormControlFile1">
+                                        <label class="label">ไฟล์แนบ :</label>
+                                        @Html.TextBoxFor(m => m.AttachFileList, new { type = "file", @class = "form-control-file" })
                                     </div>
                                 </div>
                             </div>

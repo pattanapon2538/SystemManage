@@ -51,6 +51,7 @@ namespace SystemManage.Models
         [Required(ErrorMessage = "กรุณากรอกข้อมูลให้ครบถ้วน")]
         public List<DateTime> SubTaskUpdate { get; set; }
         public List<HttpPostedFileBase> AttachFile_List { get; set; }
+        public HttpPostedFileBase AttachFile_Task { get; set; }
         public int Status { get; set; }
         public int SubDevID { get; set; }
         public DateTime SubTaskDateSend { get; set; }

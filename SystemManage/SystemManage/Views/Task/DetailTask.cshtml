@@ -23,7 +23,7 @@
         resize: none;
     }
 </style>
-@using (Html.BeginForm("EditTask", "Task", FormMethod.Post))
+@using (Html.BeginForm("EditTask", "Task", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="container">
@@ -145,11 +145,19 @@
                                     }
                                 </div>
                                 @{
+                                    @Html.HiddenFor(m => m.AttachFile_Task)
                                     if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                     {
                                         <div class="form-group" style="margin-top: 20px">
-                                            <label class="label">แนบไฟล์ :</label>
-                                            @Html.TextBoxFor(m => m.AttachFile_List, new { type = "file", @class = "form-control-file" })
+                                            <label class="label">ไฟล์แนบ :</label>
+                                            @Html.TextBoxFor(m => m.AttachFile_Task, new { type = "file", @class = "form-control-file" })
+                                            <a href='@Model.Show_Path_Sub' target="_blank">@Model.Show_FileName_Sub</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group" style="margin-top: 20px">
+                                            <label class="label">ไฟล์แนบ :</label>
                                             <a href='@Model.Show_Path_Sub' target="_blank">@Model.Show_FileName_Sub</a>
                                         </div>
                                     }
@@ -429,46 +437,62 @@
                     </div>
                 </div>
                 <div class="row" style="margin-top: 20px">
-                    <div class="col-sm-10">
-                        <div class="form-group">
-                            @Html.TextBoxFor(m => m.Show_Path, new { type = "file", @class = "form-control-file" })
-                            <a href='@Model.Show_Path' target="_blank">@Model.Show_FileName</a>
-                        </div>
-                    </div>
+                    @{
+                        @Html.HiddenFor(m => m.AttachFile)
+                        if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                        {
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label class="label">ไฟล์แนบ :</label>
+                                    @Html.TextBoxFor(m => m.AttachFile, new { type = "file", @class = "form-control-file" })
+                                    <a href='@Model.Show_Path' target="_blank">@Model.Show_FileName</a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label class="label">ไฟล์แนบ :</label>
+                                    <a href='@Model.Show_Path' target="_blank">@Model.Show_FileName</a>
+                                </div>
+                            </div>
+                        }
+                    }
                     <div class="col-sm-2">
                         <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่")'>กลับ</button></a>
 
                         @if (Model.Handle == Convert.ToInt32(Session["userID"])@*|| Model.CreateBy == Convert.ToInt32(Session["userID"])*@)
                         {
-                        if (Model.Status != 4 && Model.HaveDefect != 1)
-                        {
-                        if (Convert.ToInt32(Session["Save"]) == 0)
-                        {
-                        <button type="submit" class="btn btn-outline-success" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
-                        }
-                        else
-                        {
-                        <button type="submit" class="btn btn-outline-success">บันทึก</button>
-                        <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                            if (Model.Status != 4 && Model.HaveDefect != 1)
+                            {
+                                if (Convert.ToInt32(Session["Save"]) == 0)
+                                {
+                                   <button type="submit" class="btn btn-outline-success" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
+                                }
+                                else
+                                {
+                                   <button type="submit" class="btn btn-outline-success">บันทึก</button>
+                                   <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
                                 }
                             }
-                        }
-                        else if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Status == 0)
-                        {
-                        <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
-                        }
-                        else if (Model.Handle == 0 && Model.TestID != Convert.ToInt32(Session["userID"]) && Model.QAID != Convert.ToInt32(Session["userID"]))
-                        {
-                        if (Convert.ToInt32(Session["Save"]) == 0)
-                        {
-                            <button type="submit" class="btn btn-outline-success" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
-                        }
-                        else
-                        {
-                            <button type="submit" class="btn btn-outline-success">บันทึก</button>
-                            <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
-                        }
-                        }
+                         }
+                         else if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Status == 0)
+                         {
+                             <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
+                         }
+                         else if (Model.Handle == 0 && Model.TestID != Convert.ToInt32(Session["userID"]) && Model.QAID != Convert.ToInt32(Session["userID"]))
+                         {
+                             if (Convert.ToInt32(Session["Save"]) == 0)
+                             {
+                                <button type="submit" class="btn btn-outline-success" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
+                             }
+                             else
+                             {
+                                 <button type="submit" class="btn btn-outline-success">บันทึก</button>
+                                 <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                             }
+                         }
                     </div>
                 </div>
 

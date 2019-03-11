@@ -500,6 +500,14 @@ namespace SystemManage.Controllers
                 st.SubPercent = 0;
                 st.UpdateBy = Convert.ToInt32(Session["userID"]);
                 st.UpdateDate = DateTime.Now;
+                if (model.AttachFile_Task != null)
+                {
+                    var Upload_Sub = Upload_FileTask(model.AttachFile_Task);
+                    string[] txt = Upload_Sub.Split(",".ToCharArray());
+                    string fileName = txt[1];
+                    st.AttachFile = txt[0];
+                    st.AttachShow = fileName;
+                }
                 db.SaveChanges();
                 t.TaskName = model.TaskName;
                 if (model.level.ToString() == "ง่าย")
@@ -522,7 +530,14 @@ namespace SystemManage.Controllers
                 t.QAID = model.QAID;
                 t.DescriptionQA = model.DescriptionQA;
                 t.QASentDate = model.QASentDate;
-                t.QAStatus = 0; 
+                t.QAStatus = 0;
+                if (model.AttachFile != null)
+                {
+                    var Upload_Task = Upload_FileTask(model.AttachFile);
+                    string[] txt_Name = Upload_Task.Split(",".ToCharArray());
+                    t.AttachFile = txt_Name[0];
+                    t.AttachShow = txt_Name[1];
+                }
                 t.UpdateDate = DateTime.Now;
                 t.UpdateBy = Convert.ToInt32(Session["userID"]);
                 db.SaveChanges();
@@ -585,11 +600,13 @@ namespace SystemManage.Controllers
             var st = db.SubTasks.Where(m => m.SubID == SubID).FirstOrDefault();
             var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
             var d = db.SubTasks.Where(m => m.TaskID == t.TaskID).ToList();
+            System.IO.File.Delete("C:/Users/SWNGMN/source/repos/SystemManage/SystemManage/SystemManage" + st.AttachFile);
             db.SubTasks.Remove(st);
             db.SaveChanges();
             var d2 = db.SubTasks.Where(m => m.TaskID == t.TaskID).ToList();
             if (d2.Count == 0)
             {
+                System.IO.File.Delete("C:/Users/SWNGMN/source/repos/SystemManage/SystemManage/SystemManage" + t.AttachFile);
                 db.Tasks.Remove(t);
                 db.SaveChanges();
             }
