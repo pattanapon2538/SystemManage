@@ -60,41 +60,45 @@ namespace SystemManage.Controllers
             Message ms = new Message();
             LogMessage lm = new LogMessage();
             UploadFileController up = new UploadFileController();
+            string[] txt = model.UserList.Split(",".ToCharArray());
+            int c = txt.Count()-1;
             m.Name = model.MailName;
             m.Status = 1;
             m.CreateDate = DateTime.Now;
             m.CreateBy = Convert.ToInt32(Session["userID"]);
             db.Mails.Add(m);
             db.SaveChanges();
-            ms.Mail_ID = m.Mail_ID;
-            ms.Name = model.MailName;
-            ms.Detail = model.MailDetail;
-            ms.SendTo = Convert.ToInt32(model.SendTo);
-            ms.CreateDate = DateTime.Now;
-            ms.CreateBy = Convert.ToInt32(Session["userID"]);
-            string path = Process(model);
-            ms.AttachFile = path;
-            //ms.AttachShow1 = model.AttachFile1.FileName;
-            db.Messages.Add(ms);
-            db.SaveChanges();
-            lm.Log_Name = model.MailName;
-            lm.Log_Message = model.MailDetail;
-            lm.Recive = Convert.ToInt32(model.SendTo);
-            lm.CreateDate = DateTime.Now;
-            lm.CreateBy = ms.CreateBy;
-            lm.Message_ID = ms.Message_ID;
-            db.LogMessages.Add(lm);
-            db.SaveChanges();
-            var u = db.Users.Where(d => d.User_ID == ms.SendTo).FirstOrDefault();
-            string receiver = u.User_Email;
-            string subject = model.MailName;
-            string message = model.MailDetail;
-            var u2 = db.Users.Where(g => g.User_ID == m.CreateBy).FirstOrDefault();
-            string sender = u2.User_Email;
-            SendEmail(receiver, subject, message, sender);
+            for (int i = 0; i < c; i++)
+            {
+                ms.Mail_ID = m.Mail_ID;
+                ms.Name = model.MailName;
+                ms.Detail = model.MailDetail;
+                ms.SendTo = Convert.ToInt32(txt[i]);
+                ms.CreateDate = DateTime.Now;
+                ms.CreateBy = Convert.ToInt32(Session["userID"]);
+                string path = Process(model);
+                string[] txt2 = path.Split(",".ToCharArray());
+                ms.AttachFile = txt2[0];
+                ms.AttachShow1 = txt2[1];
+                db.Messages.Add(ms);
+                db.SaveChanges();
+                lm.Log_Name = model.MailName;
+                lm.Log_Message = model.MailDetail;
+                lm.Recive = Convert.ToInt32(txt[i]);
+                lm.CreateDate = DateTime.Now;
+                lm.CreateBy = ms.CreateBy;
+                lm.Message_ID = ms.Message_ID;
+                db.LogMessages.Add(lm);
+                db.SaveChanges();
+                var u = db.Users.Where(d => d.User_ID == ms.SendTo).FirstOrDefault();
+                string receiver = u.User_Email;
+                string subject = model.MailName;
+                string message = model.MailDetail;
+                var u2 = db.Users.Where(g => g.User_ID == m.CreateBy).FirstOrDefault();
+                string sender = u2.User_Email;
+                SendEmail(receiver, subject, message, sender);
+            }
             return RedirectToAction("Inbox", "Inbox");
-
-
         }
         public ActionResult SendEmail(string receiver, string subject, string message, string sender)
         {
@@ -183,9 +187,10 @@ namespace SystemManage.Controllers
             model.MailName = i.Name;
             model.MailDetail = i.Detail;
             model.Image = i.AttachFile;
+            model.AttachShow1 = i.AttachShow1;
             var u = db.Users.Where(m => m.User_ID == i.SendTo).FirstOrDefault();
             model.SendTo = u.User_Name;
-            model.CreateBy = i.CreateBy.ToString();
+            model.CreateBy = i.CreateBy;
             return View(model);
         }
         private bool isValidContentType(string contentType)
@@ -207,7 +212,7 @@ namespace SystemManage.Controllers
                     var fileName = Path.GetFileName(i.FileName);
                     //var test = Server.MapPath();
                     var path = Path.Combine(Server.MapPath("~/Upload"), fileName);
-                    string item = "/Upload/" + fileName;
+                    string item = "/Upload/" + fileName+","+ fileName;
                     i.SaveAs(path);
                     return item;
                 }

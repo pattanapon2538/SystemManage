@@ -7,6 +7,7 @@ using SystemManage.Database;
 using SystemManage.Models;
 using System.Threading;
 using SystemManage.Controllers;
+using System.IO;
 
 namespace SystemManage.Controllers
 {
@@ -42,6 +43,13 @@ namespace SystemManage.Controllers
                 s.Send_Date_T = model.Send_Date_T;
                 s.Send_Date_Q = model.Send_Date_Q;
                 s.Handle = model.Tester_ID;
+                if (model.AttachFile != null)
+                {
+                    var Upload = Upload_FileSIT(model.AttachFile);
+                    string[] txt = Upload.Split(",".ToCharArray());
+                    s.AttachFile = txt[0];
+                    s.AttachShow = txt[1];
+                }
                 s.Status = 0;
                 s.CreateDate = DateTime.Now;
                 s.CreateBy = Convert.ToInt32(Session["userID"]);
@@ -132,6 +140,8 @@ namespace SystemManage.Controllers
             model.Comment_QA = SIT.Comment_QA;
             model.Commnet_T = SIT.Commnet_Test;
             model.QA_ID = SIT.QA_ID;
+            model.AttachShow = SIT.AttachShow;
+            model.Show_Path = SIT.AttachFile;
             model.CreateBy = SIT.CreateBy;
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             model.Task = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
@@ -165,6 +175,13 @@ namespace SystemManage.Controllers
                 s.Dev_ID = model.Dev_ID;
                 s.Tester_ID = model.Tester_ID;
                 s.QA_ID = model.QA_ID;
+                if (model.AttachFile != null)
+                {
+                    var Upload = Upload_FileSIT(model.AttachFile);
+                    string[] txt = Upload.Split(",".ToCharArray());
+                    s.AttachFile = txt[0];
+                    s.AttachShow = txt[1];
+                }
                 s.Send_Date_T = model.Send_Date_T;
                 s.Send_Date_Q = model.Send_Date_Q;
                 s.UpdateBy = Convert.ToInt32(Session["userID"]);
@@ -261,6 +278,47 @@ namespace SystemManage.Controllers
             Session["SIT_ID"] = SIT_ID;
             Session["Defect_SIT"] = 1;
             return RedirectToAction("AddDefect", "Defect");
+        }
+        private bool isValidContentType(string contentType)
+        {
+            return contentType.Equals("image/png") || contentType.Equals("image/jpg") || contentType.Equals("application/pdf") || contentType.Equals("image/jpeg");
+        }
+
+        private bool isValidContentLength(int contentLength)
+        {
+            return ((contentLength / 1024) / 1024) < 1; // 1MB
+        }
+        public string Upload_FileSIT(HttpPostedFileBase File)
+        {
+            if (!isValidContentType(File.ContentType))
+            {
+                ViewBag.Error = "เฉพาะไฟล์ jpg png pdf";
+                return ("Error");
+            }
+            else if (!isValidContentLength(File.ContentLength))
+            {
+                ViewBag.Error = "ไฟล์มีขนาดใหญ่เกินไป (1MB)";
+                return ("Error");
+            }
+            else
+            {
+                if (File.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(File.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
+                    string i = "/Upload/" + fileName + "," + fileName;
+                    File.SaveAs(path);
+                    ViewBag.fileName = File.FileName;
+                    if (File.ContentType.Equals("application/pdf"))
+                    {
+                        return i;
+                    }
+                    else
+
+                        return i;
+                }
+                return ("Error");
+            }
         }
     }
 }

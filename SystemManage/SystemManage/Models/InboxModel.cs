@@ -22,7 +22,7 @@ namespace SystemManage.Models
         public IEnumerable<HttpPostedFileBase> AttachFile1 { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
-        public string CreateBy { get; set; }
+        public int CreateBy { get; set; }
         public string UserList { get; set; }
 
         public List<User> List { get; set; }

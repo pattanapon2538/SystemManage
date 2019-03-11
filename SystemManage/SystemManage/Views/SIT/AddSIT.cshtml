@@ -46,7 +46,7 @@
     <title>SIT</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("AddSIT", "SIT", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
+    @using (Ajax.BeginForm("AddSIT", "SIT", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }, new { enctype = "multipart/form-data" }))
     {
         <div class="container">
             <h1 style="text-align: center;margin-bottom: 30px">ทดสอบทั้งระบบ</h1>
@@ -143,7 +143,8 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                <label class="label">ไฟล์แนบ :</label>
+                                @Html.TextBoxFor(m => m.AttachFile, new { type = "file", @class = "form-control-file" })
                             </div>
                         </div>
                     </div>

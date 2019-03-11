@@ -17,7 +17,7 @@ namespace SystemManage.Models
         public string Name { get; set; }
         public string Detail { get; set; }
         public string AttachShow { get; set; }
-        public string AttachFile { get; set; }
+        public HttpPostedFileBase AttachFile { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
@@ -60,5 +60,6 @@ namespace SystemManage.Models
         public string QA_Name { get; set; }
         public string Tester_Name { get; set; }
         public string Dev_Name { get; set; }
+        public string Show_Path { get; set; }
     }
 }

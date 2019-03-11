@@ -46,14 +46,14 @@
                             <div class="input-group">
                                 <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) ผู้รับ :</label>
                                 <div class="col-sm-4">
-                                    <select class="demo" multiple="multiple" id="Select_Lag">
+                                    @Html.HiddenFor(m => m.UserList)
+                                    <select class="demo" multiple="multiple" id="Select_User">
                                         @{
                                             foreach (var n in (List<UserModel>)ViewBag.DataList)
                                             {
                                                 <option name="Select_Lag" value="@n.Users_ID">@n.User_Name</option>
                                             }
                                         }
-
 
                                     </select>
                                 </div>
@@ -77,7 +77,6 @@
             </div>
         </div>
     }
-
 </body>
 </html>
 <script src="~/assets/js/scripts.js"></script>
@@ -85,3 +84,9 @@
 <script src="~/assets/js/metisMenu.min.js"></script>
 <script src="~/assets/js/fSelect.js"></script>
 <script src="~/assets/js/plugins.js"></script>
+<script>
+    $('.demo').fSelect();
+    $('#Select_User').change(function () {
+        $("#UserList").val($(this).val() + ",");
+    });
+</script>
