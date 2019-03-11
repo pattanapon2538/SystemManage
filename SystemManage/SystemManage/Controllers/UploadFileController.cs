@@ -95,7 +95,7 @@ namespace SystemManage.Controllers
         public ActionResult DeleteDocument(int DocumentID)
         {
             var d = db.Documents.Where(m => m.DocumentID == DocumentID).FirstOrDefault();
-            System.IO.File.Delete(d.AttachFile);
+            System.IO.File.Delete("C:/Users/SWNGMN/source/repos/SystemManage/SystemManage/SystemManage" + d.AttachFile);
             db.Documents.Remove(d);
             db.SaveChanges();
             return RedirectToAction("ShowDocument");
