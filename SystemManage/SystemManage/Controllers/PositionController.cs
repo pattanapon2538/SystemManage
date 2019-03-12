@@ -22,7 +22,7 @@ namespace SystemManage.Controllers
                     result.Initial = pm.Initial;
                     result.Detail = pm.Detail;
                     result.UpdateDate = DateTime.Now;
-                    result.UpdateBy = 11;
+                    result.UpdateBy = Convert.ToInt32(Session["userID"]);
                     db.SaveChanges();
                     ModelState.Clear();
                 }
@@ -34,7 +34,7 @@ namespace SystemManage.Controllers
                     r.Initial = pm.Initial;
                     r.Detail = pm.Detail;
                     r.CreateDate = DateTime.Now;
-                    r.CreateBy = 11;
+                    r.CreateBy = Convert.ToInt32(Session["userID"]); ;
                     db.Positions.Add(r);
                     db.SaveChanges();
                     ModelState.Clear();

@@ -18,6 +18,7 @@ namespace SystemManage.Controllers
         {
             if (model.Users_ID != 0)
             {
+                Skill s = new Skill();
                 var r = db.Users.Where(m => m.User_ID == model.Users_ID).FirstOrDefault();
                 r.User_ID = model.Users_ID;
                 r.NickName = model.NikcName;
@@ -33,9 +34,120 @@ namespace SystemManage.Controllers
                 r.ContractFrom = model.ContractFrom;
                 r.Date_of_Started = model.Date_of_Started;
                 r.Date_of_Ended = model.Date_of_Ended;
-                r.Reading = Convert.ToInt32(model.Reading);
-                r.Speaking = Convert.ToInt32(model.Speaking);
-                r.Writng = Convert.ToInt32(model.Writng);
+                if (model.AttachFile1 != null)
+                {
+                    var Upload = Upload_File_User(model.AttachFile1);
+                    string[] text = Upload.Split(",".ToCharArray());
+                    r.AttachFile1 = text[0];
+                    r.AttachShow1 = text[1];
+                }
+                if (model.AttachFile2 != null)
+                {
+                    var Upload = Upload_File_User(model.AttachFile2);
+                    string[] text = Upload.Split(",".ToCharArray());
+                    r.AttachFile2 = text[0];
+                    r.AttachShow2 = text[1];
+                }
+                if (model.AttachFile3 != null)
+                {
+                    var Upload = Upload_File_User(model.AttachFile3);
+                    string[] text = Upload.Split(",".ToCharArray());
+                    r.AttachFile3 = text[0];
+                    r.AttachShow3 = text[1];
+                }
+                if (model.AttachFile4 != null)
+                {
+                    var Upload = Upload_File_User(model.AttachFile4);
+                    string[] text = Upload.Split(",".ToCharArray());
+                    r.AttachFile4 = text[0];
+                    r.AttachShow4 = text[1];
+                }
+                var skill = db.Skills.Where(m => m.User_ID == model.Users_ID).OrderBy(m => m.SkillsID).ToList();
+                if (skill.Count() != 0)
+                {
+                    string[] txt = model.Select_Laguages.Split(",".ToCharArray());
+                    int item_skill = txt.Count() - 1;
+                    if (skill != null)
+                    {
+                        if (skill.Count == item_skill)
+                        {
+                            int i = 0;
+                            foreach (var sk in skill)
+                            {
+                                sk.languageID = Convert.ToInt32(txt[i]);
+                                sk.User_ID = model.Users_ID;
+                                db.SaveChanges();
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            foreach (var sk in skill)
+                            {
+                                db.Skills.Remove(sk);
+                                db.SaveChanges();
+                            }
+                            for (int i = 0; i < txt.Count() - 1; i++)
+                            {
+                                s.languageID = Convert.ToInt32(txt[i]);
+                                s.User_ID = model.Users_ID;
+                                db.Skills.Add(s);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                }
+                if (model.Speaking == "เก่ง")
+                {
+                    r.Speaking = 3;
+                }
+                else if (model.Speaking == "ปานกลาง")
+                {
+                    r.Speaking = 2;
+                }
+                else if (model.Speaking == "อ่อน")
+                {
+                    r.Speaking = 1;
+                }
+                /////////////////////////////////////////
+                if (model.Reading == "เก่ง")
+                {
+                    r.Reading = 3;
+                }
+                else if (model.Reading == "ปานกลาง")
+                {
+                    r.Reading = 2;
+                }
+                else if (model.Reading == "อ่อน")
+                {
+                    r.Reading = 1;
+                }
+                /////////////////////////////////////
+                if (model.Writng == "เก่ง")
+                {
+                    r.Writng = 3;
+                }
+                else if (model.Writng == "ปานกลาง")
+                {
+                    r.Writng = 2;
+                }
+                else if (model.Writng == "อ่อน")
+                {
+                    r.Writng = 1;
+                }
+                /////////////////////////////////////
+                if (model.Listening == "เก่ง")
+                {
+                    r.Listening = 3;
+                }
+                else if (model.Listening == "ปานกลาง")
+                {
+                    r.Listening = 2;
+                }
+                else if (model.Listening == "อ่อน")
+                {
+                    r.Listening = 1;
+                }
                 db.SaveChanges();
                 ModelState.Clear();
             }
@@ -76,22 +188,22 @@ namespace SystemManage.Controllers
                 {
                     var Upload = Upload_File_User(model.AttachFile2);
                     string[] text = Upload.Split(",".ToCharArray());
-                    u.AttachFile1 = text[0];
-                    u.AttachShow1 = text[1];
+                    u.AttachFile2 = text[0];
+                    u.AttachShow2 = text[1];
                 }
                 if (model.AttachFile3 != null)
                 {
                     var Upload = Upload_File_User(model.AttachFile3);
                     string[] text = Upload.Split(",".ToCharArray());
-                    u.AttachFile1 = text[0];
-                    u.AttachShow1 = text[1];
+                    u.AttachFile3 = text[0];
+                    u.AttachShow3 = text[1];
                 }
                 if (model.AttachFile4 != null)
                 {
                     var Upload = Upload_File_User(model.AttachFile4);
                     string[] text = Upload.Split(",".ToCharArray());
-                    u.AttachFile1 = text[0];
-                    u.AttachShow1 = text[1];
+                    u.AttachFile4 = text[0];
+                    u.AttachShow4 = text[1];
                 }
                 u.AVG = 0;
                 u.Amount_Succ =0;

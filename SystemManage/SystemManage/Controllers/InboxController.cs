@@ -106,7 +106,6 @@ namespace SystemManage.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    UserModel model = new UserModel();
                     //var user = db.Users.Where(m => m.User_Email == sender).FirstOrDefault();
                     var senderEmail = new MailAddress(sender, sender);
                     var receiverEmail = new MailAddress(receiver, receiver);

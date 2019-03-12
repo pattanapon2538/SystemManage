@@ -641,7 +641,7 @@ namespace SystemManage.Controllers
                         db.Skills.Remove(s);
                         db.SaveChanges();
                     }
-                    for (int i = 0; i < txt.Count(); i++)
+                    for (int i = 0; i < txt.Count()-1; i++)
                     {
                         sk.languageID = Convert.ToInt32(txt[i]);
                         sk.User_ID = model.Users_ID;

@@ -22,7 +22,7 @@ namespace SystemManage.Controllers
                 cm.Contrat_Name = result.Contrat_Name;
                 cm.Contrat_Detail = result.Contrat_Detail;
                 cm.UpdateDate = DateTime.Now;
-                cm.UpdateBy = 11;
+                cm.UpdateBy = Convert.ToInt32(Session["userID"]); ;
                 db.SaveChanges();
                 ModelState.Clear();
             }
@@ -34,7 +34,7 @@ namespace SystemManage.Controllers
                 tc.Contrat_Name = cm.Contrat_Name;
                 tc.Contrat_Detail = cm.Contrat_Detail;
                 tc.CreateDate = DateTime.Now;
-                tc.CreateBy = 11;
+                tc.CreateBy = Convert.ToInt32(Session["userID"]);
                 db.Type_of_Contract.Add(tc);
                 db.SaveChanges();
                 ModelState.Clear();

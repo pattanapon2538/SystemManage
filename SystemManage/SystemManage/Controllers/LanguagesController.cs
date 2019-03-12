@@ -21,7 +21,7 @@ namespace SystemManage.Controllers
                 var results = db.Language_of_Type.Where(s => s.languageID == lg.languageID).FirstOrDefault();
                 results.Name = lg.Name;
                 results.UpdateDate = DateTime.Now;
-                results.UpdateBy = 11;
+                results.UpdateBy = Convert.ToInt32(Session["userID"]);
                 db.SaveChanges();
                 ModelState.Clear();
             }
@@ -30,7 +30,7 @@ namespace SystemManage.Controllers
                 Language_of_Type model = new Language_of_Type();
                 model.Name = lg.Name;
                 model.CreateDate = DateTime.Now;
-                model.CreateBy = 11;
+                model.CreateBy = Convert.ToInt32(Session["userID"]);
                 db.Language_of_Type.Add(model);
                 db.SaveChanges();
                 ModelState.Clear();
