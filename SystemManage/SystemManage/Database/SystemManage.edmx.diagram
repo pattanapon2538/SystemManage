@@ -30,13 +30,13 @@
         <AssociationConnector Association="SystemManageModel.FK_Defect_Project" />
         <AssociationConnector Association="SystemManageModel.FK_SubDefect" />
         <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="4.875" PointY="5.625" />
-        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="2.75" PointY="2.5" />
         <AssociationConnector Association="SystemManageModel.FK_languaeID" />
+        <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="11.625" PointY="2.5" />
+        <AssociationConnector Association="SystemManageModel.FK_SubTask" />
+        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="2.875" PointY="2.625" />
         <AssociationConnector Association="SystemManageModel.FK_Position" />
         <AssociationConnector Association="SystemManageModel.FK_UserID" />
         <AssociationConnector Association="SystemManageModel.FK_Contact" />
-        <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="11.625" PointY="2.5" />
-        <AssociationConnector Association="SystemManageModel.FK_SubTask" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

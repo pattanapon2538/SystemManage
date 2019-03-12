@@ -14,7 +14,7 @@
 
 <div class="container">
     <div class="login-box ptb--100">
-        @using (Ajax.BeginForm("AddUser", "User", new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }, new { @id = "form_submit" }))
+        @using (Ajax.BeginForm("AddUser", "User", new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }, new { @id = "form_submit" , enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <form>
@@ -36,7 +36,7 @@
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">วันเดือนปีเกิด : </label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.BirthDate, new { @class = "form-control", @type = "date" })
+                            @Html.TextBoxFor(m => m.BirthDate, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker" })
                             @Html.ValidationMessageFor(m => m.BirthDate, string.Empty, new { @style = "color:red" })
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">เพศ : </label>
@@ -82,33 +82,33 @@
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">วันเริ่มสัญญา : </label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.Date_of_Started, new { @type = "date", @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Date_of_Started, "{0:MM/dd/yyyy}", new {  @class = "form-control datepicker2" })
                             @Html.ValidationMessageFor(m => m.Date_of_Started, string.Empty, new { @style = "color:red" })
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">วันสิ้นสุดสัญญา:</label>
                         <div class="col-sm-4">
-                            @Html.TextBoxFor(m => m.Date_of_Ended, new { @type = "date", @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Date_of_Ended, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker3" })
                             @Html.ValidationMessageFor(m => m.Date_of_Ended, string.Empty, new { @style = "color:red" })
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 1 : </label>
                         <div class="col-sm-4">
-                            <input type="file" class="form-control-file" id="AttachFile1">
+                            @Html.TextBoxFor(m => m.AttachFile1, new { type = "file", @class = "form-control-file" })
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 2:</label>
                         <div class="col-sm-4">
-                            <input type="file" class="form-control-file" id="AttachFile2">
+                            @Html.TextBoxFor(m => m.AttachFile2, new { type = "file", @class = "form-control-file" })
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 3 : </label>
                         <div class="col-sm-4">
-                            <input type="file" class="form-control-file" id="AttachFile3">
+                            @Html.TextBoxFor(m => m.AttachFile3, new { type = "file", @class = "form-control-file" })
                         </div>
                         <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่4 :</label>
                         <div class="col-sm-4">
-                            <input type="file" class="form-control-file" id="AttachFile4">
+                            @Html.TextBoxFor(m => m.AttachFile4, new { type = "file", @class = "form-control-file" })
                         </div>
                     </div>
                     <h2 class="text-center" style="margin-top:30px;margin-bottom:10px">บัญชีผู้ใช้งาน</h2>
@@ -304,5 +304,16 @@
     $('.demo').fSelect();
     $('#Select_Lag').change(function () {
         $("#Select_Laguages").val($(this).val()+",");
+    });
+</script>
+<script>
+    $('.datepicker').datepicker({
+        uiLibrary: 'bootstrap4'
+    });
+    $('.datepicker2').datepicker({
+        uiLibrary: 'bootstrap4'
+    });
+    $('.datepicker3').datepicker({
+        uiLibrary: 'bootstrap4'
     });
 </script>

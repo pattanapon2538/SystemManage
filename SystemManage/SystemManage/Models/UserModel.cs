@@ -34,10 +34,14 @@ namespace SystemManage.Models
         public string AttachShow3 { get; set; }
         public string AttachShow4 { get; set; }
         [DisplayName("Upload File")]
-        public string AttachFile1 { get; set; }
-        public string AttachFile2 { get; set; }
-        public string AttachFile3 { get; set; }
-        public string AttachFile4 { get; set; }
+        public HttpPostedFileBase AttachFile1 { get; set; }
+        public HttpPostedFileBase AttachFile2 { get; set; }
+        public HttpPostedFileBase AttachFile3 { get; set; }
+        public HttpPostedFileBase AttachFile4 { get; set; }
+        public string PathShow1 { get; set; }
+        public string PathShow2 { get; set; }
+        public string PathShow3 { get; set; }
+        public string PathShow4 { get; set; }
         public string Permission { get; set; }
         public string Comment { get; set; }
         public int LanguageID { get; set; }
@@ -82,9 +86,9 @@ namespace SystemManage.Models
         public string Select_Laguages { get; set; }
         public enum Levels
         {
-            ต่ำ,
+            อ่อน,
             ปานกลาง,
-            สูง,
+            เก่ง,
         }
         public enum Sex
         {
@@ -100,6 +104,8 @@ namespace SystemManage.Models
             ลูกค้า
         }
         public int Follow_C { get; set; }
+        public string language_string { get; set; }
+        public int open_Role { get; set; }
     }
     
    

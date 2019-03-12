@@ -65,11 +65,39 @@ namespace SystemManage.Controllers
                 u.Permisstion = model.Permission;
                 u.Position_ID = model.Position_ID;
                 u.comment = model.Comment;
+                if (model.AttachFile1 != null)
+                {
+                    var Upload = Upload_File_User(model.AttachFile1);
+                    string[] text = Upload.Split(",".ToCharArray());
+                    u.AttachFile1 = text[0];
+                    u.AttachShow1 = text[1];
+                }
+                if (model.AttachFile2 != null)
+                {
+                    var Upload = Upload_File_User(model.AttachFile2);
+                    string[] text = Upload.Split(",".ToCharArray());
+                    u.AttachFile1 = text[0];
+                    u.AttachShow1 = text[1];
+                }
+                if (model.AttachFile3 != null)
+                {
+                    var Upload = Upload_File_User(model.AttachFile3);
+                    string[] text = Upload.Split(",".ToCharArray());
+                    u.AttachFile1 = text[0];
+                    u.AttachShow1 = text[1];
+                }
+                if (model.AttachFile4 != null)
+                {
+                    var Upload = Upload_File_User(model.AttachFile4);
+                    string[] text = Upload.Split(",".ToCharArray());
+                    u.AttachFile1 = text[0];
+                    u.AttachShow1 = text[1];
+                }
                 u.AVG = 0;
                 u.Amount_Succ =0;
                 u.Amount_Non = 0;
                 u.TotalCoding = 0;
-                if (model.Speaking == "สูง")
+                if (model.Speaking == "เก่ง")
                 {
                     u.Speaking = 3;
                 }
@@ -77,12 +105,12 @@ namespace SystemManage.Controllers
                 {
                     u.Speaking = 2;
                 }
-                else if (model.Speaking == "ต่ำ")
+                else if (model.Speaking == "อ่อน")
                 {
                     u.Speaking = 1;
                 }
                 /////////////////////////////////////////
-                if (model.Reading == "สูง")
+                if (model.Reading == "เก่ง")
                 {
                     u.Reading = 3;
                 }
@@ -90,12 +118,12 @@ namespace SystemManage.Controllers
                 {
                     u.Reading = 2;
                 }
-                else if (model.Reading == "ต่ำ")
+                else if (model.Reading == "อ่อน")
                 {
                     u.Reading = 1;
                 }
                 /////////////////////////////////////
-                if (model.Writng == "สูง")
+                if (model.Writng == "เก่ง")
                 {
                     u.Writng = 3;
                 }
@@ -103,12 +131,12 @@ namespace SystemManage.Controllers
                 {
                     u.Writng = 2;
                 }
-                else if (model.Writng == "ต่ำ")
+                else if (model.Writng == "อ่อน")
                 {
                     u.Writng = 1;
                 }
                 /////////////////////////////////////
-                if (model.Listening == "สูง")
+                if (model.Listening == "เก่ง")
                 {
                     u.Listening = 3;
                 }
@@ -116,7 +144,7 @@ namespace SystemManage.Controllers
                 {
                     u.Listening = 2;
                 }
-                else if (model.Listening == "ต่ำ")
+                else if (model.Listening == "อ่อน")
                 {
                     u.Listening = 1;
                 }
@@ -124,6 +152,7 @@ namespace SystemManage.Controllers
                 u.CreateBy = Convert.ToInt32(Session["userID"]);
                 db.Users.Add(u);
                 db.SaveChanges();
+                ModelState.Clear();
                 string[] txt = model.Select_Laguages.Split(",".ToCharArray());
                 for (int c = 0; c < txt.Count(); c++)
                 {
@@ -239,7 +268,7 @@ namespace SystemManage.Controllers
             ////////////////////
             if (u.Speaking == 3)
             {
-                model._Speaking = UserModel.Levels.สูง;
+                model._Speaking = UserModel.Levels.เก่ง;
             }
             else if (u.Speaking == 2)
             {
@@ -247,12 +276,12 @@ namespace SystemManage.Controllers
             }
             else if (u.Speaking == 1)
             {
-                model._Speaking = UserModel.Levels.ต่ำ;
+                model._Speaking = UserModel.Levels.อ่อน;
             }
             /////////////////////////////////////////
             if (u.Reading == 3)
             {
-                model._Reading = UserModel.Levels.สูง;
+                model._Reading = UserModel.Levels.เก่ง;
             }
             else if (u.Reading == 2)
             {
@@ -260,12 +289,12 @@ namespace SystemManage.Controllers
             }
             else if (u.Reading == 1)
             {
-                model._Reading = UserModel.Levels.ต่ำ;
+                model._Reading = UserModel.Levels.อ่อน;
             }
             /////////////////////////////////////
             if (u.Writng == 3)
             {
-                model._Writng = UserModel.Levels.สูง;
+                model._Writng = UserModel.Levels.เก่ง;
             }
             else if (u.Writng == 2)
             {
@@ -273,12 +302,12 @@ namespace SystemManage.Controllers
             }
             else if (u.Writng == 1)
             {
-                model._Writng = UserModel.Levels.ต่ำ;
+                model._Writng = UserModel.Levels.อ่อน;
             }
             /////////////////////////////////////
             if (u.Listening == 3)
             {
-                model._Listening = UserModel.Levels.สูง;
+                model._Listening = UserModel.Levels.เก่ง;
             }
             else if (u.Listening == 2)
             {
@@ -286,7 +315,7 @@ namespace SystemManage.Controllers
             }
             else if (u.Listening == 1)
             {
-                model._Listening = UserModel.Levels.ต่ำ;
+                model._Listening = UserModel.Levels.อ่อน;
             }
             return Json(new { UserID = model.Users_ID ,
             Name = model.User_Name ,
@@ -322,6 +351,47 @@ namespace SystemManage.Controllers
             db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("ShowUser");
+        }
+        private bool isValidContentType(string contentType)
+        {
+            return contentType.Equals("image/png") || contentType.Equals("image/jpg") || contentType.Equals("application/pdf") || contentType.Equals("image/jpeg");
+        }
+
+        private bool isValidContentLength(int contentLength)
+        {
+            return ((contentLength / 1024) / 1024) < 1; // 1MB
+        }
+        public string Upload_File_User(HttpPostedFileBase File)
+        {
+            if (!isValidContentType(File.ContentType))
+            {
+                ViewBag.Error = "เฉพาะไฟล์ jpg png pdf";
+                return ("Error");
+            }
+            else if (!isValidContentLength(File.ContentLength))
+            {
+                ViewBag.Error = "ไฟล์มีขนาดใหญ่เกินไป (1MB)";
+                return ("Error");
+            }
+            else
+            {
+                if (File.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(File.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
+                    string i = "/Upload/" + fileName + "," + fileName;
+                    File.SaveAs(path);
+                    ViewBag.fileName = File.FileName;
+                    if (File.ContentType.Equals("application/pdf"))
+                    {
+                        return i;
+                    }
+                    else
+
+                        return i;
+                }
+                return ("Error");
+            }
         }
     }
     

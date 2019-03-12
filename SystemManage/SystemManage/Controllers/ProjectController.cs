@@ -33,6 +33,14 @@ namespace SystemManage.Controllers
                 p.Status = 1;
                 p.CreateBy = Convert.ToInt32(Session["userID"]);
                 p.CreateDate = DateTime.Now;
+                if (model.SIT.ToString() == "ใช่")
+                {
+                    p.SIT_Menu = 1;
+                }
+                else if (model.SIT.ToString() == "ไม่")
+                {
+                    p.SIT_Menu = 0;
+                }
                 db.Projects.Add(p);
                 db.SaveChanges();
                 pm.ProjectID = p.ProjectID;
@@ -135,6 +143,14 @@ namespace SystemManage.Controllers
             {
                 Model.status = ProjectModel.Status.หยุดดำเนินการ;
             }
+            if (p.SIT_Menu == 1)
+            {
+                Model.SIT = ProjectModel.SIT_State.ใช่;
+            }
+            else if (p.SIT_Menu == 0)
+            {
+                Model.SIT = ProjectModel.SIT_State.ไม่ใช่;
+            }
             return View(Model);
 
         }
@@ -155,6 +171,14 @@ namespace SystemManage.Controllers
             else if (Model.status.ToString() == "ดำเนินการ")
             {
                 p.Status = 1;
+            }
+            if (Model.SIT.ToString() == "ใช่")
+            {
+                p.SIT_Menu = 1;
+            }
+            else if (Model.SIT.ToString() == "ไม่ใช่")
+            {
+                p.SIT_Menu = 0;
             }
             p.UpdateDate = DateTime.Now;
             p.UpdateBy = Convert.ToInt32(Session["userID"]);

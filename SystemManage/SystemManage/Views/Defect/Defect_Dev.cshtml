@@ -69,14 +69,15 @@
                                             <div class="input-group">
                                                 <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
                                                 <div class="rs-select2 js-select-simple select--no-search ">
-                                                    Coding
+                                                    <label>อยู่ระหว่างการตอบรับ</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-5">
                                                 <div class="form-group">
-                                                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                                    <label class="label">ไฟล์แนบ :</label>
+                                                    <a href='@item.Path_Defect' target="_blank">@item.AttachShow</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -87,14 +88,15 @@
                                             <div class="input-group">
                                                 <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
                                                 <div class="rs-select2 js-select-simple select--no-search ">
-                                                    FIXD
+                                                    <label>กำลังแก้ไข</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                                    <label class="label">ไฟล์แนบ :</label>
+                                                    <a href='@item.Path_Defect' target="_blank">@item.AttachShow</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -105,14 +107,15 @@
                                             <div class="input-group">
                                                 <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
                                                 <div class="rs-select2 js-select-simple select--no-search ">
-                                                    Close
+                                                    <label>แก้ไขแล้ว</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                                    <label class="label">ไฟล์แนบ :</label>
+                                                    <a href='@item.Path_Defect' target="_blank">@item.AttachShow</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,14 +126,34 @@
                                             <div class="input-group">
                                                 <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
                                                 <div class="rs-select2 js-select-simple select--no-search ">
-                                                    Recoding
+                                                    <label>ปิด</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                                    <label class="label">ไฟล์แนบ :</label>
+                                                    <a href='@item.Path_Defect' target="_blank">@item.AttachShow</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (item.Status == 4)
+                                    {
+                                        <div class="col-sm-4">
+                                            <div class="input-group">
+                                                <label class="label" for="subject" style="margin-right: 10px">สถานะ :</label>
+                                                <div class="rs-select2 js-select-simple select--no-search ">
+                                                    <label>แก้ไขใหม่</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label class="label">ไฟล์แนบ :</label>
+                                                    <a href='@item.Path_Defect' target="_blank">@item.AttachShow</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,10 +168,6 @@
                         </div>
                         <div class="col-sm-2">
                             <a href="@Url.Action("ShowDefect","Defect")"><button type="button" class="btn btn-outline-danger">กลับ</button></a>
-                            @*@if (Model.CreateBy == Convert.ToInt32(Session["userID"]) || Model.DevID == Convert.ToInt32(Session["userID"]))
-                            {
-                                <button type="submit" class="btn btn-outline-primary">ยืนยัน</button>
-                            }*@
                         </div>
                     </div>
                 </div>

@@ -56,7 +56,7 @@ namespace SystemManage.Controllers
             }
                 ViewBag.DataList = UserList;
                 ViewBag.DataList2 = F_List;
-                TempData["Not_role"] = 1;
+                Session["set_Role"] = 0;
                 return View(model);
         }
         public ActionResult AddMember(int UserID)
@@ -165,8 +165,8 @@ namespace SystemManage.Controllers
                 });
             }
             model.ProjectCreateBy = c.CreateBy;
+            Session["set_Role"] = 1;
             ViewBag.DataList = UserList;
-            TempData["Not_Role"] = 0;
             return View(model);
         }
         public ActionResult HistoryUser(int userID)
@@ -191,6 +191,7 @@ namespace SystemManage.Controllers
             }
             int projectID = Convert.ToInt32(Session["ProjectID"]);
             var PM = db.ProjectMembers.Where(m => m.UserID == userID && m.ProjectID == projectID).FirstOrDefault();
+            var crete = db.Projects.Where(m => m.ProjectID == projectID).FirstOrDefault();
             model.PositionList = db.Positions.ToList();
             model.ContractsList = db.Type_of_Contract.ToList();
             model.LanguageList = db.Language_of_Type.OrderBy(m => m.languageID).ToList();
@@ -229,7 +230,13 @@ namespace SystemManage.Controllers
             model.Percent_Non = NonPercent;
             model.Amount_Succ = u.Amount_Succ;
             model.Amount_Non = u.Amount_Non;
-            model.Check_Role = Convert.ToInt32(TempData["Not_Role"]);
+            var skill = db.Skills.Where(m => m.User_ID == userID).ToList();
+            foreach (var s in skill)
+            {
+                var lag = db.Language_of_Type.Where(m => m.languageID == s.languageID).FirstOrDefault();
+                model.language_string = lag.Name +" "+ model.language_string;
+            }
+            model.ProjectCreateBy = crete.CreateBy;
             var Work = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
             foreach (var item in Work)
             {
@@ -320,6 +327,17 @@ namespace SystemManage.Controllers
         {
             UserModel model = new UserModel();
             List<UserModel> TaskList = new List<UserModel>();
+            List<LanguageOfTypeModel> Lg_List = new List<LanguageOfTypeModel>();
+            var data = db.Language_of_Type.ToList();
+            foreach (var l in data)
+            {
+                Lg_List.Add(new LanguageOfTypeModel {
+                    Name = l.Name,
+                    languageID = l.languageID
+                });
+            }
+            ViewBag.DataLg = Lg_List;
+            var skill = db.Skills.Where(m => m.User_ID == userID).ToList();
             var u = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
             double SuccPercent = 0;
             double NonPercent = 0;
@@ -340,26 +358,29 @@ namespace SystemManage.Controllers
             var PM = db.ProjectMembers.Where(m => m.UserID == userID && m.ProjectID == projectID).FirstOrDefault();
             model.PositionList = db.Positions.ToList();
             model.ContractsList = db.Type_of_Contract.ToList();
-            model.LanguageList = db.Language_of_Type.OrderBy(m => m.languageID).ToList();
-            if (PM.Role == 1)
+            if (PM != null)
             {
-                model.Roles = UserModel._Role.ผู้จัดการโครงการ;
-            }
-            else if (PM.Role == 2)
-            {
-                model.Roles = UserModel._Role.ผู้พัฒนาซอฟแวร์;
-            }
-            else if (PM.Role == 3)
-            {
-                model.Roles = UserModel._Role.ผู้ทดสอบ;
-            }
-            else if (PM.Role == 4)
-            {
-                model.Roles = UserModel._Role.ผู้ตรวจคุณภาพ;
-            }
-            else if (PM.Role == 5)
-            {
-                model.Roles = UserModel._Role.ลูกค้า;
+                if (PM.Role == 1)
+                {
+                    model.Roles = UserModel._Role.ผู้จัดการโครงการ;
+                }
+                else if (PM.Role == 2)
+                {
+                    model.Roles = UserModel._Role.ผู้พัฒนาซอฟแวร์;
+                }
+                else if (PM.Role == 3)
+                {
+                    model.Roles = UserModel._Role.ผู้ทดสอบ;
+                }
+                else if (PM.Role == 4)
+                {
+                    model.Roles = UserModel._Role.ผู้ตรวจคุณภาพ;
+                }
+                else if (PM.Role == 5)
+                {
+                    model.Roles = UserModel._Role.ลูกค้า;
+                }
+                model.open_Role = 1;
             }
             model.Position_ID = u.Position_ID;
             model.Contract_ID = u.Contract_ID;
@@ -373,10 +394,71 @@ namespace SystemManage.Controllers
             model.Date_of_Ended = u.Date_of_Ended;
             model.Comment = u.comment;
             model.Percent_Succ = SuccPercent;
+            model.BirthDate = u.BirthDate;
+            model.PathShow1 = u.AttachFile1;
+            model.PathShow2 = u.AttachFile2;
+            model.PathShow3 = u.AttachFile3;
+            model.PathShow4 = u.AttachFile4;
+            model.AttachShow1 = u.AttachShow1;
+            model.AttachShow2 = u.AttachShow2;
+            model.AttachShow3 = u.AttachShow3;
+            model.AttachShow4 = u.AttachShow4;
+            model.Permission = u.Permisstion;
+            model.Address = u.Address;
             model.Percent_Non = NonPercent;
             model.Amount_Succ = u.Amount_Succ;
             model.Amount_Non = u.Amount_Non;
-            model.Check_Role = Convert.ToInt32(TempData["Not_Role"]);
+            if (u.Listening == 3)
+            {
+                model._Listening = UserModel.Levels.เก่ง;
+            }
+            else if (u.Listening == 2)
+            {
+                model._Listening = UserModel.Levels.ปานกลาง;
+            }
+            else if (u.Listening == 1)
+            {
+                model._Listening = UserModel.Levels.อ่อน;
+            }
+            /////////////////////////////////////
+            if (u.Reading == 3)
+            {
+                model._Reading = UserModel.Levels.เก่ง;
+            }
+            else if (u.Reading == 2)
+            {
+                model._Reading = UserModel.Levels.ปานกลาง;
+            }
+            else if (u.Reading == 1)
+            {
+                model._Reading = UserModel.Levels.อ่อน;
+            }
+            ////////////////////////////////////
+            if (u.Writng == 3)
+            {
+                model._Writng = UserModel.Levels.เก่ง;
+            }
+            else if (u.Writng == 2)
+            {
+                model._Writng = UserModel.Levels.ปานกลาง;
+            }
+            else if (u.Writng == 1)
+            {
+                model._Writng = UserModel.Levels.อ่อน;
+            }
+            ////////////////////////////////////
+            if (u.Speaking == 3)
+            {
+                model._Speaking = UserModel.Levels.เก่ง;
+            }
+            else if (u.Speaking == 2)
+            {
+                model._Speaking = UserModel.Levels.ปานกลาง;
+            }
+            else if (u.Speaking == 1)
+            {
+                model._Speaking = UserModel.Levels.อ่อน;
+            }
             var Work = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
             foreach (var item in Work)
             {
@@ -472,6 +554,142 @@ namespace SystemManage.Controllers
                 Session["Succ"] = false;
                 return Json(new { c = true });
             }
+        }
+        public ActionResult Edit_Profile(UserModel model)
+        {
+            Skill sk = new Skill();
+            var r = db.Users.Where(m => m.User_ID == model.Users_ID).FirstOrDefault();
+            r.User_ID = model.Users_ID;
+            r.User_Email = model.User_Email;
+            r.User_Password = model.User_Password;
+            r.Phone = model.Phone;
+            if (model._Reading == UserModel.Levels.เก่ง)
+            {
+                r.Reading = 3;
+            }
+            else if (model._Reading == UserModel.Levels.ปานกลาง)
+            {
+                r.Reading = 2;
+            }
+            else if (model._Reading == UserModel.Levels.อ่อน)
+            {
+                r.Reading = 1;
+            }
+
+
+            if (model._Writng == UserModel.Levels.เก่ง)
+            {
+                r.Writng = 3;
+            }
+            else if (model._Writng == UserModel.Levels.ปานกลาง)
+            {
+                r.Writng = 2;
+            }
+            else if (model._Writng == UserModel.Levels.อ่อน)
+            {
+                r.Writng = 1;
+            }
+
+            if (model._Speaking == UserModel.Levels.เก่ง)
+            {
+                r.Speaking = 3;
+            }
+            else if (model._Speaking == UserModel.Levels.ปานกลาง)
+            {
+                r.Speaking = 2;
+            }
+            else if (model._Speaking == UserModel.Levels.อ่อน)
+            {
+                r.Speaking = 1;
+            }
+
+            if (model._Listening == UserModel.Levels.เก่ง)
+            {
+                r.Listening = 3;
+            }
+            else if (model._Listening == UserModel.Levels.ปานกลาง)
+            {
+                r.Listening = 2;
+            }
+            else if (model._Listening == UserModel.Levels.อ่อน)
+            {
+                r.Listening = 1;
+            }
+            r.UpdateBy = Convert.ToInt32(Session["userID"]);
+            r.UpdateDate = DateTime.Now;
+            db.SaveChanges();
+            var skill = db.Skills.Where(m => m.User_ID == model.Users_ID).OrderBy(m => m.SkillsID).ToList();
+            string[] txt = model.language_string.Split(",".ToCharArray());
+            int item_skill = txt.Count() - 1;
+            if (skill != null)
+            {
+                if (skill.Count == item_skill)
+                {
+                    int i = 0;
+                    foreach (var s in skill)
+                    {
+                        s.languageID = Convert.ToInt32(txt[i]);
+                        s.User_ID = model.Users_ID;
+                        db.SaveChanges();
+                        i++;
+                    }
+                }
+                else
+                {
+                    foreach (var s in skill)
+                    {
+                        db.Skills.Remove(s);
+                        db.SaveChanges();
+                    }
+                    for (int i = 0; i < txt.Count(); i++)
+                    {
+                        sk.languageID = Convert.ToInt32(txt[i]);
+                        sk.User_ID = model.Users_ID;
+                        db.Skills.Add(sk);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            ModelState.Clear();
+            return RedirectToAction("Profile", "Member", new { userID = model.Users_ID });
+        }
+        public ActionResult Edit_Member(UserModel model)
+        {
+            int projectID = Convert.ToInt32(Session["ProjectID"]);
+            var user = db.Users.Where(m => m.User_ID == model.Users_ID).FirstOrDefault();
+            var ProjectMember = db.ProjectMembers.Where(m => m.UserID == model.Users_ID && m.ProjectID == projectID).FirstOrDefault();
+            if (Convert.ToInt32(Session["userID"]) == model.Users_ID)
+            {
+                user.User_Email = model.User_Email;
+                user.Phone = model.Phone;
+                user.comment = model.Comment;
+                db.SaveChanges();
+            }
+            else
+            {
+                if (model.Roles == UserModel._Role.ผู้จัดการโครงการ)
+                {
+                    ProjectMember.Role = 1;
+                }
+                else if (model.Roles == UserModel._Role.ผู้ตรวจคุณภาพ)
+                {
+                    ProjectMember.Role = 4;
+                }
+                else if (model.Roles == UserModel._Role.ผู้ทดสอบ)
+                {
+                    ProjectMember.Role = 3;
+                }
+                else if (model.Roles == UserModel._Role.ผู้พัฒนาซอฟแวร์)
+                {
+                    ProjectMember.Role = 2;
+                }
+                else if (model.Roles == UserModel._Role.ลูกค้า)
+                {
+                    ProjectMember.Role = 5;
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction("HistoryUser", "Member",new {userID = model.Users_ID });
         }
     }
 }

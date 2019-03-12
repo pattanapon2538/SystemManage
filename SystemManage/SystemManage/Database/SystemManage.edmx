@@ -301,7 +301,7 @@
           <Property Name="AttachFile3" Type="nvarchar" MaxLength="200" />
           <Property Name="AttachFile4" Type="nvarchar" MaxLength="200" />
           <Property Name="Permisstion" Type="nvarchar" MaxLength="3" />
-          <Property Name="comment" Type="nvarchar" MaxLength="50" />
+          <Property Name="comment" Type="nvarchar" MaxLength="300" />
           <Property Name="Skill_ID" Type="int" />
           <Property Name="AVG" Type="float" />
           <Property Name="Amount_Succ" Type="int" />
@@ -603,11 +603,16 @@
             <End Role="SubDefect" EntitySet="SubDefects" />
           </AssociationSet>
           <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
-          <EntitySet Name="Users" EntityType="SystemManageModel.User" />
           <AssociationSet Name="FK_languaeID" Association="SystemManageModel.FK_languaeID">
             <End Role="Language_of_Type" EntitySet="Language_of_Type" />
             <End Role="Skill" EntitySet="Skills" />
           </AssociationSet>
+          <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
+          <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
+            <End Role="Task" EntitySet="Tasks" />
+            <End Role="SubTask" EntitySet="SubTasks" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="SystemManageModel.User" />
           <AssociationSet Name="FK_Position" Association="SystemManageModel.FK_Position">
             <End Role="Position" EntitySet="Positions" />
             <End Role="User" EntitySet="Users" />
@@ -619,11 +624,6 @@
           <AssociationSet Name="FK_Contact" Association="SystemManageModel.FK_Contact">
             <End Role="Type_of_Contract" EntitySet="Type_of_Contract" />
             <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
-          <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
-            <End Role="Task" EntitySet="Tasks" />
-            <End Role="SubTask" EntitySet="SubTasks" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language_of_Type">
@@ -990,52 +990,6 @@
           <Property Name="level_of_lg" Type="Int32" />
           <NavigationProperty Name="Language_of_Type" Relationship="SystemManageModel.FK_languaeID" FromRole="Skill" ToRole="Language_of_Type" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="User_ID" />
-          </Key>
-          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="User_Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="User_LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="BirthDate" Type="DateTime" Precision="0" />
-          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ContractFrom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Date_of_Started" Type="DateTime" Precision="0" />
-          <Property Name="Date_of_Ended" Type="DateTime" Precision="0" />
-          <Property Name="AttachShow1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachShow2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachShow3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachShow4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Permisstion" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="comment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Skill_ID" Type="Int32" />
-          <Property Name="AVG" Type="Double" />
-          <Property Name="Amount_Succ" Type="Int32" />
-          <Property Name="Amount_Non" Type="Int32" />
-          <Property Name="TotalCoding" Type="Int32" />
-          <Property Name="Speaking" Type="Int32" />
-          <Property Name="Reading" Type="Int32" />
-          <Property Name="Writng" Type="Int32" />
-          <Property Name="Listening" Type="Int32" />
-          <Property Name="CreateDate" Type="DateTime" Precision="0" />
-          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
-          <Property Name="CreateBy" Type="Int32" />
-          <Property Name="UpdateBy" Type="Int32" />
-          <Property Name="Contract_ID" Type="Int32" Nullable="false" />
-          <Property Name="Position_ID" Type="Int32" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
-          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Position" Relationship="SystemManageModel.FK_Position" FromRole="User" ToRole="Position" />
-          <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_UserID" FromRole="User" ToRole="ProjectMember" />
-          <NavigationProperty Name="Type_of_Contract" Relationship="SystemManageModel.FK_Contact" FromRole="User" ToRole="Type_of_Contract" />
-        </EntityType>
         <Association Name="FK_languaeID">
           <End Type="SystemManageModel.Language_of_Type" Role="Language_of_Type" Multiplicity="1" />
           <End Type="SystemManageModel.Skill" Role="Skill" Multiplicity="*" />
@@ -1045,42 +999,6 @@
             </Principal>
             <Dependent Role="Skill">
               <PropertyRef Name="languageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Position">
-          <End Type="SystemManageModel.Position" Role="Position" Multiplicity="1" />
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Position">
-              <PropertyRef Name="Position_ID" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="Position_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserID">
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
-          <End Type="SystemManageModel.ProjectMember" Role="ProjectMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="User_ID" />
-            </Principal>
-            <Dependent Role="ProjectMember">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Contact">
-          <End Type="SystemManageModel.Type_of_Contract" Role="Type_of_Contract" Multiplicity="1" />
-          <End Type="SystemManageModel.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Type_of_Contract">
-              <PropertyRef Name="Contrat_ID" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="Contract_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1120,6 +1038,88 @@
             </Principal>
             <Dependent Role="SubTask">
               <PropertyRef Name="TaskID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="User_LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BirthDate" Type="DateTime" Precision="0" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContractFrom" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Date_of_Started" Type="DateTime" Precision="0" />
+          <Property Name="Date_of_Ended" Type="DateTime" Precision="0" />
+          <Property Name="AttachShow1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachShow4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttachFile4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Permisstion" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="comment" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Skill_ID" Type="Int32" />
+          <Property Name="AVG" Type="Double" />
+          <Property Name="Amount_Succ" Type="Int32" />
+          <Property Name="Amount_Non" Type="Int32" />
+          <Property Name="TotalCoding" Type="Int32" />
+          <Property Name="Speaking" Type="Int32" />
+          <Property Name="Reading" Type="Int32" />
+          <Property Name="Writng" Type="Int32" />
+          <Property Name="Listening" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="Int32" />
+          <Property Name="UpdateBy" Type="Int32" />
+          <Property Name="Contract_ID" Type="Int32" Nullable="false" />
+          <Property Name="Position_ID" Type="Int32" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Position" Relationship="SystemManageModel.FK_Position" FromRole="User" ToRole="Position" />
+          <NavigationProperty Name="ProjectMembers" Relationship="SystemManageModel.FK_UserID" FromRole="User" ToRole="ProjectMember" />
+          <NavigationProperty Name="Type_of_Contract" Relationship="SystemManageModel.FK_Contact" FromRole="User" ToRole="Type_of_Contract" />
+        </EntityType>
+        <Association Name="FK_Position">
+          <End Type="SystemManageModel.Position" Role="Position" Multiplicity="1" />
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="Position_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Position_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserID">
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="1" />
+          <End Type="SystemManageModel.ProjectMember" Role="ProjectMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="ProjectMember">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contact">
+          <End Type="SystemManageModel.Type_of_Contract" Role="Type_of_Contract" Multiplicity="1" />
+          <End Type="SystemManageModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_of_Contract">
+              <PropertyRef Name="Contrat_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Contract_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1392,6 +1392,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SubTasks">
+            <EntityTypeMapping TypeName="SystemManageModel.SubTask">
+              <MappingFragment StoreEntitySet="SubTask">
+                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
+                <ScalarProperty Name="AttachShow" ColumnName="AttachShow" />
+                <ScalarProperty Name="Comment_CM" ColumnName="Comment_CM" />
+                <ScalarProperty Name="Comment_QA" ColumnName="Comment_QA" />
+                <ScalarProperty Name="Comment_Tester" ColumnName="Comment_Tester" />
+                <ScalarProperty Name="Comment_Dev" ColumnName="Comment_Dev" />
+                <ScalarProperty Name="RoundCoding" ColumnName="RoundCoding" />
+                <ScalarProperty Name="HaveDefect" ColumnName="HaveDefect" />
+                <ScalarProperty Name="Handle" ColumnName="Handle" />
+                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="SubDevSend" ColumnName="SubDevSend" />
+                <ScalarProperty Name="SubDevID" ColumnName="SubDevID" />
+                <ScalarProperty Name="SubDescriptionDev" ColumnName="SubDescriptionDev" />
+                <ScalarProperty Name="SubPercent" ColumnName="SubPercent" />
+                <ScalarProperty Name="SubStatus" ColumnName="SubStatus" />
+                <ScalarProperty Name="SubName" ColumnName="SubName" />
+                <ScalarProperty Name="SubID" ColumnName="SubID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="SystemManageModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -1433,33 +1460,6 @@
                 <ScalarProperty Name="User_Password" ColumnName="User_Password" />
                 <ScalarProperty Name="User_Email" ColumnName="User_Email" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SubTasks">
-            <EntityTypeMapping TypeName="SystemManageModel.SubTask">
-              <MappingFragment StoreEntitySet="SubTask">
-                <ScalarProperty Name="AttachFile" ColumnName="AttachFile" />
-                <ScalarProperty Name="AttachShow" ColumnName="AttachShow" />
-                <ScalarProperty Name="Comment_CM" ColumnName="Comment_CM" />
-                <ScalarProperty Name="Comment_QA" ColumnName="Comment_QA" />
-                <ScalarProperty Name="Comment_Tester" ColumnName="Comment_Tester" />
-                <ScalarProperty Name="Comment_Dev" ColumnName="Comment_Dev" />
-                <ScalarProperty Name="RoundCoding" ColumnName="RoundCoding" />
-                <ScalarProperty Name="HaveDefect" ColumnName="HaveDefect" />
-                <ScalarProperty Name="Handle" ColumnName="Handle" />
-                <ScalarProperty Name="UpdateBy" ColumnName="UpdateBy" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="SubDevSend" ColumnName="SubDevSend" />
-                <ScalarProperty Name="SubDevID" ColumnName="SubDevID" />
-                <ScalarProperty Name="SubDescriptionDev" ColumnName="SubDescriptionDev" />
-                <ScalarProperty Name="SubPercent" ColumnName="SubPercent" />
-                <ScalarProperty Name="SubStatus" ColumnName="SubStatus" />
-                <ScalarProperty Name="SubName" ColumnName="SubName" />
-                <ScalarProperty Name="SubID" ColumnName="SubID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

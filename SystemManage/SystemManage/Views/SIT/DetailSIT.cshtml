@@ -54,7 +54,7 @@
 </head>
 <body>
 
-    @using (Html.BeginForm("EditSIT", "SIT", FormMethod.Post, new { @id = "form_Check" }))
+    @using (Html.BeginForm("EditSIT", "SIT", FormMethod.Post, new { @id = "form_Check" ,enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <div class="container">

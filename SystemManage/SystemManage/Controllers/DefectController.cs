@@ -504,6 +504,9 @@ namespace SystemManage.Controllers
                         Defect_ID = item.Defect_ID,
                         Detail = item.Detail,
                         Status = item.Status,
+                        SendDate = item.SendDate,
+                        AttachShow = item.AttachShow,
+                        Path_Defect = item.AttachFile
                     });
                 }
                 else if (item.Status == 1)
@@ -513,6 +516,9 @@ namespace SystemManage.Controllers
                         Defect_ID = item.Defect_ID,
                         Detail = item.Detail,
                         Status = item.Status,
+                        SendDate = item.SendDate,
+                         AttachShow = item.AttachShow,
+                        Path_Defect = item.AttachFile
                     });
                 }
                 else if (item.Status == 2)
@@ -522,6 +528,9 @@ namespace SystemManage.Controllers
                         Defect_ID = item.Defect_ID,
                         Detail = item.Detail,
                         Status = item.Status,
+                        SendDate = item.SendDate,
+                         AttachShow = item.AttachShow,
+                        Path_Defect = item.AttachFile
                     });
                 }
                 else if (item.Status == 3)
@@ -531,6 +540,9 @@ namespace SystemManage.Controllers
                         Defect_ID = item.Defect_ID,
                         Detail = item.Detail,
                         Status = item.Status,
+                        SendDate = item.SendDate,
+                         AttachShow = item.AttachShow,
+                        Path_Defect = item.AttachFile
                     });
                 }
             }

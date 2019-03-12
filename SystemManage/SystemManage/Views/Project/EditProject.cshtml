@@ -45,6 +45,14 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-sm-5">
+                        <div class="input-group">
+                            <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) โครงการนี้เสร็จสินต่อเมื่อระบบทดสอบครบ 100% ใช่หรือไม่ :</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.DropDownListFor(m => m.SIT, new SelectList(Enum.GetValues(typeof(ProjectModel.SIT_State))), new { @class = "form-control" })
+                    </div>
                     <div class="col-sm-4">
                         <div class="input-group">
                             <label class="label" for="subject" style="margin-right: 10px"> สถานะ :</label>

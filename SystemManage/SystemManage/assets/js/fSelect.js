@@ -1,4 +1,4 @@
-(function($) {
+﻿(function($) {
 
     String.prototype.unaccented = function() {
         var accent = [
@@ -27,11 +27,11 @@
         }
         else {
             var settings = $.extend({
-                placeholder: 'Select some options',
+                placeholder: 'เลือก',
                 numDisplayed: 3,
                 overflowText: '{n} selected',
-                searchText: 'Search',
-                noResultsText: 'No results found',
+                searchText: 'ค้นหา',
+                noResultsText: 'ไม่พบ',
                 showSearch: true,
                 optionFormatter: false
             }, options);

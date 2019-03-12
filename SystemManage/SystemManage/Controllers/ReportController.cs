@@ -15,6 +15,7 @@ namespace SystemManage.Controllers
         // GET: Report
         public ActionResult Report()
         {
+            string Handle,DevName,TesterName,QAName = "";
             SubTaskModel model = new SubTaskModel();
             List<SubTaskModel> subTasksReport = new List<SubTaskModel>();
             List<SubTaskModel> Team = new List<SubTaskModel>();
@@ -33,8 +34,38 @@ namespace SystemManage.Controllers
                     var y = db.Users.Where(m => m.User_ID == d.SubDevID).FirstOrDefault();
                     var tester = db.Users.Where(m => m.User_ID == c.TestID).FirstOrDefault();
                     var QA = db.Users.Where(m => m.User_ID == c.QAID).FirstOrDefault();
-                    string Handle = u.User_Name;
-                    string DevName = y.User_Name;
+                    if (u != null)
+                    {
+                         Handle = u.User_Name;
+                    }
+                    else
+                    {
+                         Handle = "ไม่ผู้รับผิดชอบ";
+                    }
+                    if (y != null)
+                    {
+                        DevName = y.User_Name;
+                    }
+                    else
+                    {
+                        DevName = "ไม่มีผู้รับผิดชอบ";
+                    }
+                    if (tester != null)
+                    {
+                        TesterName = tester.User_Name;
+                    }
+                    else
+                    {
+                        TesterName = "ไม่มีผู้รับผิดชอบ";
+                    }
+                    if (QA != null)
+                    {
+                        QAName = QA.User_Name;
+                    }
+                    else
+                    {
+                        QAName = "ไม่มีผู้รับผิดชอบ";
+                    }
                     subTasksReport.Add(new SubTaskModel
                     {
                         TaskID = c.TaskID,
@@ -47,8 +78,8 @@ namespace SystemManage.Controllers
                         SubPercent = d.SubPercent,
                         SubDescriptionDev = d.SubDescriptionDev,
                         SubDevID = DevName,
-                        TesterName = tester.User_Name,
-                        QAName = QA.User_Name,
+                        TesterName = TesterName,
+                        QAName = QAName,
                         SubDevSend = d.SubDevSend,
                         CreateDate = d.CreateDate,
                         UpdateDate = d.UpdateDate,

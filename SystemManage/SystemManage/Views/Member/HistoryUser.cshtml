@@ -49,13 +49,16 @@ chart.render();
 </style>
 <div class="container">
     <div class="login-box ptb--100">
-        @Html.AntiForgeryToken()
+        @using (Ajax.BeginForm("Edit_Member", "Member", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }))
+        {
+            @Html.AntiForgeryToken()
         <form>
             <div class="login-form-body shadow " style="border-style:solid ;border-width: 1px;margin-left: -200px;width:800px">
                 <h2 class="text-center" style="margin-bottom:20px;margin-top:-10px">ประวัติส่วนตัว</h2>
                 <div class="form-group row">
                     <label for="language" class="col-sm-2 col-form-label">อีเมล์ : </label>
                     <div class="col-sm-4">
+                        @Html.HiddenFor(m => m.Users_ID)
                         @{
                             if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
                             {
@@ -70,34 +73,14 @@ chart.render();
                     </div>
                     <label for="language" class="col-sm-2 col-form-label">ชื่อ : </label>
                     <div class="col-sm-4">
-                        @{
-                            if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
-                            {
-                                @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
-                            }
-                            else
-                            {
                                 @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", Readonly = "" })
-                            }
-                        }
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="language" class="col-sm-2 col-form-label">นามสกุล : </label>
                     <div class="col-sm-4">
-                        @{
-                            if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
-                            {
-                                @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.User_LastName, string.Empty, new { @style = "color:red" })
-                            }
-                            else
-                            {
                                 @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control", Readonly = "" })
-                            }
-                        }
-
+                       
                     </div>
                     <label for="language" class="col-sm-2 col-form-label">เบอร์โทร : </label>
                     <div class="col-sm-4">
@@ -130,12 +113,12 @@ chart.render();
                 <div class="form-group row">
                     <label for="language" class="col-sm-2 col-form-label">วันเริ่มสัญญา : </label>
                     <div class="col-sm-4">
-                        @Html.TextBoxFor(m => m.Date_of_Started, new { @type = "date", @class = "form-control", Readonly = "" })
+                        @Html.TextBoxFor(m => m.Date_of_Started, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
                         @Html.ValidationMessageFor(m => m.Date_of_Started, string.Empty, new { @style = "color:red" })
                     </div>
                     <label for="language" class="col-sm-2 col-form-label">วันสิ้นสุดสัญญา:</label>
                     <div class="col-sm-4">
-                        @Html.TextBoxFor(m => m.Date_of_Ended, new { @type = "date", @class = "form-control", Readonly = "" })
+                        @Html.TextBoxFor(m => m.Date_of_Ended, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
                         @Html.ValidationMessageFor(m => m.Date_of_Ended, string.Empty, new { @style = "color:red" })
                     </div>
                 </div>
@@ -146,9 +129,9 @@ chart.render();
                         @Html.ValidationMessageFor(m => m.Position_ID, string.Empty, new { @style = "color:red" })
                     </div>
                     @{
-                        if (Model.Check_Role != 1)
+                        if (Convert.ToInt32(Session["set_Role"]) == 1)
                         {
-                            if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
+                            if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Users_ID != Model.ProjectCreateBy)
                             {
                                 <label for="language" class="col-sm-2 col-form-label">บทบาทในโปรเจค : </label>
                                 <div class="col-sm-4">
@@ -169,8 +152,7 @@ chart.render();
                 <div class="form-group row">
                     <label for="language" class="col-sm-4 col-form-label">ทักษะภาษาโปรแกรม : </label>
                     <div class="col-sm-8">
-                        @Html.TextAreaFor(m => m.LanguageID, new { @type = "text", @class = "form-control", Readonly = "" })
-                        @Html.ValidationMessageFor(m => m.LanguageID, string.Empty, new { @style = "color:red" })
+                        @Html.TextAreaFor(m => m.language_string, new { @type = "text", @class = "form-control", Readonly = "" })
                     </div>
                 </div>
                 <div class="form-group row">
@@ -179,19 +161,21 @@ chart.render();
                         @{
                             if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
                             {
-                                @Html.TextAreaFor(m => m.LanguageID, new { @type = "text", @class = "form-control" })
+                                @Html.TextAreaFor(m => m.Comment, new { @type = "text", @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.LanguageID, string.Empty, new { @style = "color:red" })
                             }
                             else
                             {
-                                @Html.TextAreaFor(m => m.LanguageID, new { @type = "text", @class = "form-control", Readonly = "" })
+                                @Html.TextAreaFor(m => m.Comment, new { @type = "text", @class = "form-control", Readonly = "" })
                             }
                         }
-
                     </div>
+                    <button id="submit" type="submit" class="btn btn-outline-primary" onclick='return confirm("กรุณายืนยันการทำรายการ")'>ยีนยัน</button>
+                    <a href="@Url.Action("ShowMember","Member")"><button type="button" class="btn btn-outline-primary" >กลับ</button></a>
                 </div>
             </div>
         </form>
+        }
     </div>
     <div class="login-form-body shadow" style="border-style:solid;border-width:1px">
         <div class="row">
