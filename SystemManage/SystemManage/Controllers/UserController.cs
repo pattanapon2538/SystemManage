@@ -265,15 +265,18 @@ namespace SystemManage.Controllers
                 db.Users.Add(u);
                 db.SaveChanges();
                 ModelState.Clear();
-                string[] txt = model.Select_Laguages.Split(",".ToCharArray());
-                for (int c = 0; c < txt.Count(); c++)
+                if (model.Select_Laguages != null)
                 {
-                    if (txt[c] != "")
+                    string[] txt = model.Select_Laguages.Split(",".ToCharArray());
+                    for (int c = 0; c < txt.Count(); c++)
                     {
-                        s.User_ID = u.User_ID;
-                        s.languageID = Convert.ToInt32(txt[c]);
-                        db.Skills.Add(s);
-                        db.SaveChanges();
+                        if (txt[c] != "")
+                        {
+                            s.User_ID = u.User_ID;
+                            s.languageID = Convert.ToInt32(txt[c]);
+                            db.Skills.Add(s);
+                            db.SaveChanges();
+                        }
                     }
                 }
             }

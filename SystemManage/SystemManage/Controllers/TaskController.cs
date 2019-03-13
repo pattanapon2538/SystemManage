@@ -119,7 +119,7 @@ namespace SystemManage.Controllers
                         st.SubDevSend = model.SubTaskSendDate[item];
                         st.CreateDate = DateTime.Now;
                         st.CreateBy = Convert.ToInt32(Session["userID"]);
-                        if (model.AttachFile_List != null)
+                        if (model.AttachFile_List[item] != null)
                         {
                             var Upload_Sub = Upload_FileTask(model.AttachFile_List[item]);
                             string[] txt = Upload_Sub.Split(",".ToCharArray());
@@ -150,9 +150,7 @@ namespace SystemManage.Controllers
                         db.SaveChanges();
 
                     }
-
-                    ModelState.Clear();
-                    return RedirectToAction("ShowTask");
+                    return RedirectToAction("ShowTask","Task");
                 }
                 st.TaskID = t.TaskID;
                 st.SubName = model.SubTasksName[0].ToString();
@@ -166,11 +164,14 @@ namespace SystemManage.Controllers
                 st.CreateBy = Convert.ToInt32(Session["userID"]);
                 if (model.AttachFile_List != null)
                 {
-                    var Upload_Sub = Upload_FileTask(model.AttachFile_List[0]);
-                    string[] txt = Upload_Sub.Split(",".ToCharArray());
-                    string fileName = txt[1];
-                    st.AttachFile = txt[0];
-                    st.AttachShow = fileName;
+                    if (model.AttachFile_List[0] != null)
+                    {
+                        var Upload_Sub = Upload_FileTask(model.AttachFile_List[0]);
+                        string[] txt = Upload_Sub.Split(",".ToCharArray());
+                        string fileName = txt[1];
+                        st.AttachFile = txt[0];
+                        st.AttachShow = fileName;
+                    } 
                 }
                 db.SubTasks.Add(st);
                 db.SaveChanges();
