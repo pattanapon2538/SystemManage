@@ -11,6 +11,7 @@
     }
 }
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<body onload="Alert()">
 <div class="container">
     <div class="login-box ptb--100">
         @using (Ajax.BeginForm("AddContact", "Contact",
@@ -23,14 +24,14 @@
                         <label for="language" class="col-sm-6 col-form-label">ประเภทสัญญา: </label>
                         <div class="col-sm-6">
                             @Html.HiddenFor(m => m.Contrat_ID, new { @class = "form-control" })
-                            @Html.TextBoxFor(m => m.Contrat_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.TextBoxFor(m => m.Contrat_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล"})
                             @Html.ValidationMessageFor(m => m.Contrat_Name, string.Empty, new { @style = "color:red" })
                         </div>
                         <div class="mt">
                         </div>
                         <label for="language" class="col-sm-6 col-form-label">รายละเอียด: </label>
                         <div class="col-sm-6">
-                            @Html.TextAreaFor(m => m.Contrat_Detail, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue" })
+                            @Html.TextAreaFor(m => m.Contrat_Detail, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล"})
                         </div>
                     </div>
                     <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
@@ -88,6 +89,7 @@
         </div>
     </div>
 </div>
+</body>
 <script>
     function EditDetail(ContactID) {
         $.ajax({
@@ -100,8 +102,18 @@
                 $("#Contrat_ID").val(data.Contrat_ID);
                 $("#Contrat_Name").val(data.Contrat_Name);
                 $("#Contrat_Detail").val(data.Contrat_Detail);
+                document.getElementById("form_submit").innerText = "บันทึก";
             }
         });
 
+    }
+</script>
+<script>
+    function Alert()
+    {
+        if (@Model.Alert == 1)
+        {
+            alert("ไม่สามารถทำรายการเนื่องจากข้อมูลถูกเรียกใช้อยู่ กรูณาตรวจสอบอีกครั้ง");
+        }
     }
 </script>

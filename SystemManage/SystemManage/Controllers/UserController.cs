@@ -349,7 +349,17 @@ namespace SystemManage.Controllers
             }
             ViewBag.DataList = model;
             ViewBag.DataSkill = ListData;
-            return View(ModelList);
+            if (Convert.ToInt32(Session["Alert_U"]) == 1)
+            {
+                ModelList.Alert = 1;
+                Session["Alert_U"] = 0;
+                return View(ModelList);
+            }
+            else
+            {
+                ModelList.Alert = 0;
+                return View(ModelList);
+            }
         }
         [HttpPost]
         public ActionResult DetailUser(string Users_ID)
@@ -456,16 +466,24 @@ namespace SystemManage.Controllers
         }
         public ActionResult DeleteUser(int userID)
         {
-            var user = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
-            var skills = db.Skills.Where(m => m.User_ID == user.User_ID).ToList();
-            foreach (var t in skills)
+            try
             {
-                db.Skills.Remove(t);
+                var user = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
+                var skills = db.Skills.Where(m => m.User_ID == user.User_ID).ToList();
+                foreach (var t in skills)
+                {
+                    db.Skills.Remove(t);
+                    db.SaveChanges();
+                }
+                db.Users.Remove(user);
                 db.SaveChanges();
+                return RedirectToAction("ShowUser");
             }
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("ShowUser");
+            catch (Exception)
+            {
+                Session["Alert_U"] = 1;
+                return RedirectToAction("ShowUser", "User");
+            }
         }
         private bool isValidContentType(string contentType)
         {

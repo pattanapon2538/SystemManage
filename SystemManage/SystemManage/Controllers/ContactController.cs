@@ -18,11 +18,11 @@ namespace SystemManage.Controllers
             if (cm.Contrat_ID != 0)
             {
                 var result = db.Type_of_Contract.Where(m => m.Contrat_ID == cm.Contrat_ID).FirstOrDefault();
-                cm.Contrat_ID = result.Contrat_ID;
-                cm.Contrat_Name = result.Contrat_Name;
-                cm.Contrat_Detail = result.Contrat_Detail;
-                cm.UpdateDate = DateTime.Now;
-                cm.UpdateBy = Convert.ToInt32(Session["userID"]); ;
+                result.Contrat_ID = cm.Contrat_ID;
+                result.Contrat_Name = cm.Contrat_Name;
+                result.Contrat_Detail = cm.Contrat_Detail;
+                result.UpdateDate = DateTime.Now;
+                result.UpdateBy = Convert.ToInt32(Session["userID"]); ;
                 db.SaveChanges();
                 ModelState.Clear();
             }
@@ -61,6 +61,7 @@ namespace SystemManage.Controllers
         public ActionResult ShowContact()
         {
             List<TypeOfCotractModel> model = new List<TypeOfCotractModel>();
+            TypeOfCotractModel a = new TypeOfCotractModel();
             var item = db.Type_of_Contract.OrderByDescending(s => s.Contrat_ID).ToList();
             foreach (var i in item)
             {
@@ -76,7 +77,18 @@ namespace SystemManage.Controllers
                 });
             }
             ViewBag.DataList = model;
-            return View();
+            if (Convert.ToInt32(Session["Alert_C"]) == 1)
+            {
+                a.Alert = 1;
+                Session["Alert_C"] = 0;
+                return View(a);
+            }
+            else
+            {
+                a.Alert = 0;
+                return View(a);
+            }
+            
         }
         [HttpPost]
         public ActionResult DetailContact(string Contrat_ID)
@@ -91,21 +103,20 @@ namespace SystemManage.Controllers
        
         public ActionResult DeleteContact(int Contrat_ID)
         {
-            TypeOfCotractModel model = new TypeOfCotractModel();
-            Type_of_Contract tc = db.Type_of_Contract.Where(m => m.Contrat_ID == Contrat_ID).FirstOrDefault();
-            db.Type_of_Contract.Remove(tc);
-            db.SaveChanges();
-            return RedirectToAction("ShowContact");
+            try
+            {
+                TypeOfCotractModel model = new TypeOfCotractModel();
+                Type_of_Contract tc = db.Type_of_Contract.Where(m => m.Contrat_ID == Contrat_ID).FirstOrDefault();
+                db.Type_of_Contract.Remove(tc);
+                db.SaveChanges();
+                return RedirectToAction("ShowContact");
+            }
+            catch (Exception)
+            {
+                Session["Alert_C"] = 1;
+                return RedirectToAction("ShowContact", "Contact");
+            }
         }
-        //public ActionResult EditContact(Type_of_Contract model)
-        //{
-        //    Type_of_Contract tc = db.Type_of_Contract.Where(m => m.Contrat_ID == model.Contrat_ID).FirstOrDefault();
-        //    tc.Contrat_Name = model.Contrat_Name;
-        //    tc.Contrat_Detail = model.Contrat_Detail;
-        //    tc.UpdateDate = DateTime.Now;
-        //    tc.UpdateBy = 11;
-        //    db.SaveChanges();
-        //    return RedirectToAction("ShowContact");
-        //}
+        
     }
 }

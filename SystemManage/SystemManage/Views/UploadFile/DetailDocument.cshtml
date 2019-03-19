@@ -24,6 +24,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <label class="label">ชื่อเอกสาร :</label>
+                            @Html.HiddenFor(m => m.DocumentID)
                             @{
                                 if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                 {

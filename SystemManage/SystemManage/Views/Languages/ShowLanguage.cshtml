@@ -11,10 +11,11 @@
     }
 }
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<body onload="Alert()">
 <div class="container">
     <div class="login-box ptb--100">
         @using (Ajax.BeginForm("AddLanguage", "Languages",
-             new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }))
+     new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }))
         {
             @Html.AntiForgeryToken()
             <form>
@@ -28,7 +29,7 @@
                         </div>
                     </div>
                     <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
-                        <button id="form_submit" type="submit">เพิ่ม</button>
+                            <button id="form_submit" type="submit">เพิ่ม</button>
                     </div>
                 </div>
             </form>
@@ -64,7 +65,7 @@
                                                         <span style="cursor:pointer" onclick="EditDetail('@item.languageID')"><i class="fas fa-wrench"></i></span>
                                                     </td>
                                                     <td>
-                                                        <a href="@Url.Action("DeleteLanguage", new {languageID = item.languageID})"><i class="fas fa-backspace"></i></a>
+                                                        <a href="@Url.Action("DeleteLanguage", new { languageID = item.languageID })"><i class="fas fa-backspace"></i></a>
                                                     </td>
                                                 </tr>
                                                 i++;
@@ -80,6 +81,7 @@
         </div>
     </div>
 </div>
+</body>
 <script>
     function EditDetail(languagesID) {
         $.ajax({
@@ -91,7 +93,17 @@
             {
                 $("#languageID").val(data.languageID);
                 $("#Name").val(data.Name);
+                document.getElementById("form_submit").innerText = "บันทึก";
             }
         });
+    }
+</script>
+<script>
+    function Alert()
+    {
+        if (@Model.Alert == 1)
+        {
+            alert("ไม่สามารถทำรายการเนื่องจากข้อมูลถูกเรียกใช้อยู่ กรูณาตรวจสอบอีกครั้ง");
+        }
     }
 </script>

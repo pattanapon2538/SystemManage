@@ -106,6 +106,7 @@ namespace SystemManage.Models
         public int Follow_C { get; set; }
         public string language_string { get; set; }
         public int open_Role { get; set; }
+        public int Alert { get; set; }
     }
     
    

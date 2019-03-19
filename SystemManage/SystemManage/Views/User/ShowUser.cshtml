@@ -12,6 +12,7 @@
 </style>
 <link href="~/assets/css/fSelect.css" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<body onload=" Alert()">
 <div class="container">
     <div class="login-box ptb--100">
         @using (Ajax.BeginForm("AddUser", "User", new AjaxOptions { HttpMethod = FormMethod.Post.ToString(), UpdateTargetId = "tb-data" }, new { @id = "form_submit", enctype = "multipart/form-data" }))
@@ -257,6 +258,7 @@
         </div>
     </div>
 </div>
+</body>
 <script>
         function DetailUser(Users_ID) {
             $.ajax({
@@ -285,6 +287,7 @@
                     $("#Reading").val(data.Reading);
                     $("#Writng").val(data.Writng);
                     $("#Listening").val(data.Listening);
+                    document.getElementById("form_submit").innerText = "บันทึก";
                 }
             });
         }
@@ -306,4 +309,12 @@
     $('.datepicker3').datepicker({
         uiLibrary: 'bootstrap4'
     });
+</script>
+<script>
+    function Alert() {
+         if (@Model.Alert == 1)
+        {
+            alert("ไม่สามารถทำรายการเนื่องจากข้อมูลถูกเรียกใช้อยู่ กรูณาตรวจสอบอีกครั้ง");
+        }
+    }
 </script>

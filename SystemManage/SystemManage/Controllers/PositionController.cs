@@ -63,6 +63,7 @@ namespace SystemManage.Controllers
         public ActionResult ShowPosition()
         {
             List<PositionModel> positionsList = new List<PositionModel>();
+            PositionModel Model = new PositionModel();
             var item = db.Positions.OrderByDescending(s => s.Position_ID).ToList();
             foreach (var i in item)
             {
@@ -79,7 +80,17 @@ namespace SystemManage.Controllers
                 });
             }
             ViewBag.DataList = positionsList;
-            return View();
+            if (Convert.ToInt32(Session["Alert_P"]) == 1)
+            {
+                Model.Alert = 1;
+                Session["Alert_P"] = 0;
+                return View(Model);
+            }
+            else
+            {
+                Model.Alert = 0;
+                return View(Model);
+            }
         }
 
         [HttpPost]
@@ -96,10 +107,18 @@ namespace SystemManage.Controllers
        
         public ActionResult DeletePosition(int Position_ID)
         {
-            Position r = db.Positions.Where(w => w.Position_ID == Position_ID).FirstOrDefault();
-            db.Positions.Remove(r);
-            db.SaveChanges();
-            return RedirectToAction("ShowPosition");
+            try
+            {
+                Position r = db.Positions.Where(w => w.Position_ID == Position_ID).FirstOrDefault();
+                db.Positions.Remove(r);
+                db.SaveChanges();
+                return RedirectToAction("ShowPosition");
+            }
+            catch (Exception)
+            {
+                Session["Alert_P"] = 1;
+                return RedirectToAction("ShowPosition", "Position");
+            }
 
         }
         

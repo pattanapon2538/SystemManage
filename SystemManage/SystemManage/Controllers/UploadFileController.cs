@@ -127,7 +127,7 @@ namespace SystemManage.Controllers
                 {
                     var fileName = Path.GetFileName(photo.FileName);
                     var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
-                    string i = "/Upload/" + fileName;
+                    string i = "/Upload/" + fileName+","+fileName;
                     photo.SaveAs(path);
                     ViewBag.fileName = photo.FileName;
                     if (photo.ContentType.Equals("application/pdf"))

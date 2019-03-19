@@ -462,7 +462,7 @@
                     <div class="col-sm-2">
                         <a href="@Url.Action("ShowTask")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่")'>กลับ</button></a>
 
-                        @if (Model.Handle == Convert.ToInt32(Session["userID"])@*|| Model.CreateBy == Convert.ToInt32(Session["userID"])*@)
+                        @if (Model.Handle == Convert.ToInt32(Session["userID"]))
                         {
                             if (Model.Status != 4 && Model.HaveDefect != 1)
                             {

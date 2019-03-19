@@ -15,5 +15,7 @@ namespace SystemManage.Models
         public DateTime UpdateDate { get; set; }
         public int? CreateBy { get; set; }
         public int Updateby { get; set; }
+        public int Alert { get; set; }
+        public int Save { get; set; }
     }
 }
