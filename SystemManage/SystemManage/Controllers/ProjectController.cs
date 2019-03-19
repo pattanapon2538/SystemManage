@@ -195,17 +195,17 @@ namespace SystemManage.Controllers
                 //string receiver = "plusth2538@gmail.com";
                 if (Convert.ToInt32(Model.status) == 1)
                 {
-                     status = "ดำเนินการ";
+                    status = "ดำเนินการ";
                 }
-                else if(Convert.ToInt32(Model.status) == 2)
+                else if (Convert.ToInt32(Model.status) == 2)
                 {
-                     status = "พัก";
+                    status = "พัก";
                 }
                 else if (Convert.ToInt32(Model.status) == 1)
                 {
-                     status = "หยุดดำเนินการ";
+                    status = "หยุดดำเนินการ";
                 }
-                string mess = "โครงการ" + Model.ProjectName + "ได้มีการแก้ไขข้อมูลสถานะของโครงการ" + status + "วันที่ที่แก้ไข" + p.UpdateDate.ToString() +"ผู้แก้ไข"  + PM.User_Name ;
+                string mess = "โครงการ" + Model.ProjectName + "ได้มีการแก้ไขข้อมูลสถานะของโครงการ" + status + "วันที่ที่แก้ไข" + p.UpdateDate.ToString() + "ผู้แก้ไข" + PM.User_Name;
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
 
@@ -222,9 +222,29 @@ namespace SystemManage.Controllers
                 var st = db.SubTasks.Where(m => m.TaskID == item.TaskID).ToList();
                 foreach (var item2 in st)
                 {
+                    var df = db.Defects.Where(m => m.Sub_ID == item2.SubDevID).ToList();
+                    foreach (var item3 in df)
+                    {
+                        db.Defects.Remove(item3);
+                    }
                     db.SubTasks.Remove(item2);
                 }
+                var sit_t = db.SITs.Where(m => m.Project_ID == d.ProjectID).ToList();
+                foreach (var item4 in sit_t)
+                {
+                    var step = db.SITSteps.Where(m => m.SIT_ID == item4.SIT_ID).ToList();
+                    foreach (var item5 in step)
+                    {
+                        db.SITSteps.Remove(item5);
+                    }
+                    db.SITs.Remove(item4);
+                }
                 db.Tasks.Remove(item);
+            }
+            var dc = db.Documents.Where(m => m.Project_ID == ProjectID).ToList();
+            foreach (var item6 in dc)
+            {
+                db.Documents.Remove(item6);
             }
             var CreateBy = db.Users.Where(m => m.User_ID == d.CreateBy).FirstOrDefault();
             var pm = db.ProjectMembers.Where(s => s.ProjectID == ProjectID).ToList();

@@ -27,13 +27,13 @@ namespace SystemManage.Controllers
                 int projectID = Convert.ToInt32(Session["ProjectID"]);
                 Document d = new Document();
                 var data = Process(model.AttachFile);
-                //string[] txt = data.Split(",".ToCharArray());
-                //string fileName = txt[0];
-                string path = data;
+                string[] txt = data.Split(",".ToCharArray());
+                string fileName = txt[1];
+                string path = txt[0];
                 d.DocumentName = model.DocumentName;
                 d.DocumentDetail = model.DocumentDetail;
                 d.AttachFile = path;
-                d.AttachShow = model.AttachFile.FileName;
+                d.AttachShow = fileName;
                 d.CreateDate = DateTime.Now;
                 d.CreateBy = Convert.ToInt32(Session["userID"]);
                 d.Project_ID = projectID;

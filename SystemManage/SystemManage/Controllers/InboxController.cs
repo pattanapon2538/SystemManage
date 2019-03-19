@@ -76,12 +76,15 @@ namespace SystemManage.Controllers
                 ms.SendTo = Convert.ToInt32(txt[i]);
                 ms.CreateDate = DateTime.Now;
                 ms.CreateBy = Convert.ToInt32(Session["userID"]);
-                string path = Process(model);
-                string[] txt2 = path.Split(",".ToCharArray());
-                ms.AttachFile = txt2[0];
-                ms.AttachShow1 = txt2[1];
-                db.Messages.Add(ms);
-                db.SaveChanges();
+                if (model.AttachFile1 != null)
+                {
+                    var path = Process(model.AttachFile1);
+                    string[] txt2 = path.Split(",".ToCharArray());
+                    ms.AttachFile = txt2[0];
+                    ms.AttachShow1 = txt2[1];
+                    db.Messages.Add(ms);
+                    db.SaveChanges();
+                }
                 lm.Log_Name = model.MailName;
                 lm.Log_Message = model.MailDetail;
                 lm.Recive = Convert.ToInt32(txt[i]);
@@ -104,8 +107,6 @@ namespace SystemManage.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
                     //var user = db.Users.Where(m => m.User_Email == sender).FirstOrDefault();
                     var senderEmail = new MailAddress(sender, sender);
                     var receiverEmail = new MailAddress(receiver, receiver);
@@ -130,13 +131,12 @@ namespace SystemManage.Controllers
                         smtp.Send(mess);
                     }
                     return View();
-                }
             }
             catch (Exception)
             {
                 ViewBag.Error = "Some Error";
+                return View();
             }
-            return View();
         }
         public ActionResult DeleteMessage(int MailID)
         {
@@ -201,23 +201,37 @@ namespace SystemManage.Controllers
         {
             return ((contentLength / 1024) / 1024) < 1; // 1MB
         }
-
-        public string Process(InboxModel photo)
+        public string Process(HttpPostedFileBase photo)
         {
-            foreach (var i in photo.AttachFile1)
+            if (!isValidContentType(photo.ContentType))
             {
-                if (i.ContentLength > 0)
-                {
-                    var fileName = Path.GetFileName(i.FileName);
-                    //var test = Server.MapPath();
-                    var path = Path.Combine(Server.MapPath("~/Upload"), fileName);
-                    string item = "/Upload/" + fileName+","+ fileName;
-                    i.SaveAs(path);
-                    return item;
-                }
+                ViewBag.Error = "เฉพาะไฟล์ jpg png pdf";
+                return ("Error");
             }
-            ViewBag.Message = "Image(s) uploaded successfully";
-            return "";
+            else if (!isValidContentLength(photo.ContentLength))
+            {
+                ViewBag.Error = "ไฟล์มีขนาดใหญ่เกินไป (1MB)";
+                return ("Error");
+            }
+            else
+            {
+                if (photo.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(photo.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Upload/") + fileName);
+                    string i = "/Upload/" + fileName + "," + fileName;
+                    photo.SaveAs(path);
+                    ViewBag.fileName = photo.FileName;
+                    if (photo.ContentType.Equals("application/pdf"))
+                    {
+                        return i;
+                    }
+                    else
+
+                        return i;
+                }
+                return ("Error");
+            }
         }
     }
 }

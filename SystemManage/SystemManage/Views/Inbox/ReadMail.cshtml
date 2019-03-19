@@ -44,18 +44,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label class="label">ไฟล์แนบ :</label>
-                                @{
-                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
-                                    {
-                                        @Html.TextBoxFor(m => m.AttachFile1, new { type = "file", @class = "form-control-file" })
                                         <a href="@Model.Image" target="_blank">@Model.AttachShow1</a>
-                                    }
-                                    else
-                                    {
-                                        <a href="@Model.Image" target="_blank">@Model.AttachShow1</a>
-                                    }
-                                }
-
                             </div>
                         </div>
                     </div>
