@@ -97,7 +97,16 @@ namespace SystemManage.Controllers
                 string subjects = t.TaskName + "" + st.SubName;
                 string receivers_Tester = recevier.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string messs_Tester = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                string messs_Tester = null;
+                if (model.AttachFile != null)
+                {
+                    string Path_file = "http://localhost:8080" + t.AttachFile;
+                    messs_Tester = "<html><body><p>ถึงคูณ " + receivers_Tester + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; คุณได้รับมอบหมายงาน" + model.TaskName + "</p><p>กำหนดส่งภายในวันที่" + model.TestSentDate + "</p>เพื่อทำการทดสอบ</p> <p> </br></p></body></html>";
+                }
+                else
+                {
+                    messs_Tester = "<html><body><p>ถึงคูณ " + receivers_Tester + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; คุณได้รับมอบหมายงาน" + model.TaskName + "</p><p>กำหนดส่งภายในวันที่" + model.TestSentDate + "</p>เพื่อทำการทดสอบ</p> <p> </br></p></body></html>";
+                }
                 e.SendEmail(receivers_Tester, subjects, messs_Tester, senders);
                 ///////////////////////////////////////
                 string receivers_QA = recevier.User_Email.ToString();

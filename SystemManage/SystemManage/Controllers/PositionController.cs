@@ -40,24 +40,25 @@ namespace SystemManage.Controllers
                     ModelState.Clear();
                 }
 
-            List<PositionModel> positionsList = new List<PositionModel>();
-            var item = db.Positions.OrderByDescending(s => s.Position_ID).ToList();
-            foreach (var i in item)
-            {
-                positionsList.Add(new PositionModel
-                {
-                    Position_ID = i.Position_ID,
-                    Name = i.Name,
-                    Initial = i.Initial,
-                    Detail = i.Detail,
-                    CreateDate = i.CreateDate,
-                    UpdateDate = i.UpdateDate,
-                    CreateBy = i.CreateBy,
-                    UpdateBy = i.UpdateBy,
-                });
-            }
-            ViewBag.DataList = positionsList;
-            return PartialView("ShowPosition");
+            //List<PositionModel> positionsList = new List<PositionModel>();
+            //var item = db.Positions.OrderByDescending(s => s.Position_ID).ToList();
+            //foreach (var i in item)
+            //{
+            //    positionsList.Add(new PositionModel
+            //    {
+            //        Position_ID = i.Position_ID,
+            //        Name = i.Name,
+            //        Initial = i.Initial,
+            //        Detail = i.Detail,
+            //        CreateDate = i.CreateDate,
+            //        UpdateDate = i.UpdateDate,
+            //        CreateBy = i.CreateBy,
+            //        UpdateBy = i.UpdateBy,
+            //    });
+            //}
+            //ViewBag.DataList = positionsList;
+            //return PartialView("ShowPosition");
+            return RedirectToAction("ShowPosition", "Position");
         }
 
         public ActionResult ShowPosition()

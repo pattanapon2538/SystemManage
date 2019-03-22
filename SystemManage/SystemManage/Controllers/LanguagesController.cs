@@ -35,22 +35,23 @@ namespace SystemManage.Controllers
                 db.SaveChanges();
                 ModelState.Clear();
             }
-            List<LanguageOfTypeModel> languagelist = new List<LanguageOfTypeModel>();
-            var result = db.Language_of_Type.OrderByDescending(s => s.languageID).ToList();
-            foreach (var i in result)
-            {
-                languagelist.Add(new LanguageOfTypeModel
-                {
-                    languageID = i.languageID,
-                    Name = i.Name,
-                    CreateDate = i.CreateDate,
-                    UpdateDate = i.UpdateDate,
-                    CreateBy = Convert.ToInt32(i.CreateBy),
-                    Updateby = Convert.ToInt32(i.UpdateBy),
-                });
-            }
-            ViewBag.DataList = languagelist;
-            return PartialView("ShowLanguage");
+            //List<LanguageOfTypeModel> languagelist = new List<LanguageOfTypeModel>();
+            //var result = db.Language_of_Type.OrderByDescending(s => s.languageID).ToList();
+            //foreach (var i in result)
+            //{
+            //    languagelist.Add(new LanguageOfTypeModel
+            //    {
+            //        languageID = i.languageID,
+            //        Name = i.Name,
+            //        CreateDate = i.CreateDate,
+            //        UpdateDate = i.UpdateDate,
+            //        CreateBy = Convert.ToInt32(i.CreateBy),
+            //        Updateby = Convert.ToInt32(i.UpdateBy),
+            //    });
+            //}
+            //ViewBag.DataList = languagelist;
+            //return PartialView("ShowLanguage");
+           return RedirectToAction("ShowLanguage", "Languages");
         }
 
         public ActionResult ShowLanguage()

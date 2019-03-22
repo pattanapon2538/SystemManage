@@ -112,7 +112,7 @@ namespace SystemManage.Controllers
                     ProjectDescription = item.Description,
                     ProjectStatus = item.Status,
                     ProjectSendDate = item.SendDate,
-                    CreateBy = pm.User_Name,
+                    CreateName = pm.User_Name,
                     CreateDate = item.CreateDate,
                     UpdateDate = item.UpdateDate,
                 });

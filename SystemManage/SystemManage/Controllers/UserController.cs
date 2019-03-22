@@ -280,39 +280,40 @@ namespace SystemManage.Controllers
                     }
                 }
             }
-            UserModel ModelList = new UserModel();
-            ModelList.PositionList = db.Positions.OrderByDescending(m => m.Position_ID).ToList();
-            ModelList.ContractsList = db.Type_of_Contract.OrderByDescending(m => m.Contrat_ID).ToList();
-            ModelList.LanguageList = db.Language_of_Type.OrderByDescending(m => m.languageID).ToList();
-            List<UserModel> UserList = new List<UserModel>();
-            List<LanguageOfTypeModel> ListData = new List<LanguageOfTypeModel>();
-            var item2 = db.Language_of_Type.ToList();
-            var item = db.Users.OrderByDescending(m => m.User_ID).ToList();
-            foreach (var i in item)
-            {
-                var P_Name = db.Positions.Where(m => m.Position_ID == i.Position_ID).FirstOrDefault();
-                var C_Name = db.Type_of_Contract.Where(m => m.Contrat_ID == i.Contract_ID).FirstOrDefault();
-                UserList.Add(new UserModel {
-                    Users_ID = i.User_ID,
-                    User_Email = i.User_Email,
-                    User_Name = i.User_Name,
-                    User_LastName = i.User_LastName,
-                    Gender = i.Gender,
-                    PositionName = P_Name.Name,
-                    ContactName = C_Name.Contrat_Name
-                });
-            }
-            foreach (var c in item2)
-            {
-                ListData.Add(new LanguageOfTypeModel
-                {
-                    languageID = c.languageID,
-                    Name = c.Name
-                });
-            }
-            ViewBag.DataList = UserList;
-            ViewBag.DataSkill = ListData;
-            return PartialView("ShowUser",ModelList);
+            return RedirectToAction("ShowUser", "User");
+            //UserModel ModelList = new UserModel();
+            //ModelList.PositionList = db.Positions.OrderByDescending(m => m.Position_ID).ToList();
+            //ModelList.ContractsList = db.Type_of_Contract.OrderByDescending(m => m.Contrat_ID).ToList();
+            //ModelList.LanguageList = db.Language_of_Type.OrderByDescending(m => m.languageID).ToList();
+            //List<UserModel> UserList = new List<UserModel>();
+            //List<LanguageOfTypeModel> ListData = new List<LanguageOfTypeModel>();
+            //var item2 = db.Language_of_Type.ToList();
+            //var item = db.Users.OrderByDescending(m => m.User_ID).ToList();
+            //foreach (var i in item)
+            //{
+            //    var P_Name = db.Positions.Where(m => m.Position_ID == i.Position_ID).FirstOrDefault();
+            //    var C_Name = db.Type_of_Contract.Where(m => m.Contrat_ID == i.Contract_ID).FirstOrDefault();
+            //    UserList.Add(new UserModel {
+            //        Users_ID = i.User_ID,
+            //        User_Email = i.User_Email,
+            //        User_Name = i.User_Name,
+            //        User_LastName = i.User_LastName,
+            //        Gender = i.Gender,
+            //        PositionName = P_Name.Name,
+            //        ContactName = C_Name.Contrat_Name
+            //    });
+            //}
+            //foreach (var c in item2)
+            //{
+            //    ListData.Add(new LanguageOfTypeModel
+            //    {
+            //        languageID = c.languageID,
+            //        Name = c.Name
+            //    });
+            //}
+            //ViewBag.DataList = UserList;
+            //ViewBag.DataSkill = ListData;
+            //return PartialView("ShowUser",ModelList);
         }
         public ActionResult ShowUser()
         {

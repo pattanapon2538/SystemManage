@@ -39,24 +39,25 @@ namespace SystemManage.Controllers
                 db.SaveChanges();
                 ModelState.Clear();
             }
-            
-            List<TypeOfCotractModel> model = new List<TypeOfCotractModel>();
-            var item = db.Type_of_Contract.OrderByDescending(s=>s.Contrat_ID).ToList();
-            foreach (var i in item)
-            {
-                model.Add(new TypeOfCotractModel
-                {
-                    Contrat_ID = i.Contrat_ID,
-                    Contrat_Name = i.Contrat_Name,
-                    Contrat_Detail = i.Contrat_Detail,
-                    CreateDate = i.CreateDate,
-                    UpdateDate = i.UpdateDate,
-                    CreateBy = i.CreateBy,
-                    UpdateBy = i.UpdateBy,
-                });
-            }
-            ViewBag.DataList = model;
-            return PartialView("ShowContact");
+            //TypeOfCotractModel a = new TypeOfCotractModel();
+            //List<TypeOfCotractModel> model = new List<TypeOfCotractModel>();
+            //var item = db.Type_of_Contract.OrderByDescending(s=>s.Contrat_ID).ToList();
+            //foreach (var i in item)
+            //{
+            //    model.Add(new TypeOfCotractModel
+            //    {
+            //        Contrat_ID = i.Contrat_ID,
+            //        Contrat_Name = i.Contrat_Name,
+            //        Contrat_Detail = i.Contrat_Detail,
+            //        CreateDate = i.CreateDate,
+            //        UpdateDate = i.UpdateDate,
+            //        CreateBy = i.CreateBy,
+            //        UpdateBy = i.UpdateBy,
+            //    });
+            //}
+            //ViewBag.DataList = model;
+            //return PartialView("ShowContact");
+            return RedirectToAction("ShowContact", "Contact");
         }
         public ActionResult ShowContact()
         {

@@ -82,9 +82,9 @@ namespace SystemManage.Controllers
                     string[] txt2 = path.Split(",".ToCharArray());
                     ms.AttachFile = txt2[0];
                     ms.AttachShow1 = txt2[1];
-                    db.Messages.Add(ms);
-                    db.SaveChanges();
                 }
+                db.Messages.Add(ms);
+                db.SaveChanges();
                 lm.Log_Name = model.MailName;
                 lm.Log_Message = model.MailDetail;
                 lm.Recive = Convert.ToInt32(txt[i]);
@@ -94,10 +94,21 @@ namespace SystemManage.Controllers
                 db.LogMessages.Add(lm);
                 db.SaveChanges();
                 var u = db.Users.Where(d => d.User_ID == ms.SendTo).FirstOrDefault();
+                var Name_Receiver = db.Users.Where(e => e.User_ID == ms.SendTo).FirstOrDefault();
+                var Name_Sender = db.Users.Where(k => k.User_ID == ms.CreateBy).FirstOrDefault();
                 string receiver = u.User_Email;
                 string subject = model.MailName;
-                string message = model.MailDetail;
-                var u2 = db.Users.Where(g => g.User_ID == m.CreateBy).FirstOrDefault();
+                string message = null;
+                if (model.AttachFile1 != null)
+                {
+                    string Path_file = "http://localhost:8080"+ms.AttachFile;
+                     message = "<html><body><p>ถึงคูณ " + Name_Receiver.User_Name + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; " + model.MailDetail + "&nbsp;&nbsp;&nbsp;&nbsp; <a href= \"" + Path_file + "\">ไฟล์แนบ</a></p> <p> " + Name_Sender.User_Name + "</br></p></body></html>";
+                }
+                else
+                {
+                     message = "<html><body><p>ถึงคูณ " + Name_Receiver.User_Name + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; " + model.MailDetail + "</p> <p> " + Name_Sender.User_Name + "</br></p></body></html>";
+                }
+                  var u2 = db.Users.Where(g => g.User_ID == m.CreateBy).FirstOrDefault();
                 string sender = u2.User_Email;
                 SendEmail(receiver, subject, message, sender);
             }
@@ -107,7 +118,6 @@ namespace SystemManage.Controllers
         {
             try
             {
-                    //var user = db.Users.Where(m => m.User_Email == sender).FirstOrDefault();
                     var senderEmail = new MailAddress(sender, sender);
                     var receiverEmail = new MailAddress(receiver, receiver);
                     var password = "cpe59346";
@@ -124,11 +134,13 @@ namespace SystemManage.Controllers
                     };
                     using (var mess = new MailMessage(senderEmail, receiverEmail)
                     {
+
                         Subject = subject,
-                        Body = body
+                        Body = body,
                     })
                     {
-                        smtp.Send(mess);
+                    mess.IsBodyHtml = true;
+                    smtp.Send(mess);
                     }
                     return View();
             }

@@ -25,8 +25,8 @@ namespace SystemManage.Models
         public DateTime ProjectSendDate { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
-        public string CreateBy { get; set; }
-        public string UpdateBy { get; set; }
+        public int CreateBy { get; set; }
+        public int UpdateBy { get; set; }
         public int ProjectRole { get; set; }
         public int UserRole { get; set; }
         //////////////////////////////////////
@@ -34,6 +34,7 @@ namespace SystemManage.Models
         public double TaskPercent { get; set; }
         public int SIT_Menu { get; set; }
         public SIT_State SIT { get; set; }
+        public string CreateName { get; set; }
 
         public enum Status
         {
