@@ -57,7 +57,17 @@
                         <div class="input-group">
                             <label class="label" for="subject" style="margin-right: 10px"> สถานะ :</label>
                             <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                                @Html.DropDownListFor(m => m.status, new SelectList(Enum.GetValues(typeof(ProjectModel.Status))), new { @class = "form-control" })
+                                @{
+                                    if (Model.ProjectStatus == 4)
+                                    {
+                                        @Html.DropDownListFor(m => m.status, new SelectList(Enum.GetValues(typeof(ProjectModel.Status))), "เสร็จสิน", new { @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownListFor(m => m.status, new SelectList(Enum.GetValues(typeof(ProjectModel.Status))), new { @class = "form-control" })
+                                    }
+                                }
+
                                 <div class="select-dropdown"></div>
                             </div>
                         </div>

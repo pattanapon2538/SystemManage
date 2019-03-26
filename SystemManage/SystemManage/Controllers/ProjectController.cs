@@ -131,6 +131,7 @@ namespace SystemManage.Controllers
             Session["ProjectName"] = p.Name;
             Model.ProjectDescription = p.Description;
             Model.ProjectSendDate = p.SendDate;
+            Model.ProjectStatus = p.Status;
             if (p.Status == 1)
             {
                 Model.status = ProjectModel.Status.ดำเนินการ;
