@@ -61,5 +61,6 @@ namespace SystemManage.Models
         public string Tester_Name { get; set; }
         public string Dev_Name { get; set; }
         public string Show_Path { get; set; }
+        public int Project_Status { get; set; }
     }
 }

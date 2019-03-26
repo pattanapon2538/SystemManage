@@ -136,7 +136,7 @@
         <div class="col-sm-9"></div>
         <div class="col-sm-1">
             @{
-                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
                 {
                     <a href="@Url.Action("AddSIT", "SIT")"><button type="button" class="btn btn-success btn-block">ทดสอบ</button></a>
                 }

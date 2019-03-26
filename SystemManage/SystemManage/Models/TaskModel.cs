@@ -86,6 +86,7 @@ namespace SystemManage.Models
         public string Show_FileName { get; set; }
         public string Show_FileName_Sub { get; set; }
         public string Show_Path_Sub { get; set; }
+        public int Project_Status { get; set;  }
 
     }
 }

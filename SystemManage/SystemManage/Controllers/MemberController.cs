@@ -165,6 +165,7 @@ namespace SystemManage.Controllers
                 });
             }
             model.ProjectCreateBy = c.CreateBy;
+            model.Project_Status = c.Status;
             Session["set_Role"] = 1;
             ViewBag.DataList = UserList;
             return View(model);

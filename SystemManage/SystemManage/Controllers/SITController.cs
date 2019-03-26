@@ -86,6 +86,7 @@ namespace SystemManage.Controllers
             R.Summary(projectID);
             var project = db.Projects.Where(m => m.ProjectID == projectID).FirstOrDefault();
             data.CreateBy = project.CreateBy;
+            data.Project_Status = project.Status;
             var sit = db.SITs.Where(m => m.Project_ID == projectID).ToList();
             Session["Show"] = 0;
             foreach (var n in sit)

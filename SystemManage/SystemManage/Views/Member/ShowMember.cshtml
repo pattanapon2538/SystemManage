@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-sm-1" style="margin: auto">
                         @{
-                            if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
+                            if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
                             {
                                 <a href="@Url.Action("ListMember")"><button type="button" class="btn btn-outline-success">เพิ่มสมาชิก</button></a>
                             }

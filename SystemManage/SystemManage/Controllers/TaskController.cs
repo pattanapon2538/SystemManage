@@ -243,6 +243,7 @@ namespace SystemManage.Controllers
             var item = db.Tasks.Where(m => m.ProjectID == ProjectID).ToList();
             var r = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.UserID == userID).FirstOrDefault();
             model.CreateBy = ProjectManager.CreateBy;
+            model.Project_Status = ProjectManager.Status;
             foreach (var i in item)
             {
                 //PM และ CM

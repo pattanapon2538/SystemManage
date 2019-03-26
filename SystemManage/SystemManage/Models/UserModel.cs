@@ -107,6 +107,7 @@ namespace SystemManage.Models
         public string language_string { get; set; }
         public int open_Role { get; set; }
         public int Alert { get; set; }
+        public int Project_Status { get; set; }
     }
     
    
