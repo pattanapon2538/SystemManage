@@ -68,9 +68,9 @@ namespace SystemManage.Controllers
         {
             List<ProjectModel> projectlist = new List<ProjectModel>();
             ProjectModel model = new ProjectModel();
-            ProjectController project = new ProjectController();
+            //ProjectController project = new ProjectController();
             int userID = Convert.ToInt32(Session["userID"]);
-            project.Check_Project(userID);
+            //Check_Project(userID);
             var member = db.ProjectMembers.Where(m => m.UserID == userID).OrderBy(m => m.ProjectID).ToList();
             int countList = 0;
             double Percent = 0;
@@ -157,7 +157,7 @@ namespace SystemManage.Controllers
         public ActionResult SaveEdit(ProjectModel Model)
         {
             string status = null;
-            Project p = db.Projects.Where(m => m.ProjectID == Model.ProjectID).FirstOrDefault();
+            var p = db.Projects.Where(m => m.ProjectID == Model.ProjectID).FirstOrDefault();
             p.Name = Model.ProjectName;
             p.Description = Model.ProjectDescription;
             if (Model.status.ToString() == "หยุดดำเนินการ")
@@ -289,9 +289,18 @@ namespace SystemManage.Controllers
                 {
                     Total = Total + d.SubPercent;
                 }
-                Total = Total / s.Count;
-                c.TotalPercent = Total;
-                db.SaveChanges();
+                if (Total != 0)
+                {
+                    Total = Total / s.Count;
+                    c.TotalPercent = Total;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    c.TotalPercent = 0;
+                    db.SaveChanges();
+                }
+                
             }
             Session["ProjectName"] = p.Name;
             model.ProjectDescription = p.Description;

@@ -225,11 +225,13 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowTask()
         {
+            ProjectController P = new ProjectController();
             Session["Save"] = 0;
             Session["SIT_Defect"] = 0;
             ReportController R = new ReportController();
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             int userID = Convert.ToInt32(Session["userID"]);
+            P.Check_Project(userID);
             R.Summary(ProjectID);
             string Taskname = null;
             string Handle = null;
@@ -610,13 +612,19 @@ namespace SystemManage.Controllers
             var st = db.SubTasks.Where(m => m.SubID == SubID).FirstOrDefault();
             var t = db.Tasks.Where(m => m.TaskID == st.TaskID).FirstOrDefault();
             var d = db.SubTasks.Where(m => m.TaskID == t.TaskID).ToList();
-            System.IO.File.Delete("C:/Users/SWNGMN/source/repos/SystemManage/SystemManage/SystemManage" + st.AttachFile);
+            if (st.AttachFile != null)
+            {
+                System.IO.File.Delete("C:/Users/SWNGMN/source/repos/SystemManage/SystemManage/SystemManage" + st.AttachFile);
+            }
             db.SubTasks.Remove(st);
             db.SaveChanges();
             var d2 = db.SubTasks.Where(m => m.TaskID == t.TaskID).ToList();
             if (d2.Count == 0)
             {
-                System.IO.File.Delete("C:/Users/SWNGMN/source/repos/SystemManage/SystemManage/SystemManage" + t.AttachFile);
+                if (t.AttachFile != null)
+                {
+                    System.IO.File.Delete("C:/Users/SWNGMN/source/repos/SystemManage/SystemManage/SystemManage" + t.AttachFile);
+                }
                 db.Tasks.Remove(t);
                 db.SaveChanges();
             }

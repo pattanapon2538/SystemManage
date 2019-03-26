@@ -137,9 +137,17 @@ namespace SystemManage.Controllers
                 {
                     Total = Total + d.SubPercent;
                 }
-                Total = Total / s.Count;
-                c.TotalPercent = Total;
-                db.SaveChanges();
+                if (Total != 0)
+                {
+                    Total = Total / s.Count;
+                    c.TotalPercent = Total;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    c.TotalPercent = 0;
+                    db.SaveChanges();
+                }
             }
             return View();
         }
