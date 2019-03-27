@@ -24,5 +24,6 @@ namespace SystemManage.Models
         public int UpdateBy { get; set; }
         public string pathFormView { get; set; }
         public string ShowPath { get; set; }
+        public int Project_Status { get; set; }
     }
 }

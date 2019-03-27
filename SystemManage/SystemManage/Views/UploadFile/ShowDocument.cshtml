@@ -83,7 +83,7 @@
                     <div class="col-sm-6">    </div>
                     <div class="col-sm-1" style="margin: auto">
                         @{
-                            if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                            if (Model.CreateBy == Convert.ToInt32(Session["userID"])&& Model.Project_Status != 4)
                             {
                                 <a href="@Url.Action("Index", "UploadFile")"><button type="button" class="btn btn-outline-success">+ เพิ่มเอกสาร</button></a>
                             }

@@ -51,6 +51,7 @@ namespace SystemManage.Controllers
             var d = db.Documents.Where(m => m.Project_ID == ProjectID).ToList();
             var pm = db.Projects.Where(m => m.ProjectID == ProjectID).FirstOrDefault();
             model.CreateBy = pm.CreateBy;
+            model.Project_Status = pm.Status;
             foreach (var item in d)
             {
                 string[] Type = item.AttachShow.Split(".".ToCharArray());
