@@ -52,5 +52,6 @@ namespace SystemManage.Models
         }
         public string Error_Detail { get; set; }
         public string Path_Defect { get; set; }
+        public int Project_Status { get; set; }
     }
 }

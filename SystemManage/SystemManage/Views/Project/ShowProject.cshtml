@@ -128,7 +128,7 @@
                                         {
                                     <tr>
                                         @{
-                                            if (item.ProjectStatus == 1 || item.CreateBy == Convert.ToInt32(Session["userID"]) ||item.ProjectStatus == 4 )
+                                            if (item.ProjectStatus == 1 || item.CreateBy == Convert.ToInt32(Session["userID"]) || item.ProjectStatus == 4)
                                             {
                                                 <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><center><i class="fas fa-door-open"></i></center></a></td>
                                             }
@@ -140,7 +140,7 @@
                                             {
                                                 <td><a style="cursor:pointer" onclick='return alert("ไม่สามารถทำรายการได้ เนื่องจากโครงการอยู่ระหว่างหยุดดำเนินการ")'><center><i class="fas fa-door-open"></i></center></a></td>
                                             }
-                                            
+
                                         }
                                         <td><center>@i</center></td>
                                         <td><center>@item.ProjectName</center></td>
@@ -178,11 +178,19 @@
                                                     <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="fas fa-wrench"></i></a>
                                                 </center>
                                             </td>
-                                            <td>
-                                                <center>
-                                                    <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a>
-                                                </center>
-                                            </td>
+                                            if (item.ProjectStatus != 4)
+                                            {
+                                                <td>
+                                                    <center>
+                                                        <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a>
+                                                    </center>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+
                                         }
                                     </tr>
                                             role = @item.ProjectRole;

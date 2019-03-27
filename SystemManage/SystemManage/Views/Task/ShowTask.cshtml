@@ -169,7 +169,7 @@
                             <th><center>เปอร์เซ็นต์</center></th>
                             <th><center>รายละเอียด</center></th>
                             @{
-                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
                                 {
                                     <th><center>ลบ</center></th>
                                 }
@@ -216,7 +216,7 @@
                                     <td>
                                         <center><a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="fas fa-book-open"></i></a></center>
                                     </td>
-                                    @if (item.CreateBy == Convert.ToInt32(Session["userID"]))
+                                    @if (item.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
                                     {
                                         if (item.SubStatus != 4)
                                         {

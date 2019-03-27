@@ -165,7 +165,7 @@
                             <th><center>วันที่สร้าง</center></th>
                             <th><center>รายละเอียด</center></th>
                             @{
-                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
                                 {
                                     <th><center>ลบ</center></th>
                                 }
@@ -207,7 +207,7 @@
                                     <td><center>@i.CreateDate.ToShortDateString()</center></td>
                                     <td><center><a href="@Url.Action("DetailSIT", new { SIT_ID = i.SIT_ID })"><i class="fas fa-book-open"></i></a></center></td>
                                     @{
-                                        if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                        if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
                                         {
                                             <td><center><a href="@Url.Action("DeleteSIT", new { SIT_ID = i.SIT_ID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center></td>
                                         }

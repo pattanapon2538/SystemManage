@@ -74,7 +74,6 @@ namespace SystemManage.Controllers
             var member = db.ProjectMembers.Where(m => m.UserID == userID).OrderBy(m => m.ProjectID).ToList();
             int countList = 0;
             double Percent = 0;
-
             foreach (var m in member)
             {
                 model.UserRole = m.Role;

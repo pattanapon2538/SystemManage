@@ -217,6 +217,8 @@ namespace SystemManage.Controllers
             List<DefectModel> DefectList = new List<DefectModel>();
             DefectModel model = new DefectModel();
             int projectID = Convert.ToInt32(Session["ProjectID"]);
+            var p = db.Projects.Where(m => m.ProjectID == projectID).FirstOrDefault();
+            model.Project_Status = p.Status;
             var item = db.Defects.Where(m => m.Project_ID == projectID).OrderByDescending(s => s.Defect_ID).ToList();
             foreach (var i in item)
             {

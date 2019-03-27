@@ -41,7 +41,7 @@
                                     <th><center>จำนวนการโค๊ต</center></th>
                                     <th><center>รายละเอียด</center></th>
                                     @{
-                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
+                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
                                         {
                                             <th><center>ลบ</center></th>
                                         }
@@ -61,11 +61,11 @@
                                     <td><center>@item.TotalCoding</center></td>
                                     <td><a href="@Url.Action("HistoryUser",new {userID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
                                     @{
-                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
+                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
                                         {
                                             if (Model.ProjectCreateBy != item.Users_ID)
                                             {
-                                                <td><center><a href="@Url.Action("CheckDelete", "Member", new { userID = item.Users_ID })"><i class="fas fa-backspace" style="cursor:pointer" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'></i></a></center></td>
+                                                <td><center><a href="@Url.Action("DeleteMember", "Member", new { userID = item.Users_ID })"><i class="fas fa-backspace" style="cursor:pointer" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'></i></a></center></td>
                                             }
                                             else
                                             {
