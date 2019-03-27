@@ -35,7 +35,6 @@ namespace SystemManage.Database
         public string Comment_Test { get; set; }
         public string Comment_Dev { get; set; }
     
-        public virtual Project Project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubDefect> SubDefects { get; set; }
     }

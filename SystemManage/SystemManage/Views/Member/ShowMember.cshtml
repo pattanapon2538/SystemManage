@@ -63,7 +63,15 @@
                                     @{
                                         if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]))
                                         {
-                                            <td><center><a href="@Url.Action("CheckDelete","Member", new {userID = item.Users_ID })"><i class="fas fa-backspace" style="cursor:pointer" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'></i></a></center></td>
+                                            if (Model.ProjectCreateBy != item.Users_ID)
+                                            {
+                                                <td><center><a href="@Url.Action("CheckDelete", "Member", new { userID = item.Users_ID })"><i class="fas fa-backspace" style="cursor:pointer" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'></i></a></center></td>
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
+
                                         }
                                     }
                                 </tr>

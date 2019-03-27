@@ -18,7 +18,7 @@ namespace SystemManage.Controllers
             var projectID = Convert.ToInt32(Session["ProjectID"]);
             List<UserModel> UserList = new List<UserModel>();
             List<FollowModel> F_List = new List<FollowModel>();
-            var user = db.Users.Where(m => m.Permisstion != "A" && m.Date_of_Ended <= DateTime.Now).OrderBy(m => m.User_ID).ToList();
+            var user = db.Users.Where(m => m.Permisstion != "A" && m.Date_of_Ended >= DateTime.Now).OrderBy(m => m.User_ID).ToList();
             UserModel model = new UserModel();
             var f = db.Follows.Where(m => m.PM_ID == userID).OrderBy(m => m.Follow_ID).ToList();
             model.Follow_C = f.Count();
@@ -540,22 +540,22 @@ namespace SystemManage.Controllers
                 return Json(new {c = true });
             }
         }
-        public ActionResult CheckDelete(string userID)
-        {
-            Boolean c = false;
-            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
-            int user_ID = Convert.ToInt32(userID);
-            var m = db.Projects.Where(x => x.ProjectID == ProjectID).FirstOrDefault();
-            if (m.CreateBy != user_ID)
-            {
-                return RedirectToAction("DeleteMember", "Member", new { userID = userID });
-            }
-            else
-            {
-                Session["Succ"] = false;
-                return Json(new { c = true });
-            }
-        }
+        //public ActionResult CheckDelete(string userID)
+        //{
+        //    Boolean c = false;
+        //    int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+        //    int user_ID = Convert.ToInt32(userID);
+        //    var m = db.Projects.Where(x => x.ProjectID == ProjectID).FirstOrDefault();
+        //    if (m.CreateBy != user_ID)
+        //    {
+        //        return RedirectToAction("DeleteMember", "Member", new { userID = userID });
+        //    }
+        //    else
+        //    {
+        //        Session["Succ"] = false;
+        //        return RedirectToAction("ShowMember","Member",new { c= true });
+        //    }
+        //}
         public ActionResult Edit_Profile(UserModel model)
         {
             Skill sk = new Skill();
