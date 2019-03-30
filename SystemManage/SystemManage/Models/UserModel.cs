@@ -97,6 +97,7 @@ namespace SystemManage.Models
         }
         public enum _Role
         {
+            เลือก,
             ผู้จัดการโครงการ,
             ผู้พัฒนาซอฟแวร์,
             ผู้ทดสอบ,

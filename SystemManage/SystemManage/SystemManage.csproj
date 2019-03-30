@@ -3422,8 +3422,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Languages\ShowLanguage.cshtml" />
-    <Content Include="Views\Languages\DetailLanguages.cshtml" />
-    <Content Include="Views\Contact\DetailContact.cshtml" />
     <Content Include="Views\Position\ShowPosition.cshtml" />
     <Content Include="Views\User\ShowUser.cshtml" />
     <Content Include="Views\Shared\AddminLayout.cshtml" />
@@ -3433,7 +3431,6 @@
     <Content Include="Views\Project\EditProject.cshtml" />
     <Content Include="Views\Task\AddTask.cshtml" />
     <Content Include="Views\Task\DetailTask.cshtml" />
-    <Content Include="Views\Position\index.cshtml" />
     <Content Include="Views\Shared\_MainMenu.cshtml" />
     <Content Include="Views\Task\ShowTask.cshtml" />
     <Content Include="Views\Member\ShowMember.cshtml" />
