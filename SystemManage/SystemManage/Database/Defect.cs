@@ -37,5 +37,7 @@ namespace SystemManage.Database
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubDefect> SubDefects { get; set; }
+        public virtual Defect Defect1 { get; set; }
+        public virtual Defect Defect2 { get; set; }
     }
 }

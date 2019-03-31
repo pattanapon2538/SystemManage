@@ -59,7 +59,9 @@ namespace SystemManage.Models
         public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
+        [Required(ErrorMessage = "กรูณาเลือกสัญญาจ้าง")]
         public int Contract_ID { get; set; }
+        [Required(ErrorMessage = "กรูณาเลือกตำแหน่งงาน")]
         public int Position_ID { get; set; }
         public string Phone { get; set; }
         public string PositionName { get; set; }

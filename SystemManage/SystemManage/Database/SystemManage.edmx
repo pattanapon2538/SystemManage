@@ -332,15 +332,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_languaeID">
-          <End Role="Language_of_Type" Type="Self.Language_of_Type" Multiplicity="1" />
-          <End Role="Skills" Type="Self.Skills" Multiplicity="*" />
+        <Association Name="FK_Defect_Defect">
+          <End Role="Defect" Type="Self.Defect" Multiplicity="1" />
+          <End Role="Defect1" Type="Self.Defect" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="Language_of_Type">
-              <PropertyRef Name="languageID" />
+            <Principal Role="Defect">
+              <PropertyRef Name="Defect_ID" />
             </Principal>
-            <Dependent Role="Skills">
-              <PropertyRef Name="languageID" />
+            <Dependent Role="Defect1">
+              <PropertyRef Name="Defect_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -416,18 +416,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SubDefect">
-          <End Role="Defect" Type="Self.Defect" Multiplicity="1" />
-          <End Role="SubDefect" Type="Self.SubDefect" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Defect">
-              <PropertyRef Name="Defect_ID" />
-            </Principal>
-            <Dependent Role="SubDefect">
-              <PropertyRef Name="DefectID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SubTask">
           <End Role="Task" Type="Self.Task" Multiplicity="1" />
           <End Role="SubTask" Type="Self.SubTask" Multiplicity="*" />
@@ -488,9 +476,9 @@
             <End Role="Type_of_Contract" EntitySet="Type_of_Contract" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_languaeID" Association="Self.FK_languaeID">
-            <End Role="Language_of_Type" EntitySet="Language_of_Type" />
-            <End Role="Skills" EntitySet="Skills" />
+          <AssociationSet Name="FK_Defect_Defect" Association="Self.FK_Defect_Defect">
+            <End Role="Defect" EntitySet="Defect" />
+            <End Role="Defect1" EntitySet="Defect" />
           </AssociationSet>
           <AssociationSet Name="FK_Mail" Association="Self.FK_Mail">
             <End Role="Mail" EntitySet="Mail" />
@@ -515,10 +503,6 @@
           <AssociationSet Name="FK_Sub" Association="Self.FK_Sub">
             <End Role="Task" EntitySet="Task" />
             <End Role="SITStep" EntitySet="SITStep" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubDefect" Association="Self.FK_SubDefect">
-            <End Role="Defect" EntitySet="Defect" />
-            <End Role="SubDefect" EntitySet="SubDefect" />
           </AssociationSet>
           <AssociationSet Name="FK_SubTask" Association="Self.FK_SubTask">
             <End Role="Task" EntitySet="Task" />
@@ -577,11 +561,6 @@
             <End Role="SITStep" EntitySet="SITSteps" />
           </AssociationSet>
           <EntitySet Name="SubTaskSubmisstions" EntityType="SystemManageModel.SubTaskSubmisstion" />
-          <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
-          <AssociationSet Name="FK_languaeID" Association="SystemManageModel.FK_languaeID">
-            <End Role="Language_of_Type" EntitySet="Language_of_Type" />
-            <End Role="Skill" EntitySet="Skills" />
-          </AssociationSet>
           <EntitySet Name="SubTasks" EntityType="SystemManageModel.SubTask" />
           <AssociationSet Name="FK_SubTask" Association="SystemManageModel.FK_SubTask">
             <End Role="Task" EntitySet="Tasks" />
@@ -605,6 +584,11 @@
             <End Role="Defect" EntitySet="Defects" />
             <End Role="SubDefect" EntitySet="SubDefects" />
           </AssociationSet>
+          <EntitySet Name="Skills" EntityType="SystemManageModel.Skill" />
+          <AssociationSet Name="FK_Defect_Defect" Association="SystemManageModel.FK_Defect_Defect">
+            <End Role="Defect" EntitySet="Defects" />
+            <End Role="Defect1" EntitySet="Defects" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Language_of_Type">
           <Key>
@@ -616,7 +600,6 @@
           <Property Name="UpdateDate" Type="DateTime" Precision="0" />
           <Property Name="CreateBy" Type="Int32" />
           <Property Name="UpdateBy" Type="Int32" />
-          <NavigationProperty Name="Skills" Relationship="SystemManageModel.FK_languaeID" FromRole="Language_of_Type" ToRole="Skill" />
         </EntityType>
         <EntityType Name="LogMessage">
           <Key>
@@ -914,28 +897,6 @@
           <Property Name="HandleBy" Type="Int32" />
           <Property Name="SubID" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Skill">
-          <Key>
-            <PropertyRef Name="SkillsID" />
-          </Key>
-          <Property Name="SkillsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" Nullable="false" />
-          <Property Name="languageID" Type="Int32" Nullable="false" />
-          <Property Name="level_of_lg" Type="Int32" />
-          <NavigationProperty Name="Language_of_Type" Relationship="SystemManageModel.FK_languaeID" FromRole="Skill" ToRole="Language_of_Type" />
-        </EntityType>
-        <Association Name="FK_languaeID">
-          <End Type="SystemManageModel.Language_of_Type" Role="Language_of_Type" Multiplicity="1" />
-          <End Type="SystemManageModel.Skill" Role="Skill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Language_of_Type">
-              <PropertyRef Name="languageID" />
-            </Principal>
-            <Dependent Role="Skill">
-              <PropertyRef Name="languageID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="SubTask">
           <Key>
             <PropertyRef Name="SubID" />
@@ -1076,6 +1037,8 @@
           <Property Name="Comment_Test" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Comment_Dev" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SubDefects" Relationship="SystemManageModel.FK_SubDefect" FromRole="Defect" ToRole="SubDefect" />
+          <NavigationProperty Name="Defect1" Relationship="SystemManageModel.FK_Defect_Defect" FromRole="Defect" ToRole="Defect1" />
+          <NavigationProperty Name="Defect2" Relationship="SystemManageModel.FK_Defect_Defect" FromRole="Defect1" ToRole="Defect" />
         </EntityType>
         <Association Name="FK_SubDefect">
           <End Type="SystemManageModel.Defect" Role="Defect" Multiplicity="1" />
@@ -1086,6 +1049,27 @@
             </Principal>
             <Dependent Role="SubDefect">
               <PropertyRef Name="DefectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="SkillsID" />
+          </Key>
+          <Property Name="SkillsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="languageID" Type="Int32" Nullable="false" />
+          <Property Name="level_of_lg" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_Defect_Defect">
+          <End Type="SystemManageModel.Defect" Role="Defect" Multiplicity="1" />
+          <End Type="SystemManageModel.Defect" Role="Defect1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Defect">
+              <PropertyRef Name="Defect_ID" />
+            </Principal>
+            <Dependent Role="Defect1">
+              <PropertyRef Name="Defect_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1328,16 +1312,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Skills">
-            <EntityTypeMapping TypeName="SystemManageModel.Skill">
-              <MappingFragment StoreEntitySet="Skills">
-                <ScalarProperty Name="level_of_lg" ColumnName="level_of_lg" />
-                <ScalarProperty Name="languageID" ColumnName="languageID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SubTasks">
             <EntityTypeMapping TypeName="SystemManageModel.SubTask">
               <MappingFragment StoreEntitySet="SubTask">
@@ -1426,6 +1400,16 @@
                 <ScalarProperty Name="Detail" ColumnName="Detail" />
                 <ScalarProperty Name="Sub_ID" ColumnName="Sub_ID" />
                 <ScalarProperty Name="Defect_ID" ColumnName="Defect_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="SystemManageModel.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="level_of_lg" ColumnName="level_of_lg" />
+                <ScalarProperty Name="languageID" ColumnName="languageID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="SkillsID" ColumnName="SkillsID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

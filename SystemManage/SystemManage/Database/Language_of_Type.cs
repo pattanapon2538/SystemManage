@@ -14,20 +14,11 @@ namespace SystemManage.Database
     
     public partial class Language_of_Type
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Language_of_Type()
-        {
-            this.Skills = new HashSet<Skill>();
-        }
-    
         public int languageID { get; set; }
         public string Name { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public int CreateBy { get; set; }
         public int UpdateBy { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Skill> Skills { get; set; }
     }
 }

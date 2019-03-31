@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -18,55 +19,121 @@ namespace SystemManage.Controllers
         {
             if (model.Users_ID != 0)
             {
-                Skill s = new Skill();
-                var r = db.Users.Where(m => m.User_ID == model.Users_ID).FirstOrDefault();
-                r.User_ID = model.Users_ID;
-                r.NickName = model.NikcName;
-                r.User_Email = model.User_Email;
-                r.User_Name = model.User_Name;
-                r.User_Password = model.User_Password;
-                r.User_LastName = model.User_LastName;
-                r.Gender = model.Gender;
-                r.Address = model.Address;
-                r.Phone = model.Phone;
-                r.Contract_ID = model.Contract_ID;
-                r.Position_ID = model.Position_ID;
-                r.ContractFrom = model.ContractFrom;
-                r.Date_of_Started = model.Date_of_Started;
-                r.Date_of_Ended = model.Date_of_Ended;
-                if (model.AttachFile1 != null)
-                {
-                    var Upload = Upload_File_User(model.AttachFile1);
-                    string[] text = Upload.Split(",".ToCharArray());
-                    r.AttachFile1 = text[0];
-                    r.AttachShow1 = text[1];
-                }
-                if (model.AttachFile2 != null)
-                {
-                    var Upload = Upload_File_User(model.AttachFile2);
-                    string[] text = Upload.Split(",".ToCharArray());
-                    r.AttachFile2 = text[0];
-                    r.AttachShow2 = text[1];
-                }
-                if (model.AttachFile3 != null)
-                {
-                    var Upload = Upload_File_User(model.AttachFile3);
-                    string[] text = Upload.Split(",".ToCharArray());
-                    r.AttachFile3 = text[0];
-                    r.AttachShow3 = text[1];
-                }
-                if (model.AttachFile4 != null)
-                {
-                    var Upload = Upload_File_User(model.AttachFile4);
-                    string[] text = Upload.Split(",".ToCharArray());
-                    r.AttachFile4 = text[0];
-                    r.AttachShow4 = text[1];
-                }
-                var skill = db.Skills.Where(m => m.User_ID == model.Users_ID).OrderBy(m => m.SkillsID).ToList();
+                
+                    Skill s = new Skill();
+                    var r = db.Users.Where(m => m.User_ID == model.Users_ID).FirstOrDefault();
+                    r.User_ID = model.Users_ID;
+                    r.NickName = model.NikcName;
+                    r.User_Email = model.User_Email;
+                    r.User_Name = model.User_Name;
+                    r.User_Password = model.User_Password;
+                    r.User_LastName = model.User_LastName;
+                    if (model.Gender == "หญิง")
+                    {
+                        r.Gender = "F";
+                    }
+                    else if(model.Gender == "ชาย")
+                    {
+                        r.Gender = "M";
+                    }
+                    r.Address = model.Address;
+                    r.Phone = model.Phone;
+                    r.Contract_ID = model.Contract_ID;
+                    r.Position_ID = model.Position_ID;
+                    r.ContractFrom = model.ContractFrom;
+                    r.Date_of_Started = model.Date_of_Started;
+                    r.Date_of_Ended = model.Date_of_Ended;
+                    if (model.AttachFile1 != null)
+                    {
+                        var Upload = Upload_File_User(model.AttachFile1);
+                        string[] text = Upload.Split(",".ToCharArray());
+                        r.AttachFile1 = text[0];
+                        r.AttachShow1 = text[1];
+                    }
+                    if (model.AttachFile2 != null)
+                    {
+                        var Upload = Upload_File_User(model.AttachFile2);
+                        string[] text = Upload.Split(",".ToCharArray());
+                        r.AttachFile2 = text[0];
+                        r.AttachShow2 = text[1];
+                    }
+                    if (model.AttachFile3 != null)
+                    {
+                        var Upload = Upload_File_User(model.AttachFile3);
+                        string[] text = Upload.Split(",".ToCharArray());
+                        r.AttachFile3 = text[0];
+                        r.AttachShow3 = text[1];
+                    }
+                    if (model.AttachFile4 != null)
+                    {
+                        var Upload = Upload_File_User(model.AttachFile4);
+                        string[] text = Upload.Split(",".ToCharArray());
+                        r.AttachFile4 = text[0];
+                        r.AttachShow4 = text[1];
+                    }
+                    if (model.Speaking == "เก่ง")
+                    {
+                        r.Speaking = 2;
+                    }
+                    else if (model.Speaking == "ปานกลาง")
+                    {
+                        r.Speaking = 1;
+                    }
+                    else if (model.Speaking == "อ่อน")
+                    {
+                        r.Speaking = 0;
+                    }
+                    /////////////////////////////////////////
+                    if (model.Reading == "เก่ง")
+                    {
+                        r.Reading = 2;
+                    }
+                    else if (model.Reading == "ปานกลาง")
+                    {
+                        r.Reading = 1;
+                    }
+                    else if (model.Reading == "อ่อน")
+                    {
+                        r.Reading = 0;
+                    }
+                    /////////////////////////////////////
+                    if (model.Writng == "เก่ง")
+                    {
+                        r.Writng = 2;
+                    }
+                    else if (model.Writng == "ปานกลาง")
+                    {
+                        r.Writng = 1;
+                    }
+                    else if (model.Writng == "อ่อน")
+                    {
+                        r.Writng = 0;
+                    }
+                    /////////////////////////////////////
+                    if (model.Listening == "เก่ง")
+                    {
+                        r.Listening = 2;
+                    }
+                    else if (model.Listening == "ปานกลาง")
+                    {
+                        r.Listening = 1;
+                    }
+                    else if (model.Listening == "อ่อน")
+                    {
+                        r.Listening = 0;
+                    }
+                    db.SaveChanges();
+                    ModelState.Clear();
+                var skill = db.Skills.Where(m => m.User_ID == model.Users_ID).ToList();
                 if (skill.Count() != 0)
                 {
-                    string[] txt = model.Select_Laguages.Split(",".ToCharArray());
-                    int item_skill = txt.Count() - 1;
+                    int item_skill = 0;
+                    string[] txt = null;
+                    if (model.Select_Laguages != null)
+                    {
+                         txt = model.Select_Laguages.Split(",".ToCharArray());
+                        item_skill = txt.Count() - 1;
+                    }
                     if (skill != null)
                     {
                         if (skill.Count == item_skill)
@@ -97,59 +164,23 @@ namespace SystemManage.Controllers
                         }
                     }
                 }
-                if (model.Speaking == "เก่ง")
+                else
                 {
-                    r.Speaking = 2;
+                    if (model.Select_Laguages != null)
+                    {
+                        string[] txt = model.Select_Laguages.Split(",".ToCharArray());
+                        for (int c = 0; c < txt.Count(); c++)
+                        {
+                            if (txt[c] != "")
+                            {
+                                s.User_ID = r.User_ID;
+                                s.languageID = Convert.ToInt32(txt[c]);
+                                db.Skills.Add(s);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
                 }
-                else if (model.Speaking == "ปานกลาง")
-                {
-                    r.Speaking = 1;
-                }
-                else if (model.Speaking == "อ่อน")
-                {
-                    r.Speaking = 0;
-                }
-                /////////////////////////////////////////
-                if (model.Reading == "เก่ง")
-                {
-                    r.Reading = 2;
-                }
-                else if (model.Reading == "ปานกลาง")
-                {
-                    r.Reading = 1;
-                }
-                else if (model.Reading == "อ่อน")
-                {
-                    r.Reading = 0;
-                }
-                /////////////////////////////////////
-                if (model.Writng == "เก่ง")
-                {
-                    r.Writng = 2;
-                }
-                else if (model.Writng == "ปานกลาง")
-                {
-                    r.Writng = 1;
-                }
-                else if (model.Writng == "อ่อน")
-                {
-                    r.Writng = 0;
-                }
-                /////////////////////////////////////
-                if (model.Listening == "เก่ง")
-                {
-                    r.Listening = 2;
-                }
-                else if (model.Listening == "ปานกลาง")
-                {
-                    r.Listening = 1;
-                }
-                else if (model.Listening == "อ่อน")
-                {
-                    r.Listening = 0;
-                }
-                db.SaveChanges();
-                ModelState.Clear();
             }
             else
             {
@@ -389,6 +420,14 @@ namespace SystemManage.Controllers
             model.Date_of_Started = u.Date_of_Started;
             model.Date_of_Ended = u.Date_of_Ended;
             model.User_Password = u.User_Password;
+            model.PathShow1 = u.AttachFile1;
+            model.PathShow2 = u.AttachFile2;
+            model.PathShow3 = u.AttachFile3;
+            model.PathShow4 = u.AttachFile4;
+            model.AttachShow1 = u.AttachShow1;
+            model.AttachShow2 = u.AttachShow2;
+            model.AttachShow3 = u.AttachShow3;
+            model.AttachShow4 = u.AttachShow4;
             if (u.Gender == "M")
             {
                 model.Genders = UserModel.Sex.ชาย;
@@ -468,8 +507,16 @@ namespace SystemManage.Controllers
             Speaking = model._Speaking,
             Reading = model._Reading,
             Writng= model._Writng,
-            Listening = model._Listening
-            }, JsonRequestBehavior.AllowGet);
+            Listening = model._Listening,
+            PathShow1 = model.PathShow1,
+            PathShow2 = model.PathShow2,
+            PathShow3 = model.PathShow3,
+            PathShow4 = model.PathShow4,
+            Show1 = model.AttachShow1,
+            Show2 = model.AttachShow2,
+            Show3 = model.AttachShow3,
+            Show4 = model.AttachShow4,
+        }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult DeleteUser(int userID)
         {

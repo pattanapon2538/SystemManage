@@ -6,7 +6,6 @@
     Layout = "~/Views/Shared/AddminLayout.cshtml";
 }
 @{
-    string d = "";
     if (Session["userID"] == null)
     {
         Response.Redirect("~/Login/Index");
@@ -33,7 +32,7 @@
                             <div class="col-sm-4">
                                 @Html.HiddenFor(m => m.Users_ID)
                                 @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
-                                @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
+                                @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })  
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">นามสกุล : </label>
                             <div class="col-sm-4">
@@ -44,7 +43,7 @@
                         <div class="form-group row">
                             <label for="language" class="col-sm-2 col-form-label">วันเดือนปีเกิด : </label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(m => m.BirthDate, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker" })
+                                @Html.TextBoxFor(m => m.BirthDate, "{0:MM/dd/yyyy}",new { @class = "form-control datepicker" })
                                 @Html.ValidationMessageFor(m => m.BirthDate, string.Empty, new { @style = "color:red" })
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">เพศ : </label>
@@ -95,20 +94,24 @@
                             <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 1 : </label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(m => m.AttachFile1, new { type = "file", @class = "form-control-file" })
+                                <a href="" id="file1" target="_blank" style="cursor:pointer" ><label id="fileName1" style="color:blue"></label></a>
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 2:</label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(m => m.AttachFile2, new { type = "file", @class = "form-control-file" })
+                                <a href="" id="file2" target="_blank" style="cursor:pointer"><label id="fileName2" style="color:blue"></label></a>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 3 : </label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(m => m.AttachFile3, new { type = "file", @class = "form-control-file" })
+                                <a href="" id="file3" target="_blank" style="cursor:pointer"><label id="fileName3" style="color:blue"></label></a>
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่4 :</label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(m => m.AttachFile4, new { type = "file", @class = "form-control-file" })
+                                <a href="" id="file4" target="_blank" style="cursor:pointer"><label id="fileName4" style="color:blue"></label></a>
                             </div>
                         </div>
                         <h2 class="text-center" style="margin-top:30px;margin-bottom:10px">บัญชีผู้ใช้งาน</h2>
@@ -245,7 +248,7 @@
                                                                 <span style="cursor:pointer" onclick="DetailUser('@item.Users_ID')"><i class="fas fa-wrench"></i></span>
                                                             </td>
                                                             <td>
-                                                                <a href="@Url.Action("DeleteUser", new {userID = item.Users_ID})"><i class="fas fa-backspace"></i></a>
+                                                                <a style="cursor:pointer" href="@Url.Action("DeleteUser", new {userID = item.Users_ID})"><i class="fas fa-backspace"></i></a>
                                                             </td>
                                                         </tr>
                                                         ia++;
@@ -264,6 +267,7 @@
     </div>
 </body>
 <script>
+    $("#file1").hide();
         function DetailUser(Users_ID) {
             $.ajax({
                 type: "POST",
@@ -280,11 +284,19 @@
                     $("#Contract_ID").val(data.Contract);
                     $("#ContractFrom").val(data.ContractFrom);
                     $("#Position_ID").val(data.Postition);
+                    $("#file1").attr("href", data.PathShow1).show();
+                    $("#file2").attr("href", data.PathShow2).show();
+                    $("#file3").attr("href", data.PathShow3).show();
+                    $("#file4").attr("href", data.PathShow4).show();
+                    $("#fileName1").text(data.Show1);
+                    $("#fileName2").text(data.Show2);
+                    $("#fileName3").text(data.Show3);
+                    $("#fileName4").text(data.Show4);
                     $("#Phone").val(data.Phone);
                     $("#Permission").val(data.Permission);
                     if (data.Permission == "A") {
                         document.getElementById("Admin").checked = "true";
-                    }
+                    }   
                     else if (data.Permission == "P") {
                         document.getElementById("PM").checked = "true";
                     }
@@ -337,7 +349,7 @@
                     }
                     /////////////////////////////////////////////
                     if (data.Genders == 0) {
-                        $("#Genders").val("ชาย");
+                        $("#Gender").val("ชาย");
                     }
                     else if (data.Genders == 1) {
                         $("#Gender").val("หญิง");
@@ -345,7 +357,7 @@
                     document.getElementById("submits").innerText = "บันทึก";
                 }
             });
-        }
+    }
 </script>
 <script src="~/assets/js/fSelect.js"></script>
 <script>
