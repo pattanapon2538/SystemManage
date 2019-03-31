@@ -27,12 +27,17 @@
     <link rel="stylesheet" href="~/assets/css/metisMenu.css">
     <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="~/assets/css/slicknav.min.css">
+    <script src="https://unpkg.com/tablefilter@0.6.82/dist/tablefilter/tablefilter.js"></script>
     <title>เพิ่มสมาชิกในโครงการ</title>
     <style>
         .star:hover {
             content: url('/icon/star_yellow.png');
             height: 20px;
             width: 20px;
+        }
+
+        table.TF th {
+            background-color: #bee5eb;
         }
     </style>
 </head>
@@ -58,95 +63,111 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">อีเมล</span>
-                                    </div>
-                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
+                                @*<div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">อีเมล</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>*@
+                                <span id="0" hidden></span>
+                                <label for="a">ชื่อ : </label>
+                                <span id="a"></span>
                             </div>
                             <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group">
-                                        <label class="label" for="subject" style="margin-right: 10px">Position :</label>
+                                @*<div class="input-group mb-3">
+                                        <div class="input-group">
+                                            <label class="label" for="subject" style="margin-right: 10px">Position :</label>
+                                            <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                                                <select name="subject">
+                                                    <option>All</option>
+                                                    <option>Pause</option>
+                                                    <option>Terminate</option>
+                                                </select>
+                                                <div class="select-dropdown"></div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                <label for="b">นามสกุล : </label>
+                                <span id="b"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                @*<div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">Name</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>*@
+                                <label for="c">ตำแหน่ง : </label>
+                                <span id="c"></span>
+                            </div>
+                            <div class="col-sm-6">
+                                @*<div class="input-group">
+                                        <label class="label" for="subject" style="margin-right: 10px">Percent :</label>
                                         <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
                                             <select name="subject">
-                                                <option>All</option>
-                                                <option>Pause</option>
-                                                <option>Terminate</option>
+                                                <option>0</option>
                                             </select>
                                             <div class="select-dropdown"></div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">Name</span>
-                                    </div>
-                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="input-group">
-                                    <label class="label" for="subject" style="margin-right: 10px">Percent :</label>
-                                    <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                                        <select name="subject">
-
-                                            <option>0</option>
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                    <div class="rs-select2 js-select-simple select--no-search " style="width: 100px;margin-left: -40px">
-                                        <select name="subject">
-
-                                            <option>100</option>
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">LastName</span>
-                                    </div>
-                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group">
-                                        <label class="label" for="subject" style="margin-right: 10px">Skills :</label>
-                                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px;margin-left: -40px">
                                             <select name="subject">
-                                                <option>All</option>
-                                                <option>Pause</option>
-                                                <option>Terminate</option>
+                                                <option>100</option>
                                             </select>
                                             <div class="select-dropdown"></div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </div>*@
+                                <label for="d">ความยากของงาน : </label>
+                                <span id="d"></span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1">NickName</span>
-                                    </div>
-                                    <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
+                                @*<div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">LastName</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>*@
+                                <label for="e">เปอร์เซ็นความสำเร็จ: </label>
+                                <span id="e"></span>
                             </div>
-                            <div class="col-sm-4"></div>
+                            <div class="col-sm-6">
+                                @*<div class="input-group mb-3">
+                                        <div class="input-group">
+                                            <label class="label" for="subject" style="margin-right: 10px">Skills :</label>
+                                            <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
+                                                <select name="subject">
+                                                    <option>All</option>
+                                                    <option>Pause</option>
+                                                    <option>Terminate</option>
+                                                </select>
+                                                <div class="select-dropdown"></div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                <span id="1" hidden></span>
+                                <span id="2" hidden></span>
+                                <label for="f">จำนวนการโค๊ต: </label>
+                                <span id="f"></span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px">
+                            <div class="col-sm-6">
+                                @*<div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">NickName</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>*@
+                            </div>
+                            <div class="col-sm-2"></div>
                             <div class="col-sm-2">
-                                <button type="button" class="btn btn-primary btn-block shadow">Search</button>
+                                <button id="btnClr" value="Clear" type="button" class="btn btn-basic btn-block shadow" onclick="tf.clearFilters();">เคลียร์</button>
+                            </div>
+                            <div class="col-sm-2">
+                                <button id="btnFlt" value="Filter" type="button" class="btn btn-primary  btn-block shadow" onclick="tf.filter();">ค้นหา</button>
                             </div>
                         </div>
                     </div>
@@ -158,7 +179,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-sm-12">
-                    <table class="table table-bordered">
+                    <table id="demo" class="table table-bordered">
                         <thead>
                             <tr class="table-info">
                                 <th><center>ชื่นชอบ</center></th>
@@ -226,23 +247,23 @@
                                     {
                                         foreach (var item2 in (List<FollowModel>)ViewBag.DataList2)
                                         {
-                                        <tr>
-                                            @{
-                                                if (item2.user_ID != item.Users_ID)
-                                                {
-                                                    <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
-                                                    <td><center>@item.User_Name</center></td>
-                                                    <td><center>@item.User_LastName</center></td>
-                                                    <td><center>@item.PositionName</center></td>
-                                                    <td><center>@item.AVG</center></td>
-                                                    <td><center>@item.Amount_Succ.ToString("P1")</center></td>
-                                                    <td><center>@item.TotalCoding</center></td>
-                                                    <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                    <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
+                                            <tr>
+                                                @{
+                                                    if (item2.user_ID != item.Users_ID)
+                                                    {
+                                                        <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
+                                                        <td><center>@item.User_Name</center></td>
+                                                        <td><center>@item.User_LastName</center></td>
+                                                        <td><center>@item.PositionName</center></td>
+                                                        <td><center>@item.AVG</center></td>
+                                                        <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                                        <td><center>@item.TotalCoding</center></td>
+                                                        <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                                        <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
+                                                    }
                                                 }
-                                            }
 
-                                        </tr>
+                                            </tr>
                                         }
                                     };
                                 }
@@ -280,7 +301,7 @@
                 success: function (data) {
                     if (data.c == true) {
                         alert("มีผู้ใช้อยู่ระบบโครงการแล้ว");
-                    } 
+                    }
                     }
                 })
             };
@@ -289,29 +310,67 @@
 
 
 @*<script>
-    //var click = '/icon/star.png';
-    //var clicked = '/icon/star_yellow.png';
+        //var click = '/icon/star.png';
+        //var clicked = '/icon/star_yellow.png';
 
-    //$('.star').click(function () {
-    //    if ($(this).attr('src') === click) {
-    //        $(this).attr('src', clicked);
-    //    } else {
-    //        $(this).attr('src', click)
-    //    }
-    //})
+        //$('.star').click(function () {
+        //    if ($(this).attr('src') === click) {
+        //        $(this).attr('src', clicked);
+        //    } else {
+        //        $(this).attr('src', click)
+        //    }
+        //})
 
-    function Follow(userID) {
+        function Follow(userID) {
 
-        $.ajax({
-            type: "POST",
-            url: "@(Url.Action("Follows", "Member"))",
-            data: { userID: userID },
-            dataType: "json",
-            success: function (data)
-            {
-                $("#userID").val(data.userID);
-            }
-        });
-    }
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action("Follows", "Member"))",
+                data: { userID: userID },
+                dataType: "json",
+                success: function (data)
+                {
+                    $("#userID").val(data.userID);
+                }
+            });
+        }
 
-</script>*@
+    </script>*@
+
+<script>
+    var tfConfig = {
+        base_path: 'https://unpkg.com/tablefilter@latest/dist/tablefilter/',
+        col_3: 'select',
+        col_4: 'select',
+        alternate_rows: true,
+        mark_active_columns: true,
+        col_types: [
+            'string', 'string', 'string',
+            'string', 'string', 'string',
+            'string', 'string', 'string',
+        ],
+        clear_filter_text: [
+            ' [ Show all ] ',
+            '<เลือก>',
+            'Clear filter'
+        ],
+
+        /* external filters */
+        external_flt_ids: [
+            '0',
+            'a',
+            'b',
+            'c',
+            'd',
+            'e',
+            'f',
+            '1',
+            '2'
+        ],
+
+        /* sorting feature */
+        extensions: [{ name: 'sort' }]
+    };
+    var tf = new TableFilter('demo', tfConfig);
+    tf.init();
+</script>

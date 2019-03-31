@@ -147,6 +147,10 @@ chart.render();
                                         }
                                     }
                                 }
+                                <label for="language" class="col-sm-2 col-form-label">ชื่อเล่น : </label>
+                                <div class="col-sm-4">
+                                    @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", Readonly = "" })
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label for="language" class="col-sm-4 col-form-label">ทักษะภาษาโปรแกรม : </label>
