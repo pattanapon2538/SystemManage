@@ -68,10 +68,13 @@ namespace SystemManage.Controllers
                             d.CreateDate = DateTime.Now;
                             d.CreateBy = Convert.ToInt32(Session["userID"]);
                             d.Project_ID = projectID;
-                            var Upload = Upload_Defect(model.AttachFileList[i]);
-                            string[] txt = Upload.Split(",".ToCharArray());
-                            d.AttachFile = txt[0];
-                            d.AttachShow = txt[1];
+                            if (model.AttachFileList[i] != null)
+                            {
+                                var Upload = Upload_Defect(model.AttachFileList[i]);
+                                string[] txt = Upload.Split(",".ToCharArray());
+                                d.AttachFile = txt[0];
+                                d.AttachShow = txt[1];
+                            }
                             db.Defects.Add(d);
                             db.SaveChanges();
                             var SIT = db.SITs.Where(m => m.SIT_ID == SIT_ID).FirstOrDefault();
@@ -101,10 +104,13 @@ namespace SystemManage.Controllers
                         d.CreateDate = DateTime.Now;
                         d.CreateBy = Convert.ToInt32(Session["userID"]);
                         d.Project_ID = projectID;
-                        var Upload = Upload_Defect(model.AttachFileList[0]);
-                        string[] txt = Upload.Split(",".ToCharArray());
-                        d.AttachFile = txt[0];
-                        d.AttachShow = txt[1];
+                        if (model.AttachFileList[0] != null)
+                        {
+                            var Upload = Upload_Defect(model.AttachFileList[0]);
+                            string[] txt = Upload.Split(",".ToCharArray());
+                            d.AttachFile = txt[0];
+                            d.AttachShow = txt[1];
+                        }
                         db.Defects.Add(d);
                         db.SaveChanges();
                         var SIT = db.SITs.Where(m => m.SIT_ID == SIT_ID).FirstOrDefault();
@@ -151,10 +157,13 @@ namespace SystemManage.Controllers
                             d.CreateDate = DateTime.Now;
                             d.CreateBy = Convert.ToInt32(Session["userID"]);
                             d.Project_ID = projectID;
-                            var Upload = Upload_Defect(model.AttachFileList[i]);
-                            string[] txt = Upload.Split(",".ToCharArray());
-                            d.AttachFile = txt[0];
-                            d.AttachShow = txt[1];
+                            if (model.AttachFileList[i] != null)
+                            {
+                                var Upload = Upload_Defect(model.AttachFileList[i]);
+                                string[] txt = Upload.Split(",".ToCharArray());
+                                d.AttachFile = txt[0];
+                                d.AttachShow = txt[1];
+                            }
                             db.Defects.Add(d);
                             db.SaveChanges();
                             var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();
@@ -185,10 +194,13 @@ namespace SystemManage.Controllers
                         d.CreateDate = DateTime.Now;
                         d.CreateBy = Convert.ToInt32(Session["userID"]);
                         d.Project_ID = projectID;
-                        var Upload = Upload_Defect(model.AttachFileList[0]);
-                        string[] txt = Upload.Split(",".ToCharArray());
-                        d.AttachFile = txt[0];
-                        d.AttachShow = txt[1];
+                        if (model.AttachFileList[0] != null)
+                        {
+                            var Upload = Upload_Defect(model.AttachFileList[0]);
+                            string[] txt = Upload.Split(",".ToCharArray());
+                            d.AttachFile = txt[0];
+                            d.AttachShow = txt[1];
+                        }
                         db.Defects.Add(d);
                         db.SaveChanges();
                         var s = db.SubTasks.Where(m => m.SubID == model.Sub_ID).FirstOrDefault();

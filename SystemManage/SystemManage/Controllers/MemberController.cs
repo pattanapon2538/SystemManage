@@ -283,7 +283,7 @@ namespace SystemManage.Controllers
                         TaskList.Add(new UserModel
                         {
                             TaskName = TaskName.Name,
-                            Level = total.ToString(),
+                            Level = total.ToString("#.#"),
                             RoundCoding = 0
                         });
                     }
@@ -520,7 +520,7 @@ namespace SystemManage.Controllers
                     TaskList.Add(new UserModel
                     {
                         TaskName = TaskName.Name,
-                        Level = total.ToString(),
+                        Level = total.ToString("#.#"),
                         RoundCoding = 0
                     });
                 }

@@ -154,11 +154,16 @@
                                             <a href='@Model.Show_Path_Sub' target="_blank">@Model.Show_FileName_Sub</a>
                                         </div>
                                     }
-                                    else
+                                    else if (Model.Show_Path_Sub != null)
                                     {
                                         <div class="form-group" style="margin-top: 20px">
                                             <label class="label">ไฟล์แนบ :</label>
                                             <a href='@Model.Show_Path_Sub' target="_blank">@Model.Show_FileName_Sub</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group" style="margin-top: 20px">
                                         </div>
                                     }
                                 }
@@ -449,12 +454,19 @@
                                 </div>
                             </div>
                         }
-                        else
+                        else if (Model.Show_Path != null)
                         {
                             <div class="col-sm-10">
                                 <div class="form-group">
                                     <label class="label">ไฟล์แนบ :</label>
                                     <a href='@Model.Show_Path' target="_blank">@Model.Show_FileName</a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-10">
+                                <div class="form-group">
                                 </div>
                             </div>
                         }
@@ -468,31 +480,31 @@
                             {
                                 if (Convert.ToInt32(Session["Save"]) == 0)
                                 {
-                                   <button type="submit" class="btn btn-outline-success" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
+                                    <button type="submit" class="btn btn-outline-success" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
                                 }
                                 else
                                 {
-                                   <button type="submit" class="btn btn-outline-success">บันทึก</button>
-                                   <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                                    <button type="submit" class="btn btn-outline-success">บันทึก</button>
+                                    <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
                                 }
                             }
-                         }
-                         else if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Status == 0)
-                         {
-                             <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
-                         }
-                         else if (Model.Handle == 0 && Model.TestID != Convert.ToInt32(Session["userID"]) && Model.QAID != Convert.ToInt32(Session["userID"]))
-                         {
-                             if (Convert.ToInt32(Session["Save"]) == 0)
-                             {
+                        }
+                        else if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Status == 0)
+                        {
+                            <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
+                        }
+                        else if (Model.Handle == 0 && Model.TestID != Convert.ToInt32(Session["userID"]) && Model.QAID != Convert.ToInt32(Session["userID"]))
+                        {
+                            if (Convert.ToInt32(Session["Save"]) == 0)
+                            {
                                 <button type="submit" class="btn btn-outline-success" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
-                             }
-                             else
-                             {
-                                 <button type="submit" class="btn btn-outline-success">บันทึก</button>
-                                 <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
-                             }
-                         }
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-outline-success">บันทึก</button>
+                                <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                            }
+                        }
                     </div>
                 </div>
 

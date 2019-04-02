@@ -14,12 +14,6 @@ namespace SystemManage.Database
     
     public partial class Defect
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Defect()
-        {
-            this.SubDefects = new HashSet<SubDefect>();
-        }
-    
         public int Defect_ID { get; set; }
         public int Sub_ID { get; set; }
         public string Detail { get; set; }
@@ -34,10 +28,5 @@ namespace SystemManage.Database
         public int Project_ID { get; set; }
         public string Comment_Test { get; set; }
         public string Comment_Dev { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SubDefect> SubDefects { get; set; }
-        public virtual Defect Defect1 { get; set; }
-        public virtual Defect Defect2 { get; set; }
     }
 }

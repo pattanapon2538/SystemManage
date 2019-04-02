@@ -219,7 +219,7 @@
                                 if (Model.CreateBy != Convert.ToInt32(Session["userID"]) && Model.Project_Status == 2)
                                 {
                                     <td>
-                                        <center><a style="cursor:pointer" onclick='return alert("ไม่สามารถทำรายการได้ เนื่องจากโครงการอยู่ระหว่างหยุดดำเนินการ")'><i class="fas fa-book-open"></i></a></center>
+                                        <center><a style="cursor:pointer" onclick='return alert("ไม่สามารถทำรายการได้ เนื่องจากโครงการอยู่ระหว่างพักโครงการ")'><i class="fas fa-book-open"></i></a></center>
                                     </td>
                                 }
                                 else if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status == 2)
