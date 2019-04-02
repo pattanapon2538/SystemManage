@@ -871,10 +871,30 @@ namespace SystemManage.Controllers
         }
         public ActionResult Sum_AVG(int Project_ID)
         {
-            var Member = db.ProjectMembers.Where(m => m.ProjectID == Project_ID && m.Role != 1 && m.Role != 5).ToList();
+            var Member = db.ProjectMembers.Where(m => m.ProjectID == Project_ID && m.Role != 5).ToList();
             foreach (var item in Member)
             {
                 float total = 0;
+                float total2 = 0;
+                var PM = db.Projects.Where(m => m.CreateBy == item.UserID).ToList();
+                    foreach (var i in PM)
+                    {
+                        var PM_Task = db.Tasks.Where(m => m.ProjectID == i.ProjectID).ToList();
+                        foreach (var i2 in PM_Task)
+                        {
+                            total2 = total2 + i2.Task_level;
+                        }
+                        if (PM_Task.Count == 0)
+                        {
+                            total2 = 0;
+                        }
+                        else
+                        {
+                            total2 = total2 / PM_Task.Count;
+                        }
+                        total = total + total2;
+                        total2 = 0;
+                    }
                 var tester = db.Tasks.Where(m => m.TestID == item.UserID).ToList();
                 foreach (var item2 in tester)
                 {
@@ -893,7 +913,7 @@ namespace SystemManage.Controllers
                 }
                 if (total != 0)
                 { 
-                    total = total / (tester.Count + QA.Count + Dev.Count);
+                    total = total / (tester.Count + QA.Count + Dev.Count + PM.Count);
                     var User = db.Users.Where(m => m.User_ID == item.UserID).FirstOrDefault();
                     User.AVG = total;
                     db.SaveChanges();

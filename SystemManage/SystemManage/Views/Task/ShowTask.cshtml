@@ -183,51 +183,69 @@
                             int i = 1;
                             foreach (var item in (List<SubTaskModel>)ViewBag.DataList2)
                             {
-                                <tr class="Seach">
-                                    <td><center>@i</center></td>
-                                    <td><center>@item.TaskName</center></td>
-                                    <td><center>@item.SubName</center></td>
-                                    <td><center>@item.SubDevID</center></td>
-                                    @if (item.SubStatus == 0)
-                                    {
-                                        <td><center>อยู่ระหว่างดำเนินการ</center></td>
-                                    }
-                                    else if (item.SubStatus == 1)
-                                    {
-                                        <td><center>รอการทดสอบ</center></td>
-                                    }
-                                    else if (item.SubStatus == 2)
-                                    {
-                                        <td><center>ตรวจสอบคุณภาพ</center></td>
-                                    }
-                                    else if (item.SubStatus == 3)
-                                    {
-                                        <td><center>รอการยืนยัน</center></td>
-                                    }
-                                    else if (item.SubStatus == 4)
-                                    {
-                                        <td><center>เสร็จสิ้น</center></td>
-                                    }
-                                    else if (item.SubStatus == 5)
-                                    {
-                                        <td><center>อยู่ระหว่างการแก้ไข</center></td>
-                                    }
-                                    <td><center>@item.Handle</center></td>
-                                    <td><center>@item.SubDevSend.ToString("dd/MM/yyyy")</center></td>
-                                    <td><center>@item.SubPercent%</center></td>
+                        <tr class="Seach">
+                            <td><center>@i</center></td>
+                            <td><center>@item.TaskName</center></td>
+                            <td><center>@item.SubName</center></td>
+                            <td><center>@item.SubDevID</center></td>
+                            @if (item.SubStatus == 0)
+                            {
+                                <td><center>อยู่ระหว่างดำเนินการ</center></td>
+                            }
+                            else if (item.SubStatus == 1)
+                            {
+                                <td><center>รอการทดสอบ</center></td>
+                            }
+                            else if (item.SubStatus == 2)
+                            {
+                                <td><center>ตรวจสอบคุณภาพ</center></td>
+                            }
+                            else if (item.SubStatus == 3)
+                            {
+                                <td><center>รอการยืนยัน</center></td>
+                            }
+                            else if (item.SubStatus == 4)
+                            {
+                                <td><center>เสร็จสิ้น</center></td>
+                            }
+                            else if (item.SubStatus == 5)
+                            {
+                                <td><center>อยู่ระหว่างการแก้ไข</center></td>
+                            }
+                            <td><center>@item.Handle</center></td>
+                            <td><center>@item.SubDevSend.ToString("dd/MM/yyyy")</center></td>
+                            <td><center>@item.SubPercent%</center></td>
+                            @{
+                                if (Model.CreateBy != Convert.ToInt32(Session["userID"]) && Model.Project_Status == 2)
+                                {
+                                    <td>
+                                        <center><a style="cursor:pointer" onclick='return alert("ไม่สามารถทำรายการได้ เนื่องจากโครงการอยู่ระหว่างหยุดดำเนินการ")'><i class="fas fa-book-open"></i></a></center>
+                                    </td>
+                                }
+                                else if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status == 2)
+                                {
                                     <td>
                                         <center><a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="fas fa-book-open"></i></a></center>
                                     </td>
-                                    @if (item.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
-                                    {
-                                        if (item.SubStatus != 4)
-                                        {
-                                            <td>
-                                                <center><a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center>
-                                            </td>
-                                        }
-                                    }
-                                </tr>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <center><a href="@Url.Action("DetailTask", new { SubID = item.SubID })"><i class="fas fa-book-open"></i></a></center>
+                                    </td>
+                                }
+                            }
+
+                            @if (item.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
+                            {
+                                if (item.SubStatus != 4)
+                                {
+                                    <td>
+                                        <center><a href="@Url.Action("DeleteTask", new { SubID = item.SubID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center>
+                                    </td>
+                                }
+                            }
+                        </tr>
                                 ++i;
                             }
                         }
