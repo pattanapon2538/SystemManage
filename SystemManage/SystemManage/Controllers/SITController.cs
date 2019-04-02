@@ -33,10 +33,9 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddSIT(SITModel model)
         {
-            try
-            {
+            
                 SIT s = new SIT();
-                Database.SITStep Step = new Database.SITStep();
+                SITStep Step = new SITStep();
                 int ProjectID = Convert.ToInt32(Session["ProjectID"]);
                 s.Project_ID = ProjectID;
                 s.Name = model.Name;
@@ -69,16 +68,7 @@ namespace SystemManage.Controllers
                     db.SaveChanges();
                 }
                 return RedirectToAction("ShowSIT", "SIT");
-            }
-            catch {
-                SITModel SIT = new SITModel();
-                int ProjectID = Convert.ToInt32(Session["ProjectID"]);
-                SIT.Task = db.Tasks.Where(m => m.ProjectID == ProjectID && m.TotalPercent == 100).ToList();
-                SIT.Tester = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 3).OrderBy(m => m.UserID).ToList();
-                SIT.Dev = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 2).OrderBy(m => m.UserID).ToList();
-                SIT.QA = db.ProjectMembers.Where(m => m.ProjectID == ProjectID && m.Role == 4).OrderBy(m => m.UserID).ToList();
-                return View(SIT);
-            }
+            
         }
         public ActionResult ShowSIT()
         {

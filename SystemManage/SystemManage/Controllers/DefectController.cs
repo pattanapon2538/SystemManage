@@ -63,8 +63,6 @@ namespace SystemManage.Controllers
                             d.Detail = model.DetailList[i].ToString();
                             d.SendDate = model.SendDateList[i];
                             d.Status = 0;
-                            d.AttachFile = "0";
-                            d.AttachShow = "0";
                             d.CreateDate = DateTime.Now;
                             d.CreateBy = Convert.ToInt32(Session["userID"]);
                             d.Project_ID = projectID;
@@ -99,8 +97,6 @@ namespace SystemManage.Controllers
                         d.Detail = model.DetailList[0].ToString();
                         d.SendDate = model.SendDateList[0];
                         d.Status = 0;
-                        d.AttachFile = "0";
-                        d.AttachShow = "0";
                         d.CreateDate = DateTime.Now;
                         d.CreateBy = Convert.ToInt32(Session["userID"]);
                         d.Project_ID = projectID;
@@ -152,8 +148,6 @@ namespace SystemManage.Controllers
                             d.Detail = model.DetailList[i].ToString();
                             d.SendDate = model.SendDateList[i];
                             d.Status = 0;
-                            d.AttachFile = "0";
-                            d.AttachShow = "0";
                             d.CreateDate = DateTime.Now;
                             d.CreateBy = Convert.ToInt32(Session["userID"]);
                             d.Project_ID = projectID;
@@ -189,8 +183,6 @@ namespace SystemManage.Controllers
                         d.Detail = model.DetailList[0].ToString();
                         d.SendDate = model.SendDateList[0];
                         d.Status = 0;
-                        d.AttachFile = "0";
-                        d.AttachShow = "0";
                         d.CreateDate = DateTime.Now;
                         d.CreateBy = Convert.ToInt32(Session["userID"]);
                         d.Project_ID = projectID;
