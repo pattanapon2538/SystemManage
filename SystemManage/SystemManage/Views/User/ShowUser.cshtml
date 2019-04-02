@@ -15,6 +15,11 @@
     th, td {
         white-space: nowrap;
     }
+
+    textarea.form-control {
+        height: 100px;
+        resize: none;
+    }
 </style>
 <link href="~/assets/css/fSelect.css" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
@@ -32,7 +37,7 @@
                             <div class="col-sm-4">
                                 @Html.HiddenFor(m => m.Users_ID)
                                 @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
-                                @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })  
+                                @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">นามสกุล : </label>
                             <div class="col-sm-4">
@@ -41,10 +46,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="language" class="col-sm-2 col-form-label">วันเดือนปีเกิด : </label>
+                            <label for="language" class="col-sm-2 col-form-label">ชื่อเล่น : </label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(m => m.BirthDate, "{0:MM/dd/yyyy}",new { @class = "form-control datepicker" })
-                                @Html.ValidationMessageFor(m => m.BirthDate, string.Empty, new { @style = "color:red" })
+                                @Html.HiddenFor(m => m.Users_ID)
+                                @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                                @Html.ValidationMessageFor(m => m.User_Name, string.Empty, new { @style = "color:red" })
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">เพศ : </label>
                             <div class="col-sm-4">
@@ -55,15 +61,22 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="language" class="col-sm-2 col-form-label">ที่อยู่ : </label>
+                            <label for="language" class="col-sm-2 col-form-label">วันเดือนปีเกิด : </label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
-                                @Html.ValidationMessageFor(m => m.Address, string.Empty, new { @style = "color:red" })
+                                @Html.TextBoxFor(m => m.BirthDate, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker" })
+                                @Html.ValidationMessageFor(m => m.BirthDate, string.Empty, new { @style = "color:red" })
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">เบอร์โทร : </label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
                                 @Html.ValidationMessageFor(m => m.Gender, string.Empty, new { @style = "color:red" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="language" class="col-sm-2 col-form-label">ที่อยู่ : </label>
+                            <div class="col-sm-10">
+                                @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล" })
+                                @Html.ValidationMessageFor(m => m.Address, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                         <div class="form-group row">
@@ -94,7 +107,7 @@
                             <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 1 : </label>
                             <div class="col-sm-4">
                                 @Html.TextBoxFor(m => m.AttachFile1, new { type = "file", @class = "form-control-file" })
-                                <a href="" id="file1" target="_blank" style="cursor:pointer" ><label id="fileName1" style="color:blue"></label></a>
+                                <a href="" id="file1" target="_blank" style="cursor:pointer"><label id="fileName1" style="color:blue"></label></a>
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">ไฟล์ที่ 2:</label>
                             <div class="col-sm-4">
@@ -123,14 +136,14 @@
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">รหัสผ่าน : </label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(m => m.User_Password, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue", type = "password" , id= "P1" })
+                                @Html.TextBoxFor(m => m.User_Password, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue", type = "password", id = "P1" })
                                 @Html.ValidationMessageFor(m => m.User_Password, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="language" class="col-sm-2 col-form-label">รหัสผ่านอีกครั้ง: </label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(m => m.User_RePassword, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue", type = "password", id ="P2"})
+                                @Html.TextBoxFor(m => m.User_RePassword, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue", type = "password", id = "P2" })
                                 @Html.ValidationMessageFor(m => m.User_RePassword, string.Empty, new { @style = "color:red" })
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">ตำแหน่งงาน : </label>
@@ -155,23 +168,23 @@
                             <label for="language" class="col-sm-2 col-form-label">กำหนดสิทธิ์ : </label>
                             <div class="col-sm-4">
                                 <div class="col-sm-12">
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            ฝ่ายบริหารจัดการระบบ
-                                        </label>
-                                        @Html.RadioButtonFor(m => m.Permission, "A", new { id = "Admin" })
+                                    <div class="form-check row">
+
+                                        @Html.RadioButtonFor(m => m.Permission, "A", new { id = "Admin", style = "width:10%" })ฝ่ายบริหารจัดการระบบ
+
+
                                     </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label">
-                                            ฝ่ายจัดการโครงการ
-                                        </label>
-                                        @Html.RadioButtonFor(m => m.Permission, "P", new { id = "PM" })
+                                    <div class="form-check row">
+
+                                        @Html.RadioButtonFor(m => m.Permission, "P", new { id = "PM", style = "width:10%" }) ฝ่ายจัดการโครงการ
+
+
                                     </div>
-                                    <div class="form-check ">
-                                        <label class="form-check-label">
-                                            ลูกค้า
-                                        </label>
-                                        @Html.RadioButtonFor(m => m.Permission, "C", new { id = "CM" })
+                                    <div class="form-check row">
+
+                                        @Html.RadioButtonFor(m => m.Permission, "C", new { id = "CM", style = "width:10%" })ลูกค้า
+
+
                                     </div>
                                 </div>
                             </div>
@@ -299,7 +312,7 @@
                     $("#Permission").val(data.Permission);
                     if (data.Permission == "A") {
                         document.getElementById("Admin").checked = "true";
-                    }   
+                    }
                     else if (data.Permission == "P") {
                         document.getElementById("PM").checked = "true";
                     }

@@ -55,7 +55,7 @@ namespace SystemManage.Controllers
                          PositionName = PositionDB.Name,
                          TotalCoding = d.TotalCoding,
                          Amount_Succ = SuccPercent,
-                         AVG = d.AVG //ความยากของงาน
+                         AVG = Math.Round(d.AVG, 1) //ความยากของงาน
                      });    
             }
                 ViewBag.DataList = UserList;
@@ -164,8 +164,14 @@ namespace SystemManage.Controllers
                     var totalSubTester = db.Tasks.Where(m => m.TestID == i.UserID).ToList();
                     var totalSubQA = db.Tasks.Where(m => m.QAID == i.UserID).ToList();
                     int totalWork = totalSubDev.Count + totalSubTester.Count + totalSubQA.Count + totalProject.Count;
-                    SuccPercent = Convert.ToDouble(item2.Amount_Succ) / totalWork;
-                
+                    if (totalWork == 0 && item2.Amount_Succ == 0)
+                    {
+                        SuccPercent = 0;
+                    }
+                    else
+                    {
+                        SuccPercent = Convert.ToDouble(item2.Amount_Succ) / totalWork;
+                    }
                 var dbPosition = db.Positions.Where(m => m.Position_ID == item2.Position_ID).FirstOrDefault();
                 UserList.Add(new UserModel
                 {
@@ -176,7 +182,7 @@ namespace SystemManage.Controllers
                     PositionName = dbPosition.Name,
                     TotalCoding = item2.TotalCoding,
                     Amount_Succ = SuccPercent,
-                    AVG = item2.AVG,
+                    AVG =  Math.Round(item2.AVG, 1),
                 });
             }
             model.ProjectCreateBy = c.CreateBy;
@@ -215,28 +221,32 @@ namespace SystemManage.Controllers
             model.PositionList = db.Positions.ToList();
             model.ContractsList = db.Type_of_Contract.ToList();
             model.LanguageList = db.Language_of_Type.OrderBy(m => m.languageID).ToList();
-            if (PM.Role == 1)
+            if (PM != null)
             {
-                model.Roles = UserModel._Role.ผู้จัดการโครงการ;
-            }
-            else if (PM.Role == 2)
-            {
-                model.Roles = UserModel._Role.ผู้พัฒนาซอฟแวร์;
-            }
-            else if (PM.Role == 3)
-            {
-                model.Roles = UserModel._Role.ผู้ทดสอบ;
-            }
-            else if (PM.Role == 4)
-            {
-                model.Roles = UserModel._Role.ผู้ตรวจคุณภาพ;
-            }
-            else if (PM.Role == 5)
-            {
-                model.Roles = UserModel._Role.ลูกค้า;
+                if (PM.Role == 1)
+                {
+                    model.Roles = UserModel._Role.ผู้จัดการโครงการ;
+                }
+                else if (PM.Role == 2)
+                {
+                    model.Roles = UserModel._Role.ผู้พัฒนาซอฟแวร์;
+                }
+                else if (PM.Role == 3)
+                {
+                    model.Roles = UserModel._Role.ผู้ทดสอบ;
+                }
+                else if (PM.Role == 4)
+                {
+                    model.Roles = UserModel._Role.ผู้ตรวจคุณภาพ;
+                }
+                else if (PM.Role == 5)
+                {
+                    model.Roles = UserModel._Role.ลูกค้า;
+                }
             }
             model.Position_ID = u.Position_ID;
             model.Contract_ID = u.Contract_ID;
+            model.ContractFrom = u.ContractFrom;
             model.Users_ID = u.User_ID;
             model.User_Name = u.User_Name;
             model.User_LastName = u.User_LastName;
@@ -499,7 +509,14 @@ namespace SystemManage.Controllers
                     {
                         total = Convert.ToDouble(count.Task_level) + total;
                     }
-                    total = total / Level.Count;
+                    if (total == 0 && Level.Count == 0)
+                    {
+                        total = 0;
+                    }
+                    else
+                    {
+                        total = total / Level.Count;
+                    }
                     TaskList.Add(new UserModel
                     {
                         TaskName = TaskName.Name,
@@ -585,101 +602,108 @@ namespace SystemManage.Controllers
         //}
         public ActionResult Edit_Profile(UserModel model)
         {
-            Skill sk = new Skill();
-            var r = db.Users.Where(m => m.User_ID == model.Users_ID).FirstOrDefault();
-            r.User_ID = model.Users_ID;
-            r.User_Email = model.User_Email;
-            r.User_Password = model.User_Password;
-            r.Phone = model.Phone;
-            if (model._Reading == UserModel.Levels.เก่ง)
+            try
             {
-                r.Reading = 3;
-            }
-            else if (model._Reading == UserModel.Levels.ปานกลาง)
-            {
-                r.Reading = 2;
-            }
-            else if (model._Reading == UserModel.Levels.อ่อน)
-            {
-                r.Reading = 1;
-            }
-
-
-            if (model._Writng == UserModel.Levels.เก่ง)
-            {
-                r.Writng = 3;
-            }
-            else if (model._Writng == UserModel.Levels.ปานกลาง)
-            {
-                r.Writng = 2;
-            }
-            else if (model._Writng == UserModel.Levels.อ่อน)
-            {
-                r.Writng = 1;
-            }
-
-            if (model._Speaking == UserModel.Levels.เก่ง)
-            {
-                r.Speaking = 3;
-            }
-            else if (model._Speaking == UserModel.Levels.ปานกลาง)
-            {
-                r.Speaking = 2;
-            }
-            else if (model._Speaking == UserModel.Levels.อ่อน)
-            {
-                r.Speaking = 1;
-            }
-
-            if (model._Listening == UserModel.Levels.เก่ง)
-            {
-                r.Listening = 3;
-            }
-            else if (model._Listening == UserModel.Levels.ปานกลาง)
-            {
-                r.Listening = 2;
-            }
-            else if (model._Listening == UserModel.Levels.อ่อน)
-            {
-                r.Listening = 1;
-            }
-            r.UpdateBy = Convert.ToInt32(Session["userID"]);
-            r.UpdateDate = DateTime.Now;
-            db.SaveChanges();
-            var skill = db.Skills.Where(m => m.User_ID == model.Users_ID).OrderBy(m => m.SkillsID).ToList();
-            string[] txt = model.language_string.Split(",".ToCharArray());
-            int item_skill = txt.Count() - 1;
-            if (skill != null)
-            {
-                if (skill.Count == item_skill)
+                Skill sk = new Skill();
+                var r = db.Users.Where(m => m.User_ID == model.Users_ID).FirstOrDefault();
+                r.User_ID = model.Users_ID;
+                r.User_Email = model.User_Email;
+                r.User_Password = model.User_Password;
+                r.Phone = model.Phone;
+                if (model._Reading == UserModel.Levels.เก่ง)
                 {
-                    int i = 0;
-                    foreach (var s in skill)
+                    r.Reading = 3;
+                }
+                else if (model._Reading == UserModel.Levels.ปานกลาง)
+                {
+                    r.Reading = 2;
+                }
+                else if (model._Reading == UserModel.Levels.อ่อน)
+                {
+                    r.Reading = 1;
+                }
+
+
+                if (model._Writng == UserModel.Levels.เก่ง)
+                {
+                    r.Writng = 3;
+                }
+                else if (model._Writng == UserModel.Levels.ปานกลาง)
+                {
+                    r.Writng = 2;
+                }
+                else if (model._Writng == UserModel.Levels.อ่อน)
+                {
+                    r.Writng = 1;
+                }
+
+                if (model._Speaking == UserModel.Levels.เก่ง)
+                {
+                    r.Speaking = 3;
+                }
+                else if (model._Speaking == UserModel.Levels.ปานกลาง)
+                {
+                    r.Speaking = 2;
+                }
+                else if (model._Speaking == UserModel.Levels.อ่อน)
+                {
+                    r.Speaking = 1;
+                }
+
+                if (model._Listening == UserModel.Levels.เก่ง)
+                {
+                    r.Listening = 3;
+                }
+                else if (model._Listening == UserModel.Levels.ปานกลาง)
+                {
+                    r.Listening = 2;
+                }
+                else if (model._Listening == UserModel.Levels.อ่อน)
+                {
+                    r.Listening = 1;
+                }
+                r.UpdateBy = Convert.ToInt32(Session["userID"]);
+                r.UpdateDate = DateTime.Now;
+                db.SaveChanges();
+                var skill = db.Skills.Where(m => m.User_ID == model.Users_ID).OrderBy(m => m.SkillsID).ToList();
+                string[] txt = model.language_string.Split(",".ToCharArray());
+                int item_skill = txt.Count() - 1;
+                if (skill != null)
+                {
+                    if (skill.Count == item_skill)
                     {
-                        s.languageID = Convert.ToInt32(txt[i]);
-                        s.User_ID = model.Users_ID;
-                        db.SaveChanges();
-                        i++;
+                        int i = 0;
+                        foreach (var s in skill)
+                        {
+                            s.languageID = Convert.ToInt32(txt[i]);
+                            s.User_ID = model.Users_ID;
+                            db.SaveChanges();
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        foreach (var s in skill)
+                        {
+                            db.Skills.Remove(s);
+                            db.SaveChanges();
+                        }
+                        for (int i = 0; i < txt.Count() - 1; i++)
+                        {
+                            sk.languageID = Convert.ToInt32(txt[i]);
+                            sk.User_ID = model.Users_ID;
+                            db.Skills.Add(sk);
+                            db.SaveChanges();
+                        }
                     }
                 }
-                else
-                {
-                    foreach (var s in skill)
-                    {
-                        db.Skills.Remove(s);
-                        db.SaveChanges();
-                    }
-                    for (int i = 0; i < txt.Count()-1; i++)
-                    {
-                        sk.languageID = Convert.ToInt32(txt[i]);
-                        sk.User_ID = model.Users_ID;
-                        db.Skills.Add(sk);
-                        db.SaveChanges();
-                    }
-                }
+                ModelState.Clear();
+                return RedirectToAction("Profile", "Member", new { userID = model.Users_ID });
             }
-            ModelState.Clear();
-            return RedirectToAction("Profile", "Member", new { userID = model.Users_ID });
+            catch (Exception)
+            {
+                return RedirectToAction("Profile", "Member", new { userID = model.Users_ID });
+            }
         }
         public ActionResult Edit_Member(UserModel model)
         {

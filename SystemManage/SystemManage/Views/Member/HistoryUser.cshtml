@@ -81,19 +81,9 @@ chart.render();
                                     @Html.TextBoxFor(m => m.User_LastName, new { @class = "form-control", Readonly = "" })
 
                                 </div>
-                                <label for="language" class="col-sm-2 col-form-label">เบอร์โทร : </label>
+                                <label for="language" class="col-sm-2 col-form-label">ชื่อเล่น : </label>
                                 <div class="col-sm-4">
-                                    @{
-                                        if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
-                                        {
-                                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(m => m.Phone, string.Empty, new { @style = "color:red" })
-                                        }
-                                        else
-                                        {
-                                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", Readonly = "" })
-                                        }
-                                    }
+                                    @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", Readonly = "" })
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -147,9 +137,19 @@ chart.render();
                                         }
                                     }
                                 }
-                                <label for="language" class="col-sm-2 col-form-label">ชื่อเล่น : </label>
+                                <label for="language" class="col-sm-2 col-form-label">เบอร์โทร : </label>
                                 <div class="col-sm-4">
-                                    @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", Readonly = "" })
+                                    @{
+                                        if (Model.Users_ID == Convert.ToInt32(Session["userID"]))
+                                        {
+                                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Phone, string.Empty, new { @style = "color:red" })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", Readonly = "" })
+                                        }
+                                    }
                                 </div>
                             </div>
                             <div class="form-group row">

@@ -473,15 +473,21 @@ chart.render();
     function check_password() {
         var password = document.getElementById('P1').value;
         var confirmPassword = document.getElementById('P2').value;
-        if (password != confirmPassword) {
-            alert("กรุณาตรวจสอบรหัสผ่านอีกครั้ง");
+        if (password != "" && confirmPassword != "") {
+            if (password != confirmPassword) {
+                alert("กรุณาตรวจสอบรหัสผ่านอีกครั้ง");
 
-        }
-        else {
-            if (confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")) {
-                document.getElementById("form_Check").submit();
+            }
+            else {
+                if (confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")) {
+                    document.getElementById("form_Check").submit();
+                }
             }
         }
+        else {
+            alert("กรุณาตรวจสอบรหัสผ่านอีกครั้ง");
+        }
+        
     }
 </script>
 <script>

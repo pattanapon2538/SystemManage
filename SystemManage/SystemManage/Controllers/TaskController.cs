@@ -31,8 +31,7 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddTask(TaskModel model,SubTask modelSub)
         {
-            try
-            {
+            try { 
                 InboxController sendMail = new InboxController();
                 Task t = new Task();
                 SubTask st = new SubTask();
@@ -73,26 +72,26 @@ namespace SystemManage.Controllers
                 t.CreateBy = Convert.ToInt32(Session["userID"]);
                 db.Tasks.Add(t);
                 db.SaveChanges();
-                var tester = db.Tasks.Where(m => m.TestID == model.TestID).ToList();
-                int total_tester = 0;
-                foreach (var item in tester)
-                {
-                    total_tester = total_tester + item.Task_level;
-                }
-                total_tester = total_tester / tester.Count;
-                var User_Tester = db.Users.Where(m => m.User_ID == model.TestID).FirstOrDefault();
-                User_Tester.AVG = total_tester;
-                db.SaveChanges();
-                var QA = db.Tasks.Where(m => m.QAID == model.QAID).ToList();
-                int total_QA = 0;
-                foreach (var item2 in QA)
-                {
-                    total_QA = total_QA + item2.Task_level;
-                }
-                total_QA = total_QA / QA.Count;
-                var User_QA = db.Users.Where(m => m.User_ID == model.QAID).FirstOrDefault();
-                User_QA.AVG = total_QA;
-                db.SaveChanges();
+                //var tester = db.Tasks.Where(m => m.TestID == model.TestID).ToList();
+                //float total_tester = 0;
+                //foreach (var item in tester)
+                //{
+                //    total_tester = total_tester + item.Task_level;
+                //}
+                //total_tester = total_tester / tester.Count;
+                //var User_Tester = db.Users.Where(m => m.User_ID == model.TestID).FirstOrDefault();
+                //User_Tester.AVG = total_tester;
+                //db.SaveChanges();
+                //var QA = db.Tasks.Where(m => m.QAID == model.QAID).ToList();
+                //float total_QA = 0;
+                //foreach (var item2 in QA)
+                //{
+                //    total_QA = total_QA + item2.Task_level;
+                //}
+                //total_QA = total_QA / QA.Count;
+                //var User_QA = db.Users.Where(m => m.User_ID == model.QAID).FirstOrDefault();
+                //User_QA.AVG = total_QA;
+                //db.SaveChanges();
                 /////////////////////////////////////
                 var Host = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
                 var recevier = db.Users.Where(m => m.User_ID == model.TestID).FirstOrDefault();
@@ -148,73 +147,76 @@ namespace SystemManage.Controllers
                         //string receiver = "pattanapon2538@outlook.com";
                         string messs_Dev = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
                         e.SendEmail(receiversDev, subjects, messs_Dev, senders);
-                        int total = 0;
-                        float AVG = 0;
-                        ///Dev
-                        var vs = db.SubTasks.Where(m => m.SubDevID == st.SubDevID).ToList();
-                        foreach (var h in vs)
-                        {
-                            var y = db.Tasks.Where(m => m.TaskID == h.TaskID).FirstOrDefault();
-                            total = total + y.Task_level;
-                        }
-                        AVG = total / vs.Count;
-                        var us = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
-                        us.AVG = AVG;
-                        db.SaveChanges();
+                        //int total = 0;
+                        //float AVG = 0;
+                        /////Dev
+                        //var vs = db.SubTasks.Where(m => m.SubDevID == st.SubDevID).ToList();
+                        //foreach (var h in vs)
+                        //{
+                        //    var y = db.Tasks.Where(m => m.TaskID == h.TaskID).FirstOrDefault();
+                        //    total = total + y.Task_level;
+                        //}
+                        //AVG = total / vs.Count;
+                        //var us = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
+                        //us.AVG = AVG;
+                        //db.SaveChanges();
 
                     }
-                    return RedirectToAction("ShowTask","Task");
+                    return RedirectToAction("ShowTask", "Task");
                 }
-                st.TaskID = t.TaskID;
-                st.SubName = model.SubTasksName[0].ToString();
-                st.SubDescriptionDev = model.SubTasksDis[0].ToString();
-                st.SubDevID = model.SubTaskDevID[0];////เลือกการค้นหาจาก Table Member ที่ Role เป็น Dev = 2
-                st.SubPercent = 0;
-                st.SubStatus = 0;
-                st.Handle = model.SubTaskDevID[0];
-                st.SubDevSend = model.SubTaskSendDate[0];
-                st.CreateDate = DateTime.Now;
-                st.CreateBy = Convert.ToInt32(Session["userID"]);
-                if (model.AttachFile_List != null)
+                else
                 {
-                    if (model.AttachFile_List[0] != null)
+                    st.TaskID = t.TaskID;
+                    st.SubName = model.SubTasksName[0].ToString();
+                    st.SubDescriptionDev = model.SubTasksDis[0].ToString();
+                    st.SubDevID = model.SubTaskDevID[0];////เลือกการค้นหาจาก Table Member ที่ Role เป็น Dev = 2
+                    st.SubPercent = 0;
+                    st.SubStatus = 0;
+                    st.Handle = model.SubTaskDevID[0];
+                    st.SubDevSend = model.SubTaskSendDate[0];
+                    st.CreateDate = DateTime.Now;
+                    st.CreateBy = Convert.ToInt32(Session["userID"]);
+                    if (model.AttachFile_List != null)
                     {
-                        var Upload_Sub = Upload_FileTask(model.AttachFile_List[0]);
-                        string[] txt = Upload_Sub.Split(",".ToCharArray());
-                        string fileName = txt[1];
-                        st.AttachFile = txt[0];
-                        st.AttachShow = fileName;
-                    } 
+                        if (model.AttachFile_List[0] != null)
+                        {
+                            var Upload_Sub = Upload_FileTask(model.AttachFile_List[0]);
+                            string[] txt = Upload_Sub.Split(",".ToCharArray());
+                            string fileName = txt[1];
+                            st.AttachFile = txt[0];
+                            st.AttachShow = fileName;
+                        }
+                    }
+                    db.SubTasks.Add(st);
+                    db.SaveChanges();
+                    //var PoinCode2 = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
+                    //PoinCode2.TotalCoding = PoinCode2.TotalCoding + 1;
+                    //db.SaveChanges();
+                    var Email = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
+                    var Sendto = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
+                    string sender = Email.User_Email.ToString();
+                    //string sender = "systemmanage59346@gmail.com";
+                    string subject = t.TaskName + "" + st.SubName;
+                    string receiver = Sendto.User_Email.ToString();
+                    //string receiver = "pattanapon2538@outlook.com";
+                    string mess = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                    InboxController i = new InboxController();
+                    i.SendEmail(receiver, subject, mess, sender);
+                    //int totals = 0;
+                    //float AVGs = 0;
+                    //var v = db.SubTasks.Where(m => m.SubDevID == st.SubDevID).ToList();
+                    //foreach (var h in v)
+                    //{
+                    //    var y = db.Tasks.Where(m => m.TaskID == h.TaskID).FirstOrDefault();
+                    //    totals = totals + y.Task_level;
+                    //}
+                    //AVGs = totals / v.Count;
+                    //var u = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
+                    //u.AVG = AVGs;
+                    //db.SaveChanges();
+                    return RedirectToAction("ShowTask", "Task");
                 }
-                db.SubTasks.Add(st);
-                db.SaveChanges();
-                var PoinCode2 = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
-                PoinCode2.TotalCoding = PoinCode2.TotalCoding + 1;
-                db.SaveChanges();
-                var Email = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
-                var Sendto = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
-                string sender = Email.User_Email.ToString();
-                //string sender = "systemmanage59346@gmail.com";
-                string subject = t.TaskName + "" + st.SubName;
-                string receiver = Sendto.User_Email.ToString();
-                //string receiver = "pattanapon2538@outlook.com";
-                string mess = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
-                InboxController i = new InboxController();
-                i.SendEmail(receiver, subject, mess, sender);
-                int totals = 0;
-                float AVGs = 0;
-                var v = db.SubTasks.Where(m => m.SubDevID == st.SubDevID).ToList();
-                foreach (var h in v)
-                {
-                    var y = db.Tasks.Where(m => m.TaskID == h.TaskID).FirstOrDefault();
-                    totals = totals + y.Task_level;
-                }
-                AVGs = totals / v.Count;
-                var u = db.Users.Where(m => m.User_ID == st.SubDevID).FirstOrDefault();
-                u.AVG = AVGs;
-                db.SaveChanges();
-                ModelState.Clear();
-                return RedirectToAction("ShowTask", "Task");
+                
             }
             catch (Exception)
             {
@@ -241,6 +243,7 @@ namespace SystemManage.Controllers
             int userID = Convert.ToInt32(Session["userID"]);
             P.Check_Project(userID);
             R.Summary(ProjectID);
+            Sum_AVG(ProjectID);
             string Taskname = null;
             string Handle = null;
             string DevName = null;
@@ -866,5 +869,38 @@ namespace SystemManage.Controllers
                 return ("Error");
             }
         }
+        public ActionResult Sum_AVG(int Project_ID)
+        {
+            var Member = db.ProjectMembers.Where(m => m.ProjectID == Project_ID && m.Role != 1 && m.Role != 5).ToList();
+            foreach (var item in Member)
+            {
+                float total = 0;
+                var tester = db.Tasks.Where(m => m.TestID == item.UserID).ToList();
+                foreach (var item2 in tester)
+                {
+                    total = total + item2.Task_level;
+                }
+                var QA = db.Tasks.Where(m => m.QAID == item.UserID).ToList();
+                foreach(var item3 in QA)
+                {
+                    total = total + item3.Task_level;
+                }
+                var Dev = db.SubTasks.Where(m => m.SubDevID == item.UserID).ToList();
+                foreach(var item4 in Dev)
+                {
+                    var Task = db.Tasks.Where(m => m.TaskID == item4.TaskID).FirstOrDefault();
+                    total = total + Task.Task_level;
+                }
+                if (total != 0)
+                { 
+                    total = total / (tester.Count + QA.Count + Dev.Count);
+                    var User = db.Users.Where(m => m.User_ID == item.UserID).FirstOrDefault();
+                    User.AVG = total;
+                    db.SaveChanges();
+                }
+            }
+            return View();
+        }
+
     }
 }
