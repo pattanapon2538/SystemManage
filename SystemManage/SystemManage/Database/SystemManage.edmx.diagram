@@ -7,8 +7,8 @@
       <Diagram DiagramId="7defb4f02a1646268b3c899f232c21b3" Name="Diagram1" ZoomLevel="58">
         <EntityTypeShape EntityType="SystemManageModel.Language_of_Type" Width="1.5" PointX="0.625" PointY="7.75" />
         <EntityTypeShape EntityType="SystemManageModel.LogMessage" Width="1.5" PointX="15.625" PointY="2.375" />
-        <EntityTypeShape EntityType="SystemManageModel.Mail" Width="1.5" PointX="5.375" PointY="8.375" />
-        <EntityTypeShape EntityType="SystemManageModel.Message" Width="1.5" PointX="5.375" PointY="11.125" />
+        <EntityTypeShape EntityType="SystemManageModel.Mail" Width="1.5" PointX="5.25" PointY="5.125" />
+        <EntityTypeShape EntityType="SystemManageModel.Message" Width="1.5" PointX="5.25" PointY="8.125" />
         <EntityTypeShape EntityType="SystemManageModel.Position" Width="1.5" PointX="0.5" PointY="4.625" />
         <EntityTypeShape EntityType="SystemManageModel.Project" Width="1.5" PointX="7.375" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.ProjectMember" Width="1.5" PointX="5.25" PointY="2.375" />
@@ -28,14 +28,14 @@
         <EntityTypeShape EntityType="SystemManageModel.SubTaskSubmisstion" Width="1.5" PointX="13.625" PointY="2.375" />
         <EntityTypeShape EntityType="SystemManageModel.SubTask" Width="1.5" PointX="11.625" PointY="2.5" />
         <AssociationConnector Association="SystemManageModel.FK_SubTask" />
-        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="2.875" PointY="2.625" />
-        <AssociationConnector Association="SystemManageModel.FK_Position" />
-        <AssociationConnector Association="SystemManageModel.FK_UserID" />
-        <AssociationConnector Association="SystemManageModel.FK_Contact" />
         <EntityTypeShape EntityType="SystemManageModel.Defect" Width="1.5" PointX="7.25" PointY="6.875" />
         <AssociationConnector Association="SystemManageModel.FK_SubDefect" />
         <EntityTypeShape EntityType="SystemManageModel.Skill" Width="1.5" PointX="7.375" PointY="11.875" />
         <AssociationConnector Association="SystemManageModel.FK_Defect_Defect" />
+        <EntityTypeShape EntityType="SystemManageModel.User" Width="1.5" PointX="2.875" PointY="2.625" />
+        <AssociationConnector Association="SystemManageModel.FK_Position" />
+        <AssociationConnector Association="SystemManageModel.FK_UserID" />
+        <AssociationConnector Association="SystemManageModel.FK_Contact" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

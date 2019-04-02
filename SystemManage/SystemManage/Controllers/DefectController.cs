@@ -15,6 +15,10 @@ namespace SystemManage.Controllers
         // GET: Defect
         public ActionResult AddDefect()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (Convert.ToInt32(Session["Defect_SIT"]) == 1)
             {
                 DefectModel model = new DefectModel();
@@ -213,6 +217,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowDefect()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             Session["SIT_Defect"] = 0;
             List<DefectModel> DefectList = new List<DefectModel>();
             DefectModel model = new DefectModel();
@@ -345,6 +353,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult DetailDefect(int DefectID)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             DefectModel model = new DefectModel();
             var item = db.Defects.Where(m => m.Defect_ID == DefectID).FirstOrDefault();
             var SubTask = db.SubTasks.Where(m => m.SubID == item.Sub_ID).FirstOrDefault();

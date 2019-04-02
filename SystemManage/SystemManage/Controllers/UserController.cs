@@ -17,6 +17,10 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddUser(UserModel model)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (model.Users_ID != 0)
             {
                 
@@ -122,6 +126,8 @@ namespace SystemManage.Controllers
                     {
                         r.Listening = 0;
                     }
+                    r.UpdateBy = Convert.ToInt32(Session["userID"]);
+                    r.UpdateDate = DateTime.Now;
                     db.SaveChanges();
                     ModelState.Clear();
                 var skill = db.Skills.Where(m => m.User_ID == model.Users_ID).ToList();
@@ -207,6 +213,7 @@ namespace SystemManage.Controllers
                 u.Date_of_Ended = model.Date_of_Ended;
                 u.Permisstion = model.Permission;
                 u.Position_ID = model.Position_ID;
+                u.Phone = model.Phone;
                 u.comment = model.Comment;
                 if (model.AttachFile1 != null)
                 {
@@ -311,44 +318,48 @@ namespace SystemManage.Controllers
                     }
                 }
             }
-            //return RedirectToAction("ShowUser", "User");
-            UserModel ModelList = new UserModel();
-            ModelList.PositionList = db.Positions.OrderByDescending(m => m.Position_ID).ToList();
-            ModelList.ContractsList = db.Type_of_Contract.OrderByDescending(m => m.Contrat_ID).ToList();
-            ModelList.LanguageList = db.Language_of_Type.OrderByDescending(m => m.languageID).ToList();
-            List<UserModel> UserList = new List<UserModel>();
-            List<LanguageOfTypeModel> ListData = new List<LanguageOfTypeModel>();
-            var item2 = db.Language_of_Type.ToList();
-            var item = db.Users.OrderByDescending(m => m.User_ID).ToList();
-            foreach (var i in item)
-            {
-                var P_Name = db.Positions.Where(m => m.Position_ID == i.Position_ID).FirstOrDefault();
-                var C_Name = db.Type_of_Contract.Where(m => m.Contrat_ID == i.Contract_ID).FirstOrDefault();
-                UserList.Add(new UserModel
-                {
-                    Users_ID = i.User_ID,
-                    User_Email = i.User_Email,
-                    User_Name = i.User_Name,
-                    User_LastName = i.User_LastName,
-                    Gender = i.Gender,
-                    PositionName = P_Name.Name,
-                    ContactName = C_Name.Contrat_Name
-                });
-            }
-            foreach (var c in item2)
-            {
-                ListData.Add(new LanguageOfTypeModel
-                {
-                    languageID = c.languageID,
-                    Name = c.Name
-                });
-            }
-            ViewBag.DataList = UserList;
-            ViewBag.DataSkill = ListData;
-            return PartialView("ShowUser", ModelList);
+            return RedirectToAction("ShowUser", "User");
+            //UserModel ModelList = new UserModel();
+            //ModelList.PositionList = db.Positions.OrderByDescending(m => m.Position_ID).ToList();
+            //ModelList.ContractsList = db.Type_of_Contract.OrderByDescending(m => m.Contrat_ID).ToList();
+            //ModelList.LanguageList = db.Language_of_Type.OrderByDescending(m => m.languageID).ToList();
+            //List<UserModel> UserList = new List<UserModel>();
+            //List<LanguageOfTypeModel> ListData = new List<LanguageOfTypeModel>();
+            //var item2 = db.Language_of_Type.ToList();
+            //var item = db.Users.OrderByDescending(m => m.User_ID).ToList();
+            //foreach (var i in item)
+            //{
+            //    var P_Name = db.Positions.Where(m => m.Position_ID == i.Position_ID).FirstOrDefault();
+            //    var C_Name = db.Type_of_Contract.Where(m => m.Contrat_ID == i.Contract_ID).FirstOrDefault();
+            //    UserList.Add(new UserModel
+            //    {
+            //        Users_ID = i.User_ID,
+            //        User_Email = i.User_Email,
+            //        User_Name = i.User_Name,
+            //        User_LastName = i.User_LastName,
+            //        Gender = i.Gender,
+            //        PositionName = P_Name.Name,
+            //        ContactName = C_Name.Contrat_Name
+            //    });
+            //}
+            //foreach (var c in item2)
+            //{
+            //    ListData.Add(new LanguageOfTypeModel
+            //    {
+            //        languageID = c.languageID,
+            //        Name = c.Name
+            //    });
+            //}
+            //ViewBag.DataList = UserList;
+            //ViewBag.DataSkill = ListData;
+            //return PartialView("ShowUser", ModelList);
         }
         public ActionResult ShowUser()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             UserModel ModelList = new UserModel();
             ModelList.Date_of_Started = DateTime.Now;
             ModelList.Date_of_Ended = DateTime.Now;

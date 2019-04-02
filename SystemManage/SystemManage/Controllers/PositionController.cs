@@ -15,7 +15,11 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddPosition(PositionModel pm)
         {
-                if (pm.Position_ID != 0)
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            if (pm.Position_ID != 0)
                 {
                     var result = db.Positions.Where(s => s.Position_ID == pm.Position_ID).FirstOrDefault();
                     result.Name = pm.Name;
@@ -63,6 +67,10 @@ namespace SystemManage.Controllers
 
         public ActionResult ShowPosition()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             List<PositionModel> positionsList = new List<PositionModel>();
             PositionModel Model = new PositionModel();
             var item = db.Positions.OrderByDescending(s => s.Position_ID).ToList();

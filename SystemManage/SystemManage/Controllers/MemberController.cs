@@ -14,6 +14,10 @@ namespace SystemManage.Controllers
         // GET: Member
         public ActionResult ListMember()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             var userID = Convert.ToInt32(Session["userID"]);
             var projectID = Convert.ToInt32(Session["ProjectID"]);
             List<UserModel> UserList = new List<UserModel>();
@@ -61,6 +65,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult AddMember(int UserID)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             ProjectMember pm = new ProjectMember();
             pm.UserID = UserID;
             pm.ProjectID = Convert.ToInt32(Session["ProjectID"]);
@@ -97,7 +105,8 @@ namespace SystemManage.Controllers
                 db.SaveChanges();
                 return RedirectToAction("ListMember");
             }else //ถ้าไม่เข้าเงื่อไขให้เป็น Dev ทั้งหมด
-            pm.Role = 2; 
+            pm.Role = 2;
+            pm.Member_name = PoList.User_Name;
             db.ProjectMembers.Add(pm);
             db.SaveChanges();
             ///////////////////////////////////////
@@ -134,9 +143,15 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowMember()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             List<UserModel> UserList = new List<UserModel>();
             int DataProjectID = Convert.ToInt32(Session["ProjectID"]);
             UserModel model = new UserModel();
+            //var query2 = db.Users.SqlQuery("select Users.User_ID from Users LEFT JOIN Skills ON Users.User_ID = Skills.User_ID").ToList();
+            //var query = (from o in db.Users join d in db.Skills on o.User_ID equals d.User_ID where o.User_ID == null  select o).ToList();
             var item = db.ProjectMembers.Where(m => m.ProjectID == DataProjectID).ToList();
             var c = db.Projects.Where(m => m.ProjectID == DataProjectID).FirstOrDefault();
             foreach (var i in item)
@@ -171,7 +186,11 @@ namespace SystemManage.Controllers
             return View(model);
         }
         public ActionResult HistoryUser(int userID)
-        { 
+        {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             UserModel model = new UserModel();
             List<UserModel> TaskList = new List<UserModel>();
             var u = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
@@ -304,6 +323,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult Follows(string userID)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             int PM = Convert.ToInt32(Session["userID"]);
             int User = Convert.ToInt32(userID);
             var CF = db.Follows.Where(m => m.user_ID == User && m.PM_ID == PM).FirstOrDefault();
@@ -326,6 +349,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult Profile(int userID)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             UserModel model = new UserModel();
             List<UserModel> TaskList = new List<UserModel>();
             List<LanguageOfTypeModel> Lg_List = new List<LanguageOfTypeModel>();

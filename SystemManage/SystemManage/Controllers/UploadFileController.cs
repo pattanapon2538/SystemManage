@@ -17,6 +17,10 @@ namespace SystemManage.Controllers
         // GET: Upload
         public ActionResult Index()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
         [HttpPost]
@@ -45,6 +49,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowDocument()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             List<DocumentModel> DocumentList = new List<DocumentModel>();
             DocumentModel model = new DocumentModel();
@@ -83,6 +91,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult DetailDocument(int DocumentID)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             var d = db.Documents.Where(m => m.DocumentID == DocumentID).FirstOrDefault();
             DocumentModel model = new DocumentModel();
             model.DocumentID = d.DocumentID;

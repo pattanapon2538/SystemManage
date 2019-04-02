@@ -29,6 +29,7 @@ namespace SystemManage.Models
         public int UpdateBy { get; set; }
         public int ProjectRole { get; set; }
         public int UserRole { get; set; }
+        public string User_Permission { get; set; }
         //////////////////////////////////////
         public string TaskName { get; set; }
         public double TaskPercent { get; set; }

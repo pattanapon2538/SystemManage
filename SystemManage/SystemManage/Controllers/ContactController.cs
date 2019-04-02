@@ -15,6 +15,10 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddContact(TypeOfCotractModel cm)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (cm.Contrat_ID != 0)
             {
                 var result = db.Type_of_Contract.Where(m => m.Contrat_ID == cm.Contrat_ID).FirstOrDefault();
@@ -61,6 +65,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowContact()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             List<TypeOfCotractModel> model = new List<TypeOfCotractModel>();
             TypeOfCotractModel a = new TypeOfCotractModel();
             var item = db.Type_of_Contract.OrderByDescending(s => s.Contrat_ID).ToList();
@@ -94,6 +102,10 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult DetailContact(string Contrat_ID)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             TypeOfCotractModel model = new TypeOfCotractModel();
             Type_of_Contract tc = db.Type_of_Contract.Where(m => m.Contrat_ID.ToString() == Contrat_ID).FirstOrDefault();
             model.Contrat_ID = tc.Contrat_ID;

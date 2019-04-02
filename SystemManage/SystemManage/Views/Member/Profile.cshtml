@@ -6,7 +6,12 @@
     ViewBag.Title = "HistoryUser";
     Layout = "~/Views/Shared/_History.cshtml";
 }
-
+@{
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
 <script>
 window.onload = function () {
 var chart = new CanvasJS.Chart("chartContainer", {
@@ -139,24 +144,61 @@ chart.render();
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="language" class="col-sm-2 col-form-label">ไฟล์แนบ : </label>
-                                <div class="col-sm-4">
-                                    <a href="@Model.PathShow1" target="_blank">@Model.AttachShow1</a>
-                                </div>
-                                <label for="language" class="col-sm-2 col-form-label">ไฟล์แนบ :</label>
-                                <div class="col-sm-4">
-                                    <a href="@Model.PathShow2" target="_blank">@Model.AttachShow2</a>
-                                </div>
+                                @{
+                                    if (Model.PathShow1 != null)
+                                    {
+                                        <label for="language" class="col-sm-2 col-form-label">ไฟล์แนบ : </label>
+                                        <div class="col-sm-4">
+                                            <a href="@Model.PathShow1" target="_blank">@Model.AttachShow1</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-4">
+                                        </div>
+                                    }
+                                    if (Model.PathShow2 != null)
+                                    {
+                                        <label for="language" class="col-sm-2 col-form-label">ไฟล์แนบ :</label>
+                                        <div class="col-sm-4">
+                                            <a href="@Model.PathShow2" target="_blank">@Model.AttachShow2</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-4">
+                                        </div>
+                                    }
+
+                                }
                             </div>
                             <div class="form-group row">
-                                <label for="language" class="col-sm-2 col-form-label">ไฟล์แนบ : </label>
-                                <div class="col-sm-4">
-                                    <a href="@Model.PathShow3" target="_blank">@Model.AttachShow3</a>
-                                </div>
-                                <label for="language" class="col-sm-2 col-form-label">ไฟล์แนบ :</label>
-                                <div class="col-sm-4">
-                                    <a href="@Model.PathShow4" target="_blank">@Model.AttachShow4</a>
-                                </div>
+                                @{
+                                    if (Model.PathShow3 != null)
+                                    {
+                                        <label for="language" class="col-sm-2 col-form-label">ไฟล์แนบ : </label>
+                                        <div class="col-sm-4">
+                                            <a href="@Model.PathShow3" target="_blank">@Model.AttachShow3</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-4">
+                                        </div>
+                                    }
+                                    if (Model.PathShow4 != null)
+                                    {
+                                        <label for="language" class="col-sm-2 col-form-label">ไฟล์แนบ :</label>
+                                        <div class="col-sm-4">
+                                            <a href="@Model.PathShow4" target="_blank">@Model.AttachShow4</a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-4">
+                                        </div>
+                                    }
+                                }
                             </div>
                             <h2 class="text-center" style="margin-top:30px;margin-bottom:10px">บัญชีผู้ใช้งาน</h2>
                             <div class="form-group row">
@@ -167,14 +209,14 @@ chart.render();
                                 </div>
                                 <label for="language" class="col-sm-2 col-form-label">รหัสผ่าน : </label>
                                 <div class="col-sm-4">
-                                    @Html.TextBoxFor(m => m.User_Password, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", @id = "P1" })
+                                    @Html.TextBoxFor(m => m.User_Password, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", @id = "P1", @type = "password" })
                                     @Html.ValidationMessageFor(m => m.User_Password, string.Empty, new { @style = "color:red" })
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="language" class="col-sm-2 col-form-label">รหัสผ่านอีกครั้ง: </label>
                                 <div class="col-sm-4">
-                                    @Html.TextBoxFor(m => m.User_RePassword, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", @id = "P2" })
+                                    @Html.TextBoxFor(m => m.User_RePassword, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", @id = "P2", @type = "password" })
                                     @Html.ValidationMessageFor(m => m.User_RePassword, string.Empty, new { @style = "color:red" })
                                 </div>
                                 <label for="language" class="col-sm-2 col-form-label">ตำแหน่งงาน : </label>
@@ -338,10 +380,41 @@ chart.render();
                                                 <th>จำนวนไม่สำเร็จ</th>
                                             </tr>
                                             <tr>
-                                                <td>@Model.Percent_Succ.ToString("P1")</td>
-                                                <td>@Model.Amount_Succ</td>
-                                                <td>@Model.Percent_Non.ToString("P1")</td>
-                                                <td>@Model.Amount_Non</td>
+                                                @{
+                                                    if (Model.Percent_Succ == 0)
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Model.Percent_Succ.ToString("P1")</td>
+                                                    }
+                                                    if (Model.Amount_Succ == 0)
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Model.Amount_Succ</td>
+                                                    }
+                                                    if (Model.Percent_Non == 0)
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Model.Percent_Non.ToString("P1")</td>
+                                                    }
+                                                    if (Model.Amount_Non == 0)
+                                                    {
+                                                        <td>-</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Model.Amount_Non</td>
+                                                    }
+                                                }
+
                                             </tr>
 
                                         </tbody>
@@ -401,9 +474,8 @@ chart.render();
         var password = document.getElementById('P1').value;
         var confirmPassword = document.getElementById('P2').value;
         if (password != confirmPassword) {
-            confirmPassword.focus(function () {
-                alert("Handler for .focus() called.");
-            });
+            alert("กรุณาตรวจสอบรหัสผ่านอีกครั้ง");
+
         }
         else {
             if (confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")) {

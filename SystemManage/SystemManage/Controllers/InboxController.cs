@@ -18,6 +18,10 @@ namespace SystemManage.Controllers
         // GET: Inbox
         public ActionResult Inbox()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             List<InboxModel> InboxList = new List<InboxModel>();
             List<LogMessageModel> LogList = new List<LogMessageModel>();
             var userId = Convert.ToInt32(Session["userID"]);
@@ -41,6 +45,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult Index()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             var User = db.Users.Where(m => m.Permisstion != "A").OrderBy(m=>m.User_ID).ToList();
             List<UserModel> UserList = new List<UserModel>();
             foreach (var item in User)
@@ -189,6 +197,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult ReadMail(int MailID)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             InboxModel model = new InboxModel();
             var i = db.Messages.Where(m => m.Message_ID == MailID).FirstOrDefault();
             var me = db.Mails.Where(m => m.Mail_ID == i.Mail_ID).FirstOrDefault();

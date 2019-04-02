@@ -16,6 +16,10 @@ namespace SystemManage.Controllers
         // GET: Task
         public ActionResult AddTask()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             TaskModel t = new TaskModel();
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             var L = db.Tasks.Where(m => m.ProjectID == ProjectID).FirstOrDefault();
@@ -225,6 +229,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowTask()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             ProjectController P = new ProjectController();
             Session["Save"] = 0;
             Session["SIT_Defect"] = 0;
@@ -442,6 +450,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult DetailTask(int SubID)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             Session["SubID"] = SubID;
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             int userID = Convert.ToInt32(Session["userID"]);

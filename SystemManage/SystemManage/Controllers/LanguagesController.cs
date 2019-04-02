@@ -16,6 +16,10 @@ namespace SystemManage.Controllers
         [HttpPost]
         public ActionResult AddLanguage(LanguageOfTypeModel lg)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             if (lg.languageID != 0)
             {
                 var results = db.Language_of_Type.Where(s => s.languageID == lg.languageID).FirstOrDefault();
@@ -56,6 +60,10 @@ namespace SystemManage.Controllers
 
         public ActionResult ShowLanguage()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             List<LanguageOfTypeModel> model = new List<LanguageOfTypeModel>();
             LanguageOfTypeModel a = new LanguageOfTypeModel();
             var item = db.Language_of_Type.OrderByDescending(s => s.languageID).ToList();

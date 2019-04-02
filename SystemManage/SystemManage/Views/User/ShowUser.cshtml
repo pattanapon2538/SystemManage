@@ -123,14 +123,14 @@
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">รหัสผ่าน : </label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(m => m.User_Password, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue", type = "password" })
+                                @Html.TextBoxFor(m => m.User_Password, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue", type = "password" , id= "P1" })
                                 @Html.ValidationMessageFor(m => m.User_Password, string.Empty, new { @style = "color:red" })
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="language" class="col-sm-2 col-form-label">รหัสผ่านอีกครั้ง: </label>
                             <div class="col-sm-4">
-                                @Html.TextBoxFor(m => m.User_RePassword, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue", type = "password" })
+                                @Html.TextBoxFor(m => m.User_RePassword, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล", OnSuccess = "clearvalue", type = "password", id ="P2"})
                                 @Html.ValidationMessageFor(m => m.User_RePassword, string.Empty, new { @style = "color:red" })
                             </div>
                             <label for="language" class="col-sm-2 col-form-label">ตำแหน่งงาน : </label>
@@ -182,28 +182,31 @@
                                         <div class="col-sm-6">
                                             <label for="language" class="col-form-label">ฟัง: </label>
                                             @Html.DropDownListFor(m => m.Listening, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
-
+                                            @Html.ValidationMessageFor(m => m.Listening, string.Empty, new { @style = "color:red" })
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="language" class="col-form-label">พูด : </label>
                                             @Html.DropDownListFor(m => m.Speaking, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Speaking, string.Empty, new { @style = "color:red" })
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="language" class="col-form-label">อ่าน : </label>
                                             @Html.DropDownListFor(m => m.Reading, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Reading, string.Empty, new { @style = "color:red" })
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="language" class="col-form-label">เขียน : </label>
                                             @Html.DropDownListFor(m => m.Writng, new SelectList(Enum.GetValues(typeof(UserModel.Levels))), "เลือก", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Writng, string.Empty, new { @style = "color:red" })
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
-                            <button id="submits" type="submit" onclick='return confirm("กรุณายืนยันการทำรายการ")'>เพิ่ม</button>
+                            <button id="submits" type="submit" onclick="check_password()">เพิ่ม</button>
                         </div>
                     </div>
                 </form>
@@ -381,6 +384,21 @@
          if (@Model.Alert == 1)
         {
             alert("ไม่สามารถทำรายการเนื่องจากข้อมูลถูกเรียกใช้อยู่ กรูณาตรวจสอบอีกครั้ง");
+        }
+    }
+</script>
+<script>
+    function check_password() {
+        if (confirm("คุณต้องการทำรายการใช่หรือไม่")) {
+            var password = document.getElementById('P1').value;
+            var confirmPassword = document.getElementById('P2').value;
+            if (password != confirmPassword) {
+                alert("กรุณาตรวจสอบรหัสผ่านอีกครั้ง");
+            }
+            else {
+                document.getElementById("form_Check").submit();
+
+            }
         }
     }
 </script>

@@ -15,6 +15,10 @@ namespace SystemManage.Controllers
         // GET: Report
         public ActionResult Report()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             string Handle,DevName,TesterName,QAName = "";
             SubTaskModel model = new SubTaskModel();
             List<SubTaskModel> subTasksReport = new List<SubTaskModel>();

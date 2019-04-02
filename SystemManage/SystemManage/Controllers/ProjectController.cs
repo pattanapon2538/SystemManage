@@ -17,6 +17,10 @@ namespace SystemManage.Controllers
         // GET: Project
         public ActionResult AddProject()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
         [HttpPost]
@@ -66,17 +70,23 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowProject()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             List<ProjectModel> projectlist = new List<ProjectModel>();
             ProjectModel model = new ProjectModel();
             //ProjectController project = new ProjectController();
             int userID = Convert.ToInt32(Session["userID"]);
             //Check_Project(userID);
             var member = db.ProjectMembers.Where(m => m.UserID == userID).OrderBy(m => m.ProjectID).ToList();
+            var user = db.Users.Where(m => m.User_ID == userID).FirstOrDefault();
+            model.User_Permission = user.Permisstion;
+            
             int countList = 0;
             double Percent = 0;
             foreach (var m in member)
             {
-                model.UserRole = m.Role;
                 var item = db.Projects.Where(p => p.ProjectID == m.ProjectID).FirstOrDefault();
                 var pm = db.Users.Where(u => u.User_ID == item.CreateBy).FirstOrDefault();
                 Project po = db.Projects.Where(pos => pos.ProjectID == item.ProjectID).FirstOrDefault();
@@ -112,6 +122,7 @@ namespace SystemManage.Controllers
                     ProjectStatus = item.Status,
                     ProjectSendDate = item.SendDate,
                     CreateName = pm.User_Name,
+                    CreateBy = item.CreateBy,
                     CreateDate = item.CreateDate,
                     UpdateDate = item.UpdateDate,
                 });
@@ -123,6 +134,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult EditProject(String ProjectID)
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             ProjectModel Model = new ProjectModel();
             Project p = db.Projects.Where(m => m.ProjectID.ToString() == ProjectID).FirstOrDefault();
             Model.ProjectID = p.ProjectID;

@@ -18,6 +18,10 @@ namespace SystemManage.Controllers
         // GET: SIT
         public ActionResult AddSIT()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             SITModel SIT = new SITModel();
             int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             SIT.Task = db.Tasks.Where(m => m.ProjectID == ProjectID && m.TotalPercent == 100).ToList();
@@ -78,6 +82,10 @@ namespace SystemManage.Controllers
         }
         public ActionResult ShowSIT()
         {
+            if ((Session["userID"]) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             Session["Defect_SIT"] = 0;
             SITModel data = new SITModel();
             List<SITModel> model = new List<SITModel>();

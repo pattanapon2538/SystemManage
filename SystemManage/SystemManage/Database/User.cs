@@ -41,7 +41,6 @@ namespace SystemManage.Database
         public string AttachFile4 { get; set; }
         public string Permisstion { get; set; }
         public string comment { get; set; }
-        public int Skill_ID { get; set; }
         public double AVG { get; set; }
         public int Amount_Succ { get; set; }
         public int Amount_Non { get; set; }

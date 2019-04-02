@@ -112,90 +112,86 @@
                                         <th><center>กำหนดส่ง</center></th>
                                         <th><center>ผู้จัดการโครงการ</center></th>
                                         <th><center>รายละเอียด</center></th>
-                                        @if (Model.UserRole == 1)
-                                        {
-                                            <th><center>แก้ไข</center></th>
-                                            <th><center>ลบ</center></th>
-                                        }
+                                        <th><center>แก้ไข</center></th>
+                                        <th><center>ลบ</center></th>
+                                       
 
                                     </tr>
                                 </thead>
                                 <tbody id="tb">
                                     @{
-                                        var role = 0;
                                         var i = 1;
                                         foreach (var item in (List<ProjectModel>)ViewBag.DataList)
                                         {
-                                            <tr>
-                                                @{
-                                                    if (item.ProjectStatus == 1 || item.CreateBy == Convert.ToInt32(Session["userID"]) || item.ProjectStatus == 4)
-                                                    {
-                                                        <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><center><i class="fas fa-door-open"></i></center></a></td>
-                                                    }
-                                                    else if (item.ProjectStatus == 2)
-                                                    {
-                                                        <td><a style="cursor:pointer" onclick='return alert("ไม่สามารถทำรายการได้ เนื่องจากโครงการอยู่ระหว่างการพัก")'><center><i class="fas fa-door-open"></i></center></a></td>
-                                                    }
-                                                    else if (item.ProjectStatus == 3)
-                                                    {
-                                                        <td><a style="cursor:pointer" onclick='return alert("ไม่สามารถทำรายการได้ เนื่องจากโครงการอยู่ระหว่างหยุดดำเนินการ")'><center><i class="fas fa-door-open"></i></center></a></td>
-                                                    }
+                                    <tr>
+                                        @{
+                                            if (item.ProjectStatus == 1 || item.CreateBy == Convert.ToInt32(Session["userID"]) || item.ProjectStatus == 4)
+                                            {
+                                                <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><center><i class="fas fa-door-open"></i></center></a></td>
+                                            }
+                                            else if (item.ProjectStatus == 2)
+                                            {
+                                                <td><a href="@Url.Action("Getdata", new { ProjectID = item.ProjectID })"><center><i class="fas fa-door-open"></i></center></a></td>
+                                            }
+                                            else if (item.ProjectStatus == 3)
+                                            {
+                                                <td><a style="cursor:pointer" onclick='return alert("ไม่สามารถทำรายการได้ เนื่องจากโครงการอยู่ระหว่างหยุดดำเนินการ")'><center><i class="fas fa-door-open"></i></center></a></td>
+                                            }
 
-                                                }
-                                                <td><center>@i</center></td>
-                                                <td><center>@item.ProjectName</center></td>
-                                                @if (item.ProjectStatus == 1)
-                                                {
-                                                    <td><center>ดำเนินการ</center></td>
-                                                }
-                                                else if (item.ProjectStatus == 2)
-                                                {
-                                                    <td><center>พัก</center></td>
-                                                }
-                                                else if (item.ProjectStatus == 3)
-                                                {
-                                                    <td><center>หยุดดำเนินการ</center></td>
-                                                }
-                                                else if (item.ProjectStatus == 4)
-                                                {
-                                                    <td><center>เสร็จสิน</center></td>
-                                                }
-                                                @{
-                                                    item.TotalPercent = item.TotalPercent / 100;
-                                                }
-                                                <td><center>@item.TotalPercent.ToString("P02")</center></td>
-                                                <td><center>@item.ProjectSendDate.ToString("dd/MM/yyyy")</center></td>
-                                                <td><center>@item.CreateName</center></td>
+                                        }
+                                        <td><center>@i</center></td>
+                                        <td><center>@item.ProjectName</center></td>
+                                        @if (item.ProjectStatus == 1)
+                                        {
+                                            <td><center>ดำเนินการ</center></td>
+                                        }
+                                        else if (item.ProjectStatus == 2)
+                                        {
+                                            <td><center>พัก</center></td>
+                                        }
+                                        else if (item.ProjectStatus == 3)
+                                        {
+                                            <td><center>หยุดดำเนินการ</center></td>
+                                        }
+                                        else if (item.ProjectStatus == 4)
+                                        {
+                                            <td><center>เสร็จสิน</center></td>
+                                        }
+                                        @{
+                                            item.TotalPercent = item.TotalPercent / 100;
+                                        }
+                                        <td><center>@item.TotalPercent.ToString("P02")</center></td>
+                                        <td><center>@item.ProjectSendDate.ToString("dd/MM/yyyy")</center></td>
+                                        <td><center>@item.CreateName</center></td>
+                                        <td>
+                                            <center>
+                                                <a href="@Url.Action("DetailProject", new { ProjectID = item.ProjectID })"><i class="fas fa-book-open"></i></a>
+                                            </center>
+                                        </td>
+                                        @if (item.CreateBy == Convert.ToInt32(Session["userID"]))
+                                        {
+                                            <td>
+                                                <center>
+                                                    <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="fas fa-wrench"></i></a>
+                                                </center>
+                                            </td>
+                                            if (item.CreateBy == Convert.ToInt32(Session["userID"]))
+                                            {
                                                 <td>
                                                     <center>
-                                                        <a href="@Url.Action("DetailProject",new { ProjectID = item.ProjectID})"><i class="fas fa-book-open"></i></a>
+                                                        <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a>
                                                     </center>
                                                 </td>
-                                                @if (item.ProjectRole == 1)
-                                                {
-                                                    <td>
-                                                        <center>
-                                                            <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="fas fa-wrench"></i></a>
-                                                        </center>
-                                                    </td>
-                                                    if (item.ProjectStatus != 4)
-                                                    {
-                                                        <td>
-                                                            <center>
-                                                                <a href="@Url.Action("DeleteProject", new { ProjectID = item.ProjectID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a>
-                                                            </center>
-                                                        </td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td></td>
-                                                    }
+                                            }
+                                            else
+                                            {
+                                                <td></td>
+                                            }
 
-                                                }
-                                            </tr>
-                                            role = @item.ProjectRole;
-                                            i++;
                                         }
+                                    </tr>
+                                                i++;
+                                            }
                                     }
                                 </tbody>
                             </table>
@@ -210,8 +206,12 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-3"></div>
             <div class="col-sm-3">
-                @if (role != 5)
-                {<a href="@Url.Action("AddProject")"><button type="button" class="btn btn-outline-primary btn-block shadow">สร้างโครงการ</button></a>}
+                @{
+                    if (Model.User_Permission != "C")
+                    {
+                        <a href="@Url.Action("AddProject")"><button type="button" class="btn btn-outline-primary btn-block shadow">สร้างโครงการ</button></a>
+                    }
+                }
             </div>
 
         </div>

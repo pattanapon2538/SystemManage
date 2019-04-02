@@ -51,9 +51,13 @@ namespace SystemManage.Models
         public double Amount_Non { get; set; }
         public double Percent_Non { get; set; }
         public int TotalCoding { get; set; }
+        [Required(ErrorMessage = "กรูณาเลือกทักษะในการพูดภาษาอังกฤษ")]
         public string Speaking { get; set; }
+        [Required(ErrorMessage = "กรูณาเลือกทักษะในการอ่านภาษาอังกฤษ")]
         public string Reading { get; set; }
+        [Required(ErrorMessage = "กรูณาเลือกทักษะในการเขียนภาษาอังกฤษ")]
         public string Writng { get; set; }
+        [Required(ErrorMessage = "กรูณาเลือกทักษะในการฟังภาษาอังกฤษ")]
         public string Listening { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
@@ -99,7 +103,6 @@ namespace SystemManage.Models
         }
         public enum _Role
         {
-            เลือก,
             ผู้จัดการโครงการ,
             ผู้พัฒนาซอฟแวร์,
             ผู้ทดสอบ,
