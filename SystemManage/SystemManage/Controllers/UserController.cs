@@ -160,12 +160,15 @@ namespace SystemManage.Controllers
                                 db.Skills.Remove(sk);
                                 db.SaveChanges();
                             }
-                            for (int i = 0; i < txt.Count() - 1; i++)
+                            if(txt != null)
                             {
-                                s.languageID = Convert.ToInt32(txt[i]);
-                                s.User_ID = model.Users_ID;
-                                db.Skills.Add(s);
-                                db.SaveChanges();
+                                for (int i = 0; i < txt.Count() - 1; i++)
+                                {
+                                    s.languageID = Convert.ToInt32(txt[i]);
+                                    s.User_ID = model.Users_ID;
+                                    db.Skills.Add(s);
+                                    db.SaveChanges();
+                                }
                             }
                         }
                     }
