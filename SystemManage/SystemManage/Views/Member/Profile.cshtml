@@ -87,8 +87,8 @@ chart.render();
                             <div class="form-group row">
                                 <label for="language" class="col-sm-2 col-form-label">ชื่อเล่น : </label>
                                 <div class="col-sm-4">
-                                    @Html.TextBoxFor(m => m.BirthDate, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker", Readonly = "", disabled = "ture" })
-                                    @Html.ValidationMessageFor(m => m.BirthDate, string.Empty, new { @style = "color:red" })
+                                    @Html.TextBoxFor(m => m.NikcName, new { @class = "form-control", @placeHolder = "กรุณาใส่ข้อมูล"})
+                                    @Html.ValidationMessageFor(m => m.NikcName, string.Empty, new { @style = "color:red" })
                                 </div>
                                 <label for="language" class="col-sm-2 col-form-label">เพศ : </label>
                                 <div class="col-sm-4">

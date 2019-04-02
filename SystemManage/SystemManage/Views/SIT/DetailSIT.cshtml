@@ -130,7 +130,7 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group">
                                                     @Html.HiddenFor(m => m.StepList, new { @Value = item._Step_ID })
-                                                    @Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName", selectedValue: item.ID_Task), new { @class = "form-control", Readonly = "" })
+                                                    @Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName", selectedValue: item.ID_Task), new { @class = "form-control", Readonly = "" , disabled = "ture" })
                                                 </div>
                                             </div>
                                         </div>
@@ -343,11 +343,11 @@
                                 @{
                                     if (Model.Handle == 0 && Model.QA_ID != Convert.ToInt32(Session["userID"]) && Model.Tester_ID != Convert.ToInt32(Session["userID"]))
                                     {
-                                        @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control" })
+                                        @Html.TextAreaFor(m => m.Comment_CM, new { @class = "form-control" })
                                     }
                                     else
                                     {
-                                        @Html.TextAreaFor(m => m.Comment_QA, new { @class = "form-control", Readonly = "" })
+                                        @Html.TextAreaFor(m => m.Comment_CM, new { @class = "form-control", Readonly = "" })
                                     }
                                 }
                             </div>
@@ -370,18 +370,18 @@
                         <div class="col-sm-2">
                             <a href="@Url.Action("ShowSIT")"><button type="button" class="btn btn-outline-danger" onclick='return confirm("คุณต้องการยกเลิกการทำรายการใช่หรือไม่่")'>ยกเลิก</button></a>
                             @{
-                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Status != 3)
                                 {
                                     <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")'>บันทึก</button>
                                 }
-                                else if (Model.Handle == Convert.ToInt32(Session["userID"]))
+                                else if (Model.Handle == Convert.ToInt32(Session["userID"]) && Model.Status !=3)
                                 {
                                     if (Model.Status != 4)
                                     {
                                         <button type="button" class="btn btn-outline-success" onclick='Check()'>บันทึก</button>
                                     }
                                 }
-                                else if (Model.Handle == 0 && Model.QA_ID != Convert.ToInt32(Session["userID"]) && Model.Tester_ID != Convert.ToInt32(Session["userID"]))
+                                else if (Model.Handle == 0 && Model.QA_ID != Convert.ToInt32(Session["userID"]) && Model.Tester_ID != Convert.ToInt32(Session["userID"]) && Model.Status != 3)
                                 {
                                     if (Model.Status != 4)
                                     {

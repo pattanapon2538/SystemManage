@@ -83,7 +83,7 @@ chart.render();
                                 </div>
                                 <label for="language" class="col-sm-2 col-form-label">ชื่อเล่น : </label>
                                 <div class="col-sm-4">
-                                    @Html.TextBoxFor(m => m.User_Name, new { @class = "form-control", Readonly = "" })
+                                    @Html.TextBoxFor(m => m.NikcName, new { @class = "form-control", Readonly = "" })
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -179,7 +179,12 @@ chart.render();
                                         </div>
                                     </div>*@
                                 <div class="submit-btn-area col-sm-6 mx-auto " style="margin-top: 50px ; margin-bottom: -20px">
-                                    <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>ยีนยัน</button>
+                                    @{
+                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) || Model.Users_ID == Convert.ToInt32(Session["userID"]))
+                                        {
+                                            <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>ยีนยัน</button>
+                                        }
+                                    }
                                 </div>
                             </div>
                         </div>

@@ -239,6 +239,7 @@ namespace SystemManage.Controllers
                 s.Comment_CM = model.Comment_CM;
                 s.UpdateBy = Convert.ToInt32(Session["userID"]);
                 s.UpdateDate = DateTime.Now;
+                db.SaveChanges();
                 Session["Show"] = 1;
                 return RedirectToAction("DetailSIT", new { SIT_ID = model.SIT_ID });
             }

@@ -76,7 +76,7 @@ namespace SystemManage.Controllers
             if (PoList.Position_ID == 113)//PositionID = 113 Dev 
             {
                 pm.Role = 2;
-                pm.Member_name = PoList.User_Name;
+                pm.Member_name = PoList.NickName;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
                 return RedirectToAction("ListMember");
@@ -84,7 +84,7 @@ namespace SystemManage.Controllers
             else if (PoList.Position_ID == 110)//PositionID = 110 Tester
             {
                 pm.Role = 3;
-                pm.Member_name = PoList.User_Name;
+                pm.Member_name = PoList.NickName;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
                 return RedirectToAction("ListMember");
@@ -92,7 +92,7 @@ namespace SystemManage.Controllers
             else if (PoList.Position_ID == 142)//PositionID = 142 QA 
             {
                 pm.Role = 4;
-                pm.Member_name = PoList.User_Name;
+                pm.Member_name = PoList.NickName;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
                 return RedirectToAction("ListMember");
@@ -100,13 +100,13 @@ namespace SystemManage.Controllers
             else if (PoList.Position_ID == 143)//PositionID = 143 ลูกค้า 
             {
                 pm.Role = 5;
-                pm.Member_name = PoList.User_Name;
+                pm.Member_name = PoList.NickName;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
                 return RedirectToAction("ListMember");
             }else //ถ้าไม่เข้าเงื่อไขให้เป็น Dev ทั้งหมด
             pm.Role = 2;
-            pm.Member_name = PoList.User_Name;
+            pm.Member_name = PoList.NickName;
             db.ProjectMembers.Add(pm);
             db.SaveChanges();
             ///////////////////////////////////////
@@ -251,6 +251,7 @@ namespace SystemManage.Controllers
             model.User_Name = u.User_Name;
             model.User_LastName = u.User_LastName;
             model.User_Email = u.User_Email;
+            model.NikcName = u.NickName;
             model.Phone = u.Phone;
             model.Contract_ID = u.Contract_ID;
             model.Date_of_Started = u.Date_of_Started;
@@ -425,6 +426,7 @@ namespace SystemManage.Controllers
             model.Users_ID = u.User_ID;
             model.User_Name = u.User_Name;
             model.User_LastName = u.User_LastName;
+            model.NikcName = u.NickName;
             model.User_Email = u.User_Email;
             model.Phone = u.Phone;
             model.Contract_ID = u.Contract_ID;
@@ -608,6 +610,7 @@ namespace SystemManage.Controllers
                 var r = db.Users.Where(m => m.User_ID == model.Users_ID).FirstOrDefault();
                 r.User_ID = model.Users_ID;
                 r.User_Email = model.User_Email;
+                r.NickName = model.NikcName;
                 r.User_Password = model.User_Password;
                 r.Phone = model.Phone;
                 if (model._Reading == UserModel.Levels.เก่ง)
@@ -715,6 +718,7 @@ namespace SystemManage.Controllers
                 user.User_Email = model.User_Email;
                 user.Phone = model.Phone;
                 user.comment = model.Comment;
+                user.NickName = model.NikcName;
                 db.SaveChanges();
             }
             else
