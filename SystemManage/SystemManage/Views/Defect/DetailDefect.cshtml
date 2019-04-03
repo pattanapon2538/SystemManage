@@ -28,22 +28,20 @@
     <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <script>
-
         //***scritpt datepicker***//
-        $(function () {
-            $("#datepicker1").datepicker();
-            $("#datepicker2").datepicker();
-            $("#datepicker3").datepicker();
-            $("#datepicker4").datepicker();
-            $("#datepicker5").datepicker();
-            $("#datepicker6").datepicker();
-            $("#datepicker7").datepicker();
-            $("#datepicker8").datepicker();
-            $("#datepicker9").datepicker();
-            $("#datepicker10").datepicker();
-        });
+        //$(function () {
+        //    $("#datepicker1").datepicker();
+        //    $("#datepicker2").datepicker();
+        //    $("#datepicker3").datepicker();
+        //    $("#datepicker4").datepicker();
+        //    $("#datepicker5").datepicker();
+        //    $("#datepicker6").datepicker();
+        //    $("#datepicker7").datepicker();
+        //    $("#datepicker8").datepicker();
+        //    $("#datepicker9").datepicker();
+        //    $("#datepicker10").datepicker();
+        //});
         //***//
-
         //***script addsubtask***//
         $(document).ready(function () {
             var i = 1;
@@ -54,27 +52,23 @@
             });
         });
         //***//
-
         //***script deletesubtask***//
         $(document).on('click', '#cancel', function () {
             var c = confirm("ยืนยันการลบที่จะลบ Defect นี้");
             if (c == true) {
                 $(this).parent('div').parent('div').parent('div').parent('div').remove();
             }
-
         });
         //***//
-
-        //***script confrimrefresh***//
-        window.onbeforeunload = function () {
-            return "ข้อมูลไม่ได้บันทึก";
-        };
-        //***//
-
+        ////***script confrimrefresh***//
+        //window.onbeforeunload = function () {
+        //    return "ข้อมูลไม่ได้บันทึก";
+        //};
+        ////***//
     </script>
     <!-- end datepicker script -->
 
-    <title>Defect</title>
+    <title>ข้อผิดพลาด</title>
 </head>
 <body>
     @using (Ajax.BeginForm("SaveData", "Defect", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }, new { enctype = "multipart/form-data" }))
@@ -176,21 +170,21 @@
                             if (Model.Status == 0)
                             {
                                 @*<div class="row">
-                        <div class="col-sm-12">
-                            <div class="input-group">
-                                <label class="label" style="margin-right: 10px">หมายเหตุผู้ทดสอบ :</label>
-                                @Html.TextAreaFor(m => m.Comment_Test, new { @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="input-group">
-                                <label class="label" style="margin-right: 10px">หมายเหตุผู้พัฒนา :</label>
-                                @Html.TextAreaFor(m => m.Comment_Dev, new { @class = "form-control", Readonly = "" })
-                            </div>
-                        </div>
-                    </div>*@
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <label class="label" style="margin-right: 10px">หมายเหตุผู้ทดสอบ :</label>
+                                                @Html.TextAreaFor(m => m.Comment_Test, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <label class="label" style="margin-right: 10px">หมายเหตุผู้พัฒนา :</label>
+                                                @Html.TextAreaFor(m => m.Comment_Dev, new { @class = "form-control", Readonly = "" })
+                                            </div>
+                                        </div>
+                                    </div>*@
                             }
                             else if (Model.Status == 3)
                             {
@@ -284,7 +278,7 @@
                             }
                         }
                     }
-                    
+
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -415,7 +409,7 @@
                         </div>
                     </div>
                 </div>
-                        </div>
+            </div>
         </div>
         @Html.HiddenFor(m => m.CreateBy)
     }

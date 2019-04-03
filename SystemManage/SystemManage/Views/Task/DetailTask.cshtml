@@ -148,7 +148,7 @@
                                     @Html.HiddenFor(m => m.AttachFile_Task)
                                     if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
                                     {
-                                        <div class="form-group" style="margin-top: 20px">
+                                        <div class="form-group" style="margin-top: 5px;margin-bottom:-5px;">
                                             <label class="label">ไฟล์แนบ :</label>
                                             @Html.TextBoxFor(m => m.AttachFile_Task, new { type = "file", @class = "form-control-file" })
                                             <a href='@Model.Show_Path_Sub' target="_blank">@Model.Show_FileName_Sub</a>
@@ -156,14 +156,14 @@
                                     }
                                     else if (Model.Show_Path_Sub != null)
                                     {
-                                        <div class="form-group" style="margin-top: 20px">
+                                        <div class="form-group" style="margin-top: 5px;margin-bottom:-5px;">
                                             <label class="label">ไฟล์แนบ :</label>
                                             <a href='@Model.Show_Path_Sub' target="_blank">@Model.Show_FileName_Sub</a>
                                         </div>
                                     }
                                     else
                                     {
-                                        <div class="form-group" style="margin-top: 20px">
+                                        <div class="form-group" style="margin-top: 5px;">
                                         </div>
                                     }
                                 }
@@ -176,14 +176,14 @@
                                         if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Status == 0)
                                         {
 
-                                            @Html.TextBoxFor(m => m.SubTaskDateSend,"{0:MM/dd/yyyy}", new { @class = "form-control datepicker" })
+                                            @Html.TextBoxFor(m => m.SubTaskDateSend, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker" })
                                         }
                                         else
                                         {
                                             @Html.TextBoxFor(m => m.SubTaskDateSend, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
                                         }
                                     }
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -339,21 +339,21 @@
                             </div>
                             <div class="col-sm-6">
                                 <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง:</label>
-                                
-                                    @{
-                                        if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Status == 0)
-                                        {
 
-                                            @Html.TextBoxFor(m => m.TestSentDate, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker3" })
-                                        }
-                                        else
-                                        {
-                                            @Html.TextBoxFor(m => m.TestSentDate, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
-                                        }
+                                @{
+                                    if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Status == 0)
+                                    {
+
+                                        @Html.TextBoxFor(m => m.TestSentDate, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker3" })
                                     }
-                                
-                                </div>
+                                    else
+                                    {
+                                        @Html.TextBoxFor(m => m.TestSentDate, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
+                                    }
+                                }
+
                             </div>
+                        </div>
                     </div>
                     <div style="text-align: center;margin-top: 20px">
                     </div>
@@ -397,19 +397,19 @@
                             </div>
                             <div class="col-sm-6">
                                 <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
-                                
+
                                 @{
                                     if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Status == 0)
                                     {
 
-                                        @Html.TextBoxFor(m => m.QASentDate,"{0:MM/dd/yyyy}", new { @class = "form-control datepicker2" })
+                                        @Html.TextBoxFor(m => m.QASentDate, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker2" })
                                     }
                                     else
                                     {
                                         @Html.TextBoxFor(m => m.QASentDate, "{0:MM/dd/yyyy}", new { @class = "form-control", Readonly = "" })
                                     }
                                 }
-                                
+
                             </div>
                         </div>
                     </div>
@@ -424,24 +424,24 @@
                             {
                                 if (Model.Handle == Convert.ToInt32(Session["userID"]))
                                 {
-                                    <a href="@Url.Action("AddDefect", "Defect")"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                                    <a href="@Url.Action("AddDefect", "Defect")"><button type="button" class="btn btn-warning btn-block">ข้อผิดพลาด</button></a>
                                 }
                                 else if (Model.Handle == 0 && Model.TestID != Convert.ToInt32(Session["userID"]) && Model.QAID != Convert.ToInt32(Session["userID"]))
                                 {
-                                    <a href="@Url.Action("AddDefect", "Defect")"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                                    <a href="@Url.Action("AddDefect", "Defect")"><button type="button" class="btn btn-warning btn-block">ข้อผิดพลาด</button></a>
                                 }
                             }
                             else if (Model.Status == 5)
                             {
                                 if (Model.SubDevID == Convert.ToInt32(Session["userId"]))
                                 {
-                                    <a href="@Url.Action("Defect_Dev", "Defect" ,new { SubID=Model.SubTaskID})"><button type="button" class="btn btn-outline-success btn-block">ข้อผิดพลาด</button></a>
+                                    <a href="@Url.Action("Defect_Dev", "Defect" ,new { SubID=Model.SubTaskID})"><button type="button" class="btn btn-warning btn-block">ข้อผิดพลาด</button></a>
                                 }
                             }
                         }
                     </div>
                 </div>
-                <div class="row" style="margin-top: 20px">
+                <div class="row" style="margin-top: 5px">
                     @{
                         @Html.HiddenFor(m => m.AttachFile)
                         if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
@@ -485,7 +485,7 @@
                                 else
                                 {
                                     <button type="submit" class="btn btn-outline-success">บันทึก</button>
-                                    <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                                    <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-block btn-primary" style="margin-top:5px" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
                                 }
                             }
                         }
@@ -502,7 +502,7 @@
                             else
                             {
                                 <button type="submit" class="btn btn-outline-success">บันทึก</button>
-                                <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-outline-success" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
+                                <a href="@Url.Action("SendTask","Task",new {SubID=Model.SubTaskID })"><button type="button" class="btn btn-block btn-primary" style="margin-top:5px" onclick='return confirm("คุณต้องการส่งงานใช่หรือไม่")'>ส่งงาน</button></a>
                             }
                         }
                     </div>

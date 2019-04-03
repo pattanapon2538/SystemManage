@@ -23,6 +23,16 @@
 <!-- Vendor CSS-->
 <link href="~/assets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
 <link href="~/assets/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+<style>
+    input, select, textarea {
+        max-width: 2800px;
+    }
+
+        textarea.form-control {
+            resize: none;
+            height: 150px;
+        }
+</style>
 @using (Html.BeginForm("SaveEdit", "Project", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
@@ -53,7 +63,7 @@
                     <div class="col-sm-2">
                         @Html.DropDownListFor(m => m.SIT, new SelectList(Enum.GetValues(typeof(ProjectModel.SIT_State))), new { @class = "form-control" })
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="input-group">
                             <label class="label" for="subject" style="margin-right: 10px"> สถานะ :</label>
                             <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
@@ -72,8 +82,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4">
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
                         <div class="input-group">
                             <label class="label" style="margin-right: 10px">@Html.Label("*", new { @style = "color:red" }) กำหนดส่ง :</label>
                             <div class="input-group-icon">
@@ -95,11 +106,6 @@
 }
 
 <script src="~/assets/js/global.js"></script>
-<style>
-    input, select, textarea {
-        max-width: 2800px;
-    }
-</style>
 <script>
     $('.datepicker').datepicker({
         uiLibrary: 'bootstrap4'

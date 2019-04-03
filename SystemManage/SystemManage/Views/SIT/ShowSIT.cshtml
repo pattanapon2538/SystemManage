@@ -1,11 +1,11 @@
 ﻿<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 @{
-                /**/
+    /**/
 
-                if (Session["userID"] == null && Session["ProjectID"] == null)
-                {
-                    Response.Redirect("~/Login/Index");
-                }
+    if (Session["userID"] == null && Session["ProjectID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 @{
     ViewBag.Title = "SIT";
@@ -25,6 +25,10 @@
         margin-bottom: 12px;
         border-radius: 18px;
         outline: none;
+    }
+
+    th {
+        white-space: nowrap;
     }
 </style>
 <script>
@@ -132,8 +136,7 @@
 </div>
 <div class="card-body">
     <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-9"></div>
+        <div class="col-sm-11"></div>
         <div class="col-sm-1">
             @{
                 if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
@@ -154,7 +157,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12 " style="overflow-x:auto">
-                <table class="table table-bordered">
+                <table class="table table-responsive-sm table-bordered">
                     <thead>
                         <tr class="table-info">
                             <th><center>ลำดับ</center></th>

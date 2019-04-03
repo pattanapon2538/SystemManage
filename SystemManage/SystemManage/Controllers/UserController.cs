@@ -367,6 +367,21 @@ namespace SystemManage.Controllers
             ModelList.Date_of_Started = DateTime.Now;
             ModelList.Date_of_Ended = DateTime.Now;
             ModelList.BirthDate = DateTime.Now;
+            //List<SkillModel> SkillData = new List<SkillModel>();
+            //var sk_List = db.Skills.Where(m => m.User_ID == 2392).ToList();
+            //if (sk_List != null)
+            //{
+            //    foreach (var item4 in sk_List)s
+            //    {
+            //        SkillData.Add(new SkillModel
+            //        {
+            //            SkillsID = item4.SkillsID,
+            //            languageID = item4.languageID,
+            //            UserID = item4.User_ID
+            //        });
+            //    }
+            //}
+            //ViewBag.DataList2 = SkillData;
             ModelList.PositionList = db.Positions.ToList<Position>();
             ModelList.ContractsList = db.Type_of_Contract.ToList<Type_of_Contract>();
             ModelList.LanguageList = db.Language_of_Type.ToList<Language_of_Type>();
@@ -423,7 +438,6 @@ namespace SystemManage.Controllers
             model.User_LastName = u.User_LastName;
             model.NikcName = u.NickName;
             model.User_Email = u.User_Email;
-            model.BirthDate = u.BirthDate;
             model.Address = u.Address;
             model.Contract_ID = u.Contract_ID;
             model.ContractFrom = u.ContractFrom;
@@ -431,12 +445,14 @@ namespace SystemManage.Controllers
             model.Phone = u.Phone;
             model.Gender = u.Gender;
             model.Permission = u.Permisstion;
-            model.Date_of_Started = u.Date_of_Started;
-            model.Date_of_Ended = u.Date_of_Ended;
+            string Date_of_Started = string.Format("{0:dd/MM/yyyy}", u.Date_of_Started);
+            string Date_of_Ended = string.Format("{0:dd/MM/yyyy}", u.Date_of_Ended);
+            string BirthDate = string.Format("{0:dd/MM/yyyy}", u.BirthDate);
             model.User_Password = u.User_Password;
             model.PathShow1 = u.AttachFile1;
             model.PathShow2 = u.AttachFile2;
             model.PathShow3 = u.AttachFile3;
+            model.NikcName = u.NickName;
             model.PathShow4 = u.AttachFile4;
             model.AttachShow1 = u.AttachShow1;
             model.AttachShow2 = u.AttachShow2;
@@ -506,15 +522,15 @@ namespace SystemManage.Controllers
             Name = model.User_Name ,
             LastName = model.User_LastName ,
             Email = model.User_Email ,
-            BirthDate = model.BirthDate,
+            BirthDate = BirthDate,
             Address = model.Address,
             Contract = model.Contract_ID,
             ContractFrom = model.ContractFrom,
             Postition = model.Position_ID,
             Phone = model.Phone,
             Permission = model.Permission,
-            Started = model.Date_of_Started,
-            Ended = model.Date_of_Ended,
+            Started = Date_of_Started,
+            Ended = Date_of_Ended,
             Language = model.LanguageID,
             Genders = model.Genders,
             Gender = model.Gender,
@@ -524,6 +540,7 @@ namespace SystemManage.Controllers
             Listening = model._Listening,
             PathShow1 = model.PathShow1,
             PathShow2 = model.PathShow2,
+            NikcName = model.NikcName,
             PathShow3 = model.PathShow3,
             PathShow4 = model.PathShow4,
             Show1 = model.AttachShow1,

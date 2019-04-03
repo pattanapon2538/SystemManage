@@ -11,6 +11,11 @@
     }
 }
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<style>
+    th {
+        white-space: nowrap;
+    }
+</style>
 <div class="card">
     <div class="card-body">
         <div class="card">
@@ -29,8 +34,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">
-                        <table class="table table-bordered">
+                    <div class="col-sm-12" style="overflow-x:auto">
+                        <table class="table table-responsive-sm table-bordered">
                             <thead>
                                 <tr class="table-info">
                                     <th><center>ชื่อ</center></th>
@@ -52,29 +57,29 @@
                                 @{
                                     foreach (var item in (List<UserModel>)ViewBag.DataList)
                                     {
-                                <tr>
-                                    <td><center>@item.User_Name</center></td>
-                                    <td><center>@item.User_LastName</center></td>
-                                    <td><center>@item.PositionName</center></td>
-                                    <td><center>@item.AVG</center></td>
-                                    <td><center>@item.Amount_Succ.ToString("P1")</center></td>
-                                    <td><center>@item.TotalCoding</center></td>
-                                    <td><a href="@Url.Action("HistoryUser",new {userID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                    @{
-                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
-                                        {
-                                            if (Model.ProjectCreateBy != item.Users_ID)
-                                            {
-                                                <td><center><a href="@Url.Action("DeleteMember", "Member", new { userID = item.Users_ID })"><i class="fas fa-backspace" style="cursor:pointer" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'></i></a></center></td>
-                                            }
-                                            else
-                                            {
-                                                <td></td>
-                                            }
+                                        <tr>
+                                            <td><center>@item.User_Name</center></td>
+                                            <td><center>@item.User_LastName</center></td>
+                                            <td><center>@item.PositionName</center></td>
+                                            <td><center>@item.AVG</center></td>
+                                            <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                            <td><center>@item.TotalCoding</center></td>
+                                            <td><a href="@Url.Action("HistoryUser",new {userID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                            @{
+                                                if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
+                                                {
+                                                    if (Model.ProjectCreateBy != item.Users_ID)
+                                                    {
+                                                        <td><center><a href="@Url.Action("DeleteMember", "Member", new { userID = item.Users_ID })"><i class="fas fa-backspace" style="cursor:pointer" onclick='return confirm("คุณต้องการทำรายการใช่หรือไม่")'></i></a></center></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
 
-                                        }
-                                    }
-                                </tr>
+                                                }
+                                            }
+                                        </tr>
 
                                     }
                                 }
@@ -92,20 +97,20 @@
     }
 </script>
 @*<script>
-    function CheckDelete(userID) {
+        function CheckDelete(userID) {
 
-        $.ajax({
-            type: "POST",
-            url: "@(Url.Action("CheckDelete", "Member"))",
-            data: { userID: userID },
-            dataType: "json",
-            success: function (data)
-            {
-                if (data.c == true)
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action("CheckDelete", "Member"))",
+                data: { userID: userID },
+                dataType: "json",
+                success: function (data)
                 {
-                    alert("ไม่สามารถลบผู้จัดการโครงการได้");
+                    if (data.c == true)
+                    {
+                        alert("ไม่สามารถลบผู้จัดการโครงการได้");
+                    }
                 }
-            }
-        });
-    }
-</script>*@
+            });
+        }
+    </script>*@

@@ -8,7 +8,7 @@ namespace SystemManage.Models
     public class SkillModel
     {
         public int SkillsID { get; set; }
-        public string UserID { get; set; }
-        public string languageID { get; set; }
+        public int UserID { get; set; }
+        public int languageID { get; set; }
     }
 }

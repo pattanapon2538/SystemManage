@@ -21,18 +21,18 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
     <script>
         //***scritpt datepicker***//
-        $(function () {
-            $("#datepicker1").datepicker();
-            $("#datepicker2").datepicker();
-            $("#datepicker3").datepicker();
-            $("#datepicker4").datepicker();
-            $("#datepicker5").datepicker();
-            $("#datepicker6").datepicker();
-            $("#datepicker7").datepicker();
-            $("#datepicker8").datepicker();
-            $("#datepicker9").datepicker();
-            $("#datepicker10").datepicker();
-        });
+        //$(function () {
+        //    $("#datepicker1").datepicker();
+        //    $("#datepicker2").datepicker();
+        //    $("#datepicker3").datepicker();
+        //    $("#datepicker4").datepicker();
+        //    $("#datepicker5").datepicker();
+        //    $("#datepicker6").datepicker();
+        //    $("#datepicker7").datepicker();
+        //    $("#datepicker8").datepicker();
+        //    $("#datepicker9").datepicker();
+        //    $("#datepicker10").datepicker();
+        //});
         //***//
         //***script addsubtask***//
         $(document).ready(function () {
@@ -52,10 +52,10 @@
             }
         });
         //***//
-        //***script confrimrefresh***//
-        window.onbeforeunload = function () {
-            return "ข้อมูลไม่ได้บันทึก";
-        };
+        ////***script confrimrefresh***//
+        //window.onbeforeunload = function () {
+        //    return "ข้อมูลไม่ได้บันทึก";
+        //};
                                     //***//
     </script>
     <!-- end datepicker script -->
@@ -73,7 +73,7 @@
     <title>ข้อผิดพลาด</title>
 </head>
 <body>
-    @using (Ajax.BeginForm("AddDefect", "Defect", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() } ,new { enctype = "multipart/form-data" }))
+    @using (Ajax.BeginForm("AddDefect", "Defect", new AjaxOptions { HttpMethod = FormMethod.Post.ToString() }, new { enctype = "multipart/form-data" }))
     {
         <div class="container">
             <div class="row">

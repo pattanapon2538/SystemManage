@@ -159,9 +159,14 @@
                                     @{
                                         foreach (var n in (List<LanguageOfTypeModel>)ViewBag.DataSkill)
                                         {
-                                            
-                                                <option name="Select_Lag" value="@n.languageID">@n.Name</option>
-                                           
+                                            @*foreach (var d in (List<SkillModel>)ViewBag.DataList2)
+                                            {
+                                                if (d.languageID == n.languageID)
+                                                {
+                                                    <option name="Select_Lag" value="@d.languageID" selected>@n.Name</option>
+                                                }
+                                            }*@
+                                            <option name="Select_Lag" value="@n.languageID">@n.Name</option>
                                         }
                                     }
                                 </select>
@@ -321,6 +326,7 @@
                     $("#fileName3").text(data.Show3);
                     $("#fileName4").text(data.Show4);
                     $("#Phone").val(data.Phone);
+                    $("#NikcName").val(data.NikcName);
                     $("#Permission").val(data.Permission);
                     if (data.Permission == "A") {
                         document.getElementById("Admin").checked = "true";

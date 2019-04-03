@@ -27,7 +27,7 @@
                         <table class="table-borderless" style="margin-left:50px;margin-top:20px;margin-bottom:20px">
                             <tbody>
                                 <tr>
-                                    <td><u>ชื่อโครงการ</u> : @Session["ProjectName"] </td>
+                                    <td><u>ชื่อโครงการ</u> : <span style="background-color: #FFFF00">@Session["ProjectName"] </td>
                                 </tr>
                                 <tr>
                                     <td><br></td>
@@ -39,7 +39,7 @@
                                     <td><br /></td>
                                 </tr>
                                 <tr>
-                                    <td style="padding-left:50px">@Model.ProjectDetail</td>
+                                    <td style="padding-left:50px"><span style="background-color: #FFFF00"> @Model.ProjectDetail</td>
                                 </tr>
                                 <tr>
                                     <td><br></td>
@@ -57,7 +57,7 @@
                                         if (item.Role == 1)
                                         {
                                             <tr>
-                                                <td style="padding-left:50px"><u>ผู้จัดการโครงการ</u> : @item.PM </td>
+                                                <td style="padding-left:50px"><u>ผู้จัดการโครงการ</u> : <span style="background-color: #FFFF00">@item.PM </td>
                                                 <td>
                                                 <td>
                                                 <td></td>
@@ -68,7 +68,7 @@
                                             if (r != item.Role)
                                             {
                                                 <tr>
-                                                    <td style="padding-left:50px"><u>ผู้พัฒนา</u> : @item.Dev </td>
+                                                    <td style="padding-left:50px;white-space: nowrap;"><u>ผู้พัฒนา</u> : <span style="background-color: #FFFF00">@item.Dev </td>
                                                     <td>
                                                     <td>
                                                     <td></td>
@@ -77,7 +77,7 @@
                                             else
                                             {
                                                 <tr>
-                                                    <td style="padding-left:115px"> @item.Dev</td>
+                                                    <td style="padding-left:115px"> <span style="background-color: #FFFF00">@item.Dev</td>
                                                     <td>
                                                     <td></td>
                                                 </tr>
@@ -89,7 +89,7 @@
                                             if (r != item.Role)
                                             {
                                                 <tr>
-                                                    <td style="padding-left:50px"><u>ผู้ทดสอบ</u> :  @item.Tester</td>
+                                                    <td style="padding-left:50px"><u>ผู้ทดสอบ</u> :  <span style="background-color: #FFFF00">@item.Tester</td>
                                                     <td>
                                                     <td>
                                                     <td></td>
@@ -98,7 +98,7 @@
                                             else
                                             {
                                                 <tr>
-                                                    <td style="padding-left:123px">@item.Tester</td>
+                                                    <td style="padding-left:123px"><span style="background-color: #FFFF00">@item.Tester</td>
                                                     <td>
                                                     <td>
                                                     <td></td>
@@ -112,7 +112,7 @@
                                             if (r != item.Role)
                                             {
                                                 <tr>
-                                                    <td style="padding-left:50px"><u>ผู้ตรวจสอบ</u> : @item.QA</td>
+                                                    <td style="padding-left:50px"><u>ผู้ตรวจสอบ</u> :<span style="background-color: #FFFF00"> @item.QA</td>
                                                     <td>
                                                     <td>
                                                     <td></td>
@@ -125,7 +125,7 @@
                                                     <td>
                                                     <td>
                                                     <td>
-                                                        @item.QA
+                                                        <span style="background-color: #FFFF00"> @item.QA
                                                     </td>
                                                 </tr>
                                             }
@@ -151,25 +151,25 @@
                                         {
                                             s++;
                                             <tr>
-                                                <td style="padding-left:166px">@s. @n.SubName</td>
-                                                <td style="padding-left:30px"><u>ผู้พัฒนา</u> : @n.SubDevID</td>
+                                                <td style="padding-left:166px"><span style="background-color: #FFFF00"> @s. @n.SubName</td>
+                                                <td style="padding-left:30px;white-space: nowrap;"><u>ผู้พัฒนา    </u> : <span style="background-color: #FFFF00"> @n.SubDevID</td>
                                             </tr>
                                         }
                                         else
                                         {
                                             s = 1;
                                             <tr>
-                                                <td style="padding-left:50px"><u>งานหลัก</u> : @n.TaskName</td>
+                                                <td style="padding-left:50px"><u>งานหลัก</u> : <span style="background-color: #FFFF00"> @n.TaskName</td>
                                             </tr>
                                             <tr>
-                                                <td style="padding-left:50px"><u>ผู้ทดสอบ</u> : @n.TesterName</td>
+                                                <td style="padding-left:50px"><u>ผู้ทดสอบ</u> : <span style="background-color: #FFFF00"> @n.TesterName</td>
                                             </tr>
                                             <tr>
-                                                <td style="padding-left:50px"><u>ผู้ตรวจสอบ</u> : @n.QAName</td>
+                                                <td style="padding-left:50px"><u>ผู้ตรวจสอบ</u> : <span style="background-color: #FFFF00"> @n.QAName</td>
                                             </tr>
                                             <tr>
-                                                <td style="padding-left:100px"><u>งานย่อย</u> : @s. @n.SubName</td>
-                                                <td style="padding-left:30px"><u>ผู้พัฒนา</u> : @n.SubDevID</td>
+                                                <td style="padding-left:100px"><u>งานย่อย</u> : <span style="background-color: #FFFF00"> @s. @n.SubName</td>
+                                                <td style="padding-left:30px;white-space: nowrap;"><u>ผู้พัฒนา</u> : <span style="background-color: #FFFF00"> @n.SubDevID</td>
                                                 <td>
                                                 <td>
                                                 <td></td>

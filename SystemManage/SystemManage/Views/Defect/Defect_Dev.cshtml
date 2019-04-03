@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <h1 class="text-center" style="margin-top: 20pt">Defect</h1>
+                    <h1 class="text-center" style="margin-top: 20pt">ข้อผิดพลาด</h1>
                 </div>
             </div>
             <div class="card shadow" style="margin-top: 50px;margin-bottom: 50px">
@@ -51,7 +51,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="comment">รายละเอียดข้อผิดพลาด:</label>
-                                            @Html.TextAreaFor(m => item.Detail, new { @class = "form-control", @type = "TextArea", @readonly = "" })
+                                        @Html.TextAreaFor(m => item.Detail, new { @class = "form-control", @type = "TextArea", @readonly = "" })
                                     </div>
                                 </div>
                             </div>
@@ -180,4 +180,3 @@
         max-width: 2800px;
     }
 </style>
-

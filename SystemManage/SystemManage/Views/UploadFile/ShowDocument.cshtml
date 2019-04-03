@@ -24,6 +24,10 @@
         border-radius: 18px;
         outline: none;
     }
+
+    th {
+        white-space: nowrap;
+    }
 </style>
 <script>
     $(document).ready(function () {
@@ -83,7 +87,7 @@
                     <div class="col-sm-6">    </div>
                     <div class="col-sm-1" style="margin: auto">
                         @{
-                            if (Model.CreateBy == Convert.ToInt32(Session["userID"])&& Model.Project_Status != 4)
+                            if (Model.CreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
                             {
                                 <a href="@Url.Action("Index", "UploadFile")"><button type="button" class="btn btn-outline-success">+ เพิ่มเอกสาร</button></a>
                             }
@@ -98,7 +102,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12 " style="overflow-x:auto">
-                <table class="table table-bordered">
+                <table class="table table-responsive-sm table-bordered">
                     <thead>
                         <tr class="table-info">
                             <th><center>ดู</center></th>
@@ -112,26 +116,26 @@
                                     <th><center>ลบ</center></th>
                                 }
                             }
-                            </tr>
+                        </tr>
                     </thead>
                     <tbody id="tb">
                         @{
                             int i = 1;
                             foreach (var item in (List<DocumentModel>)ViewBag.DataList)
                             {
-                        <tr>
-                            <td><center><a href="@item.pathFormView" target="_blank"><i class="fas fa-eye"></i></a></center></td>
-                            <td><center>@i</center></td>
-                            <td><center>@item.DocumentName</center></td>
-                            <td><center>@item.Type</center></td>
-                            <td><center><a href="@Url.Action("DetailDocument",new {DocumentID = item.DocumentID })"><i class="fas fa-book-open"></i></a></center></td>
-                            @{
-                                if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
-                                {
-                                    <td><center><a href="@Url.Action("DeleteDocument",new {DocumentID = item.DocumentID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center></td>
-                                }
-                            }
-                        </tr>
+                                <tr>
+                                    <td><center><a href="@item.pathFormView" target="_blank"><i class="fas fa-eye"></i></a></center></td>
+                                    <td><center>@i</center></td>
+                                    <td><center>@item.DocumentName</center></td>
+                                    <td><center>@item.Type</center></td>
+                                    <td><center><a href="@Url.Action("DetailDocument",new {DocumentID = item.DocumentID })"><i class="fas fa-book-open"></i></a></center></td>
+                                    @{
+                                        if (Model.CreateBy == Convert.ToInt32(Session["userID"]))
+                                        {
+                                            <td><center><a href="@Url.Action("DeleteDocument",new {DocumentID = item.DocumentID })"><i class="fas fa-backspace" onclick='return confirm("คุณต้องการลบข้อมูลใช่หรือไม่่")'></i></a></center></td>
+                                        }
+                                    }
+                                </tr>
                                 ++i;
                             }
                         }
