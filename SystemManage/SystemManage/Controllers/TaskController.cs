@@ -712,6 +712,7 @@ namespace SystemManage.Controllers
             //Tester
             else if (r.Role == 3)
             {
+                
                 st.SubStatus = 2;
                 st.SubPercent = 50;
                 st.Handle = t.QAID;

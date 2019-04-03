@@ -33,6 +33,8 @@ namespace SystemManage.Models
         public string AttachShow2 { get; set; }
         public string AttachShow3 { get; set; }
         public string AttachShow4 { get; set; }
+        public string Start { get; set; }
+        public string End { get; set; }
         [DisplayName("Upload File")]
         public HttpPostedFileBase AttachFile1 { get; set; }
         public HttpPostedFileBase AttachFile2 { get; set; }

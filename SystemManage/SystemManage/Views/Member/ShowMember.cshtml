@@ -25,12 +25,7 @@
                         <h1 style="margin-bottom: 20pt">สมาชิกในโครงการ</h1>
                     </div>
                     <div class="col-sm-1" style="margin: auto">
-                        @{
-                            if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
-                            {
-                                <a href="@Url.Action("ListMember")"><button type="button" class="btn btn-outline-success">เพิ่มสมาชิก</button></a>
-                            }
-                        }
+                                <a href="@Url.Action("ListMember")"><button type="button" class="btn btn-outline-success">ค้นหาสมาชิก</button></a>
                     </div>
                 </div>
                 <div class="row">

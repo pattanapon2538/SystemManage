@@ -25,7 +25,10 @@ namespace SystemManage.Controllers
             UserModel model = new UserModel();
             var f = db.Follows.Where(m => m.PM_ID == userID).OrderBy(m => m.Follow_ID).ToList();
             var user = db.Users.Where(m => m.Permisstion != "A" && m.Date_of_Ended >= DateTime.Now).OrderBy(m => m.User_ID).ToList();
+            var PM = db.Projects.Where(m => m.ProjectID == projectID).FirstOrDefault();
             model.Follow_C = f.Count();
+            model.ProjectCreateBy = PM.CreateBy;
+            model.Project_Status = PM.Status;
             foreach (var u in f)
             {
                 F_List.Add(new FollowModel {
@@ -46,17 +49,30 @@ namespace SystemManage.Controllers
                     SuccPercent = Convert.ToDouble(d.Amount_Succ) / totalWork;
                 }
                 var PositionDB = db.Positions.Where(m => m.Position_ID == d.Position_ID).FirstOrDefault();
-                     UserList.Add(new UserModel
-                     {
+                var Contract = db.Type_of_Contract.Where(m => m.Contrat_ID == d.Contract_ID).FirstOrDefault();
+                var skill = db.Skills.Where(m => m.User_ID == d.User_ID).ToList();
+                string Languages = "";
+                foreach (var item in skill)
+                {
+                    var language = db.Language_of_Type.Where(m => m.languageID == item.languageID).FirstOrDefault();
+                    Languages = Languages + "" + language.Name;
+                }
+                UserList.Add(new UserModel
+                {
+                        NikcName = d.NickName,
+                        ContactName = Contract.Contrat_Name,
+                            Start = string.Format("{0:dd/MM/yyyy}", d.Date_of_Started),
+                            End = string.Format("{0:dd/MM/yyyy}", d.Date_of_Ended),
                          Users_ID = d.User_ID,
                          User_Email = d.User_Email,
                          User_Name = d.User_Name,
                          User_LastName = d.User_LastName,
                          PositionName = PositionDB.Name,
+                         language_string = Languages,
                          TotalCoding = d.TotalCoding,
                          Amount_Succ = SuccPercent,
                          AVG = Math.Round(d.AVG, 1) //ความยากของงาน
-                     });    
+                });    
             }
                 ViewBag.DataList = UserList;
                 ViewBag.DataList2 = F_List;
@@ -150,8 +166,6 @@ namespace SystemManage.Controllers
             List<UserModel> UserList = new List<UserModel>();
             int DataProjectID = Convert.ToInt32(Session["ProjectID"]);
             UserModel model = new UserModel();
-            //var query2 = db.Users.SqlQuery("select Users.User_ID from Users LEFT JOIN Skills ON Users.User_ID = Skills.User_ID").ToList();
-            //var query = (from o in db.Users join d in db.Skills on o.User_ID equals d.User_ID where o.User_ID == null  select o).ToList();
             var item = db.ProjectMembers.Where(m => m.ProjectID == DataProjectID).ToList();
             var c = db.Projects.Where(m => m.ProjectID == DataProjectID).FirstOrDefault();
             foreach (var i in item)

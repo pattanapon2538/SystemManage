@@ -493,7 +493,7 @@
                         {
                             <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่")'>บันทึก</button>
                         }
-                        else if (Model.Handle == 0 && Model.TestID != Convert.ToInt32(Session["userID"]) && Model.QAID != Convert.ToInt32(Session["userID"]))
+                        else if (Model.Handle == 0 && Model.TestID != Convert.ToInt32(Session["userID"]) && Model.QAID != Convert.ToInt32(Session["userID"]) && Model.SubDevID != Convert.ToInt32(Session["userID"]))
                         {
                             if (Convert.ToInt32(Session["Save"]) == 0)
                             {

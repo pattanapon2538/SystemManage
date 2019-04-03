@@ -189,14 +189,24 @@
                         <thead>
                             <tr class="table-info">
                                 <th><center>ชื่นชอบ</center></th>
+                                <th><center>อีเมล</center></th>
                                 <th><center>ชื่อ</center></th>
                                 <th><center>นามสกุล</center></th>
+                                <th><center>ชื่อเล่น</center></th>
                                 <th><center>ตำแหน่ง</center></th>
-                                <th><center>ความยากของงาน   <span style="cursor:pointer" onclick="information()"><i class="fas fa-info-circle"></i></span></center></th>
+                                <th><center>รูปแบบสัญญาจ้าง</center></th>
+                                <th><center>วันที่เริ่มทำงาน</center></th>
+                                <th><center>วันที่สิ้นสุดการทำงาน</center></th>
+                                <th><center>ความชำนาญ</center></th>
+                                <th><center>ความยากของงาน  <span style="cursor:pointer" onclick="information()"><i class="fas fa-info-circle"></i></span></center></th>
                                 <th><center>เปอร์เซ็นความสำเร็จ</center></th>
-                                <th><center>จำนวนการโค๊ต</center></th>
                                 <th><center>ดูรายละเอียด</center></th>
-                                <th><center>เพิ่ม</center></th>
+                                @{
+                                    if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
+                                    {
+                                        <th><center>เพิ่ม</center></th>
+                                    }
+                                }
                             </tr>
                         </thead>
                         <tbody>
@@ -205,23 +215,32 @@
                                 {
                                     foreach (var item2 in (List<FollowModel>)ViewBag.DataList2)
                                     {
-                                        <tr>
-                                            @{
-                                                if (item.Users_ID == item2.user_ID)
-                                                {
-                                                    <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star_yellow.png" width="20" height="20"></a></center></td>
-                                                    <td><center>@item.User_Name</center></td>
-                                                    <td><center>@item.User_LastName</center></td>
-                                                    <td><center>@item.PositionName</center></td>
-                                                    <td><center>@item.AVG.ToString("#.#")</center></td>
-                                                    <td><center>@item.Amount_Succ.ToString("P1")</center></td>
-                                                    <td><center>@item.TotalCoding</center></td>
-                                                    <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                    <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
-                                                }
-                                            }
+                            <tr>
+                                @{
+                                    if (item.Users_ID == item2.user_ID)
+                                    {
+                                        <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star_yellow.png" width="20" height="20"></a></center></td>
+                                        <th><center>@item.User_Email</center></th>
+                                        <td><center>@item.User_Name</center></td>
+                                        <td><center>@item.User_LastName</center></td>
+                                        <th><center>@item.NikcName</center></th>
+                                        <td><center>@item.PositionName</center></td>
+                                        <th><center>@item.ContactName</center></th>
+                                        <th><center>@item.Start</center></th>
+                                        <th><center>@item.End</center></th>
+                                        <th><center>@item.language_string</center></th>
+                                        <td><center>@item.AVG.ToString("#.#")</center></td>
+                                        <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                        <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
 
-                                        </tr>
+                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
+                                        {
+                                            <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
+                                        }
+                                    }
+                                }
+
+                            </tr>
                                     }
                                 };
                             }
@@ -230,20 +249,29 @@
                                 {
                                     foreach (var item in (List<UserModel>)ViewBag.DataList)
                                     {
-                                        <tr>
-                                            @{
-                                                <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
-                                                <td><center>@item.User_Name</center></td>
-                                                <td><center>@item.User_LastName</center></td>
-                                                <td><center>@item.PositionName</center></td>
-                                                <td><center>@item.AVG</center></td>
-                                                <td><center>@item.Amount_Succ.ToString("P1")</center></td>
-                                                <td><center>@item.TotalCoding</center></td>
-                                                <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
+                            <tr>
+                                @{
+                                    <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
+                                    <th><center>@item.User_Email</center></th>
+                                    <td><center>@item.User_Name</center></td>
+                                    <td><center>@item.User_LastName</center></td>
+                                    <th><center>@item.NikcName</center></th>
+                                    <td><center>@item.PositionName</center></td>
+                                    <th><center>@item.ContactName</center></th>
+                                    <th><center>@item.Start</center></th>
+                                    <th><center>@item.End</center></th>
+                                    <th><center>@item.language_string</center></th>
+                                    <td><center>@item.AVG.ToString("#.#")</center></td>
+                                    <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                    <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                    if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
+                                    {
+                                        <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
+                                    }
 
-                                            }
-                                        </tr>
+
+                                }
+                            </tr>
 
                                     };
                                 }
@@ -253,23 +281,32 @@
                                     {
                                         foreach (var item2 in (List<FollowModel>)ViewBag.DataList2)
                                         {
-                                            <tr>
-                                                @{
-                                                    if (item2.user_ID != item.Users_ID)
-                                                    {
-                                                        <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
-                                                        <td><center>@item.User_Name</center></td>
-                                                        <td><center>@item.User_LastName</center></td>
-                                                        <td><center>@item.PositionName</center></td>
-                                                        <td><center>@item.AVG</center></td>
-                                                        <td><center>@item.Amount_Succ.ToString("P1")</center></td>
-                                                        <td><center>@item.TotalCoding</center></td>
-                                                        <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                        <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
-                                                    }
-                                                }
+                            <tr>
+                                @{
+                                    if (item2.user_ID != item.Users_ID)
+                                    {
+                                        <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
+                                        <th><center>@item.User_Email</center></th>
+                                        <td><center>@item.User_Name</center></td>
+                                        <td><center>@item.User_LastName</center></td>
+                                        <th><center>@item.NikcName</center></th>
+                                        <td><center>@item.PositionName</center></td>
+                                        <th><center>@item.ContactName</center></th>
+                                        <th><center>@item.Start</center></th>
+                                        <th><center>@item.End</center></th>
+                                        <th><center>@item.language_string</center></th>
+                                        <td><center>@item.AVG.ToString("#.#")</center></td>
+                                        <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                        <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
 
-                                            </tr>
+                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
+                                        {
+                                            <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
+                                        }
+                                    }
+                                }
+
+                            </tr>
                                         }
                                     };
                                 }
