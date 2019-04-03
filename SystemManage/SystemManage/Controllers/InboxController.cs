@@ -25,36 +25,52 @@ namespace SystemManage.Controllers
             List<InboxModel> InboxList = new List<InboxModel>();
             List<LogMessageModel> LogList = new List<LogMessageModel>();
             var userId = Convert.ToInt32(Session["userID"]);
-            int item = 0;
             string Name_User = "";
+            int num = 0;
+            int co = 1;
             var u = db.Messages.Where(m => m.CreateBy == userId || m.SendTo == userId).OrderByDescending(m => m.CreateDate).ToList();
-            int num = 1;
             foreach (var c in u)
             {
                 var i = db.Mails.Where(m => m.Mail_ID == c.Mail_ID).FirstOrDefault();
                 var l = db.LogMessages.Where(m => m.Message_ID == c.Message_ID).FirstOrDefault();
                 var k = db.Users.Where(m => m.User_ID == l.Recive).FirstOrDefault();
                 var Name = db.Users.Where(m => m.User_ID == c.SendTo).FirstOrDefault();
-                if (num == 1)
-                {
-                    Name_User = Name.User_Name;
-                }
-                else
-                {
-                    Name_User = Name_User + "," + Name.User_Name;
-                }
-                if(u.Count == num)
+                if (c.Mail_ID != num)
                 {
                     InboxList.Add(new InboxModel
                     {
                         MailID = c.Message_ID.ToString(),
                         MailName = c.Name,
                         Status = i.Status,
-                        SendTo = Name_User
+                        SendTo = Name.User_Name
                     });
+                    num = c.Mail_ID;
                 }
-                item = c.Mail_ID;
-                num++;
+                else
+                {
+                    if (co == 1)
+                    {
+                        Name_User = Name.User_Name;
+                    }
+                    else
+                    {
+                        Name_User = Name_User + "," + Name.User_Name;
+                    }
+                    var MailCount = db.Messages.Where(m => m.Mail_ID == c.Mail_ID).ToList();
+                    if(MailCount.Count  == co)
+                    {
+                        InboxList.Add(new InboxModel
+                        {
+                            MailID = c.Message_ID.ToString(),
+                            MailName = c.Name,
+                            Status = i.Status,
+                            SendTo = Name_User
+                        });
+                        num = c.Mail_ID;
+                        co = 0;
+                    }
+                    co++;
+                }
             }
             ViewBag.DataList = InboxList;
             return View();
