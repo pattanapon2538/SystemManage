@@ -231,9 +231,21 @@ chart.render();
                                     @Html.HiddenFor(m => m.language_string)
                                     <select class="demo" multiple="multiple" id="Select_lg">
                                         @{
+                                            int num = 0;
                                             foreach (var n in (List<LanguageOfTypeModel>)ViewBag.DataLg)
                                             {
-                                                <option name="Select_Lag" value="@n.languageID">@n.Name</option>
+                                                foreach (var item in (List<SkillModel>)ViewBag.DataList2)
+                                                {
+                                                    if (n.languageID == item.languageID)
+                                                    {
+                                                        <option name="Select_Lag" value="@item.languageID" selected>@n.Name</option>
+                                                        num = item.languageID;
+                                                    }
+                                                }
+                                                if (n.languageID != num)
+                                                {
+                                                    <option name="Select_Lag" value="@n.languageID">@n.Name</option>
+                                                }
                                             }
                                         }
                                     </select>

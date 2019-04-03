@@ -55,7 +55,7 @@ namespace SystemManage.Controllers
                 foreach (var item in skill)
                 {
                     var language = db.Language_of_Type.Where(m => m.languageID == item.languageID).FirstOrDefault();
-                    Languages = Languages + "" + language.Name;
+                    Languages = Languages + " " + language.Name;
                 }
                 UserList.Add(new UserModel
                 {
@@ -390,6 +390,15 @@ namespace SystemManage.Controllers
             }
             UserModel model = new UserModel();
             List<UserModel> TaskList = new List<UserModel>();
+            List<SkillModel> Skill_List = new List<SkillModel>();
+            var sk = db.Skills.Where(m => m.User_ID == userID).ToList();
+            foreach (var item in sk)
+            {
+                Skill_List.Add(new SkillModel {
+                    languageID = item.languageID,
+                    UserID = item.User_ID,
+                });
+            }
             List<LanguageOfTypeModel> Lg_List = new List<LanguageOfTypeModel>();
             var data = db.Language_of_Type.ToList();
             foreach (var l in data)
@@ -592,6 +601,7 @@ namespace SystemManage.Controllers
                 }
             }
             ViewBag.DataList = TaskList;
+            ViewBag.DataList2 = Skill_List;
             return View(model);
         }
         public ActionResult CheckMember(string userID)
