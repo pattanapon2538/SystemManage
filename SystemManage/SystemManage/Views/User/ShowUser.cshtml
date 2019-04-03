@@ -30,6 +30,8 @@
             {
                 @Html.AntiForgeryToken()
                 <form>
+                    <div class="card">
+                    <div class="card-body">
                     <div class="login-form-body shadow " style="border-style:solid ;border-width: 1px;margin-left: -200px;width:800px">
                         <h2 class="text-center" style="margin-bottom:20px;margin-top:-10px">ประวัติส่วนตัว</h2>
                         <div class="form-group row">
@@ -228,11 +230,13 @@
                             <button id="submits" type="submit" onclick="check_password()">เพิ่ม</button>
                         </div>
                     </div>
+                    </div>
+                    </div>
                 </form>
             }
         </div>
     </div>
-    <div class="row" id="tb-data">
+    <div class="row" id="tb-data">  
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">

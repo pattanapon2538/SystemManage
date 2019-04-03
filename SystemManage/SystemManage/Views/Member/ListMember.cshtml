@@ -44,6 +44,18 @@
 
         table.TF td {
             padding: 12px;
+            white-space: nowrap;
+        }
+
+        input.flt {
+            background-position: 10px 12px;
+            width: 0;
+            font-size: 16px;
+            padding: 12px 20px 12px 20px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+            border-radius: 18px;
+            outline: none;
         }
     </style>
 </head>
@@ -70,14 +82,9 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <span id="0" hidden></span>
-                                @*<label for="a">อีเมล : </label>
-                                    <span id="a" class="input-group-text"></span>*@
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="a">อีเมล : </span>
-                                    </div>
-                                </div>
-                            </div>
+                                <label for="a">อีเมล : </label>
+                                <span id="a"></span>
+                             </div>
                             <div class="col-sm-4">
                                 <label for="b">ชื่อ : </label>
                                 <span id="b"></span>
