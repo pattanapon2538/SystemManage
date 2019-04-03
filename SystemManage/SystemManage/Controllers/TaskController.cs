@@ -95,27 +95,19 @@ namespace SystemManage.Controllers
                 /////////////////////////////////////
                 var Host = db.Users.Where(m => m.User_ID == t.CreateBy).FirstOrDefault();
                 var recevier = db.Users.Where(m => m.User_ID == model.TestID).FirstOrDefault();
+                var QA_Recevier = db.Users.Where(m => m.User_ID == model.QAID).FirstOrDefault();
                 string senders = Host.User_Email.ToString();
                 //string sender = "systemmanage59346@gmail.com";
                 string subjects = t.TaskName + "" + st.SubName;
                 string receivers_Tester = recevier.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string messs_Tester = null;
-                if (model.AttachFile != null)
-                {
-                    string Path_file = "http://localhost:8080" + t.AttachFile;
-                    messs_Tester = "<html><body><p>ถึงคูณ " + receivers_Tester + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; คุณได้รับมอบหมายงาน" + model.TaskName + "</p><p>กำหนดส่งภายในวันที่" + model.TestSentDate + "</p>เพื่อทำการทดสอบ</p> <p> </br></p></body></html>";
-                }
-                else
-                {
-                    messs_Tester = "<html><body><p>ถึงคูณ " + receivers_Tester + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; คุณได้รับมอบหมายงาน" + model.TaskName + "</p><p>กำหนดส่งภายในวันที่" + model.TestSentDate + "</p>เพื่อทำการทดสอบ</p> <p> </br></p></body></html>";
-                }
+                string messs_Tester = "<html><body><p>ถึงคูณ " + recevier.User_Name +" "+ recevier.User_LastName + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; คุณได้รับมอบหมายงาน  " + model.TaskName + "("+model.level+")"+"</p><p>กำหนดส่งภายในวันที่ " + string.Format("{0:dd/MM/yyyy}",model.TestSentDate) + "</p><p>รายละเอียดงานมีดังนี้</p><p>"+ model.DescriptionTask +" และรายละเอียดเพิ่มของผู้ทดสอบ  "+model.DescriptionTest+"</p><p>############################</p><p>"+Host.User_Name+" "+Host.User_LastName+"</p></body></html>";
                 e.SendEmail(receivers_Tester, subjects, messs_Tester, senders);
                 ///////////////////////////////////////
-                string receivers_QA = recevier.User_Email.ToString();
+                string receivers_QA = QA_Recevier.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string messs_QA = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
-                e.SendEmail(receivers_Tester, subjects, messs_QA, senders);
+                string messs_QA = "<html><body><p>ถึงคูณ " + QA_Recevier.User_Name + " " + QA_Recevier.User_LastName + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; คุณได้รับมอบหมายงาน  " + model.TaskName + "(" + model.level + ")" + "</p><p>กำหนดส่งภายในวันที่ " + string.Format("{0:dd/MM/yyyy}", model.QASentDate) + "</p><p>รายละเอียดงานมีดังนี้</p><p>" + model.DescriptionTask + " และรายละเอียดเพิ่มของผู้ตรวจสอบ  " + model.DescriptionQA + "</p><p>############################</p><p>" + Host.User_Name + " " + Host.User_LastName + "</p></body></html>";
+                e.SendEmail(receivers_QA, subjects, messs_QA, senders);
                 var count = model.SubTasksName.Count;
                 if (count > 1)
                 {
@@ -145,7 +137,7 @@ namespace SystemManage.Controllers
                         //string sender = "systemmanage59346@gmail.com";
                         string receiversDev = Sendtos.User_Email.ToString();
                         //string receiver = "pattanapon2538@outlook.com";
-                        string messs_Dev = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                        string messs_Dev = "<html><body><p>ถึงคูณ " + Sendtos.User_Name + " " + Sendtos.User_LastName + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; คุณได้รับมอบหมายงาน  " + model.TaskName + "(" + model.level + ")" + "</p><p>กำหนดส่งภายในวันที่ " + string.Format("{0:dd/MM/yyyy}", model.SubTaskSendDate[item]) + "</p><p>รายละเอียดงานมีดังนี้</p><p>" + model.DescriptionTask + " และรายละเอียดเพิ่มของผู้พัฒนาระบบ  " + model.SubTasksDis[item].ToString() + "</p><p>############################</p><p>" + Host.User_Name + " " + Host.User_LastName + "</p></body></html>";
                         e.SendEmail(receiversDev, subjects, messs_Dev, senders);
                         //int total = 0;
                         //float AVG = 0;
@@ -199,7 +191,7 @@ namespace SystemManage.Controllers
                     string subject = t.TaskName + "" + st.SubName;
                     string receiver = Sendto.User_Email.ToString();
                     //string receiver = "pattanapon2538@outlook.com";
-                    string mess = "คุณได้รับงานใหม่" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                    string mess = "<html><body><p>ถึงคูณ " + Sendto.User_Name + " " + Sendto.User_LastName + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; คุณได้รับมอบหมายงาน  " + model.TaskName + "(" + model.level + ")" + "</p><p>กำหนดส่งภายในวันที่ " + string.Format("{0:dd/MM/yyyy}", model.SubTaskSendDate[0]) + "</p><p>รายละเอียดงานมีดังนี้</p><p>" + model.DescriptionTask + " และรายละเอียดเพิ่มของผู้พัฒนาระบบ  " + model.SubTasksDis[0].ToString() + "</p><p>############################</p><p>" + Host.User_Name + " " + Host.User_LastName + "</p></body></html>";
                     InboxController i = new InboxController();
                     i.SendEmail(receiver, subject, mess, sender);
                     //int totals = 0;
@@ -580,10 +572,10 @@ namespace SystemManage.Controllers
                 var Sendto = db.Users.Where(m => m.User_ID == model.SubDevID).FirstOrDefault();
                 string sender = Email.User_Email.ToString();
                 //string sender = "systemmanage59346@gmail.com";
-                string subject = t.TaskName + "" + st.SubName;
+                string subject = t.TaskName + " " + st.SubName;
                 string receiver = Sendto.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string mess = "งานของคุณได้มีการแก้ไข" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                string mess = "<html><body><p>ถึงคูณ " + Sendto.User_Name + " " + Sendto.User_LastName + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; " + model.TaskName + " มีการแก้ไขรายละเอียดของงาน</p><p><p>รายละเอียดมีดังนี้</p>กำหนดส่งภายในวันที่ " + string.Format("{0:dd/MM/yyyy}", model.SubTaskDateSend) + "</p><p>รายละเอียดงานมีดังนี้</p><p>" + model.DescriptionTask + " และรายละเอียดเพิ่มของผู้พัฒนา  " + model.SubTasksDes + "</p><p>############################</p><p>" + Email.User_Name + " " + Email.User_LastName + "</p></body></html>";
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
                 return RedirectToAction("ShowTask","Task");
@@ -693,7 +685,7 @@ namespace SystemManage.Controllers
                 string subject = t.TaskName + "" + st.SubName;
                 string receiver = Sendto.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                string mess = "<html><body><p>ถึงคูณ " + Sendto.User_Name + " " + Sendto.User_LastName + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; งาน " + t.TaskName + "</p><p>ผู้พัฒนาระบบได้ทำการยืนยันการทำรายการส่งต่อไปยังผู้ทดสอบระบบ กำหนดส่งภายในวันที่ " + string.Format("{0:dd/MM/yyyy}", t.TestSentDate) + "</p><p>รายละเอียดงานมีดังนี้</p><p>" + t.DescriptionTask + " และรายละเอียดเพิ่มของผู้พัฒนาระบบ  " + t.DescriptionTest + "</p><p>############################</p><p>" + Email.User_Name + " " + Email.User_LastName + "</p></body></html>";
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
                 if (st.SubDevSend >= st.UpdateDate)
@@ -736,7 +728,7 @@ namespace SystemManage.Controllers
                 string subject = t.TaskName + "" + st.SubName;
                 string receiver = Sendto.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                string mess = "<html><body><p>ถึงคูณ " + Sendto.User_Name + " " + Sendto.User_LastName + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; งาน " + t.TaskName + "</p><p>ผู้ทดสอบได้ทำการยืนยันการทำรายการส่งต่อไปยังผู้ตรวจคุณภาพ กำหนดส่งภายในวันที่ " + string.Format("{0:dd/MM/yyyy}", t.QASentDate) + "</p><p>รายละเอียดงานมีดังนี้</p><p>" + t.DescriptionTask + " และรายละเอียดเพิ่มของผู้พัฒนาระบบ  " + t.DescriptionQA + "</p><p>############################</p><p>" + Email.User_Name + " " + Email.User_LastName + "</p></body></html>";
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
                 if (t.TestSentDate >= t.UpdateDate)
@@ -778,7 +770,7 @@ namespace SystemManage.Controllers
                 string subject = t.TaskName + "" + st.SubName;
                 string receiver = Sendto.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                string mess = "<html><body><p>ถึงคูณ " + Sendto.User_Name + " " + Sendto.User_LastName + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; งาน " + t.TaskName + "</p><p>ผู้ตรวจสอบได้ทำการยืนยันการทำรายการส่งต่อไปยังลูกค้าเพื่อยืนยันการทำงาน กำหนดส่งภายในวันที่ </p><p>รายละเอียดงานมีดังนี้</p><p>" + t.DescriptionTask + " และรายละเอียดเพิ่มของผู้พัฒนาระบบ  " + t.DescriptionQA + "</p><p>############################</p><p>" + Email.User_Name + " " + Email.User_LastName + "</p></body></html>";
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
                 if (t.QASentDate >= t.UpdateDate)
@@ -820,7 +812,7 @@ namespace SystemManage.Controllers
                 string subject = t.TaskName + "" + st.SubName;
                 string receiver = Sendto.User_Email.ToString();
                 //string receiver = "pattanapon2538@outlook.com";
-                string mess = "ยืนยันการทำงานของงาน" + t.TaskName + "และมีมีงานรองคือ" + st.SubName;
+                string mess = "<html><body><p>ถึงคูณ " + Sendto.User_Name + " " + Sendto.User_LastName + ",</p><p>&nbsp;&nbsp;&nbsp;&nbsp; งาน " + t.TaskName + "</p><p>ลูกค้าได้ทำการยืนยันงานที่ได้สร้างขึ้นถูกต้องตามความต้อง </p><p>รายละเอียดงานมีดังนี้</p><p>" + t.DescriptionTask + " และรายละเอียดเพิ่มของผู้พัฒนาระบบ  " + t.DescriptionQA + "</p><p>############################</p><p>" + Email.User_Name + " " + Email.User_LastName + "</p></body></html>";
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
                 Session["Save"] = 0;

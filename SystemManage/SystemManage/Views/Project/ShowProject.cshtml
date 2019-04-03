@@ -118,8 +118,6 @@
                                         <th><center>รายละเอียด</center></th>
                                         <th><center>แก้ไข</center></th>
                                         <th><center>ลบ</center></th>
-
-
                                     </tr>
                                 </thead>
                                 <tbody id="tb">
@@ -179,7 +177,7 @@
                                                             <a href="@Url.Action("EditProject", new { ProjectID = item.ProjectID })"><i class="fas fa-wrench"></i></a>
                                                         </center>
                                                     </td>
-                                                    if (item.CreateBy == Convert.ToInt32(Session["userID"]))
+                                                    if (item.CreateBy == Convert.ToInt32(Session["userID"]) && item.ProjectStatus !=4)
                                                     {
                                                         <td>
                                                             <center>

@@ -220,7 +220,7 @@ namespace SystemManage.Controllers
                 {
                     status = "หยุดดำเนินการ";
                 }
-                string mess = "โครงการ" + Model.ProjectName + "ได้มีการแก้ไขข้อมูลสถานะของโครงการ" + status + "วันที่ที่แก้ไข" + p.UpdateDate.ToString() + "ผู้แก้ไข" + PM.User_Name;
+                string mess = "<html><body><p>โครงการ " + Model.ProjectName + "</p><p> ได้มีการแก้ไขข้อมูลสถานะของโครงการ " + status + " วันที่ที่แก้ไข " + p.UpdateDate.ToString() + "ผู้แก้ไขคือคุณ " + PM.User_Name+" "+PM.User_LastName+"</p></body></html>";
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
 
@@ -272,7 +272,7 @@ namespace SystemManage.Controllers
                 string subject = d.Name;
                 //string receiver = d.CreateBy.ToString(); รอส่งเมล์ให้ทั้งทีม
                 string receiver = "plusth2538@gmail.com";
-                string mess = "โครงการ" + d.Name + "ได้ถูกลบ" + "ผู้ลบโครงการ" + CreateBy.User_Name + "วันที่" + time ;
+                string mess = "<html><body><p>โครงการ" + d.Name + "</p><p>ได้ถูกลบ" + "ผู้ลบโครงการ" + CreateBy.User_Name +" "+CreateBy.User_LastName+ "วันที่" + time +"</p></html></body>";
                 InboxController i = new InboxController();
                 i.SendEmail(receiver, subject, mess, sender);
                 db.ProjectMembers.Remove(c);
@@ -369,7 +369,7 @@ namespace SystemManage.Controllers
                                 var se = db.Users.Where(m => m.User_ID == project.CreateBy).FirstOrDefault();
                                 string receiver = re.User_Email;
                                 string subject = project.Name;
-                                string mess = "โครการ" + project.Name + "ได้มีสถานะเป็นเสร็จสมบูรณ์";
+                                string mess = "<html><body><p>โครการ" + project.Name + "</p><p>ได้มีสถานะเป็นเสร็จสมบูรณ์</p></body></html>";
                                 string sender = se.User_Email;
                                 Inbox.SendEmail(receiver, subject, mess, sender);
                             }
@@ -390,7 +390,7 @@ namespace SystemManage.Controllers
                                 var se = db.Users.Where(m => m.User_ID == project.CreateBy).FirstOrDefault();
                                 string receiver = re.User_Email;
                                 string subject = project.Name;
-                                string mess = "โครการ" + project.Name + "ได้มีสถานะเป็นเสร็จสมบูรณ์";
+                                string mess = "<html><body><p>โครการ" + project.Name + "</p><p>ได้มีสถานะเป็นเสร็จสมบูรณ์</p></body></html>";
                                 string sender = se.User_Email;
                                 Inbox.SendEmail(receiver, subject, mess, sender);
                             }
@@ -405,7 +405,7 @@ namespace SystemManage.Controllers
                             if (i.Status == 3)
                             {
                                 count = count + 1;
-                                if (count == sit.Count() && project.SendDate <= DateTime.Now)
+                                if (count == sit.Count() && project.SendDate >= DateTime.Now)
                                 {
                                     project.Status = 4;
                                     db.SaveChanges();
@@ -420,12 +420,12 @@ namespace SystemManage.Controllers
                                         var se = db.Users.Where(m => m.User_ID == project.CreateBy).FirstOrDefault();
                                         string receiver = re.User_Email;
                                         string subject = project.Name;
-                                        string mess = "โครการ" + project.Name + "ได้มีสถานะเป็นเสร็จสมบูรณ์";
+                                        string mess = "<html><body><p>โครการ" + project.Name + "</p><p>ได้มีสถานะเป็นเสร็จสมบูรณ์</p></body></html>";
                                         string sender = se.User_Email;
                                         Inbox.SendEmail(receiver, subject, mess, sender);
                                     }
                                 }
-                                else if (count == sit.Count() && project.SendDate > DateTime.Now)
+                                else if (count == sit.Count() && project.SendDate < DateTime.Now)
                                 {
                                     project.Status = 4;
                                     db.SaveChanges();
@@ -440,7 +440,7 @@ namespace SystemManage.Controllers
                                         var se = db.Users.Where(m => m.User_ID == project.CreateBy).FirstOrDefault();
                                         string receiver = re.User_Email;
                                         string subject = project.Name;
-                                        string mess = "โครการ" + project.Name + "ได้มีสถานะเป็นเสร็จสมบูรณ์";
+                                        string mess = "<html><body><p>โครการ" + project.Name + "</p><p>ได้มีสถานะเป็นเสร็จสมบูรณ์</p></body></html>";
                                         string sender = se.User_Email;
                                         Inbox.SendEmail(receiver, subject, mess, sender);
                                     }

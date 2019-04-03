@@ -308,7 +308,7 @@ namespace SystemManage.Controllers
                                 var SI = db.SITs.Where(m => m.SIT_ID == c.Sub_ID).FirstOrDefault();
                                 SI.Defect_SIT = 0;
                                 var Handle = db.ProjectMembers.Where(m => m.UserID == SI.Handle).FirstOrDefault();
-                                if (Handle == null)
+                                if (Handle != null)
                                 {
                                     if (Handle.Role == 3)
                                     {
@@ -328,6 +328,8 @@ namespace SystemManage.Controllers
                                 else
                                 {
                                     SI.Status = 3;
+                                    db.SaveChanges();
+                                    number = 0;
                                 }
                             }
                         }

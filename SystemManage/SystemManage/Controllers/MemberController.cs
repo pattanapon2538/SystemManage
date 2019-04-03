@@ -95,7 +95,7 @@ namespace SystemManage.Controllers
                 pm.Member_name = PoList.NickName;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
-                return RedirectToAction("ListMember");
+                //return RedirectToAction("ListMember");
             }
             else if (PoList.Position_ID == 110)//PositionID = 110 Tester
             {
@@ -103,7 +103,7 @@ namespace SystemManage.Controllers
                 pm.Member_name = PoList.NickName;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
-                return RedirectToAction("ListMember");
+                //return RedirectToAction("ListMember");
             }
             else if (PoList.Position_ID == 142)//PositionID = 142 QA 
             {
@@ -111,7 +111,7 @@ namespace SystemManage.Controllers
                 pm.Member_name = PoList.NickName;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
-                return RedirectToAction("ListMember");
+                //return RedirectToAction("ListMember");
             }
             else if (PoList.Position_ID == 143)//PositionID = 143 ลูกค้า 
             {
@@ -119,40 +119,50 @@ namespace SystemManage.Controllers
                 pm.Member_name = PoList.NickName;
                 db.ProjectMembers.Add(pm);
                 db.SaveChanges();
-                return RedirectToAction("ListMember");
-            }else //ถ้าไม่เข้าเงื่อไขให้เป็น Dev ทั้งหมด
-            pm.Role = 2;
-            pm.Member_name = PoList.NickName;
-            db.ProjectMembers.Add(pm);
-            db.SaveChanges();
+                //return RedirectToAction("ListMember");
+            }
+            else //ถ้าไม่เข้าเงื่อไขให้เป็น Dev ทั้งหมด
+            {
+                pm.Role = 2;
+                pm.Member_name = PoList.NickName;
+                db.ProjectMembers.Add(pm);
+                db.SaveChanges();
+            }
             ///////////////////////////////////////
             var Cb = db.Projects.Where(m => m.ProjectID == pm.ProjectID).FirstOrDefault();
             var Email = db.Users.Where(m => m.User_ID == Cb.CreateBy).FirstOrDefault();
             var Sendto = db.Users.Where(m => m.User_ID == UserID).FirstOrDefault();
+            var project = db.Projects.Where(m => m.ProjectID == pm.ProjectID).FirstOrDefault();
             string sender = Email.User_Email.ToString();
             //string sender = "systemmanage59346@gmail.com";
             string subject = Cb.Name;
             string receiver = Sendto.User_Email.ToString();
+            string SendDate = string.Format("{0:dd/MM/yyyy}",project.SendDate);
+            string CreateDate = string.Format("{0:dd/MM/yyyy}", project.CreateDate);
             //string receiver = "pattanapon2538@outlook.com";
-            string mess = Sendto.User_Name+"ได้รับสิทธ์ในการเข้าร่วมโครงการ"+Cb.Name;
+            string mess = "<html><body><p>ถึงคุณ" + Sendto.User_Name + " " + Sendto.User_LastName + "</p><p>&nbsp;&nbsp;&nbsp;&nbsp; คุณได้รับสิทธิ์ในการเข้าถึงโครงการ "+ project.Name+" มีรายละเอียดโครงการดังนี้  "+project.Description+" กำหนดส่งวันที่ "+ SendDate + " สร้างเมื่อวันที่ "+ CreateDate + " มีหัวหน้าโครงการคือคุณ "+Email.User_Name+" "+Email.User_LastName+"</p><p></p>" + Email.User_Name + " " + Email.User_LastName + "</body></html>";
+            
             InboxController i = new InboxController();
             i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ListMember");
         }
         public ActionResult DeleteMember(int UserID)
         {
-            var pm = db.ProjectMembers.Where(m => m.UserID == UserID).FirstOrDefault();
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
+            var pm = db.ProjectMembers.Where(m => m.UserID == UserID && m.ProjectID == ProjectID).FirstOrDefault();
             db.ProjectMembers.Remove(pm);
             db.SaveChanges();
             var Cb = db.Projects.Where(m => m.ProjectID == pm.ProjectID).FirstOrDefault();
             var Email = db.Users.Where(m => m.User_ID == Cb.CreateBy).FirstOrDefault();
             var Sendto = db.Users.Where(m => m.User_ID == UserID).FirstOrDefault();
+            var project = db.Projects.Where(m => m.ProjectID == pm.ProjectID).FirstOrDefault();
             string sender = Email.User_Email.ToString();
             //string sender = "systemmanage59346@gmail.com";
             string subject = Cb.Name;
             string receiver = Sendto.User_Email.ToString();
+            string Exit_Date = string.Format("{0:dd/MM/yyyy}",DateTime.Now);
             //string receiver = "pattanapon2538@outlook.com";
-            string mess = Sendto.User_Name + "คุณได้ออกจากโครงการ" + Cb.Name;
+            string mess = "<html><body><p>ถึงคุณ" + Sendto.User_Name + " " + Sendto.User_LastName + "</p><p>&nbsp;&nbsp;&nbsp;&nbsp; คุณถูกเชิญออกจากโครงการ " + project.Name + " ณ วันที่ "+Exit_Date+ "หากมีข้อสงสัยกรุณาติดต่อกับหัวหน้าโครงการ คุณ"+ Email.User_Name + " " + Email.User_LastName + "</p><p>" + Email.User_Name + " " + Email.User_LastName + "</p></body></html>";
             InboxController i = new InboxController();
             i.SendEmail(receiver, subject, mess, sender);
             return RedirectToAction("ShowMember","Member");
