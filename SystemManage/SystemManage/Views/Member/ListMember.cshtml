@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="~/assets/css/slicknav.min.css">
     <script src="https://unpkg.com/tablefilter@0.6.82/dist/tablefilter/tablefilter.js"></script>
-    <title>เพิ่มสมาชิกในโครงการ</title>
+    <title>ค้นหาสมาชิก</title>
     <style>
         .star:hover {
             content: url('/icon/star_yellow.png');
@@ -60,7 +60,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h1 style="text-align: center">เพิ่มสมาชิกในโครงการ</h1>
+                <h1 style="text-align: center">สมาชิกในระบบ</h1>
             </div>
         </div>
         <div class="card">
@@ -68,105 +68,58 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="row">
-                            <div class="col-sm-6">
-                                @*<div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">อีเมล</span>
-                                        </div>
-                                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                                    </div>*@
+                            <div class="col-sm-4">
                                 <span id="0" hidden></span>
-                                <label for="a">ชื่อ : </label>
+                                <label for="a">อีเมล : </label>
                                 <span id="a"></span>
                             </div>
-                            <div class="col-sm-6">
-                                @*<div class="input-group mb-3">
-                                        <div class="input-group">
-                                            <label class="label" for="subject" style="margin-right: 10px">Position :</label>
-                                            <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                                                <select name="subject">
-                                                    <option>All</option>
-                                                    <option>Pause</option>
-                                                    <option>Terminate</option>
-                                                </select>
-                                                <div class="select-dropdown"></div>
-                                            </div>
-                                        </div>
-                                    </div>*@
-                                <label for="b">นามสกุล : </label>
+                            <div class="col-sm-4">
+                                <label for="b">ชื่อ : </label>
                                 <span id="b"></span>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                @*<div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">Name</span>
-                                        </div>
-                                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                                    </div>*@
-                                <label for="c">ตำแหน่ง : </label>
+                            <div class="col-sm-4">
+                                <label for="c">นามสกุล : </label>
                                 <span id="c"></span>
                             </div>
-                            <div class="col-sm-6">
-                                @*<div class="input-group">
-                                        <label class="label" for="subject" style="margin-right: 10px">Percent :</label>
-                                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                                            <select name="subject">
-                                                <option>0</option>
-                                            </select>
-                                            <div class="select-dropdown"></div>
-                                        </div>
-                                        <div class="rs-select2 js-select-simple select--no-search " style="width: 100px;margin-left: -40px">
-                                            <select name="subject">
-                                                <option>100</option>
-                                            </select>
-                                            <div class="select-dropdown"></div>
-                                        </div>
-                                    </div>*@
-                                <label for="d">ความยากของงาน : </label>
-                                <span id="d"></span>
-                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
-                                @*<div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">LastName</span>
-                                        </div>
-                                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                                    </div>*@
-                                <label for="e">เปอร์เซ็นความสำเร็จ: </label>
+                            <div class="col-sm-4">
+                                <label for="d">ชื่อเล่น : </label>
+                                <span id="d"></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="e">ตำแหน่ง : </label>
                                 <span id="e"></span>
                             </div>
-                            <div class="col-sm-6">
-                                @*<div class="input-group mb-3">
-                                        <div class="input-group">
-                                            <label class="label" for="subject" style="margin-right: 10px">Skills :</label>
-                                            <div class="rs-select2 js-select-simple select--no-search " style="width: 100px">
-                                                <select name="subject">
-                                                    <option>All</option>
-                                                    <option>Pause</option>
-                                                    <option>Terminate</option>
-                                                </select>
-                                                <div class="select-dropdown"></div>
-                                            </div>
-                                        </div>
-                                    </div>*@
-                                <span id="1" hidden></span>
-                                <span id="2" hidden></span>
-                                <label for="f">จำนวนการโค๊ต: </label>
+                            <div class="col-sm-4">
+                                <label for="f">รูปแบบการจ้างงาน : </label>
                                 <span id="f"></span>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="g">วันเริ่มทำงาน : </label>
+                                <span id="g"></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="h">วันสิ้นสุดการทำงาน : </label>
+                                <span id="h"></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <label for="i">ความชำนาญ : </label>
+                                <span id="i"></span>
+                            </div>
+                            <span id="1" hidden></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="j">เปอร์เซ็นต์ความสำเร็จของงานขั้นต่ำ : </label>
+                                <span id="j"></span>
+                            </div>
+                            <span id="2" hidden></span>
+                        </div>
                         <div class="row" style="margin-top: 20px">
                             <div class="col-sm-6">
-                                @*<div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">NickName</span>
-                                        </div>
-                                        <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                                    </div>*@
                             </div>
                             <div class="col-sm-2"></div>
                             <div class="col-sm-2">
@@ -184,8 +137,8 @@
     <div class="card" style="margin-top: 20px">
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-12">
-                    <table id="demo" class="table table-bordered">
+                <div class="col-sm-12" style="overflow-x:auto;">
+                    <table id="demo" class="table table-responsive-sm table-bordered">
                         <thead>
                             <tr class="table-info">
                                 <th><center>ชื่นชอบ</center></th>
@@ -210,69 +163,69 @@
                             </tr>
                         </thead>
                         <tbody>
-                                @{ 
-                                    int num = 0;
-                                    foreach (var item in (List<UserModel>)ViewBag.DataList)
+                            @{
+                                int num = 0;
+                                foreach (var item in (List<UserModel>)ViewBag.DataList)
+                                {
+                                    foreach (var item2 in (List<FollowModel>)ViewBag.DataList2)
                                     {
-                                        foreach (var item2 in (List<FollowModel>)ViewBag.DataList2)
+                                        if (item.Users_ID == item2.user_ID)
                                         {
-                                            if (item.Users_ID == item2.user_ID)
-                                            {
-                                                <tr>
-                                                    <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star_yellow.png" width="20" height="20"></a></center></td>
-                                                    <td><center>@item.User_Email</center></td>
-                                                    <td><center>@item.User_Name</center></td>
-                                                    <td><center>@item.User_LastName</center></td>
-                                                    <td><center>@item.NikcName</center></td>
-                                                    <td><center>@item.PositionName</center></td>
-                                                    <td><center>@item.ContactName</center></td>
-                                                    <td><center>@item.Start</center></td>
-                                                    <td><center>@item.End</center></td>
-                                                    <td><center>@item.language_string</center></td>
-                                                    <td><center>@item.AVG.ToString("#.#")</center></td>
-                                                    <td><center>@item.Amount_Succ.ToString("P1")</center></td>
-                                                    <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                    @{
-                                                        if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
-                                                        {
-                                                            <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
-                                                        }
-                                                        num = item2.user_ID;
+                                            <tr>
+                                                <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star_yellow.png" width="20" height="20"></a></center></td>
+                                                <td><center>@item.User_Email</center></td>
+                                                <td><center>@item.User_Name</center></td>
+                                                <td><center>@item.User_LastName</center></td>
+                                                <td><center>@item.NikcName</center></td>
+                                                <td><center>@item.PositionName</center></td>
+                                                <td><center>@item.ContactName</center></td>
+                                                <td><center>@item.Start</center></td>
+                                                <td><center>@item.End</center></td>
+                                                <td><center>@item.language_string</center></td>
+                                                <td><center>@item.AVG.ToString("#.#")</center></td>
+                                                <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                                <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                                @{
+                                                    if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
+                                                    {
+                                                        <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
                                                     }
-                                                </tr>
-                                            }
-                                        }
-                                                if(num != item.Users_ID)
-                                                {
-                                                            <tr>
-                                                                <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
-                                                                <td><center>@item.User_Email</center></td>
-                                                                <td><center>@item.User_Name</center></td>
-                                                                <td><center>@item.User_LastName</center></td>
-                                                                <td><center>@item.NikcName</center></td>
-                                                                <td><center>@item.PositionName</center></td>
-                                                                <td><center>@item.ContactName</center></td>
-                                                                <td><center>@item.Start</center></td>
-                                                                <td><center>@item.End</center></td>
-                                                                <td><center>@item.language_string</center></td>
-                                                                <td><center>@item.AVG.ToString("#.#")</center></td>
-                                                                <td><center>@item.Amount_Succ.ToString("P1")</center></td>
-                                                                <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
-                                                                @{
-                                                                    if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
-                                                                    {
-                                                                        <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
-                                                                    }
-                                                                }
-                                                            </tr>       
-
+                                                    num = item2.user_ID;
                                                 }
-                                                
+                                            </tr>
+                                        }
                                     }
-                                 }
-                                
+                                    if (num != item.Users_ID)
+                                    {
+                                        <tr>
+                                            <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
+                                            <td><center>@item.User_Email</center></td>
+                                            <td><center>@item.User_Name</center></td>
+                                            <td><center>@item.User_LastName</center></td>
+                                            <td><center>@item.NikcName</center></td>
+                                            <td><center>@item.PositionName</center></td>
+                                            <td><center>@item.ContactName</center></td>
+                                            <td><center>@item.Start</center></td>
+                                            <td><center>@item.End</center></td>
+                                            <td><center>@item.language_string</center></td>
+                                            <td><center>@item.AVG.ToString("#.#")</center></td>
+                                            <td><center>@item.Amount_Succ.ToString("P1")</center></td>
+                                            <td><a href="@Url.Action("HistoryUser",new {UserID = item.Users_ID })"><center><i class="fas fa-book-open"></i></center></a></td>
+                                            @{
+                                                if (Model.ProjectCreateBy == Convert.ToInt32(Session["userID"]) && Model.Project_Status != 4)
+                                                {
+                                                    <td><center><i class="fas fa-plus-circle" style="cursor:pointer" onclick="CheckMember('@item.Users_ID')"></i></center></td>
+                                                }
+                                            }
+                                        </tr>
+
+                                    }
+
+                                }
+                            }
+
                         </tbody>
-                        </table>
+                    </table>
                 </div>
             </div>
         </div>
@@ -342,15 +295,38 @@
 <script>
     var tfConfig = {
         base_path: 'https://unpkg.com/tablefilter@latest/dist/tablefilter/',
-        col_3: 'select',
-        col_4: 'select',
         alternate_rows: true,
         mark_active_columns: true,
+        col_5: 'checklist',
+        col_6: 'checklist',
+        col_7: 'select',
+        col_8: 'select',
+        col_9: 'checklist',
+        col_11: 'select',
         col_types: [
             'string', 'string', 'string',
             'string', 'string', 'string',
             'string', 'string', 'string',
         ],
+        custom_options: {
+            cols: [11],
+            texts: [
+                [
+                    '10', '20',
+                    '30', '40', '50',
+                    '60', '70', '80', '90', '100'
+                ]
+            ],
+            values: [
+                [
+                    '>=10 && <=100', '>=20 &&, <=100',
+                    '>=30 && <=100', '>=40 && <=100', '>=50 && <=100',
+                    '>=60 && <=100', '>=70 && <=100',
+                    '>=80 && <=100', '>=90 && <=100', '>=100'
+                ]
+            ],
+            sorts: [false]
+        },
         clear_filter_text: [
             ' [ Show all ] ',
             '<เลือก>',
@@ -366,8 +342,12 @@
             'd',
             'e',
             'f',
+            'g',
+            'h',
+            'i',
             '1',
-            '2'
+            'j',
+            '2',
         ],
 
         /* sorting feature */

@@ -291,8 +291,9 @@ namespace SystemManage.Controllers
                 var lag = db.Language_of_Type.Where(m => m.languageID == s.languageID).FirstOrDefault();
                 model.language_string = lag.Name +" "+ model.language_string;
             }
+            int dev = 0;
             model.ProjectCreateBy = crete.CreateBy;
-            var Work = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
+            var Work = db.ProjectMembers.Where(m => m.UserID == userID /*&& m.ProjectID == projectID*/).ToList();
             foreach (var item in Work)
             {
                 if (item.Role == 1)
@@ -312,7 +313,7 @@ namespace SystemManage.Controllers
                             RoundCoding = 0
                         });
                     }
-                else if (item.Role == 2)
+                else if (item.Role == 2 && dev !=1)
                 {
                     var TaskDev = db.SubTasks.Where(m => m.SubDevID == userID).ToList();
                     foreach (var item3 in TaskDev)
@@ -325,10 +326,11 @@ namespace SystemManage.Controllers
                             RoundCoding = item3.RoundCoding
                         });
                     }
+                    dev = 1;
                 }
                 else if (item.Role == 3)
                 {
-                    var TaskTester = db.Tasks.Where(m => m.TestID == userID).ToList();
+                    var TaskTester = db.Tasks.Where(m => m.TestID == userID && m.ProjectID == item.ProjectID).ToList();
                     foreach (var item4 in TaskTester)
                     {
                         TaskList.Add(new UserModel
@@ -341,7 +343,7 @@ namespace SystemManage.Controllers
                 }
                 else if (item.Role == 4)
                 {
-                    var TaskQA = db.Tasks.Where(m => m.QAID == userID).ToList();
+                    var TaskQA = db.Tasks.Where(m => m.QAID == userID && m.ProjectID == item.ProjectID).ToList();
                     foreach (var item5 in TaskQA)
                     {
                         TaskList.Add(new UserModel
@@ -532,6 +534,7 @@ namespace SystemManage.Controllers
             {
                 model._Speaking = UserModel.Levels.อ่อน;
             }
+            int dev = 0;
             var Work = db.ProjectMembers.Where(m => m.UserID == userID).ToList();
             foreach (var item in Work)
             {
@@ -559,7 +562,7 @@ namespace SystemManage.Controllers
                         RoundCoding = 0
                     });
                 }
-                else if (item.Role == 2)
+                else if (item.Role == 2 && dev != 1)
                 {
                     var TaskDev = db.SubTasks.Where(m => m.SubDevID == userID).ToList();
                     foreach (var item3 in TaskDev)
@@ -572,10 +575,11 @@ namespace SystemManage.Controllers
                             RoundCoding = item3.RoundCoding
                         });
                     }
+                    dev = 1;
                 }
                 else if (item.Role == 3)
                 {
-                    var TaskTester = db.Tasks.Where(m => m.TestID == userID).ToList();
+                    var TaskTester = db.Tasks.Where(m => m.TestID == userID && m.ProjectID == item.ProjectID ).ToList();
                     foreach (var item4 in TaskTester)
                     {
                         TaskList.Add(new UserModel
@@ -588,7 +592,7 @@ namespace SystemManage.Controllers
                 }
                 else if (item.Role == 4)
                 {
-                    var TaskQA = db.Tasks.Where(m => m.QAID == userID).ToList();
+                    var TaskQA = db.Tasks.Where(m => m.QAID == userID && m.ProjectID == item.ProjectID).ToList();
                     foreach (var item5 in TaskQA)
                     {
                         TaskList.Add(new UserModel
