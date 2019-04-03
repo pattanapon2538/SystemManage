@@ -47,7 +47,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="sort_name()">
     <div class="card" style="border: none">
         <div class="card-body">
             <div class="row">
@@ -70,8 +70,13 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <span id="0" hidden></span>
-                                <label for="a">อีเมล : </label>
-                                <span id="a"></span>
+                                @*<label for="a">อีเมล : </label>
+                                    <span id="a" class="input-group-text"></span>*@
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="a">อีเมล : </span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-sm-4">
                                 <label for="b">ชื่อ : </label>
@@ -162,7 +167,7 @@
                                 }
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="ta">
                             @{
                                 int num = 0;
                                 foreach (var item in (List<UserModel>)ViewBag.DataList)
@@ -172,7 +177,7 @@
                                         if (item.Users_ID == item2.user_ID)
                                         {
                                             <tr>
-                                                <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star_yellow.png" width="20" height="20"></a></center></td>
+                                                <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star_yellow.png" width="20" height="20"><span hidden>1</span></a></center></td>
                                                 <td><center>@item.User_Email</center></td>
                                                 <td><center>@item.User_Name</center></td>
                                                 <td><center>@item.User_LastName</center></td>
@@ -198,7 +203,7 @@
                                     if (num != item.Users_ID)
                                     {
                                         <tr>
-                                            <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20"></a></center></td>
+                                            <td><center><a href="@Url.Action("Follows","Member", new { userID = item.Users_ID })"><img class="star" src="~/icon/star.png" width="20" height="20" value="0"></a></center></td>
                                             <td><center>@item.User_Email</center></td>
                                             <td><center>@item.User_Name</center></td>
                                             <td><center>@item.User_LastName</center></td>
@@ -262,7 +267,9 @@
             };
     };
 </script>
+<script>
 
+</script>
 
 @*<script>
         //var click = '/icon/star.png';
@@ -351,7 +358,10 @@
         ],
 
         /* sorting feature */
-        extensions: [{ name: 'sort' }]
+        extensions: [{ name: 'sort', async_sort: true }],
+        themes: [{
+            name: 'transparent'
+        }]
     };
     var tf = new TableFilter('demo', tfConfig);
     tf.init();
