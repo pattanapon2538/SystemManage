@@ -67,7 +67,12 @@
         ////***//
     </script>
     <!-- end datepicker script -->
-
+    <style>
+        textarea.form-control {
+            resize: none;
+            height: 150px;
+        }
+    </style>
     <title>ข้อผิดพลาด</title>
 </head>
 <body>
@@ -76,7 +81,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <h1 class="text-center" style="margin-top: 20pt">Defect</h1>
+                    <h1 class="text-center" style="margin-top: 20pt">ข้อผิดพลาด</h1>
                 </div>
             </div>
             <div class="card shadow" style="margin-top: 50px;margin-bottom: 50px">
@@ -103,8 +108,8 @@
                                 </div>
                             }
                         }
-                        <div class="col-sm-4">
-                            <div class="input-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
                                 <label class="label" style="margin-right: 10px">ผู้พัฒนา :</label>
                                 @Html.TextBoxFor(m => m.DevName, new { @class = "form-control", ReadOnly = "" })
                             </div>

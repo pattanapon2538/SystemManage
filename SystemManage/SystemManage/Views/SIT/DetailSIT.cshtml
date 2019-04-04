@@ -31,10 +31,6 @@
         $(this).parent('div').parent('div').parent('div').parent('div').remove();
         }
     });
-    window.onbeforeunload = function ()
-    {
-        return "ข้อมูลไม่ได้บันทึก";
-    };//*
     </script>
     <style>
         input, select, textarea {
@@ -54,7 +50,7 @@
 </head>
 <body>
 
-    @using (Html.BeginForm("EditSIT", "SIT", FormMethod.Post, new { @id = "form_Check" ,enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("EditSIT", "SIT", FormMethod.Post, new { @id = "form_Check", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <div class="container">
@@ -130,7 +126,7 @@
                                             <div class="col-sm-4">
                                                 <div class="input-group">
                                                     @Html.HiddenFor(m => m.StepList, new { @Value = item._Step_ID })
-                                                    @Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName", selectedValue: item.ID_Task), new { @class = "form-control", Readonly = "" , disabled = "ture" })
+                                                    @Html.DropDownListFor(m => m.TaskList, new SelectList(Model.Task, "TaskID", "TaskName", selectedValue: item.ID_Task), new { @class = "form-control", Readonly = "", disabled = "ture" })
                                                 </div>
                                             </div>
                                         </div>
@@ -186,7 +182,7 @@
                                 <div class="col-sm-4">
                                     <div class="input-group">
                                         <label class="label" style="margin-right: 6px">กำหนดส่ง :</label>
-                                        @Html.TextBoxFor(m => m.Send_Date_T, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker"})
+                                        @Html.TextBoxFor(m => m.Send_Date_T, "{0:MM/dd/yyyy}", new { @class = "form-control datepicker" })
                                     </div>
                                 </div>
                                 <div class="col-sm-2"></div>
@@ -374,7 +370,7 @@
                                 {
                                     <button type="submit" class="btn btn-outline-primary" onclick='return confirm("คุณต้องการบันทึกข้อมูลใช่หรือไม่่")'>บันทึก</button>
                                 }
-                                else if (Model.Handle == Convert.ToInt32(Session["userID"]) && Model.Status !=3)
+                                else if (Model.Handle == Convert.ToInt32(Session["userID"]) && Model.Status != 3)
                                 {
                                     if (Model.Status != 4)
                                     {
